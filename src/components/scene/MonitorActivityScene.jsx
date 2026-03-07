@@ -2,8 +2,18 @@ import { useEffect, useRef } from 'react'
 import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 
-export function MonitorActivityScene({ messages = [], options = [], onSelectOption }) {
+export function MonitorActivityScene({ messages = [], options = [], onSelectOption, variant = 'monitor' }) {
   const scrollRef = useRef(null)
+  const titleByVariant = {
+    monitor: 'Stand-PC Monitor',
+    tablet: 'Tablet Interface',
+    hologram: 'Hologramm Interface',
+  }
+  const backgroundByVariant = {
+    monitor: 'radial-gradient(circle at 50% 20%, #213a56 0%, #0d1a2a 55%, #070f18 100%)',
+    tablet: 'radial-gradient(circle at 40% 20%, #2b3b58 0%, #132035 58%, #0a1421 100%)',
+    hologram: 'radial-gradient(circle at 50% 18%, #102b45 0%, #081a2a 52%, #050c14 100%)',
+  }
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -15,14 +25,14 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
     <div className="scene">
       <SceneBackground
         backgroundImage={null}
-        backgroundPlaceholder="radial-gradient(circle at 50% 20%, #213a56 0%, #0d1a2a 55%, #070f18 100%)"
+        backgroundPlaceholder={backgroundByVariant[variant] || backgroundByVariant.monitor}
       />
 
-      <div className="monitor-scene">
+      <div className={`monitor-scene monitor-scene--${variant}`}>
         <div className="monitor-scene__bezel">
           <div className="monitor-scene__screen">
             <header className="monitor-scene__header">
-              <h2 className="monitor-scene__title">Stand-PC Monitor</h2>
+              <h2 className="monitor-scene__title">{titleByVariant[variant] || titleByVariant.monitor}</h2>
             </header>
 
             <div className="monitor-scene__messages" ref={scrollRef}>

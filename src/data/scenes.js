@@ -55,7 +55,7 @@ export const SCENES = [
   {
     id: 3,
     name: 'Erdgeschoss – Zweite Fallakte',
-    backgroundImage: DEFAULT_BACKGROUND,
+    backgroundImage: '/backgrounds/open-office-scene.svg',
     backgroundPlaceholder: 'linear-gradient(170deg, #e8e4dc 0%, #d4cfc4 50%, #c4bfb4 100%)',
     characters: [
       { id: 'host', name: 'Host', avatarUrl: null, position: { x: '50%', y: '63%' }, align: 'left' },
@@ -73,7 +73,7 @@ export const SCENES = [
   {
     id: 4,
     name: 'Zweiter Stock – Dritte Fallakte',
-    backgroundImage: DEFAULT_BACKGROUND,
+    backgroundImage: '/backgrounds/private-office-scene.svg',
     backgroundPlaceholder: 'linear-gradient(165deg, #f5f3ef 0%, #e8e6e0 40%, #dcd8d0 100%)',
     characters: [
       { id: 'host', name: 'Host', avatarUrl: null, position: { x: '65%', y: '64%' }, align: 'right' },

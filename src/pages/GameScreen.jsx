@@ -182,7 +182,8 @@ export function GameScreen({
     getFallbackStep(scene, currentPart, stepIndex)
 
   const options = stepData.options || []
-  const isMonitorActivityMode = currentPart === 2 && String(stepData.type || '').toLowerCase() === 'activity'
+  const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
+  const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
     if (currentPart === 0 && String(option?.id || '').toLowerCase() === 'continue') {
       return { ...option, disabled: !selectedAvatarId }
@@ -288,7 +289,14 @@ export function GameScreen({
   }
 
   if (isMonitorActivityMode) {
-    return <MonitorActivityScene messages={chatMessages} options={displayOptions} onSelectOption={handleSelectOption} />
+    return (
+      <MonitorActivityScene
+        messages={chatMessages}
+        options={displayOptions}
+        onSelectOption={handleSelectOption}
+        variant={activityVariantByPart[currentPart] || 'monitor'}
+      />
+    )
   }
 
   return (
