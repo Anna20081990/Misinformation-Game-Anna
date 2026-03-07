@@ -523,10 +523,10 @@ html, body {
 .monitor-scene--keller-monitor-select .monitor-scene__bezel {
   position: absolute;
   left: 50%;
-  top: 55%;
+  top: 53%;
   transform: translate(-50%, -50%);
-  width: min(53vw, 980px);
-  height: min(62vh, 700px);
+  width: min(50vw, 960px);
+  height: min(60vh, 660px);
   border-radius: 10px;
   padding: 0.25rem;
   background: transparent;
@@ -574,6 +574,15 @@ html, body {
 .monitor-scene--keller-monitor-select .monitor-select__sentence {
   border-color: rgba(145, 227, 179, 0.44);
   background: rgba(18, 60, 42, 0.18);
+}
+
+.monitor-scene--keller-monitor-select .monitor-choice__item--selected,
+.monitor-scene--keller-monitor-select .monitor-select__sentence--selected {
+  color: #f4fff8;
+  font-weight: 700;
+  background: rgba(48, 128, 90, 0.36);
+  border-color: rgba(179, 249, 206, 0.78);
+  text-shadow: 0 0 2px rgba(5, 24, 16, 0.55);
 }
 
 .monitor-scene--keller-monitor-select .monitor-choice__item:hover,
