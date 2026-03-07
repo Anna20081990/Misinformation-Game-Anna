@@ -115,8 +115,9 @@ function scene2Steps() {
       bubble('selected', 'Teilweise richtig, aber du hast auch neutrale Teile markiert und nicht alles erwischt. Konzentriere dich auf klare Übertreibung und Generalisierung.', 'wrongMixed'),
     ], [option('retry', 'Ich versuche es nochmal.', 3)]),
     step(4, 'activity', [
-      bubble('selected', 'Exakt. Jetzt die nächste Stufe: Welche Variante erzeugt die höchste Empörung?', 'rightA'),
-      bubble('selected', 'Guter Retry. Jetzt präzise: Welche Variante erzeugt die höchste Empörung?', 'retry'),
+      bubble('selected', 'Stark erkannt, genau das war die emotionale Zuspitzung.', 'rightA'),
+      bubble('selected', 'Aktivität 2: Welche Variante erzeugt die höchste Empörung?', 'rightA'),
+      bubble('selected', 'Guter Retry. Aktivität 2: Welche Variante erzeugt jetzt die höchste Empörung?', 'retry'),
     ], [
       option('rightB', '„Das ist ein Skandal, der uns alle bedroht!“', 5),
       option('wrongB', '„Der Punkt sollte genauer geprüft werden.“', 41),

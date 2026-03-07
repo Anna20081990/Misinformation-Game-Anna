@@ -342,12 +342,17 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Exakt. Jetzt die nächste Stufe: Welche Variante erzeugt die höchste Empörung?",
+              "text": "Stark erkannt, genau das war die emotionale Zuspitzung.",
               "showOnOptionId": "rightA"
             },
             {
               "hostId": "selected",
-              "text": "Guter Retry. Jetzt präzise: Welche Variante erzeugt die höchste Empörung?",
+              "text": "Aktivität 2: Welche Variante erzeugt die höchste Empörung?",
+              "showOnOptionId": "rightA"
+            },
+            {
+              "hostId": "selected",
+              "text": "Guter Retry. Aktivität 2: Welche Variante erzeugt jetzt die höchste Empörung?",
               "showOnOptionId": "retry"
             }
           ],

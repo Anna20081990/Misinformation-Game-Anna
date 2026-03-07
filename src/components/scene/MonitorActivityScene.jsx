@@ -38,27 +38,6 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
             </header>
 
             <div className="monitor-scene__messages" ref={scrollRef}>
-              {variant === 'monitor-select' && (
-                <section className="monitor-select" aria-label="Beitrag analysieren">
-                  <h3 className="monitor-select__title">Beitrag</h3>
-                  <p className="monitor-select__paragraph">
-                    {sentenceOptions.map((sentence, index) => (
-                        <span key={`sentence-wrap-${sentence.id ?? index}`}>
-                        <button
-                          type="button"
-                          className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
-                          onClick={() => onSelectOption?.(index, sentence)}
-                          disabled={Boolean(sentence.disabled)}
-                        >
-                          {sentence.label}
-                        </button>
-                        {index < sentenceOptions.length - 1 && <span> </span>}
-                        </span>
-                      ))}
-                  </p>
-                </section>
-              )}
-
               {messages.map((message) => (
                 <article
                   key={message.id}
@@ -75,6 +54,27 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                   </div>
                 </article>
               ))}
+
+              {variant === 'monitor-select' && (
+                <section className="monitor-select" aria-label="Beitrag analysieren">
+                  <h3 className="monitor-select__title">Beitrag</h3>
+                  <p className="monitor-select__paragraph">
+                    {sentenceOptions.map((sentence, index) => (
+                      <span key={`sentence-wrap-${sentence.id ?? index}`}>
+                        <button
+                          type="button"
+                          className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
+                          onClick={() => onSelectOption?.(index, sentence)}
+                          disabled={Boolean(sentence.disabled)}
+                        >
+                          {sentence.label}
+                        </button>
+                        {index < sentenceOptions.length - 1 && <span> </span>}
+                      </span>
+                    ))}
+                  </p>
+                </section>
+              )}
             </div>
 
             <footer className="monitor-scene__options" role="group" aria-label="Aktivitätsoptionen">

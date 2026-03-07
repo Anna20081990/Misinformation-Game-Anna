@@ -139,6 +139,7 @@ export function GameScreen({
   const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
+  const resetOnActivity2TransitionRef = useRef(false)
   const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
 
   useEffect(() => {
@@ -334,8 +335,13 @@ export function GameScreen({
 
       if (!mappedOption) return
 
+      resetOnActivity2TransitionRef.current = Boolean(
+        isCorrect && mappedOption.id === (part2Activity1Config?.success?.id || 'rightA')
+      )
       setLastSubmittedSentenceIndexes(selectedSentenceIndexes)
       option = { ...mappedOption, label: option.label }
+    } else {
+      resetOnActivity2TransitionRef.current = false
     }
 
     onSelectOption?.(index, option, currentPart)
@@ -376,7 +382,14 @@ export function GameScreen({
         return
       }
 
-        if (option?.nextStep != null) {
+      if (option?.nextStep != null) {
+        if (resetOnActivity2TransitionRef.current && currentPart === 2 && Number(option.nextStep) === 4) {
+          setChatMessages([])
+          setSelectedSentenceIndexes([])
+          setLastSubmittedSentenceIndexes([])
+          appendedStepKeysRef.current = new Set()
+        }
+
         if (resetOnRetry) {
           setChatMessages([])
           setSelectedSentenceIndexes([])
@@ -384,6 +397,8 @@ export function GameScreen({
           appendedStepKeysRef.current = new Set()
           setLastSelectedOptionId(null)
         }
+
+        resetOnActivity2TransitionRef.current = false
         setStepIndex(option.nextStep)
       }
     }, 220)
