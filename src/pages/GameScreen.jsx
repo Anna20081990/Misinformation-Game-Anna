@@ -1111,12 +1111,20 @@ export function GameScreen({
   }
 
   if (isMonitorActivityMode) {
+    const part2SelectMode = isPart2Activity1Context || isPart2Activity2Context
+    const monitorVariant = part2SelectMode
+      ? 'keller-monitor-select'
+      : (isPart3Activity1Context || isPart3Activity2Context || isPart4Activity1Context || isPart4Activity2Context)
+        ? 'monitor-select'
+        : (activityVariantByPart[currentPart] || 'monitor')
+
     return (
       <MonitorActivityScene
         messages={chatMessages}
         options={monitorOptions}
         onSelectOption={handleSelectOption}
-        variant={(isPart2Activity1Context || isPart2Activity2Context || isPart3Activity1Context || isPart3Activity2Context || isPart4Activity1Context || isPart4Activity2Context) ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
+        variant={monitorVariant}
+        backgroundImage={part2SelectMode ? '/backgrounds/keller-monitor.png' : null}
       />
     )
   }

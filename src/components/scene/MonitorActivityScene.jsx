@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 
-export function MonitorActivityScene({ messages = [], options = [], onSelectOption, variant = 'monitor' }) {
+export function MonitorActivityScene({
+  messages = [],
+  options = [],
+  onSelectOption,
+  variant = 'monitor',
+  backgroundImage = null,
+  backgroundPlaceholder = null,
+}) {
   const scrollRef = useRef(null)
   const dragItemIdRef = useRef('')
   const [dragOverBucketId, setDragOverBucketId] = useState('')
@@ -20,6 +27,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
     monitor: 'radial-gradient(circle at 50% 20%, #213a56 0%, #0d1a2a 55%, #070f18 100%)',
     tablet: 'radial-gradient(circle at 40% 20%, #2b3b58 0%, #132035 58%, #0a1421 100%)',
     hologram: 'radial-gradient(circle at 50% 18%, #102b45 0%, #081a2a 52%, #050c14 100%)',
+    'keller-monitor-select': 'linear-gradient(180deg, #112f22 0%, #0c2219 100%)',
   }
 
   useEffect(() => {
@@ -53,11 +61,13 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
   const bucketDefinitions = bucketOptions[0]?.bucketDefinitions || []
   const unassignedBucketLabel = bucketOptions[0]?.unassignedLabel || 'Nicht zugeordnet'
 
+  const isSelectVariant = String(variant).includes('select')
+
   return (
     <div className="scene">
       <SceneBackground
-        backgroundImage={null}
-        backgroundPlaceholder={backgroundByVariant[variant] || backgroundByVariant.monitor}
+        backgroundImage={backgroundImage}
+        backgroundPlaceholder={backgroundPlaceholder || backgroundByVariant[variant] || backgroundByVariant.monitor}
       />
 
       <div className={`monitor-scene monitor-scene--${variant}`}>
@@ -85,7 +95,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                 </article>
               ))}
 
-              {variant === 'monitor-select' && (
+              {isSelectVariant && (
                 <section className="monitor-select" aria-label="Beitrag analysieren">
                   {!!sentenceOptions.length && (
                     <>

@@ -520,6 +520,25 @@ html, body {
   background: rgba(188, 250, 197, 0.92);
 }
 
+.monitor-scene--keller-monitor-select .monitor-scene__bezel {
+  background: linear-gradient(160deg, rgba(21, 45, 36, 0.78) 0%, rgba(12, 31, 24, 0.72) 100%);
+  border: 2px solid rgba(151, 230, 179, 0.45);
+  box-shadow: 0 12px 32px rgba(6, 25, 17, 0.55);
+}
+
+.monitor-scene--keller-monitor-select .monitor-scene__screen {
+  background: linear-gradient(180deg, rgba(10, 47, 34, 0.64) 0%, rgba(7, 32, 24, 0.62) 100%);
+  border-color: rgba(153, 233, 183, 0.38);
+}
+
+.monitor-scene--keller-monitor-select .monitor-scene__header {
+  border-bottom-color: rgba(153, 233, 183, 0.28);
+}
+
+.monitor-scene--keller-monitor-select .monitor-scene__options {
+  border-top-color: rgba(153, 233, 183, 0.28);
+}
+
 /* -----------------------------------------------
    Chatbox rechts
    ----------------------------------------------- */
