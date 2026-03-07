@@ -17,7 +17,7 @@ export const SCENES = [
   {
     id: 1,
     name: 'Außenansicht & Einstieg',
-    backgroundImage: DEFAULT_BACKGROUND,
+    backgroundImage: '/backgrounds/Media Lab.png',
     backgroundPlaceholder: 'linear-gradient(160deg, #87CEEB 0%, #B0E0E6 50%, #E0F4FF 100%)',
     characters: [
       { id: 'clara', name: 'Clara Blick', avatarUrl: null, position: { x: '18%', y: '62%' }, align: 'left' },
