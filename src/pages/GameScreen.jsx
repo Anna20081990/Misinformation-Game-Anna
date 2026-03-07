@@ -1129,17 +1129,29 @@ export function GameScreen({
     )
   }
 
+  const hostSpecificBackground = (() => {
+    if (selectedHostId !== 'clara' && selectedHostId !== 'uwe') return scene.backgroundImage
+    if (currentPart === 2) {
+      return selectedHostId === 'clara'
+        ? '/backgrounds/keller-klara.png'
+        : '/backgrounds/keller-uwe.png'
+    }
+    if (currentPart === 3) {
+      return selectedHostId === 'clara'
+        ? '/backgrounds/grossraumbuero-clara.png'
+        : '/backgrounds/grossraumbuero-uwe.png'
+    }
+    if (currentPart === 4) {
+      return selectedHostId === 'clara'
+        ? '/backgrounds/einzelbuero-clara.png'
+        : '/backgrounds/einzelbuero-uwe.png'
+    }
+    return scene.backgroundImage
+  })()
+
   const sceneForRender =
-    currentPart === 2
-      ? {
-        ...scene,
-        backgroundImage:
-          selectedHostId === 'clara'
-            ? '/backgrounds/keller-klara.png'
-            : selectedHostId === 'uwe'
-              ? '/backgrounds/keller-uwe.png'
-              : scene.backgroundImage,
-      }
+    [2, 3, 4].includes(currentPart)
+      ? { ...scene, backgroundImage: hostSpecificBackground }
       : scene
 
   return (
