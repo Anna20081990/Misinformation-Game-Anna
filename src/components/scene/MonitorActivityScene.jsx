@@ -98,8 +98,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                             onClick={() => onSelectOption?.(index, choice)}
                             disabled={Boolean(choice.disabled)}
                           >
-                            <strong>{choice.label}</strong>
-                            <p>{choice.detailText}</p>
+                            <p className="monitor-choice__text">{choice.text}</p>
                           </button>
                         ))}
                       </div>

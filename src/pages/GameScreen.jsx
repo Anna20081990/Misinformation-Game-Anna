@@ -78,17 +78,14 @@ const PART2_ACTIVITY2_FALLBACK_CONFIG = {
   choices: [
     {
       id: 'a',
-      heading: 'A - Sachlich',
       text: '„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“',
     },
     {
       id: 'b',
-      heading: 'B - Leicht emotionalisiert',
       text: '„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“',
     },
     {
       id: 'c',
-      heading: 'C - Stark zugespitzt',
       text: '„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“',
     },
   ],
@@ -263,8 +260,7 @@ export function GameScreen({
     ? (part2Activity2Config?.choices || []).map((choice) => ({
       id: choice.id,
       kind: 'choice',
-      label: choice.heading,
-      detailText: choice.text,
+      text: choice.text,
       selected: effectiveIntensityChoiceId === choice.id,
       disabled: !isPart2Activity2InputStep,
       choiceId: choice.id,

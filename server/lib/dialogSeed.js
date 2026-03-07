@@ -129,17 +129,14 @@ function scene2Steps() {
         choices: [
           {
             id: 'a',
-            heading: 'A - Sachlich',
             text: '„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“',
           },
           {
             id: 'b',
-            heading: 'B - Leicht emotionalisiert',
             text: '„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“',
           },
           {
             id: 'c',
-            heading: 'C - Stark zugespitzt',
             text: '„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“',
           },
         ],
