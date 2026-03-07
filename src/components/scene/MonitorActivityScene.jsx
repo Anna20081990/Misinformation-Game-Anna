@@ -23,6 +23,9 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
     }
   }, [messages, options])
 
+  const leadMessage = messages[0] || null
+  const trailingMessages = messages.slice(1)
+
   return (
     <div className="scene">
       <SceneBackground
@@ -38,22 +41,22 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
             </header>
 
             <div className="monitor-scene__messages" ref={scrollRef}>
-              {messages.map((message) => (
+              {leadMessage && (
                 <article
-                  key={message.id}
-                  className={`monitor-message monitor-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
+                  key={leadMessage.id}
+                  className={`monitor-message monitor-message--${leadMessage.speakerType === 'player' ? 'player' : 'host'}`}
                 >
-                  {message.speakerType !== 'player' && (
-                    <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={message.speakerName} />
+                  {leadMessage.speakerType !== 'player' && (
+                    <HostAvatar characterId={leadMessage.hostId ?? leadMessage.characterId} speakerName={leadMessage.speakerName} />
                   )}
                   <div className="monitor-message__bubble">
-                    {message.speakerType !== 'player' && (
-                      <strong className="monitor-message__speaker">{message.speakerName || 'Host'}</strong>
+                    {leadMessage.speakerType !== 'player' && (
+                      <strong className="monitor-message__speaker">{leadMessage.speakerName || 'Host'}</strong>
                     )}
-                    <p>{message.text}</p>
+                    <p>{leadMessage.text}</p>
                   </div>
                 </article>
-              ))}
+              )}
 
               {variant === 'monitor-select' && (
                 <section className="monitor-select" aria-label="Beitrag analysieren">
@@ -75,6 +78,23 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                   </p>
                 </section>
               )}
+
+              {trailingMessages.map((message) => (
+                <article
+                  key={message.id}
+                  className={`monitor-message monitor-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
+                >
+                  {message.speakerType !== 'player' && (
+                    <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={message.speakerName} />
+                  )}
+                  <div className="monitor-message__bubble">
+                    {message.speakerType !== 'player' && (
+                      <strong className="monitor-message__speaker">{message.speakerName || 'Host'}</strong>
+                    )}
+                    <p>{message.text}</p>
+                  </div>
+                </article>
+              ))}
             </div>
 
             <footer className="monitor-scene__options" role="group" aria-label="Aktivitätsoptionen">
