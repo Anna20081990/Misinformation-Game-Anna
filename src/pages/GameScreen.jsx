@@ -402,6 +402,24 @@ export function GameScreen({
       : displayOptions
 
   useEffect(() => {
+    if (!isPart2Activity2InputStep) return
+    if (intensityChoiceOrder.length) return
+    const ids = (part2Activity2Config?.choices || []).map((choice) => choice.id)
+    if (!ids.length) return
+    const randomized = part2Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    setIntensityChoiceOrder(randomized)
+  }, [isPart2Activity2InputStep, intensityChoiceOrder.length, part2Activity2Config])
+
+  useEffect(() => {
+    if (!isPart3Activity1InputStep) return
+    if (trendChoiceOrder.length) return
+    const ids = (part3Activity1Config?.choices || []).map((choice) => choice.id)
+    if (!ids.length) return
+    const randomized = part3Activity1Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    setTrendChoiceOrder(randomized)
+  }, [isPart3Activity1InputStep, trendChoiceOrder.length, part3Activity1Config])
+
+  useEffect(() => {
     if (!isPart2Activity1Context && selectedSentenceIndexes.length) {
       setSelectedSentenceIndexes([])
     }
@@ -691,20 +709,3 @@ export function GameScreen({
     />
   )
 }
-  useEffect(() => {
-    if (!isPart2Activity2InputStep) return
-    if (intensityChoiceOrder.length) return
-    const ids = (part2Activity2Config?.choices || []).map((choice) => choice.id)
-    if (!ids.length) return
-    const randomized = part2Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
-    setIntensityChoiceOrder(randomized)
-  }, [isPart2Activity2InputStep, intensityChoiceOrder.length, part2Activity2Config])
-
-  useEffect(() => {
-    if (!isPart3Activity1InputStep) return
-    if (trendChoiceOrder.length) return
-    const ids = (part3Activity1Config?.choices || []).map((choice) => choice.id)
-    if (!ids.length) return
-    const randomized = part3Activity1Config?.randomizeChoices === false ? ids : shuffleArray(ids)
-    setTrendChoiceOrder(randomized)
-  }, [isPart3Activity1InputStep, trendChoiceOrder.length, part3Activity1Config])
