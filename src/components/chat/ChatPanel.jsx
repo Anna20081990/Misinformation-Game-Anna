@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
+import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
 function getHostDisplayName(hostId, speakerName, selectedHostId) {
   const id = String(hostId || '').toLowerCase()
@@ -14,8 +15,10 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   return speakerName || 'Host'
 }
 
-export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId }) {
+export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId, selectedAvatarId }) {
   const scrollRef = useRef(null)
+  const avatarOptions = options.filter((option) => option?.kind === 'avatar')
+  const textOptions = options.filter((option) => option?.kind !== 'avatar')
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -55,12 +58,35 @@ export function ChatPanel({ messages = [], options = [], onSelectOption, selecte
       </div>
 
       <footer className="chat-panel__options" role="group" aria-label="Antwortoptionen">
-        {options.map((option, index) => (
+        {!!avatarOptions.length && (
+          <div className="chat-panel__avatar-options" role="group" aria-label="Avatar-Auswahl">
+            {avatarOptions.map((option, index) => {
+              const AvatarComponent = getPlayerAvatarComponent(option.avatarId)
+              const isSelected = option.avatarId === selectedAvatarId
+
+              return (
+                <button
+                  key={option.id ?? `avatar-${index}`}
+                  type="button"
+                  className={`chat-panel__avatar-option ${isSelected ? 'chat-panel__avatar-option--selected' : ''}`}
+                  onClick={() => onSelectOption?.(index, option)}
+                  aria-label="Avatar auswählen"
+                  aria-pressed={isSelected}
+                >
+                  <AvatarComponent className="chat-panel__avatar-image" />
+                </button>
+              )
+            })}
+          </div>
+        )}
+
+        {textOptions.map((option, index) => (
           <button
             key={option.id ?? index}
             type="button"
             className="chat-panel__option"
-            onClick={() => onSelectOption?.(index, option)}
+            onClick={() => onSelectOption?.(index + avatarOptions.length, option)}
+            disabled={Boolean(option.disabled)}
           >
             {option.label}
           </button>

@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { Scene } from '../components/scene/Scene.jsx'
-import { AvatarSelectionScreen } from './AvatarSelectionScreen.jsx'
 import { getSceneById } from '../data/scenes.js'
 import { getPart1Step } from '../data/conversations/part1.js'
 import { getSceneDialogs } from '../api/dialogApi.js'
+
+const PART0_INTRO_TEXT = 'Willkommen in Regelreich. In der Stadt wird gerade diskutiert, argumentiert und abgestimmt, sogar zur neuen Parkbank-Regelung. Bevor wir starten: Bist du bereit, uns im Media Lab zu helfen?'
+const PART0_READY_REPLY = 'Stark, das passt zu Regelreich. Dann legen wir direkt los.'
+const PART0_HESITANT_REPLY = 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.'
+const PART0_AVATAR_PROMPT = 'Wähle jetzt deinen Avatar für das Praktikum.'
+const PART0_AVATAR_IDS = ['avatar1', 'avatar2', 'avatar3']
 
 function getHostFullName(hostId) {
   if (hostId === 'clara') return 'Clara Blick'
@@ -57,6 +62,7 @@ export function GameScreen({
   const [lastSelectedOptionId, setLastSelectedOptionId] = useState(null)
   const [chatMessages, setChatMessages] = useState([])
   const [sceneDialogs, setSceneDialogs] = useState(null)
+  const [part0Stage, setPart0Stage] = useState('intro')
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
 
@@ -65,6 +71,7 @@ export function GameScreen({
     setLastSelectedOptionId(null)
     setChatMessages([])
     setSceneDialogs(null)
+    setPart0Stage('intro')
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -112,10 +119,39 @@ export function GameScreen({
     getFallbackStep(scene, currentPart, stepIndex)
 
   const options = stepData.options || []
+  const part0Options = part0Stage === 'intro'
+    ? [
+      { id: 'ready', label: 'Ich bin bereit!' },
+      { id: 'hesitant', label: 'Muss ich?' },
+    ]
+    : [
+      ...PART0_AVATAR_IDS.map((avatarId) => ({
+        id: `avatar:${avatarId}`,
+        kind: 'avatar',
+        avatarId,
+        label: `Avatar ${avatarId}`,
+      })),
+      { id: 'continue', label: 'Weiter zu Teil 1', disabled: !selectedAvatarId },
+    ]
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
   }, [currentPart, stepData.stepIndex, onStepChange])
+
+  useEffect(() => {
+    if (currentPart !== 0) return
+    if (chatMessages.length) return
+
+    setChatMessages([
+      {
+        id: 'part0:intro',
+        speakerType: 'host',
+        hostId: 'host',
+        speakerName: 'Regelreich',
+        text: PART0_INTRO_TEXT,
+      },
+    ])
+  }, [currentPart, chatMessages.length])
 
   useEffect(() => {
     if (currentPart === 0) return
@@ -148,16 +184,48 @@ export function GameScreen({
     setChatMessages((prev) => [...prev, ...hostMessages])
   }, [currentPart, stepData, stepIndex, selectedHostId, lastSelectedOptionId])
 
-  if (currentPart === 0) {
-    return (
-      <div className="avatar-selection-scene">
-        <AvatarSelectionScreen
-          selectedAvatarId={selectedAvatarId}
-          onSelectAvatar={onSelectAvatar}
-          onContinue={() => onPartChange?.(1)}
-        />
-      </div>
-    )
+  const handlePart0Option = (index, option) => {
+    onSelectOption?.(index, option, currentPart)
+
+    if (option?.id === 'ready' || option?.id === 'hesitant') {
+      const cityReply = option.id === 'ready' ? PART0_READY_REPLY : PART0_HESITANT_REPLY
+
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          id: `part0:player:${Date.now()}:${index}`,
+          speakerType: 'player',
+          speakerName: 'Du',
+          text: option.label,
+        },
+        {
+          id: `part0:reply:${Date.now()}:${option.id}`,
+          speakerType: 'host',
+          hostId: 'host',
+          speakerName: 'Regelreich',
+          text: cityReply,
+        },
+        {
+          id: `part0:prompt:${Date.now()}`,
+          speakerType: 'host',
+          hostId: 'host',
+          speakerName: 'Regelreich',
+          text: PART0_AVATAR_PROMPT,
+        },
+      ])
+
+      setPart0Stage('avatar')
+      return
+    }
+
+    if (option?.kind === 'avatar' && option?.avatarId) {
+      onSelectAvatar?.(option.avatarId)
+      return
+    }
+
+    if (option?.id === 'continue') {
+      onPartChange?.(1)
+    }
   }
 
   const handleSelectOption = (index, option) => {
@@ -203,8 +271,8 @@ export function GameScreen({
     <Scene
       scene={scene}
       messages={chatMessages}
-      options={options}
-      onSelectOption={handleSelectOption}
+      options={currentPart === 0 ? part0Options : options}
+      onSelectOption={currentPart === 0 ? handlePart0Option : handleSelectOption}
       selectedAvatarId={selectedAvatarId}
       selectedHostId={selectedHostId}
     />

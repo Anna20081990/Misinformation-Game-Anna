@@ -24,6 +24,7 @@ export function Scene({ scene, messages = [], options = [], onSelectOption, sele
           options={options}
           onSelectOption={onSelectOption}
           selectedHostId={selectedHostId}
+          selectedAvatarId={selectedAvatarId}
         />
       </div>
 

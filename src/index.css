@@ -301,6 +301,50 @@ html, body {
   filter: brightness(1.04);
 }
 
+.chat-panel__option:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+.chat-panel__avatar-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.chat-panel__avatar-option {
+  border: 2px solid rgba(203, 231, 247, 0.55);
+  border-radius: 14px;
+  background: rgba(8, 26, 43, 0.34);
+  padding: 0.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.2s, background 0.2s;
+}
+
+.chat-panel__avatar-option:hover {
+  transform: translateY(-1px);
+  border-color: #a9e4ff;
+  background: rgba(21, 58, 92, 0.52);
+}
+
+.chat-panel__avatar-option--selected {
+  border-color: #6de2a1;
+  background: rgba(45, 103, 70, 0.45);
+}
+
+.chat-panel__avatar-image {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: block;
+  overflow: hidden;
+}
+
 .host-avatar {
   width: 48px;
   height: 48px;
