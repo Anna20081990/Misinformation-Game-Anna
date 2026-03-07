@@ -504,6 +504,33 @@ html, body {
   color: var(--button-primary);
 }
 
+.avatar-selection__continue {
+  margin-top: 2rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--button-primary);
+  color: #1a2a3a;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.2s, opacity 0.2s;
+}
+
+.avatar-selection__continue:hover:not(:disabled) {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
+
+.avatar-selection__continue:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.avatar-selection__continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 /* -----------------------------------------------
    Admin UI
    ----------------------------------------------- */

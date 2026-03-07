@@ -8,7 +8,9 @@ const AVATAR_LABELS = { avatar1: 'Mädchen', avatar2: 'Junge', avatar3: 'Hund' }
  * Teil 0: Weißer Hintergrund, drei Avatare zur Auswahl (Mädchen, Junge, Hund).
  * Ein Klick wählt den Avatar und speichert ihn für die restlichen Teile.
  */
-export function AvatarSelectionScreen({ selectedAvatarId, onSelectAvatar }) {
+export function AvatarSelectionScreen({ selectedAvatarId, onSelectAvatar, onContinue }) {
+  const canContinue = Boolean(selectedAvatarId)
+
   return (
     <div className="avatar-selection">
       <h1 className="avatar-selection__title">Wähle deinen Avatar</h1>
@@ -33,6 +35,9 @@ export function AvatarSelectionScreen({ selectedAvatarId, onSelectAvatar }) {
           )
         })}
       </div>
+      <button type="button" className="avatar-selection__continue" onClick={onContinue} disabled={!canContinue}>
+        Weiter zu Teil 1
+      </button>
     </div>
   )
 }

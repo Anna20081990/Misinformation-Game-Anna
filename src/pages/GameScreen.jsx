@@ -136,7 +136,11 @@ export function GameScreen({
   if (currentPart === 0) {
     return (
       <div className="avatar-selection-scene">
-        <AvatarSelectionScreen selectedAvatarId={selectedAvatarId} onSelectAvatar={onSelectAvatar} />
+        <AvatarSelectionScreen
+          selectedAvatarId={selectedAvatarId}
+          onSelectAvatar={onSelectAvatar}
+          onContinue={() => onPartChange?.(1)}
+        />
       </div>
     )
   }
