@@ -334,16 +334,12 @@ export function GameScreen({
       ])
     }
 
-    if (currentPart === 2 && option?.id === 'retry') {
-      setChatMessages([])
-      setSelectedSentenceIndexes([])
-      appendedStepKeysRef.current = new Set()
-    }
-
     if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current)
 
     const shouldNavigate = option?.nextPart != null || option?.nextStep != null
     if (!shouldNavigate) return
+
+    const resetOnRetry = currentPart === 2 && option?.id === 'retry'
 
     transitionTimerRef.current = setTimeout(() => {
       if (option?.nextPart != null && onPartChange) {
@@ -353,6 +349,12 @@ export function GameScreen({
       }
 
       if (option?.nextStep != null) {
+        if (resetOnRetry) {
+          setChatMessages([])
+          setSelectedSentenceIndexes([])
+          appendedStepKeysRef.current = new Set()
+          setLastSelectedOptionId(null)
+        }
         setStepIndex(option.nextStep)
       }
     }, 220)
