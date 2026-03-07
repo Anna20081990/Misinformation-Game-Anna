@@ -275,28 +275,28 @@
             "sentences": [
               {
                 "id": "s1",
-                "text": "Die Stadt plant, die Parkzeiten im Zentrum anzupassen."
+                "text": "Die Stadt plant, für öffentliche Veranstaltungen eine einheitliche Regenschirmfarbe vorzuschlagen."
               },
               {
                 "id": "s2",
-                "text": "Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden."
+                "text": "Gestern stand eine ältere Dame im Regen, weil ihr alter Schirm nicht mehr erlaubt war."
               },
               {
                 "id": "s3",
-                "text": "Schon wieder trifft es die normalen Leute."
+                "text": "Der Vorschlag soll nächste Woche abgestimmt werden."
               },
               {
                 "id": "s4",
-                "text": "Der Vorschlag wird nächste Woche beraten."
+                "text": "Schon wieder werden die normalen Leute im Stich gelassen."
               },
               {
                 "id": "s5",
-                "text": "So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander."
+                "text": "Wenn das so weitergeht, ist bald nichts Alltägliches mehr sicher."
               }
             ],
             "correctSentenceIds": [
               "s2",
-              "s3",
+              "s4",
               "s5"
             ],
             "success": {
@@ -308,33 +308,6 @@
               "nextStep": 31
             }
           }
-        },
-        {
-          "stepIndex": 31,
-          "type": "activity",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung."
-            },
-            {
-              "hostId": "selected",
-              "text": "Du hast schon einen relevanten Teil markiert, aber noch nicht alles erwischt. Schau auf weitere Zuspitzungen.",
-              "showOnOptionId": "wrongPartial"
-            },
-            {
-              "hostId": "selected",
-              "text": "Teilweise richtig, aber du hast auch neutrale Teile markiert und nicht alles erwischt. Konzentriere dich auf klare Übertreibung und Generalisierung.",
-              "showOnOptionId": "wrongMixed"
-            }
-          ],
-          "options": [
-            {
-              "id": "retry",
-              "label": "Ich versuche es nochmal.",
-              "nextStep": 3
-            }
-          ]
         },
         {
           "stepIndex": 4,
@@ -370,15 +343,19 @@
             "mode": "intensity-choice",
             "title": "Aktivität 2: Intensitätswahl",
             "topic": "Thema: Einführung einer offiziellen Mittagsglocke",
+            "randomizeChoices": true,
             "choices": [
               {
-                "id": "a",                "text": "„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“"
+                "id": "a",
+                "text": "„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“"
               },
               {
-                "id": "b",                "text": "„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“"
+                "id": "b",
+                "text": "„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“"
               },
               {
-                "id": "c",                "text": "„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“"
+                "id": "c",
+                "text": "„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“"
               }
             ],
             "correctChoiceId": "c",
@@ -391,23 +368,6 @@
               "nextStep": 41
             }
           }
-        },
-        {
-          "stepIndex": 41,
-          "type": "activity",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Hier fehlte die emotionale Intensität. Nimm die maximal aufgeladene Version."
-            }
-          ],
-          "options": [
-            {
-              "id": "retry",
-              "label": "Nochmal wählen.",
-              "nextStep": 4
-            }
-          ]
         },
         {
           "stepIndex": 5,
@@ -427,6 +387,50 @@
               "id": "next",
               "label": "Weiter zu Fallakte 2.",
               "nextPart": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 31,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung."
+            },
+            {
+              "hostId": "selected",
+              "text": "Du hast schon einen relevanten Teil markiert, aber noch nicht alles erwischt. Schau auf weitere Zuspitzungen.",
+              "showOnOptionId": "wrongPartial"
+            },
+            {
+              "hostId": "selected",
+              "text": "Teilweise richtig, aber du hast auch neutrale Teile markiert und nicht alles erwischt. Konzentriere dich auf klare Übertreibung und Generalisierung.",
+              "showOnOptionId": "wrongMixed"
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Ich versuche es nochmal.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 41,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Hier fehlte die emotionale Intensität. Nimm die maximal aufgeladene Version."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Nochmal wählen.",
+              "nextStep": 4
             }
           ]
         }
@@ -501,16 +505,43 @@
           ],
           "options": [
             {
-              "id": "rightA",
-              "label": "„Alle vernünftigen Leute sehen das inzwischen genauso.“",
-              "nextStep": 4
+              "id": "submit_easy3",
+              "label": "Das ist einfach."
             },
             {
+              "id": "submit_unsure3",
+              "label": "Ich habe eigentlich keine Ahnung."
+            }
+          ],
+          "activityConfig": {
+            "mode": "intensity-choice",
+            "title": "Aktivität 1: Trend-Detektor",
+            "topic": "Thema: Einführung eines verpflichtenden Wochenmottos",
+            "randomizeChoices": true,
+            "choices": [
+              {
+                "id": "p1",
+                "text": "„Die Stadt diskutiert ein wöchentliches Motto für öffentliche Einrichtungen.“"
+              },
+              {
+                "id": "p2",
+                "text": "„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“"
+              },
+              {
+                "id": "p3",
+                "text": "„Alle wissen längst, dass ein Wochenmotto überfällig ist.“"
+              }
+            ],
+            "correctChoiceId": "p3",
+            "success": {
+              "id": "rightA",
+              "nextStep": 4
+            },
+            "failure": {
               "id": "wrongA",
-              "label": "„Einige finden die Idee interessant.“",
               "nextStep": 31
             }
-          ]
+          }
         },
         {
           "stepIndex": 31,

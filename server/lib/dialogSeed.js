@@ -126,6 +126,7 @@ function scene2Steps() {
         mode: 'intensity-choice',
         title: 'Aktivität 2: Intensitätswahl',
         topic: 'Thema: Einführung einer offiziellen Mittagsglocke',
+        randomizeChoices: true,
         choices: [
           {
             id: 'a',
@@ -170,9 +171,33 @@ function scene3Steps() {
     step(3, 'activity', [
       bubble('selected', 'Aktivität 1: Welche Aussage erzeugt am stärksten den Eindruck von Konsens?'),
     ], [
-      option('rightA', '„Alle vernünftigen Leute sehen das inzwischen genauso.“', 4),
-      option('wrongA', '„Einige finden die Idee interessant.“', 31),
-    ]),
+      option('submit_easy3', 'Das ist einfach.'),
+      option('submit_unsure3', 'Ich habe eigentlich keine Ahnung.'),
+    ], {
+      activityConfig: {
+        mode: 'intensity-choice',
+        title: 'Aktivität 1: Trend-Detektor',
+        topic: 'Thema: Einführung eines verpflichtenden Wochenmottos',
+        randomizeChoices: true,
+        choices: [
+          {
+            id: 'p1',
+            text: '„Die Stadt diskutiert ein wöchentliches Motto für öffentliche Einrichtungen.“',
+          },
+          {
+            id: 'p2',
+            text: '„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“',
+          },
+          {
+            id: 'p3',
+            text: '„Alle wissen längst, dass ein Wochenmotto überfällig ist.“',
+          },
+        ],
+        correctChoiceId: 'p3',
+        success: { id: 'rightA', nextStep: 4 },
+        failure: { id: 'wrongA', nextStep: 31 },
+      },
+    }),
     step(31, 'activity', [
       bubble('selected', 'Zu schwach für Social Proof. Suche den höchsten Gruppendruck.'),
     ], [option('retry', 'Nochmal.', 3)]),

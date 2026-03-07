@@ -93,6 +93,29 @@ const PART2_ACTIVITY2_FALLBACK_CONFIG = {
   success: { id: 'rightB', nextStep: 5 },
   failure: { id: 'wrongB', nextStep: 41 },
 }
+const PART3_ACTIVITY1_FALLBACK_CONFIG = {
+  mode: 'intensity-choice',
+  title: 'Aktivität 1: Trend-Detektor',
+  topic: 'Thema: Einfuehrung eines verpflichtenden Wochenmottos',
+  randomizeChoices: true,
+  choices: [
+    { id: 'p1', text: '„Die Stadt diskutiert ein woechentliches Motto fuer oeffentliche Einrichtungen.“' },
+    { id: 'p2', text: '„Immer mehr Menschen sprechen sich fuer ein Wochenmotto aus.“' },
+    { id: 'p3', text: '„Alle wissen laengst, dass ein Wochenmotto ueberfaellig ist.“' },
+  ],
+  correctChoiceId: 'p3',
+  success: { id: 'rightA', nextStep: 4 },
+  failure: { id: 'wrongA', nextStep: 31 },
+}
+
+function shuffleArray(items = []) {
+  const out = [...items]
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
 
 function isAvatarOption(option) {
   const id = String(option?.id || '').toLowerCase()
@@ -161,6 +184,12 @@ export function GameScreen({
   const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
   const [selectedIntensityChoiceId, setSelectedIntensityChoiceId] = useState('')
   const [lastSubmittedIntensityChoiceId, setLastSubmittedIntensityChoiceId] = useState('')
+  const [intensityChoiceOrder, setIntensityChoiceOrder] = useState([])
+  const [lastSubmittedIntensityChoiceOrder, setLastSubmittedIntensityChoiceOrder] = useState([])
+  const [selectedTrendChoiceId, setSelectedTrendChoiceId] = useState('')
+  const [lastSubmittedTrendChoiceId, setLastSubmittedTrendChoiceId] = useState('')
+  const [trendChoiceOrder, setTrendChoiceOrder] = useState([])
+  const [lastSubmittedTrendChoiceOrder, setLastSubmittedTrendChoiceOrder] = useState([])
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const resetOnActivity2TransitionRef = useRef(false)
@@ -175,6 +204,12 @@ export function GameScreen({
     setLastSubmittedSentenceIndexes([])
     setSelectedIntensityChoiceId('')
     setLastSubmittedIntensityChoiceId('')
+    setIntensityChoiceOrder([])
+    setLastSubmittedIntensityChoiceOrder([])
+    setSelectedTrendChoiceId('')
+    setLastSubmittedTrendChoiceId('')
+    setTrendChoiceOrder([])
+    setLastSubmittedTrendChoiceOrder([])
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -235,6 +270,11 @@ export function GameScreen({
   const part2Activity2Config = isPart2Activity2Context
     ? (stepData.activityConfig || PART2_ACTIVITY2_FALLBACK_CONFIG)
     : null
+  const isPart3Activity1InputStep = currentPart === 3 && Number(stepData.stepIndex) === 3
+  const isPart3Activity1Context = currentPart === 3 && [3, 31].includes(Number(stepData.stepIndex))
+  const part3Activity1Config = isPart3Activity1Context
+    ? (stepData.activityConfig || PART3_ACTIVITY1_FALLBACK_CONFIG)
+    : null
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -256,8 +296,15 @@ export function GameScreen({
     }))
     : []
   const effectiveIntensityChoiceId = isPart2Activity2InputStep ? selectedIntensityChoiceId : lastSubmittedIntensityChoiceId
+  const part2ChoiceOrder = isPart2Activity2InputStep ? intensityChoiceOrder : lastSubmittedIntensityChoiceOrder
+  const orderedPart2Choices = (() => {
+    const choices = part2Activity2Config?.choices || []
+    if (!part2ChoiceOrder.length) return choices
+    const byId = new Map(choices.map((choice) => [choice.id, choice]))
+    return part2ChoiceOrder.map((id) => byId.get(id)).filter(Boolean)
+  })()
   const intensityChoiceOptions = isPart2Activity2Context
-    ? (part2Activity2Config?.choices || []).map((choice) => ({
+    ? orderedPart2Choices.map((choice) => ({
       id: choice.id,
       kind: 'choice',
       text: choice.text,
@@ -268,12 +315,35 @@ export function GameScreen({
       topic: part2Activity2Config?.topic || '',
     }))
     : []
+  const effectiveTrendChoiceId = isPart3Activity1InputStep ? selectedTrendChoiceId : lastSubmittedTrendChoiceId
+  const part3ChoiceOrder = isPart3Activity1InputStep ? trendChoiceOrder : lastSubmittedTrendChoiceOrder
+  const orderedPart3Choices = (() => {
+    const choices = part3Activity1Config?.choices || []
+    if (!part3ChoiceOrder.length) return choices
+    const byId = new Map(choices.map((choice) => [choice.id, choice]))
+    return part3ChoiceOrder.map((id) => byId.get(id)).filter(Boolean)
+  })()
+  const trendChoiceOptions = isPart3Activity1Context
+    ? orderedPart3Choices.map((choice) => ({
+      id: choice.id,
+      kind: 'choice',
+      text: choice.text,
+      selected: effectiveTrendChoiceId === choice.id,
+      disabled: !isPart3Activity1InputStep,
+      choiceId: choice.id,
+      groupTitle: part3Activity1Config?.title || 'Aktivität 1',
+      topic: part3Activity1Config?.topic || '',
+    }))
+    : []
   const backendSubmitOptions = options
     .filter((item) => item.id === 'submit_confident' || item.id === 'submit_unsure')
     .map((item) => ({ ...item, kind: 'submit', disabled: selectedSentenceIndexes.length === 0 }))
   const backendActivity2SubmitOptions = options
     .filter((item) => item.id === 'submit_easy' || item.id === 'submit_unsure2')
     .map((item) => ({ ...item, kind: 'submit', disabled: !selectedIntensityChoiceId }))
+  const backendTrendSubmitOptions = options
+    .filter((item) => item.id === 'submit_easy3' || item.id === 'submit_unsure3')
+    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedTrendChoiceId }))
   const submitOptions = isPart2Activity1InputStep
     ? (backendSubmitOptions.length
       ? backendSubmitOptions
@@ -288,11 +358,20 @@ export function GameScreen({
           { id: 'submit_easy', label: 'Das ist einfach.', kind: 'submit', disabled: !selectedIntensityChoiceId },
           { id: 'submit_unsure2', label: 'Ich habe eigentlich keine Ahnung.', kind: 'submit', disabled: !selectedIntensityChoiceId },
         ])
+      : isPart3Activity1InputStep
+        ? (backendTrendSubmitOptions.length
+          ? backendTrendSubmitOptions
+          : [
+            { id: 'submit_easy3', label: 'Das ist einfach.', kind: 'submit', disabled: !selectedTrendChoiceId },
+            { id: 'submit_unsure3', label: 'Ich habe eigentlich keine Ahnung.', kind: 'submit', disabled: !selectedTrendChoiceId },
+          ])
       : displayOptions
   const monitorOptions = isPart2Activity1Context
     ? [...sentenceOptions, ...submitOptions]
     : isPart2Activity2Context
       ? [...intensityChoiceOptions, ...submitOptions]
+      : isPart3Activity1Context
+        ? [...trendChoiceOptions, ...submitOptions]
       : displayOptions
 
   useEffect(() => {
@@ -308,7 +387,25 @@ export function GameScreen({
     if (!isPart2Activity2Context && lastSubmittedIntensityChoiceId) {
       setLastSubmittedIntensityChoiceId('')
     }
-  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId, lastSubmittedIntensityChoiceId])
+    if (!isPart2Activity2Context && intensityChoiceOrder.length) {
+      setIntensityChoiceOrder([])
+    }
+    if (!isPart2Activity2Context && lastSubmittedIntensityChoiceOrder.length) {
+      setLastSubmittedIntensityChoiceOrder([])
+    }
+    if (!isPart3Activity1Context && selectedTrendChoiceId) {
+      setSelectedTrendChoiceId('')
+    }
+    if (!isPart3Activity1Context && lastSubmittedTrendChoiceId) {
+      setLastSubmittedTrendChoiceId('')
+    }
+    if (!isPart3Activity1Context && trendChoiceOrder.length) {
+      setTrendChoiceOrder([])
+    }
+    if (!isPart3Activity1Context && lastSubmittedTrendChoiceOrder.length) {
+      setLastSubmittedTrendChoiceOrder([])
+    }
+  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId, lastSubmittedIntensityChoiceId, intensityChoiceOrder.length, lastSubmittedIntensityChoiceOrder.length, isPart3Activity1Context, selectedTrendChoiceId, lastSubmittedTrendChoiceId, trendChoiceOrder.length, lastSubmittedTrendChoiceOrder.length])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -427,6 +524,30 @@ export function GameScreen({
         }
 
       setLastSubmittedIntensityChoiceId(selectedIntensityChoiceId)
+      setLastSubmittedIntensityChoiceOrder(intensityChoiceOrder)
+      option = { ...mappedOption, label: option.label }
+    }
+
+    if (isPart3Activity1InputStep && option?.kind === 'choice') {
+      setSelectedTrendChoiceId(String(option.choiceId || ''))
+      return
+    }
+
+    if (isPart3Activity1InputStep && option?.kind === 'submit') {
+      const correctChoiceId = String(part3Activity1Config?.correctChoiceId || 'p3')
+      const isCorrect = selectedTrendChoiceId === correctChoiceId
+      const mappedOption = isCorrect
+        ? {
+          id: part3Activity1Config?.success?.id || 'rightA',
+          nextStep: part3Activity1Config?.success?.nextStep ?? 4,
+        }
+        : {
+          id: part3Activity1Config?.failure?.id || 'wrongA',
+          nextStep: part3Activity1Config?.failure?.nextStep ?? 31,
+        }
+
+      setLastSubmittedTrendChoiceId(selectedTrendChoiceId)
+      setLastSubmittedTrendChoiceOrder(trendChoiceOrder)
       option = { ...mappedOption, label: option.label }
     }
 
@@ -459,7 +580,8 @@ export function GameScreen({
     const shouldNavigate = option?.nextPart != null || option?.nextStep != null
     if (!shouldNavigate) return
 
-    const resetOnRetry = currentPart === 2 && option?.id === 'retry'
+    const resetOnRetryPart2 = currentPart === 2 && option?.id === 'retry'
+    const resetOnRetryPart3 = currentPart === 3 && option?.id === 'retry'
 
     transitionTimerRef.current = setTimeout(() => {
       if (option?.nextPart != null && onPartChange) {
@@ -476,12 +598,24 @@ export function GameScreen({
           appendedStepKeysRef.current = new Set()
         }
 
-        if (resetOnRetry) {
+        if (resetOnRetryPart2) {
           setChatMessages([])
           setSelectedSentenceIndexes([])
           setLastSubmittedSentenceIndexes([])
           setSelectedIntensityChoiceId('')
           setLastSubmittedIntensityChoiceId('')
+          setIntensityChoiceOrder([])
+          setLastSubmittedIntensityChoiceOrder([])
+          appendedStepKeysRef.current = new Set()
+          setLastSelectedOptionId(null)
+        }
+
+        if (resetOnRetryPart3) {
+          setChatMessages([])
+          setSelectedTrendChoiceId('')
+          setLastSubmittedTrendChoiceId('')
+          setTrendChoiceOrder([])
+          setLastSubmittedTrendChoiceOrder([])
           appendedStepKeysRef.current = new Set()
           setLastSelectedOptionId(null)
         }
@@ -498,7 +632,7 @@ export function GameScreen({
         messages={chatMessages}
         options={monitorOptions}
         onSelectOption={handleSelectOption}
-        variant={(isPart2Activity1Context || isPart2Activity2Context) ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
+        variant={(isPart2Activity1Context || isPart2Activity2Context || isPart3Activity1Context) ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
       />
     )
   }
@@ -514,3 +648,20 @@ export function GameScreen({
     />
   )
 }
+  useEffect(() => {
+    if (!isPart2Activity2InputStep) return
+    if (intensityChoiceOrder.length) return
+    const ids = (part2Activity2Config?.choices || []).map((choice) => choice.id)
+    if (!ids.length) return
+    const randomized = part2Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    setIntensityChoiceOrder(randomized)
+  }, [isPart2Activity2InputStep, intensityChoiceOrder.length, part2Activity2Config])
+
+  useEffect(() => {
+    if (!isPart3Activity1InputStep) return
+    if (trendChoiceOrder.length) return
+    const ids = (part3Activity1Config?.choices || []).map((choice) => choice.id)
+    if (!ids.length) return
+    const randomized = part3Activity1Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    setTrendChoiceOrder(randomized)
+  }, [isPart3Activity1InputStep, trendChoiceOrder.length, part3Activity1Config])
