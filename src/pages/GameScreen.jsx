@@ -163,6 +163,7 @@ export function GameScreen({
   const [selectedSentenceIndexes, setSelectedSentenceIndexes] = useState([])
   const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
   const [selectedIntensityChoiceId, setSelectedIntensityChoiceId] = useState('')
+  const [lastSubmittedIntensityChoiceId, setLastSubmittedIntensityChoiceId] = useState('')
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const resetOnActivity2TransitionRef = useRef(false)
@@ -176,6 +177,7 @@ export function GameScreen({
     setSelectedSentenceIndexes([])
     setLastSubmittedSentenceIndexes([])
     setSelectedIntensityChoiceId('')
+    setLastSubmittedIntensityChoiceId('')
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -232,7 +234,7 @@ export function GameScreen({
     ? (stepData.activityConfig || PART2_ACTIVITY1_FALLBACK_CONFIG)
     : null
   const isPart2Activity2InputStep = currentPart === 2 && Number(stepData.stepIndex) === 4
-  const isPart2Activity2Context = isPart2Activity2InputStep
+  const isPart2Activity2Context = currentPart === 2 && [4, 41].includes(Number(stepData.stepIndex))
   const part2Activity2Config = isPart2Activity2Context
     ? (stepData.activityConfig || PART2_ACTIVITY2_FALLBACK_CONFIG)
     : null
@@ -256,13 +258,15 @@ export function GameScreen({
       sentenceId: sentence.id,
     }))
     : []
+  const effectiveIntensityChoiceId = isPart2Activity2InputStep ? selectedIntensityChoiceId : lastSubmittedIntensityChoiceId
   const intensityChoiceOptions = isPart2Activity2Context
     ? (part2Activity2Config?.choices || []).map((choice) => ({
       id: choice.id,
       kind: 'choice',
       label: choice.heading,
       detailText: choice.text,
-      selected: selectedIntensityChoiceId === choice.id,
+      selected: effectiveIntensityChoiceId === choice.id,
+      disabled: !isPart2Activity2InputStep,
       choiceId: choice.id,
       groupTitle: part2Activity2Config?.title || 'Aktivität 2',
       topic: part2Activity2Config?.topic || '',
@@ -305,7 +309,10 @@ export function GameScreen({
     if (!isPart2Activity2Context && selectedIntensityChoiceId) {
       setSelectedIntensityChoiceId('')
     }
-  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId])
+    if (!isPart2Activity2Context && lastSubmittedIntensityChoiceId) {
+      setLastSubmittedIntensityChoiceId('')
+    }
+  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId, lastSubmittedIntensityChoiceId])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -423,6 +430,7 @@ export function GameScreen({
           nextStep: part2Activity2Config?.failure?.nextStep ?? 41,
         }
 
+      setLastSubmittedIntensityChoiceId(selectedIntensityChoiceId)
       option = { ...mappedOption, label: option.label }
     }
 
@@ -477,6 +485,7 @@ export function GameScreen({
           setSelectedSentenceIndexes([])
           setLastSubmittedSentenceIndexes([])
           setSelectedIntensityChoiceId('')
+          setLastSubmittedIntensityChoiceId('')
           appendedStepKeysRef.current = new Set()
           setLastSelectedOptionId(null)
         }

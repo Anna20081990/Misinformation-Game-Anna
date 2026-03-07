@@ -365,6 +365,11 @@ html, body {
   color: #123119;
 }
 
+.monitor-choice__item:disabled {
+  cursor: default;
+  transform: none;
+}
+
 .monitor-choice__item p {
   margin: 0.35rem 0 0;
   line-height: 1.45;
