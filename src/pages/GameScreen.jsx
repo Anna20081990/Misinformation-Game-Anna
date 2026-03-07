@@ -108,6 +108,32 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
   failure: { id: 'wrongA', nextStep: 31 },
 }
 
+function resolveSentenceMarkingConfig(config, fallback) {
+  if (!config || typeof config !== 'object') return fallback
+  return {
+    ...fallback,
+    ...config,
+    sentences: Array.isArray(config.sentences) && config.sentences.length ? config.sentences : fallback.sentences,
+    correctSentenceIds: Array.isArray(config.correctSentenceIds) && config.correctSentenceIds.length
+      ? config.correctSentenceIds
+      : fallback.correctSentenceIds,
+    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
+    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
+  }
+}
+
+function resolveIntensityChoiceConfig(config, fallback) {
+  if (!config || typeof config !== 'object') return fallback
+  return {
+    ...fallback,
+    ...config,
+    choices: Array.isArray(config.choices) && config.choices.length ? config.choices : fallback.choices,
+    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
+    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
+    correctChoiceId: config.correctChoiceId || fallback.correctChoiceId,
+  }
+}
+
 function shuffleArray(items = []) {
   const out = [...items]
   for (let i = out.length - 1; i > 0; i -= 1) {
@@ -264,18 +290,18 @@ export function GameScreen({
   const isPart2Activity1InputStep = currentPart === 2 && Number(stepData.stepIndex) === 3
   const isPart2Activity1Context = currentPart === 2 && [3, 31].includes(Number(stepData.stepIndex))
   const part2Activity1Config = isPart2Activity1Context
-    ? (stepData.activityConfig || PART2_ACTIVITY1_FALLBACK_CONFIG)
-    : null
+    ? resolveSentenceMarkingConfig(stepData.activityConfig, PART2_ACTIVITY1_FALLBACK_CONFIG)
+    : PART2_ACTIVITY1_FALLBACK_CONFIG
   const isPart2Activity2InputStep = currentPart === 2 && Number(stepData.stepIndex) === 4
   const isPart2Activity2Context = currentPart === 2 && [4, 41].includes(Number(stepData.stepIndex))
   const part2Activity2Config = isPart2Activity2Context
-    ? (stepData.activityConfig || PART2_ACTIVITY2_FALLBACK_CONFIG)
-    : null
+    ? resolveIntensityChoiceConfig(stepData.activityConfig, PART2_ACTIVITY2_FALLBACK_CONFIG)
+    : PART2_ACTIVITY2_FALLBACK_CONFIG
   const isPart3Activity1InputStep = currentPart === 3 && Number(stepData.stepIndex) === 3
   const isPart3Activity1Context = currentPart === 3 && [3, 31].includes(Number(stepData.stepIndex))
   const part3Activity1Config = isPart3Activity1Context
-    ? (stepData.activityConfig || PART3_ACTIVITY1_FALLBACK_CONFIG)
-    : null
+    ? resolveIntensityChoiceConfig(stepData.activityConfig, PART3_ACTIVITY1_FALLBACK_CONFIG)
+    : PART3_ACTIVITY1_FALLBACK_CONFIG
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -418,9 +444,10 @@ export function GameScreen({
     const samePart = prev.part === currentPart
     const enteredActivity = samePart && prev.type !== 'activity' && currentType === 'activity'
     const enteredSummary = samePart && prev.type === 'activity' && currentType === 'summary'
+    const enteredPart3Activity1 = currentPart === 3 && Number(stepData.stepIndex) === 3 && Number(prev.stepIndex) !== 3
 
     // For monitor activities: start with a clean thread when entering activity sections.
-    if (((currentPart === 2) && (enteredActivity || enteredSummary)) || ((currentPart === 3) && enteredActivity)) {
+    if (((currentPart === 2) && (enteredActivity || enteredSummary)) || ((currentPart === 3) && (enteredActivity || enteredPart3Activity1))) {
       setChatMessages([])
       appendedStepKeysRef.current = new Set()
     }
