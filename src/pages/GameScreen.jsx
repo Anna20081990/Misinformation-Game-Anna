@@ -560,11 +560,9 @@ export function GameScreen({
 
     appendedStepKeysRef.current.add(key)
     const speechBubbles = stepData.speechBubbles || []
-    const conditional = speechBubbles.filter((bubble) => bubble.showOnOptionId)
-    const unconditioned = speechBubbles.filter((bubble) => !bubble.showOnOptionId)
-    const selectedConditional = conditional.filter((bubble) => bubble.showOnOptionId === lastSelectedOptionId)
-    const effectiveBubbles = conditional.length
-      ? (selectedConditional.length ? selectedConditional : unconditioned)
+    const hasConditional = speechBubbles.some((bubble) => bubble.showOnOptionId)
+    const effectiveBubbles = hasConditional
+      ? speechBubbles.filter((bubble) => !bubble.showOnOptionId || bubble.showOnOptionId === lastSelectedOptionId)
       : speechBubbles
 
     const hostMessages = effectiveBubbles.map((bubble, index) => {
