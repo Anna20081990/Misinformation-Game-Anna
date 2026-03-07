@@ -571,27 +571,70 @@
             },
             {
               "hostId": "selected",
-              "text": "Weiter mit Aktivität 2.",
+              "text": "Aktivität 2: Welche Ergänzungen lassen einen neutralen Beitrag wie breiten Konsens wirken?",
               "showOnOptionId": "rightA"
             },
             {
               "hostId": "selected",
-              "text": "Nach dem Retry: Welche Variante erzeugt jetzt den stärksten Konsensdruck?",
+              "text": "Aktivität 2: Wähle die stärksten Konsens-Verstärker.",
               "showOnOptionId": "retry"
             }
           ],
           "options": [
             {
-              "id": "wrongB",
-              "label": "„Wir sollten Argumente vergleichen.“",
-              "nextStep": 41
+              "id": "submit_confident4",
+              "label": "Das wirkt nach echtem Konsens."
             },
             {
-              "id": "rightB",
-              "label": "„Schon 9 von 10 sind dafür, du willst doch nicht Außenseiter sein.“",
-              "nextStep": 5
+              "id": "submit_unsure4",
+              "label": "Ich bin unsicher."
             }
-          ]
+          ],
+          "activityConfig": {
+            "mode": "consensus-boosters",
+            "title": "Aktivität 2: Konsens-Verstärker",
+            "topic": "Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen",
+            "prompt": "Aktivität 2: Welche Ergänzungen lassen den Beitrag so wirken, als gäbe es bereits breiten Konsens?",
+            "neutralPost": "„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“",
+            "choices": [
+              {
+                "id": "a",
+                "text": "„Ich finde die Idee interessant.“"
+              },
+              {
+                "id": "b",
+                "text": "„Mein Nachbar unterstützt das inzwischen auch.“"
+              },
+              {
+                "id": "c",
+                "text": "„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“"
+              },
+              {
+                "id": "d",
+                "text": "„#EndlichOrdnung“"
+              },
+              {
+                "id": "e",
+                "text": "„Dieser Beitrag hat bereits mehr als 4.200 Likes.“"
+              },
+              {
+                "id": "f",
+                "text": "„Mal sehen, was daraus wird.“"
+              }
+            ],
+            "correctChoiceIds": [
+              "c",
+              "e"
+            ],
+            "success": {
+              "id": "rightB",
+              "nextStep": 5
+            },
+            "failure": {
+              "id": "wrongB",
+              "nextStep": 41
+            }
+          }
         },
         {
           "stepIndex": 41,
@@ -599,7 +642,17 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das war zu neutral. Entscheidend ist der soziale Druck auf Zugehörigkeit."
+              "text": "Das waren nur neutrale oder irrelevante Ergänzungen. Suche nach klaren Mehrheits- oder Metriksignalen."
+            },
+            {
+              "hostId": "selected",
+              "text": "Du hast schon einen richtigen Verstärker gewählt, aber noch nicht alle erwischt.",
+              "showOnOptionId": "wrongBPartial"
+            },
+            {
+              "hostId": "selected",
+              "text": "Teilweise richtig, aber du hast auch neutrale Ergänzungen gewählt. Fokussiere auf starke Konsenssignale.",
+              "showOnOptionId": "wrongBMixed"
             }
           ],
           "options": [

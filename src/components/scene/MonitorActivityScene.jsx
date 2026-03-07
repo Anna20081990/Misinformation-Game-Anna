@@ -6,7 +6,8 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
   const scrollRef = useRef(null)
   const sentenceOptions = options.filter((opt) => opt.kind === 'sentence')
   const choiceOptions = options.filter((opt) => opt.kind === 'choice')
-  const actionOptions = options.filter((option) => option.kind !== 'sentence' && option.kind !== 'choice')
+  const boosterOptions = options.filter((opt) => opt.kind === 'booster')
+  const actionOptions = options.filter((option) => option.kind !== 'sentence' && option.kind !== 'choice' && option.kind !== 'booster')
   const titleByVariant = {
     monitor: 'Stand-PC Monitor',
     tablet: 'Tablet Interface',
@@ -26,7 +27,8 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
 
   const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
-  const leadCount = isChoiceMode ? 2 : (isSentenceMode ? 1 : messages.length)
+  const isBoosterMode = !!boosterOptions.length
+  const leadCount = (isChoiceMode || isBoosterMode) ? 2 : (isSentenceMode ? 1 : messages.length)
   const leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
   const trailingMessages = messages.slice(Math.min(leadCount, messages.length))
 
@@ -93,6 +95,31 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                         {choiceOptions.map((choice, index) => (
                           <button
                             key={choice.id ?? `choice-${index}`}
+                            type="button"
+                            className={`monitor-choice__item ${choice.selected ? 'monitor-choice__item--selected' : ''}`}
+                            onClick={() => onSelectOption?.(index, choice)}
+                            disabled={Boolean(choice.disabled)}
+                          >
+                            <p className="monitor-choice__text">{choice.text}</p>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {!!boosterOptions.length && (
+                    <div className="monitor-choice">
+                      <h3 className="monitor-select__title">{boosterOptions[0]?.topic || boosterOptions[0]?.groupTitle || 'Aktivität 2'}</h3>
+                      {!!boosterOptions[0]?.prompt && <p className="monitor-choice__topic">{boosterOptions[0]?.prompt}</p>}
+                      {!!boosterOptions[0]?.neutralPost && (
+                        <div className="monitor-choice__item monitor-choice__item--neutral" aria-label="Ausgangspost">
+                          <p className="monitor-choice__text">{boosterOptions[0]?.neutralPost}</p>
+                        </div>
+                      )}
+                      <div className="monitor-choice__list">
+                        {boosterOptions.map((choice, index) => (
+                          <button
+                            key={choice.id ?? `booster-${index}`}
                             type="button"
                             className={`monitor-choice__item ${choice.selected ? 'monitor-choice__item--selected' : ''}`}
                             onClick={() => onSelectOption?.(index, choice)}

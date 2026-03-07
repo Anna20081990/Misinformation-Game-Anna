@@ -365,6 +365,12 @@ html, body {
   color: #123119;
 }
 
+.monitor-choice__item--neutral {
+  cursor: default;
+  background: rgba(14, 39, 65, 0.92);
+  border-color: rgba(130, 191, 233, 0.45);
+}
+
 .monitor-choice__item:disabled {
   cursor: default;
   transform: none;

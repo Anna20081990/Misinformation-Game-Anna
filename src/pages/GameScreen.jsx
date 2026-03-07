@@ -107,6 +107,24 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
   success: { id: 'rightA', nextStep: 4 },
   failure: { id: 'wrongA', nextStep: 31 },
 }
+const PART3_ACTIVITY2_FALLBACK_CONFIG = {
+  mode: 'consensus-boosters',
+  title: 'Aktivität 2: Konsens-Verstärker',
+  topic: 'Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen',
+  prompt: 'Aktivität 2: Welche Ergänzungen lassen den Beitrag so wirken, als gäbe es bereits breiten Konsens?',
+  neutralPost: '„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“',
+  choices: [
+    { id: 'a', text: '„Ich finde die Idee interessant.“' },
+    { id: 'b', text: '„Mein Nachbar unterstützt das inzwischen auch.“' },
+    { id: 'c', text: '„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“' },
+    { id: 'd', text: '„#EndlichOrdnung“' },
+    { id: 'e', text: '„Dieser Beitrag hat bereits mehr als 4.200 Likes.“' },
+    { id: 'f', text: '„Mal sehen, was daraus wird.“' },
+  ],
+  correctChoiceIds: ['c', 'e'],
+  success: { id: 'rightB', nextStep: 5 },
+  failure: { id: 'wrongB', nextStep: 41 },
+}
 
 function resolveSentenceMarkingConfig(config, fallback) {
   if (!config || typeof config !== 'object') return fallback
@@ -131,6 +149,20 @@ function resolveIntensityChoiceConfig(config, fallback) {
     success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
     failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
     correctChoiceId: config.correctChoiceId || fallback.correctChoiceId,
+  }
+}
+
+function resolveBoosterChoiceConfig(config, fallback) {
+  if (!config || typeof config !== 'object') return fallback
+  return {
+    ...fallback,
+    ...config,
+    choices: Array.isArray(config.choices) && config.choices.length ? config.choices : fallback.choices,
+    correctChoiceIds: Array.isArray(config.correctChoiceIds) && config.correctChoiceIds.length
+      ? config.correctChoiceIds
+      : fallback.correctChoiceIds,
+    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
+    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
   }
 }
 
@@ -216,6 +248,8 @@ export function GameScreen({
   const [lastSubmittedTrendChoiceId, setLastSubmittedTrendChoiceId] = useState('')
   const [trendChoiceOrder, setTrendChoiceOrder] = useState([])
   const [lastSubmittedTrendChoiceOrder, setLastSubmittedTrendChoiceOrder] = useState([])
+  const [selectedBoosterChoiceIds, setSelectedBoosterChoiceIds] = useState([])
+  const [lastSubmittedBoosterChoiceIds, setLastSubmittedBoosterChoiceIds] = useState([])
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const resetOnActivity2TransitionRef = useRef(false)
@@ -237,6 +271,8 @@ export function GameScreen({
     setLastSubmittedTrendChoiceId('')
     setTrendChoiceOrder([])
     setLastSubmittedTrendChoiceOrder([])
+    setSelectedBoosterChoiceIds([])
+    setLastSubmittedBoosterChoiceIds([])
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -246,6 +282,8 @@ export function GameScreen({
     setStepIndex(stepJumpRequest.stepIndex ?? 0)
     setLastSelectedOptionId(null)
     setChatMessages([])
+    setSelectedBoosterChoiceIds([])
+    setLastSubmittedBoosterChoiceIds([])
     appendedStepKeysRef.current = new Set()
   }, [stepJumpRequest])
 
@@ -302,6 +340,11 @@ export function GameScreen({
   const part3Activity1Config = isPart3Activity1Context
     ? resolveIntensityChoiceConfig(stepData.activityConfig, PART3_ACTIVITY1_FALLBACK_CONFIG)
     : PART3_ACTIVITY1_FALLBACK_CONFIG
+  const isPart3Activity2InputStep = currentPart === 3 && Number(stepData.stepIndex) === 4
+  const isPart3Activity2Context = currentPart === 3 && [4, 41].includes(Number(stepData.stepIndex))
+  const part3Activity2Config = isPart3Activity2Context
+    ? resolveBoosterChoiceConfig(stepData.activityConfig, PART3_ACTIVITY2_FALLBACK_CONFIG)
+    : PART3_ACTIVITY2_FALLBACK_CONFIG
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -362,6 +405,21 @@ export function GameScreen({
       topic: part3Activity1Config?.topic || '',
     }))
     : []
+  const effectiveBoosterChoiceIds = isPart3Activity2InputStep ? selectedBoosterChoiceIds : lastSubmittedBoosterChoiceIds
+  const boosterChoiceOptions = isPart3Activity2Context
+    ? (part3Activity2Config?.choices || []).map((choice) => ({
+      id: choice.id,
+      kind: 'booster',
+      text: choice.text,
+      selected: effectiveBoosterChoiceIds.includes(choice.id),
+      disabled: !isPart3Activity2InputStep,
+      choiceId: choice.id,
+      groupTitle: part3Activity2Config?.title || 'Aktivität 2',
+      topic: part3Activity2Config?.topic || '',
+      prompt: part3Activity2Config?.prompt || '',
+      neutralPost: part3Activity2Config?.neutralPost || '',
+    }))
+    : []
   const backendSubmitOptions = options
     .filter((item) => item.id === 'submit_confident' || item.id === 'submit_unsure')
     .map((item) => ({ ...item, kind: 'submit', disabled: selectedSentenceIndexes.length === 0 }))
@@ -371,6 +429,9 @@ export function GameScreen({
   const backendTrendSubmitOptions = options
     .filter((item) => item.id === 'submit_easy3' || item.id === 'submit_unsure3')
     .map((item) => ({ ...item, kind: 'submit', disabled: !selectedTrendChoiceId }))
+  const backendBoosterSubmitOptions = options
+    .filter((item) => item.id === 'submit_confident4' || item.id === 'submit_unsure4')
+    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedBoosterChoiceIds.length }))
   const submitOptions = isPart2Activity1InputStep
     ? (backendSubmitOptions.length
       ? backendSubmitOptions
@@ -392,14 +453,23 @@ export function GameScreen({
             { id: 'submit_easy3', label: 'Das schreit nach Konrad!', kind: 'submit', disabled: !selectedTrendChoiceId },
             { id: 'submit_unsure3', label: 'Konrad - bist du es?', kind: 'submit', disabled: !selectedTrendChoiceId },
           ])
-      : displayOptions
+        : isPart3Activity2InputStep
+          ? (backendBoosterSubmitOptions.length
+            ? backendBoosterSubmitOptions
+            : [
+              { id: 'submit_confident4', label: 'Das wirkt nach echtem Konsens.', kind: 'submit', disabled: !selectedBoosterChoiceIds.length },
+              { id: 'submit_unsure4', label: 'Ich bin unsicher.', kind: 'submit', disabled: !selectedBoosterChoiceIds.length },
+            ])
+          : displayOptions
   const monitorOptions = isPart2Activity1Context
     ? [...sentenceOptions, ...submitOptions]
     : isPart2Activity2Context
       ? [...intensityChoiceOptions, ...submitOptions]
       : isPart3Activity1Context
         ? [...trendChoiceOptions, ...submitOptions]
-      : displayOptions
+        : isPart3Activity2Context
+          ? [...boosterChoiceOptions, ...submitOptions]
+          : displayOptions
 
   useEffect(() => {
     if (!isPart2Activity2InputStep) return
@@ -450,7 +520,13 @@ export function GameScreen({
     if (!isPart3Activity1Context && lastSubmittedTrendChoiceOrder.length) {
       setLastSubmittedTrendChoiceOrder([])
     }
-  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId, lastSubmittedIntensityChoiceId, intensityChoiceOrder.length, lastSubmittedIntensityChoiceOrder.length, isPart3Activity1Context, selectedTrendChoiceId, lastSubmittedTrendChoiceId, trendChoiceOrder.length, lastSubmittedTrendChoiceOrder.length])
+    if (!isPart3Activity2Context && selectedBoosterChoiceIds.length) {
+      setSelectedBoosterChoiceIds([])
+    }
+    if (!isPart3Activity2Context && lastSubmittedBoosterChoiceIds.length) {
+      setLastSubmittedBoosterChoiceIds([])
+    }
+  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId, lastSubmittedIntensityChoiceId, intensityChoiceOrder.length, lastSubmittedIntensityChoiceOrder.length, isPart3Activity1Context, selectedTrendChoiceId, lastSubmittedTrendChoiceId, trendChoiceOrder.length, lastSubmittedTrendChoiceOrder.length, isPart3Activity2Context, selectedBoosterChoiceIds.length, lastSubmittedBoosterChoiceIds.length])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -602,6 +678,43 @@ export function GameScreen({
       resetOnPart3Activity2TransitionRef.current = false
     }
 
+    if (isPart3Activity2InputStep && option?.kind === 'booster') {
+      const choiceId = String(option.choiceId || '')
+      setSelectedBoosterChoiceIds((prev) => (
+        prev.includes(choiceId)
+          ? prev.filter((item) => item !== choiceId)
+          : [...prev, choiceId].sort()
+      ))
+      return
+    }
+
+    if (isPart3Activity2InputStep && option?.kind === 'submit') {
+      const correctChoiceIds = part3Activity2Config?.correctChoiceIds || []
+      const selectedCorrectCount = selectedBoosterChoiceIds.filter((item) => correctChoiceIds.includes(item)).length
+      const selectedWrongCount = selectedBoosterChoiceIds.length - selectedCorrectCount
+      const isCorrect =
+        selectedBoosterChoiceIds.length === correctChoiceIds.length &&
+        correctChoiceIds.every((item) => selectedBoosterChoiceIds.includes(item))
+
+      const baseWrongOption = {
+        id: part3Activity2Config?.failure?.id || 'wrongB',
+        nextStep: part3Activity2Config?.failure?.nextStep ?? 41,
+      }
+      const mappedOption = isCorrect
+        ? {
+          id: part3Activity2Config?.success?.id || 'rightB',
+          nextStep: part3Activity2Config?.success?.nextStep ?? 5,
+        }
+        : selectedCorrectCount === 0
+          ? baseWrongOption
+          : selectedWrongCount === 0
+            ? { ...baseWrongOption, id: 'wrongBPartial' }
+            : { ...baseWrongOption, id: 'wrongBMixed' }
+
+      setLastSubmittedBoosterChoiceIds(selectedBoosterChoiceIds)
+      option = { ...mappedOption, label: option.label }
+    }
+
     onSelectOption?.(index, option, currentPart)
     setLastSelectedOptionId(option?.id ?? null)
 
@@ -655,6 +768,8 @@ export function GameScreen({
           setLastSubmittedTrendChoiceId('')
           setTrendChoiceOrder([])
           setLastSubmittedTrendChoiceOrder([])
+          setSelectedBoosterChoiceIds([])
+          setLastSubmittedBoosterChoiceIds([])
           appendedStepKeysRef.current = new Set()
         }
 
@@ -676,6 +791,8 @@ export function GameScreen({
           setLastSubmittedTrendChoiceId('')
           setTrendChoiceOrder([])
           setLastSubmittedTrendChoiceOrder([])
+          setSelectedBoosterChoiceIds([])
+          setLastSubmittedBoosterChoiceIds([])
           appendedStepKeysRef.current = new Set()
           setLastSelectedOptionId(null)
         }
@@ -693,7 +810,7 @@ export function GameScreen({
         messages={chatMessages}
         options={monitorOptions}
         onSelectOption={handleSelectOption}
-        variant={(isPart2Activity1Context || isPart2Activity2Context || isPart3Activity1Context) ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
+        variant={(isPart2Activity1Context || isPart2Activity2Context || isPart3Activity1Context || isPart3Activity2Context) ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
       />
     )
   }

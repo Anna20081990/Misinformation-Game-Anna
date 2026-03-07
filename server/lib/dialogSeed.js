@@ -203,14 +203,35 @@ function scene3Steps() {
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
       bubble('selected', 'Richtig erkannt, das war die stärkste Mehrheitsbehauptung.', 'rightA'),
-      bubble('selected', 'Weiter mit Aktivität 2.', 'rightA'),
-      bubble('selected', 'Nach dem Retry: Welche Variante erzeugt jetzt den stärksten Konsensdruck?', 'retry'),
+      bubble('selected', 'Aktivität 2: Welche Ergänzungen lassen einen neutralen Beitrag wie breiten Konsens wirken?', 'rightA'),
+      bubble('selected', 'Aktivität 2: Wähle die stärksten Konsens-Verstärker.', 'retry'),
     ], [
-      option('wrongB', '„Wir sollten Argumente vergleichen.“', 41),
-      option('rightB', '„Schon 9 von 10 sind dafür, du willst doch nicht Außenseiter sein.“', 5),
-    ]),
+      option('submit_confident4', 'Das wirkt nach echtem Konsens.'),
+      option('submit_unsure4', 'Ich bin unsicher.'),
+    ], {
+      activityConfig: {
+        mode: 'consensus-boosters',
+        title: 'Aktivität 2: Konsens-Verstärker',
+        topic: 'Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen',
+        prompt: 'Aktivität 2: Welche Ergänzungen lassen den Beitrag so wirken, als gäbe es bereits breiten Konsens?',
+        neutralPost: '„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“',
+        choices: [
+          { id: 'a', text: '„Ich finde die Idee interessant.“' },
+          { id: 'b', text: '„Mein Nachbar unterstützt das inzwischen auch.“' },
+          { id: 'c', text: '„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“' },
+          { id: 'd', text: '„#EndlichOrdnung“' },
+          { id: 'e', text: '„Dieser Beitrag hat bereits mehr als 4.200 Likes.“' },
+          { id: 'f', text: '„Mal sehen, was daraus wird.“' },
+        ],
+        correctChoiceIds: ['c', 'e'],
+        success: { id: 'rightB', nextStep: 5 },
+        failure: { id: 'wrongB', nextStep: 41 },
+      },
+    }),
     step(41, 'activity', [
-      bubble('selected', 'Das war zu neutral. Entscheidend ist der soziale Druck auf Zugehörigkeit.'),
+      bubble('selected', 'Das waren nur neutrale oder irrelevante Ergänzungen. Suche nach klaren Mehrheits- oder Metriksignalen.'),
+      bubble('selected', 'Du hast schon einen richtigen Verstärker gewählt, aber noch nicht alle erwischt.', 'wrongBPartial'),
+      bubble('selected', 'Teilweise richtig, aber du hast auch neutrale Ergänzungen gewählt. Fokussiere auf starke Konsenssignale.', 'wrongBMixed'),
     ], [option('retry', 'Erneut wählen.', 4)]),
     step(5, 'summary', [
       bubble('selected', 'Stark. Ihr habt Konsens-Signale von echten Belegen unterschieden.'),
