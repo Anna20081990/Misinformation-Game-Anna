@@ -52,6 +52,7 @@ export function GameScreen({
 }) {
   const scene = getSceneById(currentPart)
   const [stepIndex, setStepIndex] = useState(0)
+  const [lastSelectedOptionId, setLastSelectedOptionId] = useState(null)
   const [chatMessages, setChatMessages] = useState([])
   const [sceneDialogs, setSceneDialogs] = useState(null)
   const appendedStepKeysRef = useRef(new Set())
@@ -59,6 +60,7 @@ export function GameScreen({
 
   useEffect(() => {
     setStepIndex(0)
+    setLastSelectedOptionId(null)
     setChatMessages([])
     setSceneDialogs(null)
     appendedStepKeysRef.current = new Set()
@@ -108,7 +110,15 @@ export function GameScreen({
     if (appendedStepKeysRef.current.has(key)) return
 
     appendedStepKeysRef.current.add(key)
-    const hostMessages = (stepData.speechBubbles || []).map((bubble, index) => {
+    const speechBubbles = stepData.speechBubbles || []
+    const conditional = speechBubbles.filter((bubble) => bubble.showOnOptionId)
+    const unconditioned = speechBubbles.filter((bubble) => !bubble.showOnOptionId)
+    const selectedConditional = conditional.filter((bubble) => bubble.showOnOptionId === lastSelectedOptionId)
+    const effectiveBubbles = conditional.length
+      ? (selectedConditional.length ? selectedConditional : unconditioned)
+      : speechBubbles
+
+    const hostMessages = effectiveBubbles.map((bubble, index) => {
       const resolvedHostId = normalizeHostId(bubble.hostId, selectedHostId)
 
       return {
@@ -121,7 +131,7 @@ export function GameScreen({
     })
 
     setChatMessages((prev) => [...prev, ...hostMessages])
-  }, [currentPart, stepData, stepIndex, selectedHostId])
+  }, [currentPart, stepData, stepIndex, selectedHostId, lastSelectedOptionId])
 
   if (currentPart === 0) {
     return (
@@ -133,6 +143,7 @@ export function GameScreen({
 
   const handleSelectOption = (index, option) => {
     onSelectOption?.(index, option, currentPart)
+    setLastSelectedOptionId(option?.id ?? null)
 
     const selectedFromPart1 = currentPart === 1 && stepData.stepIndex === 0 && (option?.id === 'clara' || option?.id === 'uwe')
     if (selectedFromPart1) {

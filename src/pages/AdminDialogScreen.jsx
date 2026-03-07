@@ -27,7 +27,7 @@ function emptyForm(stepIndex = 0) {
   return {
     stepIndex,
     type: 'dialog',
-    speechBubbles: [{ hostId: 'selected', text: '' }],
+    speechBubbles: [{ hostId: 'selected', text: '', showOnOptionId: '' }],
     options: [{ id: '', label: '', nextStep: '', nextPart: '' }],
   }
 }
@@ -47,6 +47,7 @@ function normalizeForApi(formData) {
       .map((item) => ({
         hostId: item.hostId || 'selected',
         text: item.text.trim(),
+        ...(item.showOnOptionId?.trim() ? { showOnOptionId: item.showOnOptionId.trim() } : {}),
       })),
     options: formData.options
       .filter((item) => item.label && item.label.trim())
@@ -74,6 +75,7 @@ function fromStep(step) {
     speechBubbles: (step.speechBubbles || []).map((item) => ({
       hostId: item.hostId ?? 'selected',
       text: item.text ?? '',
+      showOnOptionId: item.showOnOptionId ?? '',
     })),
     options: (step.options || []).map((item) => ({
       id: item.id ?? '',
@@ -351,12 +353,20 @@ export function AdminDialogScreen() {
                 <span>Text</span>
                 <textarea rows="3" value={bubble.text} onChange={(event) => updateBubble(index, 'text', event.target.value)} />
               </label>
+              <label className="admin__field admin__field--full">
+                <span>Anzeigen wenn Option-ID gewählt wurde (optional)</span>
+                <input
+                  value={bubble.showOnOptionId}
+                  onChange={(event) => updateBubble(index, 'showOnOptionId', event.target.value)}
+                  placeholder="z. B. ok, skeptisch, rightA"
+                />
+              </label>
               <button type="button" className="admin__link" onClick={() => setFormData((prev) => ({ ...prev, speechBubbles: prev.speechBubbles.filter((_, i) => i !== index) }))} disabled={formData.speechBubbles.length <= 1}>
                 Nachricht entfernen
               </button>
             </div>
           ))}
-          <button type="button" className="admin__action" onClick={() => setFormData((prev) => ({ ...prev, speechBubbles: [...prev.speechBubbles, { hostId: 'selected', text: '' }] }))}>
+          <button type="button" className="admin__action" onClick={() => setFormData((prev) => ({ ...prev, speechBubbles: [...prev.speechBubbles, { hostId: 'selected', text: '', showOnOptionId: '' }] }))}>
             Nachricht hinzufügen
           </button>
 

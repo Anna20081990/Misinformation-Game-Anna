@@ -34,10 +34,13 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
     assert(typeof bubble.text === 'string' && bubble.text.trim(), `speechBubbles[${index}].text ist erforderlich.`)
     const hostId = String(bubble.hostId ?? bubble.characterId ?? 'selected').toLowerCase()
     assert(HOST_IDS.has(hostId), `speechBubbles[${index}].hostId muss einer der Werte selected, clara oder uwe sein.`)
+    const showOnOptionId = bubble.showOnOptionId == null ? null : String(bubble.showOnOptionId).trim()
+    assert(showOnOptionId == null || showOnOptionId.length > 0, `speechBubbles[${index}].showOnOptionId darf nicht leer sein.`)
 
     return {
       hostId,
       text: bubble.text.trim(),
+      ...(showOnOptionId ? { showOnOptionId } : {}),
     }
   })
 

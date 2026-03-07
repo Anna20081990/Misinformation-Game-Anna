@@ -39,11 +39,17 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Perfekt. Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam."
+              "text": "Gute Wahl. Ihr startet mit einem klaren Blick auf Muster und Dynamiken.",
+              "showOnOptionId": "clara"
             },
             {
               "hostId": "selected",
-              "text": "Jede Fallakte zeigt ein eigenes Manipulationsmuster in Debatten."
+              "text": "Starke Entscheidung. Dann gehen wir pragmatisch und analytisch vor.",
+              "showOnOptionId": "uwe"
+            },
+            {
+              "hostId": "selected",
+              "text": "Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam."
             }
           ],
           "options": [
@@ -65,11 +71,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Jedes Kapitel folgt derselben Struktur: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung."
+              "text": "Kurzfassung: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung.",
+              "showOnOptionId": "ok"
             },
             {
               "hostId": "selected",
-              "text": "Fehler sind erlaubt. Ihr bekommt Feedback und könnt direkt erneut probieren."
+              "text": "Ja, es gibt klare Aufgaben und direktes Feedback in jedem Schritt.",
+              "showOnOptionId": "skepsis"
             }
           ],
           "options": [
@@ -211,7 +219,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Welche Variante erzeugt die höchste Empörung?"
+              "text": "Exakt. Jetzt die nächste Stufe: Welche Variante erzeugt die höchste Empörung?",
+              "showOnOptionId": "rightA"
+            },
+            {
+              "hostId": "selected",
+              "text": "Guter Retry. Jetzt präzise: Welche Variante erzeugt die höchste Empörung?",
+              "showOnOptionId": "retry"
             }
           ],
           "options": [
@@ -370,7 +384,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Welche Variante nutzt am stärksten die Mehrheitsillusion?"
+              "text": "Richtig erkannt. Welche Variante nutzt nun am stärksten die Mehrheitsillusion?",
+              "showOnOptionId": "rightA"
+            },
+            {
+              "hostId": "selected",
+              "text": "Nach dem Retry: Welche Variante erzeugt jetzt den stärksten Konsensdruck?",
+              "showOnOptionId": "retry"
             }
           ],
           "options": [
@@ -529,7 +549,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Welche Reaktion verschiebt die Debatte von Sache auf Person?"
+              "text": "Treffer. Welche Reaktion verschiebt die Debatte jetzt von Sache auf Person?",
+              "showOnOptionId": "rightA"
+            },
+            {
+              "hostId": "selected",
+              "text": "Weiter geht’s: Wähle die klarste persönliche Verschiebung.",
+              "showOnOptionId": "retry"
             }
           ],
           "options": [

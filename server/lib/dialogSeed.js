@@ -4,8 +4,12 @@ function step(stepIndex, type, speechBubbles, options) {
   return { stepIndex, type, speechBubbles, options }
 }
 
-function bubble(hostId, text) {
-  return { hostId, text }
+function bubble(hostId, text, showOnOptionId = null) {
+  return {
+    hostId,
+    text,
+    ...(showOnOptionId ? { showOnOptionId } : {}),
+  }
 }
 
 function option(id, label, nextStep = null, nextPart = null) {
@@ -25,15 +29,16 @@ function scene1Steps() {
       option('uwe', 'Ich starte mit Uwe R. Blick.', 1),
     ]),
     step(1, 'intro', [
-      bubble('selected', 'Perfekt. Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam.'),
-      bubble('selected', 'Jede Fallakte zeigt ein eigenes Manipulationsmuster in Debatten.'),
+      bubble('selected', 'Gute Wahl. Ihr startet mit einem klaren Blick auf Muster und Dynamiken.', 'clara'),
+      bubble('selected', 'Starke Entscheidung. Dann gehen wir pragmatisch und analytisch vor.', 'uwe'),
+      bubble('selected', 'Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam.'),
     ], [
       option('ok', 'Klingt gut, wie laufen die Kapitel ab?', 2),
       option('skepsis', 'Klingt groß. Gibt es klare Aufgaben?', 2),
     ]),
     step(2, 'intro', [
-      bubble('selected', 'Jedes Kapitel folgt derselben Struktur: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung.'),
-      bubble('selected', 'Fehler sind erlaubt. Ihr bekommt Feedback und könnt direkt erneut probieren.'),
+      bubble('selected', 'Kurzfassung: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung.', 'ok'),
+      bubble('selected', 'Ja, es gibt klare Aufgaben und direktes Feedback in jedem Schritt.', 'skepsis'),
     ], [
       option('bereit', 'Verstanden, ich bin bereit.', 3),
       option('frage', 'Noch eine kurze Frage, dann los.', 3),
@@ -69,7 +74,8 @@ function scene2Steps() {
       bubble('selected', 'Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung.'),
     ], [option('retry', 'Ich versuche es nochmal.', 3)]),
     step(4, 'activity', [
-      bubble('selected', 'Aktivität 2: Welche Variante erzeugt die höchste Empörung?'),
+      bubble('selected', 'Exakt. Jetzt die nächste Stufe: Welche Variante erzeugt die höchste Empörung?', 'rightA'),
+      bubble('selected', 'Guter Retry. Jetzt präzise: Welche Variante erzeugt die höchste Empörung?', 'retry'),
     ], [
       option('rightB', '„Das ist ein Skandal, der uns alle bedroht!“', 5),
       option('wrongB', '„Der Punkt sollte genauer geprüft werden.“', 41),
@@ -106,7 +112,8 @@ function scene3Steps() {
       bubble('selected', 'Zu schwach für Social Proof. Suche den höchsten Gruppendruck.'),
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
-      bubble('selected', 'Aktivität 2: Welche Variante nutzt am stärksten die Mehrheitsillusion?'),
+      bubble('selected', 'Richtig erkannt. Welche Variante nutzt nun am stärksten die Mehrheitsillusion?', 'rightA'),
+      bubble('selected', 'Nach dem Retry: Welche Variante erzeugt jetzt den stärksten Konsensdruck?', 'retry'),
     ], [
       option('wrongB', '„Wir sollten Argumente vergleichen.“', 41),
       option('rightB', '„Schon 9 von 10 sind dafür, du willst doch nicht Außenseiter sein.“', 5),
@@ -143,7 +150,8 @@ function scene4Steps() {
       bubble('selected', 'Das war legitime Kritik am Inhalt. Gesucht ist ein persönlicher Angriff.'),
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
-      bubble('selected', 'Aktivität 2: Welche Reaktion verschiebt die Debatte von Sache auf Person?'),
+      bubble('selected', 'Treffer. Welche Reaktion verschiebt die Debatte jetzt von Sache auf Person?', 'rightA'),
+      bubble('selected', 'Weiter geht’s: Wähle die klarste persönliche Verschiebung.', 'retry'),
     ], [
       option('wrongB', '„Dein Argument hat Lücken bei den Zahlen.“', 41),
       option('rightB', '„Man merkt, dass du nur Aufmerksamkeit willst.“', 5),
