@@ -24,8 +24,11 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
     }
   }, [messages, options])
 
-  const leadMessage = messages[0] || null
-  const trailingMessages = messages.slice(1)
+  const isSentenceMode = !!sentenceOptions.length
+  const isChoiceMode = !!choiceOptions.length
+  const leadCount = isChoiceMode ? 2 : (isSentenceMode ? 1 : messages.length)
+  const leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
+  const trailingMessages = messages.slice(Math.min(leadCount, messages.length))
 
   return (
     <div className="scene">
@@ -42,22 +45,22 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
             </header>
 
             <div className="monitor-scene__messages" ref={scrollRef}>
-              {leadMessage && (
+              {leadMessages.map((message) => (
                 <article
-                  key={leadMessage.id}
-                  className={`monitor-message monitor-message--${leadMessage.speakerType === 'player' ? 'player' : 'host'}`}
+                  key={message.id}
+                  className={`monitor-message monitor-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
                 >
-                  {leadMessage.speakerType !== 'player' && (
-                    <HostAvatar characterId={leadMessage.hostId ?? leadMessage.characterId} speakerName={leadMessage.speakerName} />
+                  {message.speakerType !== 'player' && (
+                    <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={message.speakerName} />
                   )}
                   <div className="monitor-message__bubble">
-                    {leadMessage.speakerType !== 'player' && (
-                      <strong className="monitor-message__speaker">{leadMessage.speakerName || 'Host'}</strong>
+                    {message.speakerType !== 'player' && (
+                      <strong className="monitor-message__speaker">{message.speakerName || 'Host'}</strong>
                     )}
-                    <p>{leadMessage.text}</p>
+                    <p>{message.text}</p>
                   </div>
                 </article>
-              )}
+              ))}
 
               {variant === 'monitor-select' && (
                 <section className="monitor-select" aria-label="Beitrag analysieren">
