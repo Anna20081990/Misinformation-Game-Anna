@@ -4,7 +4,7 @@ import { getSceneById } from '../data/scenes.js'
 import { getPart1Step } from '../data/conversations/part1.js'
 import { getSceneDialogs } from '../api/dialogApi.js'
 
-const PART0_INTRO_TEXT = 'Willkommen in Regelreich. In der Stadt wird gerade diskutiert, argumentiert und abgestimmt, sogar zur neuen Parkbank-Regelung. Bevor wir starten: Bist du bereit, uns im Media Lab zu helfen?'
+const PART0_INTRO_TEXT = 'Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen.'
 const PART0_READY_REPLY = 'Stark, das passt zu Regelreich. Dann legen wir direkt los.'
 const PART0_HESITANT_REPLY = 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.'
 const PART0_AVATAR_PROMPT = 'Wähle jetzt deinen Avatar für das Praktikum.'
