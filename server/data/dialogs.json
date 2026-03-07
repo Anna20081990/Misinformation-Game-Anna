@@ -262,16 +262,52 @@
           ],
           "options": [
             {
-              "id": "wrongA",
-              "label": "„Es gab Kritik am Vorschlag.“",
-              "nextStep": 31
+              "id": "submit_confident",
+              "label": "Ich bin mir sicher."
             },
             {
-              "id": "rightA",
-              "label": "„Ganz Regelreich wird absichtlich ruiniert!“",
-              "nextStep": 4
+              "id": "submit_unsure",
+              "label": "Ich hoffe, es stimmt."
             }
-          ]
+          ],
+          "activityConfig": {
+            "mode": "sentence-marking",
+            "sentences": [
+              {
+                "id": "s1",
+                "text": "Die Stadt plant, die Parkzeiten im Zentrum anzupassen."
+              },
+              {
+                "id": "s2",
+                "text": "Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden."
+              },
+              {
+                "id": "s3",
+                "text": "Schon wieder trifft es die normalen Leute."
+              },
+              {
+                "id": "s4",
+                "text": "Der Vorschlag wird nächste Woche beraten."
+              },
+              {
+                "id": "s5",
+                "text": "So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander."
+              }
+            ],
+            "correctSentenceIds": [
+              "s2",
+              "s3",
+              "s5"
+            ],
+            "success": {
+              "id": "rightA",
+              "nextStep": 4
+            },
+            "failure": {
+              "id": "wrongA",
+              "nextStep": 31
+            }
+          }
         },
         {
           "stepIndex": 31,

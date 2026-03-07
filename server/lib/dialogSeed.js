@@ -1,7 +1,7 @@
 import { SCENES } from '../../src/data/scenes.js'
 
-function step(stepIndex, type, speechBubbles, options) {
-  return { stepIndex, type, speechBubbles, options }
+function step(stepIndex, type, speechBubbles, options, extras = {}) {
+  return { stepIndex, type, speechBubbles, options, ...extras }
 }
 
 function bubble(hostId, text, showOnOptionId = null) {
@@ -92,9 +92,23 @@ function scene2Steps() {
     step(3, 'activity', [
       bubble('selected', 'Aktivität 1: Welche Markierung zeigt die stärkste emotionale Zuspitzung?'),
     ], [
-      option('wrongA', '„Es gab Kritik am Vorschlag.“', 31),
-      option('rightA', '„Ganz Regelreich wird absichtlich ruiniert!“', 4),
-    ]),
+      option('submit_confident', 'Ich bin mir sicher.'),
+      option('submit_unsure', 'Ich hoffe, es stimmt.'),
+    ], {
+      activityConfig: {
+        mode: 'sentence-marking',
+        sentences: [
+          { id: 's1', text: 'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.' },
+          { id: 's2', text: 'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.' },
+          { id: 's3', text: 'Schon wieder trifft es die normalen Leute.' },
+          { id: 's4', text: 'Der Vorschlag wird nächste Woche beraten.' },
+          { id: 's5', text: 'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.' },
+        ],
+        correctSentenceIds: ['s2', 's3', 's5'],
+        success: { id: 'rightA', nextStep: 4 },
+        failure: { id: 'wrongA', nextStep: 31 },
+      },
+    }),
     step(31, 'activity', [
       bubble('selected', 'Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung.'),
       bubble('selected', 'Du hast schon einen relevanten Teil markiert, aber noch nicht alles erwischt. Schau auf weitere Zuspitzungen.', 'wrongPartial'),

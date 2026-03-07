@@ -59,14 +59,18 @@ const PART0_FALLBACK_STEPS = [
     ],
   },
 ]
-const PART2_ACTIVITY1_SENTENCES = [
-  'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.',
-  'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.',
-  'Schon wieder trifft es die normalen Leute.',
-  'Der Vorschlag wird nächste Woche beraten.',
-  'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.',
-]
-const PART2_ACTIVITY1_CORRECT_INDEXES = [1, 2, 4]
+const PART2_ACTIVITY1_FALLBACK_CONFIG = {
+  sentences: [
+    { id: 's1', text: 'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.' },
+    { id: 's2', text: 'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.' },
+    { id: 's3', text: 'Schon wieder trifft es die normalen Leute.' },
+    { id: 's4', text: 'Der Vorschlag wird nächste Woche beraten.' },
+    { id: 's5', text: 'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.' },
+  ],
+  correctSentenceIds: ['s2', 's3', 's5'],
+  success: { id: 'rightA', nextStep: 4 },
+  failure: { id: 'wrongA', nextStep: 31 },
+}
 
 function isAvatarOption(option) {
   const id = String(option?.id || '').toLowerCase()
@@ -196,6 +200,9 @@ export function GameScreen({
   const options = stepData.options || []
   const isPart2Activity1InputStep = currentPart === 2 && Number(stepData.stepIndex) === 3
   const isPart2Activity1Context = currentPart === 2 && [3, 31].includes(Number(stepData.stepIndex))
+  const part2Activity1Config = isPart2Activity1Context
+    ? (stepData.activityConfig || PART2_ACTIVITY1_FALLBACK_CONFIG)
+    : null
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -207,20 +214,25 @@ export function GameScreen({
   })
   const effectiveSentenceSelection = isPart2Activity1InputStep ? selectedSentenceIndexes : lastSubmittedSentenceIndexes
   const sentenceOptions = isPart2Activity1Context
-    ? PART2_ACTIVITY1_SENTENCES.map((sentence, index) => ({
-      id: `sentence-${index + 1}`,
+    ? (part2Activity1Config?.sentences || []).map((sentence, index) => ({
+      id: sentence.id || `sentence-${index + 1}`,
       kind: 'sentence',
-      label: sentence,
-      selected: effectiveSentenceSelection.includes(index),
+      label: sentence.text,
+      selected: effectiveSentenceSelection.includes(sentence.id),
       disabled: !isPart2Activity1InputStep,
-      sentenceIndex: index,
+      sentenceId: sentence.id,
     }))
     : []
+  const backendSubmitOptions = options
+    .filter((item) => item.id === 'submit_confident' || item.id === 'submit_unsure')
+    .map((item) => ({ ...item, kind: 'submit', disabled: selectedSentenceIndexes.length === 0 }))
   const submitOptions = isPart2Activity1InputStep
-    ? [
-      { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
-      { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
-    ]
+    ? (backendSubmitOptions.length
+      ? backendSubmitOptions
+      : [
+        { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
+        { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
+      ])
     : displayOptions
   const monitorOptions = isPart2Activity1Context ? [...sentenceOptions, ...submitOptions] : displayOptions
 
@@ -288,25 +300,32 @@ export function GameScreen({
 
   const handleSelectOption = (index, option) => {
     if (isPart2Activity1InputStep && option?.kind === 'sentence') {
-      const sentenceIndex = Number(option.sentenceIndex)
+      const sentenceId = String(option.sentenceId || '')
       setSelectedSentenceIndexes((prev) => (
-        prev.includes(sentenceIndex)
-          ? prev.filter((item) => item !== sentenceIndex)
-          : [...prev, sentenceIndex].sort((a, b) => a - b)
+        prev.includes(sentenceId)
+          ? prev.filter((item) => item !== sentenceId)
+          : [...prev, sentenceId].sort()
       ))
       return
     }
 
     if (isPart2Activity1InputStep && option?.kind === 'submit') {
-      const selectedCorrectCount = selectedSentenceIndexes.filter((item) => PART2_ACTIVITY1_CORRECT_INDEXES.includes(item)).length
+      const correctSentenceIds = part2Activity1Config?.correctSentenceIds || []
+      const selectedCorrectCount = selectedSentenceIndexes.filter((item) => correctSentenceIds.includes(item)).length
       const selectedWrongCount = selectedSentenceIndexes.length - selectedCorrectCount
       const isCorrect =
-        selectedSentenceIndexes.length === PART2_ACTIVITY1_CORRECT_INDEXES.length &&
-        PART2_ACTIVITY1_CORRECT_INDEXES.every((item) => selectedSentenceIndexes.includes(item))
+        selectedSentenceIndexes.length === correctSentenceIds.length &&
+        correctSentenceIds.every((item) => selectedSentenceIndexes.includes(item))
 
-      const baseWrongOption = options.find((item) => item.id === 'wrongA')
+      const baseWrongOption = {
+        id: part2Activity1Config?.failure?.id || 'wrongA',
+        nextStep: part2Activity1Config?.failure?.nextStep ?? 31,
+      }
       const mappedOption = isCorrect
-        ? options.find((item) => item.id === 'rightA')
+        ? {
+          id: part2Activity1Config?.success?.id || 'rightA',
+          nextStep: part2Activity1Config?.success?.nextStep ?? 4,
+        }
         : selectedCorrectCount === 0
           ? baseWrongOption
           : selectedWrongCount === 0
