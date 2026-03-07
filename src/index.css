@@ -521,22 +521,87 @@ html, body {
 }
 
 .monitor-scene--keller-monitor-select .monitor-scene__bezel {
-  background: linear-gradient(160deg, rgba(21, 45, 36, 0.78) 0%, rgba(12, 31, 24, 0.72) 100%);
-  border: 2px solid rgba(151, 230, 179, 0.45);
-  box-shadow: 0 12px 32px rgba(6, 25, 17, 0.55);
+  width: min(42vw, 780px);
+  height: min(56vh, 620px);
+  margin-left: 50.8vw;
+  margin-top: 15.6vh;
+  border-radius: 10px;
+  padding: 0.25rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.monitor-scene--keller-monitor-select {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
 }
 
 .monitor-scene--keller-monitor-select .monitor-scene__screen {
-  background: linear-gradient(180deg, rgba(10, 47, 34, 0.64) 0%, rgba(7, 32, 24, 0.62) 100%);
-  border-color: rgba(153, 233, 183, 0.38);
+  background: transparent;
+  border: none;
 }
 
 .monitor-scene--keller-monitor-select .monitor-scene__header {
-  border-bottom-color: rgba(153, 233, 183, 0.28);
+  display: none;
 }
 
 .monitor-scene--keller-monitor-select .monitor-scene__options {
-  border-top-color: rgba(153, 233, 183, 0.28);
+  border-top: none;
+  padding: 0.45rem 0;
+}
+
+.monitor-scene--keller-monitor-select .monitor-scene__messages {
+  padding: 0.2rem 0;
+}
+
+.monitor-scene--keller-monitor-select .monitor-select {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.monitor-scene--keller-monitor-select .monitor-select__title,
+.monitor-scene--keller-monitor-select .monitor-choice__topic {
+  color: #d8f7e8;
+  text-shadow: 0 0 6px rgba(51, 153, 99, 0.45);
+}
+
+.monitor-scene--keller-monitor-select .monitor-choice__item,
+.monitor-scene--keller-monitor-select .monitor-select__sentence {
+  border-color: rgba(145, 227, 179, 0.44);
+  background: rgba(18, 60, 42, 0.18);
+}
+
+.monitor-scene--keller-monitor-select .monitor-choice__item:hover,
+.monitor-scene--keller-monitor-select .monitor-select__sentence:hover {
+  background: rgba(30, 94, 66, 0.24);
+  border-color: rgba(168, 243, 197, 0.64);
+}
+
+@media (max-width: 1200px) {
+  .monitor-scene--keller-monitor-select {
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .monitor-scene--keller-monitor-select .monitor-scene__bezel {
+    width: min(95vw, 980px);
+    height: min(78vh, 760px);
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 18px;
+    padding: 0.7rem;
+    background: rgba(10, 38, 28, 0.26);
+    border: 1px solid rgba(145, 227, 179, 0.3);
+  }
+
+  .monitor-scene--keller-monitor-select .monitor-scene__screen {
+    background: rgba(5, 24, 17, 0.25);
+    border: 1px solid rgba(145, 227, 179, 0.24);
+  }
 }
 
 /* -----------------------------------------------
