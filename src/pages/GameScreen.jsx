@@ -235,10 +235,9 @@ export function GameScreen({
     const samePart = prev.part === currentPart
     const enteredActivity = samePart && prev.type !== 'activity' && currentType === 'activity'
     const enteredSummary = samePart && prev.type === 'activity' && currentType === 'summary'
-    const switchedActivityStep = samePart && prev.type === 'activity' && currentType === 'activity' && prev.stepIndex !== (stepData.stepIndex ?? 0)
 
     // For Teil 2 monitor flow: start each activity phase and summary with a clean thread.
-    if (currentPart === 2 && (enteredActivity || enteredSummary || switchedActivityStep)) {
+    if (currentPart === 2 && (enteredActivity || enteredSummary)) {
       setChatMessages([])
       appendedStepKeysRef.current = new Set()
     }
@@ -333,6 +332,12 @@ export function GameScreen({
           text: option.label,
         },
       ])
+    }
+
+    if (currentPart === 2 && option?.id === 'retry') {
+      setChatMessages([])
+      setSelectedSentenceIndexes([])
+      appendedStepKeysRef.current = new Set()
     }
 
     if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current)
