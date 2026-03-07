@@ -116,8 +116,8 @@ function scene2Steps() {
     ], [option('retry', 'Ich versuche es nochmal.', 3)]),
     step(4, 'activity', [
       bubble('selected', 'Stark erkannt, genau das war die emotionale Zuspitzung.', 'rightA'),
-      bubble('selected', 'Aktivität 2: Welche Variante erzeugt die höchste Empörung?', 'rightA'),
-      bubble('selected', 'Guter Retry. Aktivität 2: Welche Variante erzeugt jetzt die höchste Empörung?', 'retry'),
+      bubble('selected', 'Aktivität 2: Welche Variante erzeugt die höchste Empörung?'),
+      bubble('selected', 'Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.', 'retry'),
     ], [
       option('submit_easy', 'Das ist einfach.'),
       option('submit_unsure2', 'Ich habe eigentlich keine Ahnung.'),
@@ -203,8 +203,8 @@ function scene3Steps() {
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
       bubble('selected', 'Richtig erkannt, das war die stärkste Mehrheitsbehauptung.', 'rightA'),
-      bubble('selected', 'Aktivität 2: Welche Ergänzungen lassen einen neutralen Beitrag wie breiten Konsens wirken?', 'rightA'),
-      bubble('selected', 'Aktivität 2: Wähle die stärksten Konsens-Verstärker.', 'retry'),
+      bubble('selected', 'Aktivität 2: Welche Ergänzungen lassen einen neutralen Beitrag wie breiten Konsens wirken?'),
+      bubble('selected', 'Guter Retry. Wähle jetzt wieder die stärksten Konsens-Verstärker.', 'retry'),
     ], [
       option('submit_confident4', 'Das wirkt nach echtem Konsens.'),
       option('submit_unsure4', 'Ich bin unsicher.'),

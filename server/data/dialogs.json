@@ -320,12 +320,11 @@
             },
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Welche Variante erzeugt die höchste Empörung?",
-              "showOnOptionId": "rightA"
+              "text": "Aktivität 2: Welche Variante erzeugt die höchste Empörung?"
             },
             {
               "hostId": "selected",
-              "text": "Guter Retry. Aktivität 2: Welche Variante erzeugt jetzt die höchste Empörung?",
+              "text": "Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.",
               "showOnOptionId": "retry"
             }
           ],
@@ -571,12 +570,11 @@
             },
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Welche Ergänzungen lassen einen neutralen Beitrag wie breiten Konsens wirken?",
-              "showOnOptionId": "rightA"
+              "text": "Aktivität 2: Welche Ergänzungen lassen einen neutralen Beitrag wie breiten Konsens wirken?"
             },
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Wähle die stärksten Konsens-Verstärker.",
+              "text": "Guter Retry. Wähle jetzt wieder die stärksten Konsens-Verstärker.",
               "showOnOptionId": "retry"
             }
           ],
