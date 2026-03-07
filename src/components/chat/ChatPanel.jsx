@@ -2,6 +2,11 @@ import { useEffect, useRef } from 'react'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
+function isAvatarOption(option) {
+  const id = String(option?.id || '').toLowerCase()
+  return option?.kind === 'avatar' || id === 'avatar1' || id === 'avatar2' || id === 'avatar3'
+}
+
 function getHostDisplayName(hostId, speakerName, selectedHostId) {
   const id = String(hostId || '').toLowerCase()
   const name = String(speakerName || '').toLowerCase()
@@ -25,8 +30,8 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
 
 export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId, selectedAvatarId, title = 'Media Lab Luminara' }) {
   const scrollRef = useRef(null)
-  const avatarOptions = options.filter((option) => option?.kind === 'avatar')
-  const textOptions = options.filter((option) => option?.kind !== 'avatar')
+  const avatarOptions = options.filter((option) => isAvatarOption(option))
+  const textOptions = options.filter((option) => !isAvatarOption(option))
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -78,7 +83,7 @@ export function ChatPanel({ messages = [], options = [], onSelectOption, selecte
                   type="button"
                   className={`chat-panel__avatar-option ${isSelected ? 'chat-panel__avatar-option--selected' : ''}`}
                   onClick={() => onSelectOption?.(index, option)}
-                  aria-label="Avatar auswählen"
+                  aria-label={`Avatar ${index + 1} auswählen`}
                   aria-pressed={isSelected}
                 >
                   <AvatarComponent className="chat-panel__avatar-image" />

@@ -2,7 +2,84 @@
   "scenes": [
     {
       "sceneId": 0,
-      "steps": []
+      "steps": [
+        {
+          "stepIndex": 0,
+          "type": "intro",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen."
+            }
+          ],
+          "options": [
+            {
+              "id": "ready",
+              "label": "Ich bin bereit!",
+              "nextStep": 1
+            },
+            {
+              "id": "hesitant",
+              "label": "Muss ich?",
+              "nextStep": 1
+            }
+          ]
+        },
+        {
+          "stepIndex": 1,
+          "type": "intro",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Stark, das passt zu Regelreich. Dann legen wir direkt los.",
+              "showOnOptionId": "ready"
+            },
+            {
+              "hostId": "selected",
+              "text": "Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.",
+              "showOnOptionId": "hesitant"
+            },
+            {
+              "hostId": "selected",
+              "text": "Wähle jetzt deinen Avatar für das Praktikum."
+            }
+          ],
+          "options": [
+            {
+              "id": "avatar1",
+              "label": "Avatar 1",
+              "nextStep": 2
+            },
+            {
+              "id": "avatar2",
+              "label": "Avatar 2",
+              "nextStep": 2
+            },
+            {
+              "id": "avatar3",
+              "label": "Avatar 3",
+              "nextStep": 2
+            }
+          ]
+        },
+        {
+          "stepIndex": 2,
+          "type": "transition",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Perfekt. Weiter geht es jetzt ins Media Lab."
+            }
+          ],
+          "options": [
+            {
+              "id": "continue",
+              "label": "Weiter zu Teil 1",
+              "nextPart": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "sceneId": 1,
