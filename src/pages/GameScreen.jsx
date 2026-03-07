@@ -213,8 +213,8 @@ export function GameScreen({
     : []
   const submitOptions = isPart2Activity1
     ? [
-      { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit' },
-      { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit' },
+      { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
+      { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
     ]
     : displayOptions
   const monitorOptions = isPart2Activity1 ? [...sentenceOptions, ...submitOptions] : displayOptions
@@ -235,9 +235,10 @@ export function GameScreen({
     const samePart = prev.part === currentPart
     const enteredActivity = samePart && prev.type !== 'activity' && currentType === 'activity'
     const enteredSummary = samePart && prev.type === 'activity' && currentType === 'summary'
+    const switchedActivityStep = samePart && prev.type === 'activity' && currentType === 'activity' && prev.stepIndex !== (stepData.stepIndex ?? 0)
 
     // For Teil 2 monitor flow: start each activity phase and summary with a clean thread.
-    if (currentPart === 2 && (enteredActivity || enteredSummary)) {
+    if (currentPart === 2 && (enteredActivity || enteredSummary || switchedActivityStep)) {
       setChatMessages([])
       appendedStepKeysRef.current = new Set()
     }

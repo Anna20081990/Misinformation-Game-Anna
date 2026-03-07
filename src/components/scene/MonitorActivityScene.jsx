@@ -4,6 +4,8 @@ import { HostAvatar } from '../layout/HostAvatar.jsx'
 
 export function MonitorActivityScene({ messages = [], options = [], onSelectOption, variant = 'monitor' }) {
   const scrollRef = useRef(null)
+  const sentenceOptions = options.filter((opt) => opt.kind === 'sentence')
+  const actionOptions = options.filter((option) => option.kind !== 'sentence')
   const titleByVariant = {
     monitor: 'Stand-PC Monitor',
     tablet: 'Tablet Interface',
@@ -39,20 +41,20 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
               {variant === 'monitor-select' && (
                 <section className="monitor-select" aria-label="Beitrag analysieren">
                   <h3 className="monitor-select__title">Beitrag</h3>
-                  <div className="monitor-select__sentences">
-                    {options
-                      .filter((opt) => opt.kind === 'sentence')
-                      .map((sentence, index) => (
+                  <p className="monitor-select__paragraph">
+                    {sentenceOptions.map((sentence, index) => (
+                        <span key={`sentence-wrap-${sentence.id ?? index}`}>
                         <button
-                          key={sentence.id ?? `sentence-${index}`}
                           type="button"
                           className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
                           onClick={() => onSelectOption?.(index, sentence)}
                         >
                           {sentence.label}
                         </button>
+                        {index < sentenceOptions.length - 1 && <span> </span>}
+                        </span>
                       ))}
-                  </div>
+                  </p>
                 </section>
               )}
 
@@ -75,9 +77,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
             </div>
 
             <footer className="monitor-scene__options" role="group" aria-label="Aktivitätsoptionen">
-              {options
-                .filter((option) => option.kind !== 'sentence')
-                .map((option, index) => (
+              {actionOptions.map((option, index) => (
                 <button
                   key={option.id ?? index}
                   type="button"
