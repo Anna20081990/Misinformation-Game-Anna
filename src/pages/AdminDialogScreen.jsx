@@ -30,6 +30,7 @@ function emptyForm(stepIndex = 0) {
     type: 'dialog',
     speechBubbles: [{ hostId: 'selected', text: '', showOnOptionId: '' }],
     options: [{ id: '', label: '', nextStep: '', nextPart: '' }],
+    activityConfigText: '',
   }
 }
 
@@ -40,6 +41,20 @@ function toNumberOrNull(value) {
 }
 
 function normalizeForApi(formData) {
+  const activityConfigRaw = formData.activityConfigText?.trim()
+  let parsedActivityConfig = null
+  if (activityConfigRaw) {
+    try {
+      parsedActivityConfig = JSON.parse(activityConfigRaw)
+    } catch {
+      throw new Error('activityConfig ist kein gültiges JSON.')
+    }
+
+    if (!parsedActivityConfig || typeof parsedActivityConfig !== 'object' || Array.isArray(parsedActivityConfig)) {
+      throw new Error('activityConfig muss ein JSON-Objekt sein.')
+    }
+  }
+
   return {
     stepIndex: Number(formData.stepIndex),
     type: formData.type || 'dialog',
@@ -66,6 +81,7 @@ function normalizeForApi(formData) {
 
         return out
       }),
+    ...(parsedActivityConfig ? { activityConfig: parsedActivityConfig } : {}),
   }
 }
 
@@ -84,6 +100,7 @@ function fromStep(step) {
       nextStep: item.nextStep ?? '',
       nextPart: item.nextPart ?? '',
     })),
+    activityConfigText: step.activityConfig ? JSON.stringify(step.activityConfig, null, 2) : '',
   }
 }
 
@@ -398,6 +415,17 @@ export function AdminDialogScreen() {
           <button type="button" className="admin__action" onClick={() => setFormData((prev) => ({ ...prev, options: [...prev.options, { id: '', label: '', nextStep: '', nextPart: '' }] }))}>
             Option hinzufügen
           </button>
+
+          <h3>Activity Config (JSON, optional)</h3>
+          <label className="admin__field admin__field--full">
+            <span>activityConfig</span>
+            <textarea
+              rows="10"
+              value={formData.activityConfigText}
+              onChange={(event) => setFormData((prev) => ({ ...prev, activityConfigText: event.target.value }))}
+              placeholder='{"mode":"sentence-marking","sentences":[...]}'
+            />
+          </label>
 
           {loading && <p className="admin__hint">Lade...</p>}
           {status && <p className="admin__success">{status}</p>}

@@ -28,6 +28,8 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
 
   const options = payload.options ?? []
   assert(Array.isArray(options), 'options muss ein Array sein.')
+  const activityConfig = payload.activityConfig == null ? null : payload.activityConfig
+  assert(activityConfig == null || typeof activityConfig === 'object', 'activityConfig muss ein Objekt sein.')
 
   const normalizedBubbles = speechBubbles.map((bubble, index) => {
     assert(bubble && typeof bubble === 'object', `speechBubbles[${index}] muss ein Objekt sein.`)
@@ -66,7 +68,13 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
     return normalized
   })
 
-  return { stepIndex, type, speechBubbles: normalizedBubbles, options: normalizedOptions }
+  return {
+    stepIndex,
+    type,
+    speechBubbles: normalizedBubbles,
+    options: normalizedOptions,
+    ...(activityConfig ? { activityConfig } : {}),
+  }
 }
 
 export function validateSceneDialogLogic(sceneEntry) {
