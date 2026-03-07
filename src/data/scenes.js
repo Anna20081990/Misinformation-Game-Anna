@@ -8,7 +8,7 @@ export const SCENES = [
   {
     id: 0,
     name: 'Avatar wählen',
-    backgroundImage: '/backgrounds/regelreich-panorama.svg',
+    backgroundImage: '/backgrounds/Willkommen.png',
     backgroundPlaceholder: 'linear-gradient(180deg, #dff2ff 0%, #f7fcff 100%)',
     characters: [],
     speechBubbles: [],
