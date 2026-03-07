@@ -5,6 +5,42 @@ import { useScene } from './hooks/useScene.js'
 import { DEFAULT_PART } from './data/constants.js'
 import { getSceneDialogs } from './api/dialogApi.js'
 
+const FALLBACK_NAV_STEPS_BY_PART = {
+  1: [
+    { stepIndex: 0, type: 'intro' },
+    { stepIndex: 3, type: 'transition' },
+  ],
+  2: [
+    { stepIndex: 0, type: 'intro' },
+    { stepIndex: 1, type: 'example' },
+    { stepIndex: 2, type: 'example' },
+    { stepIndex: 3, type: 'activity' },
+    { stepIndex: 4, type: 'activity' },
+    { stepIndex: 5, type: 'summary' },
+  ],
+  3: [
+    { stepIndex: 0, type: 'intro' },
+    { stepIndex: 1, type: 'example' },
+    { stepIndex: 2, type: 'example' },
+    { stepIndex: 3, type: 'activity' },
+    { stepIndex: 4, type: 'activity' },
+    { stepIndex: 5, type: 'summary' },
+  ],
+  4: [
+    { stepIndex: 0, type: 'intro' },
+    { stepIndex: 1, type: 'example' },
+    { stepIndex: 2, type: 'example' },
+    { stepIndex: 3, type: 'activity' },
+    { stepIndex: 4, type: 'activity' },
+    { stepIndex: 5, type: 'summary' },
+  ],
+  5: [
+    { stepIndex: 0, type: 'intro' },
+    { stepIndex: 1, type: 'summary' },
+    { stepIndex: 3, type: 'transition' },
+  ],
+}
+
 function buildSubchapters(steps = []) {
   const sortedSteps = [...steps]
     .filter((step) => Number.isFinite(step?.stepIndex))
@@ -107,11 +143,14 @@ export function App() {
     console.log('Antwort gewählt:', option?.label, 'Teil:', part)
   }
 
-  const activeSubchapters = buildSubchapters(dialogsByPart[currentPart]?.steps || [])
+  const activeSteps = (dialogsByPart[currentPart]?.steps?.length
+    ? dialogsByPart[currentPart].steps
+    : (FALLBACK_NAV_STEPS_BY_PART[currentPart] || []))
+  const activeSubchapters = buildSubchapters(activeSteps)
   const activeChapterStepIndex = resolveActiveChapterStep(
     activeStepByPart[currentPart] ?? 0,
     activeSubchapters,
-    dialogsByPart[currentPart]?.steps || []
+    activeSteps
   )
 
   useEffect(() => {
