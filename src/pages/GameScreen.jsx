@@ -1112,10 +1112,14 @@ export function GameScreen({
 
   if (isMonitorActivityMode) {
     const part2SelectMode = isPart2Activity1Context || isPart2Activity2Context
+    const part3SelectMode = isPart3Activity1Context || isPart3Activity2Context
+    const part4SelectMode = isPart4Activity1Context || isPart4Activity2Context
     const monitorVariant = part2SelectMode
       ? 'keller-monitor-select'
-      : (isPart3Activity1Context || isPart3Activity2Context || isPart4Activity1Context || isPart4Activity2Context)
-        ? 'monitor-select'
+      : part3SelectMode
+        ? 'grossraum-monitor-select'
+        : part4SelectMode
+          ? 'einzelbuero-tablet-select'
         : (activityVariantByPart[currentPart] || 'monitor')
 
     return (
@@ -1124,7 +1128,15 @@ export function GameScreen({
         options={monitorOptions}
         onSelectOption={handleSelectOption}
         variant={monitorVariant}
-        backgroundImage={part2SelectMode ? '/backgrounds/keller-monitor.png' : null}
+        backgroundImage={
+          part2SelectMode
+            ? '/backgrounds/keller-monitor.png'
+            : part3SelectMode
+              ? '/backgrounds/grossraum-monitor.png'
+              : part4SelectMode
+                ? '/backgrounds/einzelbuero-tablet.png'
+                : null
+        }
       />
     )
   }

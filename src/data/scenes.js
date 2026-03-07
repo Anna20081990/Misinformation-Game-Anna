@@ -91,7 +91,7 @@ export const SCENES = [
   {
     id: 5,
     name: 'Corner Office – Abschluss',
-    backgroundImage: DEFAULT_BACKGROUND,
+    backgroundImage: '/backgrounds/kuppelsaal.png',
     backgroundPlaceholder: 'linear-gradient(150deg, #1a2a4a 0%, #2d4a6e 35%, #4a6fa5 70%, #87CEEB 100%)',
     characters: [
       { id: 'clara', name: 'Clara Blick', avatarUrl: null, position: { x: '25%', y: '62%' }, align: 'left' },

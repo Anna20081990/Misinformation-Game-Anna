@@ -520,7 +520,9 @@ html, body {
   background: rgba(188, 250, 197, 0.92);
 }
 
-.monitor-scene--keller-monitor-select .monitor-scene__bezel {
+.monitor-scene--keller-monitor-select .monitor-scene__bezel,
+.monitor-scene--grossraum-monitor-select .monitor-scene__bezel,
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__bezel {
   position: absolute;
   left: 52.2%;
   top: 53%;
@@ -534,50 +536,74 @@ html, body {
   box-shadow: none;
 }
 
-.monitor-scene--keller-monitor-select {
+.monitor-scene--keller-monitor-select,
+.monitor-scene--grossraum-monitor-select,
+.monitor-scene--einzelbuero-tablet-select {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0;
 }
 
-.monitor-scene--keller-monitor-select .monitor-scene__screen {
+.monitor-scene--keller-monitor-select .monitor-scene__screen,
+.monitor-scene--grossraum-monitor-select .monitor-scene__screen,
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__screen {
   background: transparent;
   border: none;
 }
 
-.monitor-scene--keller-monitor-select .monitor-scene__header {
+.monitor-scene--keller-monitor-select .monitor-scene__header,
+.monitor-scene--grossraum-monitor-select .monitor-scene__header,
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__header {
   display: none;
 }
 
-.monitor-scene--keller-monitor-select .monitor-scene__options {
+.monitor-scene--keller-monitor-select .monitor-scene__options,
+.monitor-scene--grossraum-monitor-select .monitor-scene__options,
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__options {
   border-top: none;
   padding: 0.45rem 0;
 }
 
-.monitor-scene--keller-monitor-select .monitor-scene__messages {
+.monitor-scene--keller-monitor-select .monitor-scene__messages,
+.monitor-scene--grossraum-monitor-select .monitor-scene__messages,
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__messages {
   padding: 0.2rem 0;
 }
 
-.monitor-scene--keller-monitor-select .monitor-select {
+.monitor-scene--keller-monitor-select .monitor-select,
+.monitor-scene--grossraum-monitor-select .monitor-select,
+.monitor-scene--einzelbuero-tablet-select .monitor-select {
   border: none;
   background: transparent;
   padding: 0;
 }
 
 .monitor-scene--keller-monitor-select .monitor-select__title,
-.monitor-scene--keller-monitor-select .monitor-choice__topic {
+.monitor-scene--keller-monitor-select .monitor-choice__topic,
+.monitor-scene--grossraum-monitor-select .monitor-select__title,
+.monitor-scene--grossraum-monitor-select .monitor-choice__topic,
+.monitor-scene--einzelbuero-tablet-select .monitor-select__title,
+.monitor-scene--einzelbuero-tablet-select .monitor-choice__topic {
   color: #d8f7e8;
   text-shadow: 0 0 6px rgba(51, 153, 99, 0.45);
 }
 
 .monitor-scene--keller-monitor-select .monitor-choice__item,
-.monitor-scene--keller-monitor-select .monitor-select__sentence {
+.monitor-scene--keller-monitor-select .monitor-select__sentence,
+.monitor-scene--grossraum-monitor-select .monitor-choice__item,
+.monitor-scene--grossraum-monitor-select .monitor-select__sentence,
+.monitor-scene--einzelbuero-tablet-select .monitor-choice__item,
+.monitor-scene--einzelbuero-tablet-select .monitor-select__sentence {
   border-color: rgba(145, 227, 179, 0.44);
   background: rgba(18, 60, 42, 0.18);
 }
 
 .monitor-scene--keller-monitor-select .monitor-choice__item--selected,
-.monitor-scene--keller-monitor-select .monitor-select__sentence--selected {
+.monitor-scene--keller-monitor-select .monitor-select__sentence--selected,
+.monitor-scene--grossraum-monitor-select .monitor-choice__item--selected,
+.monitor-scene--grossraum-monitor-select .monitor-select__sentence--selected,
+.monitor-scene--einzelbuero-tablet-select .monitor-choice__item--selected,
+.monitor-scene--einzelbuero-tablet-select .monitor-select__sentence--selected {
   color: #f4fff8;
   font-weight: 700;
   background: rgba(48, 128, 90, 0.36);
@@ -586,24 +612,36 @@ html, body {
 }
 
 .monitor-scene--keller-monitor-select .monitor-choice__text,
-.monitor-scene--keller-monitor-select .monitor-select__sentence {
+.monitor-scene--keller-monitor-select .monitor-select__sentence,
+.monitor-scene--grossraum-monitor-select .monitor-choice__text,
+.monitor-scene--grossraum-monitor-select .monitor-select__sentence,
+.monitor-scene--einzelbuero-tablet-select .monitor-choice__text,
+.monitor-scene--einzelbuero-tablet-select .monitor-select__sentence {
   font-size: 1.08rem;
 }
 
 .monitor-scene--keller-monitor-select .monitor-choice__item:hover,
-.monitor-scene--keller-monitor-select .monitor-select__sentence:hover {
+.monitor-scene--keller-monitor-select .monitor-select__sentence:hover,
+.monitor-scene--grossraum-monitor-select .monitor-choice__item:hover,
+.monitor-scene--grossraum-monitor-select .monitor-select__sentence:hover,
+.monitor-scene--einzelbuero-tablet-select .monitor-choice__item:hover,
+.monitor-scene--einzelbuero-tablet-select .monitor-select__sentence:hover {
   background: rgba(30, 94, 66, 0.24);
   border-color: rgba(168, 243, 197, 0.64);
 }
 
 @media (max-width: 1200px) {
-  .monitor-scene--keller-monitor-select {
+  .monitor-scene--keller-monitor-select,
+  .monitor-scene--grossraum-monitor-select,
+  .monitor-scene--einzelbuero-tablet-select {
     align-items: center;
     justify-content: center;
     padding: 1rem;
   }
 
-  .monitor-scene--keller-monitor-select .monitor-scene__bezel {
+  .monitor-scene--keller-monitor-select .monitor-scene__bezel,
+  .monitor-scene--grossraum-monitor-select .monitor-scene__bezel,
+  .monitor-scene--einzelbuero-tablet-select .monitor-scene__bezel {
     width: min(95vw, 980px);
     height: min(78vh, 760px);
     left: 50%;
@@ -615,7 +653,9 @@ html, body {
     border: 1px solid rgba(145, 227, 179, 0.3);
   }
 
-  .monitor-scene--keller-monitor-select .monitor-scene__screen {
+  .monitor-scene--keller-monitor-select .monitor-scene__screen,
+  .monitor-scene--grossraum-monitor-select .monitor-scene__screen,
+  .monitor-scene--einzelbuero-tablet-select .monitor-scene__screen {
     background: rgba(5, 24, 17, 0.25);
     border: 1px solid rgba(145, 227, 179, 0.24);
   }
