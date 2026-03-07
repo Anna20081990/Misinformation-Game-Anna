@@ -23,3 +23,64 @@ npm run build
 ```
 
 Ausgabe in `dist/`.
+
+## Dialog-Backend (lokal)
+
+Das Projekt enthält jetzt ein lokales Backend zum Erstellen, Verwalten und Entfernen von Dialogen inkl. Logikprüfung (`nextStep`, `nextPart`).
+
+### Starten
+
+```bash
+npm install
+npm run server
+```
+
+Backend läuft dann auf `http://localhost:3001`.
+
+Für paralleles Frontend + Backend:
+
+```bash
+npm run dev:full
+```
+
+Im Frontend oben auf **Admin** wechseln, um die Dialogverwaltung zu öffnen.
+
+### Datenhaltung
+
+- Persistenzdatei: `server/data/dialogs.json`
+- Änderungen über API werden direkt in diese Datei geschrieben.
+
+### API-Endpunkte
+
+- `GET /api/health` - Healthcheck
+- `GET /api/scenes` - Szenenübersicht (mit Anzahl Dialogschritte)
+- `GET /api/scenes/:sceneId/dialogs` - alle Dialogschritte einer Szene
+- `GET /api/scenes/:sceneId/dialogs/:stepIndex` - einzelner Dialogschritt
+- `POST /api/scenes/:sceneId/dialogs` - Dialogschritt anlegen
+- `PUT /api/scenes/:sceneId/dialogs/:stepIndex` - Dialogschritt aktualisieren
+- `DELETE /api/scenes/:sceneId/dialogs/:stepIndex` - Dialogschritt löschen
+
+### Request-Format für `POST`/`PUT`
+
+```json
+{
+  "stepIndex": 4,
+  "speechBubbles": [
+    {
+      "characterId": "clara",
+      "speakerName": "Clara",
+      "text": "Beispieltext",
+      "anchor": "left"
+    }
+  ],
+  "options": [
+    { "id": "a", "label": "Weiter", "nextStep": 5 },
+    { "id": "b", "label": "Nächste Szene", "nextPart": 2 }
+  ]
+}
+```
+
+Hinweise:
+- `stepIndex` kann bei `POST` weggelassen werden (wird dann automatisch vergeben).
+- `nextStep` muss auf einen existierenden Schritt derselben Szene zeigen.
+- `nextPart` muss auf eine existierende Szene (0-5) zeigen.

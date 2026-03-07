@@ -1,0 +1,176 @@
+import express from 'express'
+import cors from 'cors'
+import { SCENES } from '../src/data/scenes.js'
+import {
+  ensureSceneExists,
+  ensureStepNotReferenced,
+  normalizeStepPayload,
+  validateSceneDialogLogic,
+} from './lib/dialogValidation.js'
+import {
+  getAllSceneDialogs,
+  getSceneDialogs,
+  updateSceneDialogs,
+} from './lib/dialogStore.js'
+
+const app = express()
+
+app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173'] }))
+app.use(express.json({ limit: '1mb' }))
+
+app.get('/api/health', (_req, res) => {
+  res.json({ ok: true, service: 'regelreich-dialog-backend' })
+})
+
+app.get('/api/scenes', async (_req, res, next) => {
+  try {
+    const dialogs = await getAllSceneDialogs()
+    const byId = new Map(dialogs.map((entry) => [entry.sceneId, entry]))
+
+    const result = SCENES.map((scene) => {
+      const entry = byId.get(scene.id) ?? { sceneId: scene.id, steps: [] }
+      return {
+        sceneId: scene.id,
+        name: scene.name,
+        stepCount: entry.steps.length,
+      }
+    })
+
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/api/scenes/:sceneId/dialogs', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    ensureSceneExists(sceneId)
+
+    const entry = await getSceneDialogs(sceneId)
+    res.json(entry ?? { sceneId, steps: [] })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    const stepIndex = Number(req.params.stepIndex)
+
+    ensureSceneExists(sceneId)
+
+    const entry = await getSceneDialogs(sceneId)
+    const step = entry?.steps?.find((item) => item.stepIndex === stepIndex)
+
+    if (!step) {
+      return res.status(404).json({ message: `Step ${stepIndex} in Szene ${sceneId} nicht gefunden.` })
+    }
+
+    return res.json(step)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+app.post('/api/scenes/:sceneId/dialogs', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    ensureSceneExists(sceneId)
+
+    const current = await getSceneDialogs(sceneId)
+    const maxStep = Math.max(-1, ...(current?.steps ?? []).map((step) => step.stepIndex))
+    const normalized = normalizeStepPayload(req.body, maxStep + 1)
+
+    const updated = await updateSceneDialogs(sceneId, (entry) => {
+      const exists = entry.steps.some((step) => step.stepIndex === normalized.stepIndex)
+      if (exists) {
+        const error = new Error(`Step ${normalized.stepIndex} existiert bereits.`)
+        error.status = 409
+        throw error
+      }
+
+      const next = { ...entry, steps: [...entry.steps, normalized] }
+      validateSceneDialogLogic(next)
+      return next
+    })
+
+    res.status(201).json(updated)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.put('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    const stepIndex = Number(req.params.stepIndex)
+
+    ensureSceneExists(sceneId)
+    const normalized = normalizeStepPayload(req.body, stepIndex)
+
+    const updated = await updateSceneDialogs(sceneId, (entry) => {
+      const exists = entry.steps.some((step) => step.stepIndex === stepIndex)
+      if (!exists) {
+        const error = new Error(`Step ${stepIndex} existiert nicht.`)
+        error.status = 404
+        throw error
+      }
+
+      const nextSteps = entry.steps.map((step) =>
+        step.stepIndex === stepIndex ? { ...normalized, stepIndex } : step,
+      )
+
+      const next = { ...entry, steps: nextSteps }
+      validateSceneDialogLogic(next)
+      return next
+    })
+
+    res.json(updated)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.delete('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    const stepIndex = Number(req.params.stepIndex)
+
+    ensureSceneExists(sceneId)
+
+    const updated = await updateSceneDialogs(sceneId, (entry) => {
+      const exists = entry.steps.some((step) => step.stepIndex === stepIndex)
+      if (!exists) {
+        const error = new Error(`Step ${stepIndex} existiert nicht.`)
+        error.status = 404
+        throw error
+      }
+
+      ensureStepNotReferenced(entry, stepIndex)
+
+      const next = {
+        ...entry,
+        steps: entry.steps.filter((step) => step.stepIndex !== stepIndex),
+      }
+
+      validateSceneDialogLogic(next)
+      return next
+    })
+
+    res.json(updated)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.use((error, _req, res, _next) => {
+  const status = error.status ?? 500
+  res.status(status).json({
+    message: error.message ?? 'Unbekannter Fehler',
+    status,
+  })
+})
+
+export { app }

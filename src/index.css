@@ -62,6 +62,23 @@ html, body {
   flex-wrap: wrap;
 }
 
+.app__mode-btn {
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: rgba(7, 21, 37, 0.55);
+  color: #fff;
+  font-weight: 700;
+  padding: 0 0.9rem;
+  cursor: pointer;
+}
+
+.app__mode-btn--active {
+  background: #eaf4fb;
+  color: #0f2840;
+  border-color: #ffffff;
+}
+
 .app__nav-btn {
   width: 2.25rem;
   height: 2.25rem;
@@ -431,4 +448,165 @@ html, body {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--button-primary);
+}
+
+/* -----------------------------------------------
+   Admin UI
+   ----------------------------------------------- */
+.admin {
+  min-height: calc(100vh - 3rem);
+  background: linear-gradient(180deg, #eff4f9 0%, #dce8f2 100%);
+  padding: 1.25rem;
+}
+
+.admin__header {
+  margin: 0 auto 1rem;
+  max-width: 1400px;
+}
+
+.admin__title {
+  margin: 0;
+  color: #112438;
+}
+
+.admin__subtitle {
+  margin: 0.35rem 0 0;
+  color: #314e67;
+}
+
+.admin__layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 260px minmax(380px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.admin__panel,
+.admin__editor {
+  background: #fff;
+  border: 1px solid #d1dce6;
+  border-radius: 14px;
+  padding: 0.9rem;
+}
+
+.admin__panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.admin__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.admin__list-btn {
+  border: 1px solid #cad8e5;
+  background: #f7fbff;
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin__list-btn small {
+  color: #4f667a;
+}
+
+.admin__list-btn--active {
+  border-color: #4388bd;
+  background: #e9f4fd;
+}
+
+.admin__editor h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.admin__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin__action,
+.admin__danger,
+.admin__link {
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.admin__action {
+  background: #2e8bcc;
+  color: #fff;
+  padding: 0.45rem 0.7rem;
+}
+
+.admin__danger {
+  background: #c34a45;
+  color: #fff;
+  padding: 0.45rem 0.7rem;
+}
+
+.admin__link {
+  background: transparent;
+  color: #2d6b9b;
+  padding: 0.15rem 0;
+  text-align: left;
+}
+
+.admin__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.55rem;
+}
+
+.admin__field input,
+.admin__field textarea,
+.admin__field select {
+  border: 1px solid #c6d5e1;
+  border-radius: 8px;
+  padding: 0.45rem 0.5rem;
+  font: inherit;
+}
+
+.admin__field--full {
+  grid-column: 1 / -1;
+}
+
+.admin__block {
+  border: 1px solid #d9e4ee;
+  border-radius: 10px;
+  background: #f9fcff;
+  padding: 0.7rem;
+  margin-bottom: 0.55rem;
+}
+
+.admin__hint {
+  color: #41596c;
+}
+
+.admin__success {
+  color: #1d7d43;
+  font-weight: 600;
+}
+
+.admin__error {
+  color: #a7322d;
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .admin__layout {
+    grid-template-columns: 1fr;
+  }
 }
