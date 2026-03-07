@@ -6,6 +6,14 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   const id = String(hostId || '').toLowerCase()
   const name = String(speakerName || '').toLowerCase()
 
+  // If a specific non-host speaker label is provided (e.g. "Botschafter Regelreich"),
+  // prefer it over dynamic host resolution from selectedHostId.
+  if (speakerName && id !== 'selected') {
+    if (!name.includes('clara') && !name.includes('uwe') && !name.includes('host')) {
+      return speakerName
+    }
+  }
+
   if (id === 'host' && selectedHostId === 'clara') return 'Clara Blick'
   if (id === 'host' && selectedHostId === 'uwe') return 'Uwe R. Blick'
   if (id === 'selected' && selectedHostId === 'clara') return 'Clara Blick'
