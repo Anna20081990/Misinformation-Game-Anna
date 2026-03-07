@@ -295,9 +295,9 @@ html, body {
 }
 
 .monitor-select__sentence {
-  border: 1px solid rgba(152, 204, 236, 0);
-  background: rgba(233, 246, 255, 0);
-  color: #13283e;
+  border: 1px solid rgba(152, 204, 236, 0.25);
+  background: rgba(18, 54, 84, 0.48);
+  color: #e7f5ff;
   text-align: left;
   border-radius: 8px;
   padding: 0.15rem 0.22rem;
@@ -308,13 +308,14 @@ html, body {
 }
 
 .monitor-select__sentence:hover {
-  border-color: rgba(143, 217, 255, 0.62);
-  background: rgba(216, 241, 255, 0.78);
+  border-color: rgba(143, 217, 255, 0.78);
+  background: rgba(39, 95, 138, 0.62);
 }
 
 .monitor-select__sentence--selected {
   border-color: #6de2a1;
   background: #dff9e7;
+  color: #123119;
 }
 
 .monitor-select__paragraph {
