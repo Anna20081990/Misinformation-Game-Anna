@@ -291,12 +291,21 @@ export function GameScreen({
     }
 
     if (isPart2Activity1 && option?.kind === 'submit') {
+      const selectedCorrectCount = selectedSentenceIndexes.filter((item) => PART2_ACTIVITY1_CORRECT_INDEXES.includes(item)).length
+      const selectedWrongCount = selectedSentenceIndexes.length - selectedCorrectCount
       const isCorrect =
         selectedSentenceIndexes.length === PART2_ACTIVITY1_CORRECT_INDEXES.length &&
         PART2_ACTIVITY1_CORRECT_INDEXES.every((item) => selectedSentenceIndexes.includes(item))
 
-      const targetId = isCorrect ? 'rightA' : 'wrongA'
-      const mappedOption = options.find((item) => item.id === targetId)
+      const baseWrongOption = options.find((item) => item.id === 'wrongA')
+      const mappedOption = isCorrect
+        ? options.find((item) => item.id === 'rightA')
+        : selectedCorrectCount === 0
+          ? baseWrongOption
+          : selectedWrongCount === 0
+            ? { ...baseWrongOption, id: 'wrongPartial' }
+            : { ...baseWrongOption, id: 'wrongMixed' }
+
       if (!mappedOption) return
 
       option = { ...mappedOption, label: option.label }

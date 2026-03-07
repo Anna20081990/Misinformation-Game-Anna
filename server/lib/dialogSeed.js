@@ -97,6 +97,8 @@ function scene2Steps() {
     ]),
     step(31, 'activity', [
       bubble('selected', 'Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung.'),
+      bubble('selected', 'Du hast schon einen relevanten Teil markiert, aber noch nicht alles erwischt. Schau auf weitere Zuspitzungen.', 'wrongPartial'),
+      bubble('selected', 'Teilweise richtig, aber du hast auch neutrale Teile markiert und nicht alles erwischt. Konzentriere dich auf klare Übertreibung und Generalisierung.', 'wrongMixed'),
     ], [option('retry', 'Ich versuche es nochmal.', 3)]),
     step(4, 'activity', [
       bubble('selected', 'Exakt. Jetzt die nächste Stufe: Welche Variante erzeugt die höchste Empörung?', 'rightA'),
