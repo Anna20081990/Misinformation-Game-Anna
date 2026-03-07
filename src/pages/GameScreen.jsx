@@ -132,6 +132,7 @@ export function GameScreen({
   const [chatMessages, setChatMessages] = useState([])
   const [sceneDialogs, setSceneDialogs] = useState(null)
   const [selectedSentenceIndexes, setSelectedSentenceIndexes] = useState([])
+  const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
@@ -142,6 +143,7 @@ export function GameScreen({
     setChatMessages([])
     setSceneDialogs(null)
     setSelectedSentenceIndexes([])
+    setLastSubmittedSentenceIndexes([])
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -192,7 +194,8 @@ export function GameScreen({
     getFallbackStep(scene, currentPart, stepIndex)
 
   const options = stepData.options || []
-  const isPart2Activity1 = currentPart === 2 && Number(stepData.stepIndex) === 3
+  const isPart2Activity1InputStep = currentPart === 2 && Number(stepData.stepIndex) === 3
+  const isPart2Activity1Context = currentPart === 2 && [3, 31].includes(Number(stepData.stepIndex))
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -202,28 +205,33 @@ export function GameScreen({
 
     return option
   })
-  const sentenceOptions = isPart2Activity1
+  const effectiveSentenceSelection = isPart2Activity1InputStep ? selectedSentenceIndexes : lastSubmittedSentenceIndexes
+  const sentenceOptions = isPart2Activity1Context
     ? PART2_ACTIVITY1_SENTENCES.map((sentence, index) => ({
       id: `sentence-${index + 1}`,
       kind: 'sentence',
       label: sentence,
-      selected: selectedSentenceIndexes.includes(index),
+      selected: effectiveSentenceSelection.includes(index),
+      disabled: !isPart2Activity1InputStep,
       sentenceIndex: index,
     }))
     : []
-  const submitOptions = isPart2Activity1
+  const submitOptions = isPart2Activity1InputStep
     ? [
       { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
       { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
     ]
     : displayOptions
-  const monitorOptions = isPart2Activity1 ? [...sentenceOptions, ...submitOptions] : displayOptions
+  const monitorOptions = isPart2Activity1Context ? [...sentenceOptions, ...submitOptions] : displayOptions
 
   useEffect(() => {
-    if (!isPart2Activity1 && selectedSentenceIndexes.length) {
+    if (!isPart2Activity1Context && selectedSentenceIndexes.length) {
       setSelectedSentenceIndexes([])
     }
-  }, [isPart2Activity1, selectedSentenceIndexes.length])
+    if (!isPart2Activity1Context && lastSubmittedSentenceIndexes.length) {
+      setLastSubmittedSentenceIndexes([])
+    }
+  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -279,7 +287,7 @@ export function GameScreen({
   }, [currentPart, stepData, stepIndex, selectedHostId, lastSelectedOptionId])
 
   const handleSelectOption = (index, option) => {
-    if (isPart2Activity1 && option?.kind === 'sentence') {
+    if (isPart2Activity1InputStep && option?.kind === 'sentence') {
       const sentenceIndex = Number(option.sentenceIndex)
       setSelectedSentenceIndexes((prev) => (
         prev.includes(sentenceIndex)
@@ -289,7 +297,7 @@ export function GameScreen({
       return
     }
 
-    if (isPart2Activity1 && option?.kind === 'submit') {
+    if (isPart2Activity1InputStep && option?.kind === 'submit') {
       const selectedCorrectCount = selectedSentenceIndexes.filter((item) => PART2_ACTIVITY1_CORRECT_INDEXES.includes(item)).length
       const selectedWrongCount = selectedSentenceIndexes.length - selectedCorrectCount
       const isCorrect =
@@ -307,6 +315,7 @@ export function GameScreen({
 
       if (!mappedOption) return
 
+      setLastSubmittedSentenceIndexes(selectedSentenceIndexes)
       option = { ...mappedOption, label: option.label }
     }
 
@@ -348,10 +357,11 @@ export function GameScreen({
         return
       }
 
-      if (option?.nextStep != null) {
+        if (option?.nextStep != null) {
         if (resetOnRetry) {
           setChatMessages([])
           setSelectedSentenceIndexes([])
+          setLastSubmittedSentenceIndexes([])
           appendedStepKeysRef.current = new Set()
           setLastSelectedOptionId(null)
         }
@@ -366,7 +376,7 @@ export function GameScreen({
         messages={chatMessages}
         options={monitorOptions}
         onSelectOption={handleSelectOption}
-        variant={isPart2Activity1 ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
+        variant={isPart2Activity1Context ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
       />
     )
   }

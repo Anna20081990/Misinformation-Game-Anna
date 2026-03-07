@@ -48,6 +48,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                           type="button"
                           className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
                           onClick={() => onSelectOption?.(index, sentence)}
+                          disabled={Boolean(sentence.disabled)}
                         >
                           {sentence.label}
                         </button>
