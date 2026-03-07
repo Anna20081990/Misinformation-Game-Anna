@@ -15,7 +15,7 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   return speakerName || 'Host'
 }
 
-export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId, selectedAvatarId }) {
+export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId, selectedAvatarId, title = 'Media Lab Luminara' }) {
   const scrollRef = useRef(null)
   const avatarOptions = options.filter((option) => option?.kind === 'avatar')
   const textOptions = options.filter((option) => option?.kind !== 'avatar')
@@ -29,7 +29,7 @@ export function ChatPanel({ messages = [], options = [], onSelectOption, selecte
   return (
     <section className="chat-panel" aria-label="Konversationsfenster">
       <header className="chat-panel__header">
-        <h2 className="chat-panel__title">Media Lab Luminara</h2>
+        <h2 className="chat-panel__title">{title}</h2>
       </header>
 
       <div className="chat-panel__messages" ref={scrollRef}>

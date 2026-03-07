@@ -147,7 +147,7 @@ export function GameScreen({
         id: 'part0:intro',
         speakerType: 'host',
         hostId: 'host',
-        speakerName: 'Regelreich',
+        speakerName: 'Botschafter Regelreich',
         text: PART0_INTRO_TEXT,
       },
     ])
@@ -202,14 +202,14 @@ export function GameScreen({
           id: `part0:reply:${Date.now()}:${option.id}`,
           speakerType: 'host',
           hostId: 'host',
-          speakerName: 'Regelreich',
+          speakerName: 'Botschafter Regelreich',
           text: cityReply,
         },
         {
           id: `part0:prompt:${Date.now()}`,
           speakerType: 'host',
           hostId: 'host',
-          speakerName: 'Regelreich',
+          speakerName: 'Botschafter Regelreich',
           text: PART0_AVATAR_PROMPT,
         },
       ])

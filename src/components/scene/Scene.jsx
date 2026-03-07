@@ -25,14 +25,17 @@ export function Scene({ scene, messages = [], options = [], onSelectOption, sele
           onSelectOption={onSelectOption}
           selectedHostId={selectedHostId}
           selectedAvatarId={selectedAvatarId}
+          title={scene?.id === 0 ? 'Regelreich' : 'Media Lab Luminara'}
         />
       </div>
 
-      <div className="scene__player-dock" aria-hidden="true">
-        <div className="scene__player-avatar">
-          <AvatarComponent className="scene__player-avatar-img" />
+      {scene?.id !== 0 && (
+        <div className="scene__player-dock" aria-hidden="true">
+          <div className="scene__player-avatar">
+            <AvatarComponent className="scene__player-avatar-img" />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
