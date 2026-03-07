@@ -1,0 +1,434 @@
+/* -----------------------------------------------
+   Regelreich – globale Variablen & Reset
+   ----------------------------------------------- */
+:root {
+  --scene-bg-fallback: #e0e8f0;
+  --character-bg: rgba(255, 255, 255, 0.92);
+  --character-border: #b0b8c0;
+  --character-text: #333;
+  --bubble-bg: #fff;
+  --bubble-border: #333;
+  --bubble-text: #222;
+  --interaction-bg: #2d2d2d;
+  --interaction-decor: #4a4a4a;
+  --button-primary: #7eb8da;
+  --button-secondary: #8bc98b;
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--bubble-text);
+}
+
+#root {
+  min-height: 100%;
+}
+
+/* -----------------------------------------------
+   App & Navigation
+   ----------------------------------------------- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+}
+
+.app__nav {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.app__nav-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.app__nav-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.app__nav-btn--active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a1a1a;
+  border-color: #fff;
+}
+
+.app__main {
+  flex: 1;
+  position: relative;
+  padding-top: 3rem;
+}
+
+/* -----------------------------------------------
+   Scene (Fullscreen-Container)
+   ----------------------------------------------- */
+.scene {
+  position: relative;
+  min-height: calc(100vh - 3rem);
+  width: 100%;
+  overflow: hidden;
+}
+
+.scene__content {
+  position: relative;
+  z-index: 2;
+  min-height: 50vh;
+  padding: 1rem;
+}
+
+/* -----------------------------------------------
+   Speech Bubbles – an Gesichter der beiden Figuren angepasst
+   ----------------------------------------------- */
+.scene__bubbles {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+/* Linke Figur: Blase über dem linken Gesicht (Position an Hintergrundbild anpassbar) */
+.scene__bubble-wrapper[data-anchor="left"] {
+  position: absolute;
+  left: 3%;
+  top: 14%;
+  max-width: min(300px, 36vw);
+  width: max-content;
+  pointer-events: auto;
+}
+
+/* Rechte Figur: Blase über dem rechten Gesicht */
+.scene__bubble-wrapper[data-anchor="right"] {
+  position: absolute;
+  right: 3%;
+  left: auto;
+  top: 14%;
+  max-width: min(300px, 36vw);
+  width: max-content;
+  pointer-events: auto;
+}
+
+/* Größe und Form: kompakt, proportional zum Gesicht; abgerundet, Schwanz-Seite etwas flacher */
+.speech-bubble {
+  position: relative;
+  padding: 0.6rem 0.9rem 0.75rem;
+  background: var(--bubble-bg);
+  border: 2px solid var(--bubble-border);
+  min-width: 6rem;
+  max-width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  pointer-events: auto;
+}
+
+/* Linke Blase: Schwanz unten links, daher unten links flacher */
+.speech-bubble--left {
+  border-radius: 1.25rem 1.25rem 0.35rem 1.25rem;
+}
+
+/* Rechte Blase: Schwanz unten rechts, daher unten rechts flacher */
+.speech-bubble--right {
+  border-radius: 1.25rem 1.25rem 1.25rem 0.35rem;
+}
+
+.speech-bubble__speaker {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  color: var(--bubble-text);
+  font-size: 0.9rem;
+}
+
+.speech-bubble__text {
+  margin: 0;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+  font-size: 0.95rem;
+}
+
+/* Schwanz der Sprechblase – zeigt zum Gesicht der Figur */
+.speech-bubble__tail {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  bottom: -16px;
+}
+
+.speech-bubble--left .speech-bubble__tail {
+  left: 1.25rem;
+  border-top-color: var(--bubble-border);
+  border-bottom: none;
+}
+
+.speech-bubble--left .speech-bubble__tail::after {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: -11px;
+  border: 7px solid transparent;
+  border-top-color: var(--bubble-bg);
+  border-bottom: none;
+}
+
+.speech-bubble--right .speech-bubble__tail {
+  right: 1.25rem;
+  left: auto;
+  border-top-color: var(--bubble-border);
+  border-bottom: none;
+}
+
+.speech-bubble--right .speech-bubble__tail::after {
+  content: '';
+  position: absolute;
+  right: -7px;
+  left: auto;
+  top: -11px;
+  border: 7px solid transparent;
+  border-top-color: var(--bubble-bg);
+  border-bottom: none;
+}
+
+/* -----------------------------------------------
+   Player Interaction (Avatar + Sprechblase unten links)
+   ----------------------------------------------- */
+.player-interaction {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1rem;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  max-width: calc(100vw - 2rem);
+}
+
+.generic-avatar {
+  flex-shrink: 0;
+  width: 80px;
+  height: 107px;
+}
+
+.generic-avatar__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+.player-interaction__avatar {
+  flex-shrink: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: #fff;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Textbox des Avatars im Stil der dunklen Leiste (Referenzbild): dunkelgrau, abgerundet, solide */
+.player-interaction__bubble {
+  position: relative;
+  background: rgba(30, 32, 35, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem 1.25rem 1.25rem;
+  min-width: 12rem;
+  max-width: min(480px, calc(100vw - 7rem));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  margin-left: 0.75rem;
+  backdrop-filter: blur(8px);
+}
+
+.player-interaction__bubble-tail {
+  position: absolute;
+  left: -12px;
+  bottom: 1.5rem;
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-right-color: rgba(255, 255, 255, 0.1);
+  border-left: none;
+}
+
+.player-interaction__bubble-tail::after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: -11px;
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+  border-right-color: rgba(30, 32, 35, 0.95);
+  border-left: none;
+}
+
+.player-interaction__buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.player-interaction__button {
+  flex: 1;
+  min-width: 120px;
+  max-width: 280px;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+.player-interaction__button:first-child {
+  background: var(--button-primary);
+  color: #1a2a3a;
+}
+
+.player-interaction__button:nth-child(2) {
+  background: var(--button-secondary);
+  color: #1a2a1a;
+}
+
+.player-interaction__button:hover {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
+
+.player-interaction__button:active {
+  transform: scale(0.98);
+}
+
+/* -----------------------------------------------
+   Teil 0: Avatar-Auswahl (weißer Hintergrund)
+   ----------------------------------------------- */
+.avatar-selection-scene {
+  min-height: calc(100vh - 3rem);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.avatar-selection {
+  text-align: center;
+  max-width: 900px;
+}
+
+.avatar-selection__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  color: #1a1a1a;
+}
+
+.avatar-selection__subtitle {
+  margin: 0 0 2rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.avatar-selection__list {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.avatar-selection__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 3px solid #ddd;
+  border-radius: 16px;
+  background: #fafafa;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.avatar-selection__item:hover {
+  border-color: var(--button-primary);
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-selection__item--selected {
+  border-color: var(--button-primary);
+  background: #f0f8ff;
+  box-shadow: 0 4px 16px rgba(126, 184, 218, 0.3);
+}
+
+.avatar-selection__svg {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid transparent;
+  background: #fff;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-selection__label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.avatar-selection__item--selected .avatar-selection__label {
+  color: var(--button-primary);
+}
+
+.avatar-selection__check {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--button-primary);
+}
