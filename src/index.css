@@ -522,7 +522,7 @@ html, body {
 
 .monitor-scene--keller-monitor-select .monitor-scene__bezel {
   position: absolute;
-  left: 50%;
+  left: 52.2%;
   top: 53%;
   transform: translate(-50%, -50%);
   width: min(50vw, 960px);
@@ -583,6 +583,11 @@ html, body {
   background: rgba(48, 128, 90, 0.36);
   border-color: rgba(179, 249, 206, 0.78);
   text-shadow: 0 0 2px rgba(5, 24, 16, 0.55);
+}
+
+.monitor-scene--keller-monitor-select .monitor-choice__text,
+.monitor-scene--keller-monitor-select .monitor-select__sentence {
+  font-size: 1.08rem;
 }
 
 .monitor-scene--keller-monitor-select .monitor-choice__item:hover,
