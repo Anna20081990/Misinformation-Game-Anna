@@ -3,22 +3,87 @@ import { Scene } from '../components/scene/Scene.jsx'
 import { AvatarSelectionScreen } from './AvatarSelectionScreen.jsx'
 import { getSceneById } from '../data/scenes.js'
 import { getPart1Step } from '../data/conversations/part1.js'
+import { getSceneDialogs } from '../api/dialogApi.js'
 
-/**
- * Eine Seite: aktueller Teil, Scene + Interaktionslogik.
- * Teil 0 = Avatar-Auswahl; Teil 1 = Konversation mit drei Interaktionsschleifen; andere Teile = feste Config.
- */
-export function GameScreen({ currentPart, onPartChange, onSelectOption, selectedAvatarId, onSelectAvatar }) {
+function getHostFullName(hostId) {
+  if (hostId === 'clara') return 'Clara Blick'
+  if (hostId === 'uwe') return 'Uwe R. Blick'
+  return 'Host'
+}
+
+function normalizeHostId(raw, selectedHostId) {
+  const id = String(raw || 'selected').toLowerCase()
+  if (id === 'clara' || id === 'uwe') return id
+  if (id === 'selected') return selectedHostId || 'selected'
+  return selectedHostId || 'selected'
+}
+
+function getFallbackStep(scene, currentPart, stepIndex) {
+  if (currentPart === 1) {
+    const step = getPart1Step(stepIndex)
+    return {
+      stepIndex: step.stepIndex,
+      speechBubbles: (step.speechBubbles || []).map((bubble) => ({
+        hostId: bubble.characterId === 'uwe' ? 'uwe' : 'clara',
+        text: bubble.text,
+      })),
+      options: step.options || [],
+    }
+  }
+
+  return {
+    stepIndex: 0,
+    speechBubbles: (scene.speechBubbles || []).map((bubble) => ({
+      hostId: bubble.characterId === 'host' ? 'selected' : bubble.characterId,
+      text: bubble.text,
+    })),
+    options: scene.interaction?.options || [],
+  }
+}
+
+export function GameScreen({
+  currentPart,
+  onPartChange,
+  onSelectOption,
+  selectedAvatarId,
+  onSelectAvatar,
+  selectedHostId,
+  onSelectHost,
+}) {
   const scene = getSceneById(currentPart)
   const [stepIndex, setStepIndex] = useState(0)
   const [chatMessages, setChatMessages] = useState([])
+  const [sceneDialogs, setSceneDialogs] = useState(null)
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
 
   useEffect(() => {
     setStepIndex(0)
     setChatMessages([])
+    setSceneDialogs(null)
     appendedStepKeysRef.current = new Set()
+  }, [currentPart])
+
+  useEffect(() => {
+    let active = true
+
+    async function loadDialogs() {
+      if (currentPart === 0) return
+
+      try {
+        const data = await getSceneDialogs(currentPart)
+        if (!active) return
+        setSceneDialogs(data)
+      } catch {
+        if (!active) return
+        setSceneDialogs(null)
+      }
+    }
+
+    loadDialogs()
+    return () => {
+      active = false
+    }
   }, [currentPart])
 
   useEffect(() => {
@@ -27,28 +92,36 @@ export function GameScreen({ currentPart, onPartChange, onSelectOption, selected
     }
   }, [])
 
-  const isPart1 = currentPart === 1
-  const part1Step = isPart1 ? getPart1Step(stepIndex) : null
-  const speechBubbles = part1Step?.speechBubbles ?? scene.speechBubbles
-  const options = part1Step ? part1Step.options : scene.interaction?.options ?? []
+  const sortedBackendSteps = [...(sceneDialogs?.steps || [])].sort((a, b) => a.stepIndex - b.stepIndex)
+  const stepData =
+    sortedBackendSteps.find((step) => step.stepIndex === stepIndex) ||
+    sortedBackendSteps[0] ||
+    getFallbackStep(scene, currentPart, stepIndex)
+
+  const options = stepData.options || []
 
   useEffect(() => {
     if (currentPart === 0) return
 
-    const key = `${currentPart}:${isPart1 ? stepIndex : 0}`
+    const effectiveStepIndex = stepData.stepIndex ?? stepIndex
+    const key = `${currentPart}:${effectiveStepIndex}`
     if (appendedStepKeysRef.current.has(key)) return
 
     appendedStepKeysRef.current.add(key)
-    const hostMessages = (speechBubbles ?? []).map((bubble, index) => ({
-      id: `${key}:host:${index}`,
-      speakerType: 'host',
-      characterId: bubble.characterId,
-      speakerName: bubble.speakerName,
-      text: bubble.text,
-    }))
+    const hostMessages = (stepData.speechBubbles || []).map((bubble, index) => {
+      const resolvedHostId = normalizeHostId(bubble.hostId, selectedHostId)
+
+      return {
+        id: `${key}:host:${index}`,
+        speakerType: 'host',
+        hostId: resolvedHostId,
+        speakerName: getHostFullName(resolvedHostId),
+        text: bubble.text,
+      }
+    })
 
     setChatMessages((prev) => [...prev, ...hostMessages])
-  }, [currentPart, isPart1, stepIndex, speechBubbles])
+  }, [currentPart, stepData, stepIndex, selectedHostId])
 
   if (currentPart === 0) {
     return (
@@ -60,6 +133,11 @@ export function GameScreen({ currentPart, onPartChange, onSelectOption, selected
 
   const handleSelectOption = (index, option) => {
     onSelectOption?.(index, option, currentPart)
+
+    const selectedFromPart1 = currentPart === 1 && stepData.stepIndex === 0 && (option?.id === 'clara' || option?.id === 'uwe')
+    if (selectedFromPart1) {
+      onSelectHost?.(option.id)
+    }
 
     if (option?.label) {
       setChatMessages((prev) => [
@@ -75,7 +153,7 @@ export function GameScreen({ currentPart, onPartChange, onSelectOption, selected
 
     if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current)
 
-    const shouldNavigate = option?.nextPart != null || (option?.nextStep != null && isPart1)
+    const shouldNavigate = option?.nextPart != null || option?.nextStep != null
     if (!shouldNavigate) return
 
     transitionTimerRef.current = setTimeout(() => {
@@ -85,17 +163,10 @@ export function GameScreen({ currentPart, onPartChange, onSelectOption, selected
         return
       }
 
-      if (option?.nextStep != null && isPart1) {
+      if (option?.nextStep != null) {
         setStepIndex(option.nextStep)
       }
     }, 220)
-  }
-
-  const handleChatOptionSelect = (index, option) => {
-    if (!option) {
-      return
-    }
-    handleSelectOption(index, option)
   }
 
   return (
@@ -103,8 +174,9 @@ export function GameScreen({ currentPart, onPartChange, onSelectOption, selected
       scene={scene}
       messages={chatMessages}
       options={options}
-      onSelectOption={handleChatOptionSelect}
+      onSelectOption={handleSelectOption}
       selectedAvatarId={selectedAvatarId}
+      selectedHostId={selectedHostId}
     />
   )
 }

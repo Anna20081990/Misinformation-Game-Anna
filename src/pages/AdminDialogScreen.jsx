@@ -7,10 +7,16 @@ import {
   updateSceneDialogStep,
 } from '../api/dialogApi.js'
 
+const HOST_CHOICES = [
+  { id: 'selected', label: 'Gewählter Host (aus Teil 1)' },
+  { id: 'clara', label: 'Clara Blick' },
+  { id: 'uwe', label: 'Uwe R. Blick' },
+]
+
 function emptyForm(stepIndex = 0) {
   return {
     stepIndex,
-    speechBubbles: [{ characterId: '', speakerName: '', text: '', anchor: 'left' }],
+    speechBubbles: [{ hostId: 'selected', text: '' }],
     options: [{ id: '', label: '', nextStep: '', nextPart: '' }],
   }
 }
@@ -27,10 +33,8 @@ function normalizeForApi(formData) {
     speechBubbles: formData.speechBubbles
       .filter((item) => item.text && item.text.trim())
       .map((item) => ({
-        characterId: item.characterId?.trim() || null,
-        speakerName: item.speakerName?.trim() || null,
+        hostId: item.hostId || 'selected',
         text: item.text.trim(),
-        anchor: item.anchor || 'left',
       })),
     options: formData.options
       .filter((item) => item.label && item.label.trim())
@@ -55,10 +59,8 @@ function fromStep(step) {
   return {
     stepIndex: step.stepIndex,
     speechBubbles: (step.speechBubbles || []).map((item) => ({
-      characterId: item.characterId ?? '',
-      speakerName: item.speakerName ?? '',
+      hostId: item.hostId ?? 'selected',
       text: item.text ?? '',
-      anchor: item.anchor ?? 'left',
     })),
     options: (step.options || []).map((item) => ({
       id: item.id ?? '',
@@ -83,6 +85,21 @@ export function AdminDialogScreen() {
     () => [...(sceneDialogs.steps || [])].sort((a, b) => a.stepIndex - b.stepIndex),
     [sceneDialogs.steps],
   )
+
+  const flowItems = useMemo(() => {
+    return sortedSteps.map((step) => {
+      const links = (step.options || []).map((opt) => {
+        if (opt.nextStep != null) return `${opt.label} → Step ${opt.nextStep}`
+        if (opt.nextPart != null) return `${opt.label} → Teil ${opt.nextPart}`
+        return `${opt.label} → Ende`
+      })
+
+      return {
+        stepIndex: step.stepIndex,
+        links,
+      }
+    })
+  }, [sortedSteps])
 
   async function loadScenes() {
     setLoading(true)
@@ -179,9 +196,6 @@ export function AdminDialogScreen() {
       }
 
       await loadDialogs(selectedSceneId)
-      if (editingStepIndex != null) {
-        selectStep(editingStepIndex)
-      }
     } catch (err) {
       setError(err.message)
     } finally {
@@ -211,7 +225,7 @@ export function AdminDialogScreen() {
     <section className="admin">
       <div className="admin__header">
         <h1 className="admin__title">Dialogverwaltung</h1>
-        <p className="admin__subtitle">Szenen und Dialoglogik lokal über das Backend bearbeiten.</p>
+        <p className="admin__subtitle">Branching-Dialoge aus dem Backend bearbeiten.</p>
       </div>
 
       <div className="admin__layout">
@@ -247,10 +261,25 @@ export function AdminDialogScreen() {
                 onClick={() => selectStep(step.stepIndex)}
               >
                 <span>Step {step.stepIndex}</span>
-                <small>{step.options?.length || 0} Optionen</small>
+                <small>{step.options?.length || 0} Verzweigungen</small>
               </button>
             ))}
             {!sortedSteps.length && <p className="admin__hint">Keine Dialogschritte vorhanden.</p>}
+          </div>
+
+          <h3 className="admin__flow-title">Flow / Verzweigungen</h3>
+          <div className="admin__flow">
+            {flowItems.map((item) => (
+              <div key={`flow-${item.stepIndex}`} className="admin__flow-step">
+                <strong>Step {item.stepIndex}</strong>
+                {item.links.length ? (
+                  item.links.map((line, index) => <div key={`flow-${item.stepIndex}-${index}`}>{line}</div>)
+                ) : (
+                  <div>Keine ausgehende Verzweigung</div>
+                )}
+              </div>
+            ))}
+            {!flowItems.length && <div>Kein Flow vorhanden.</div>}
           </div>
         </aside>
 
@@ -280,22 +309,15 @@ export function AdminDialogScreen() {
             />
           </label>
 
-          <h3>Speech Bubbles</h3>
+          <h3>Host-Nachrichten</h3>
           {(formData.speechBubbles || []).map((bubble, index) => (
             <div key={`bubble-${index}`} className="admin__block">
               <label className="admin__field">
-                <span>Character ID</span>
-                <input value={bubble.characterId} onChange={(event) => updateBubble(index, 'characterId', event.target.value)} />
-              </label>
-              <label className="admin__field">
-                <span>Speaker</span>
-                <input value={bubble.speakerName} onChange={(event) => updateBubble(index, 'speakerName', event.target.value)} />
-              </label>
-              <label className="admin__field">
-                <span>Anchor</span>
-                <select value={bubble.anchor} onChange={(event) => updateBubble(index, 'anchor', event.target.value)}>
-                  <option value="left">left</option>
-                  <option value="right">right</option>
+                <span>Host-Name</span>
+                <select value={bubble.hostId} onChange={(event) => updateBubble(index, 'hostId', event.target.value)}>
+                  {HOST_CHOICES.map((choice) => (
+                    <option key={choice.id} value={choice.id}>{choice.label}</option>
+                  ))}
                 </select>
               </label>
               <label className="admin__field admin__field--full">
@@ -313,7 +335,7 @@ export function AdminDialogScreen() {
                 }
                 disabled={formData.speechBubbles.length <= 1}
               >
-                Bubble entfernen
+                Nachricht entfernen
               </button>
             </div>
           ))}
@@ -323,14 +345,14 @@ export function AdminDialogScreen() {
             onClick={() =>
               setFormData((prev) => ({
                 ...prev,
-                speechBubbles: [...prev.speechBubbles, { characterId: '', speakerName: '', text: '', anchor: 'left' }],
+                speechBubbles: [...prev.speechBubbles, { hostId: 'selected', text: '' }],
               }))
             }
           >
-            Bubble hinzufügen
+            Nachricht hinzufügen
           </button>
 
-          <h3>Optionen</h3>
+          <h3>Antwortoptionen / Branches</h3>
           {(formData.options || []).map((option, index) => (
             <div key={`option-${index}`} className="admin__block">
               <label className="admin__field">

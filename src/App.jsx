@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GameScreen } from './pages/GameScreen.jsx'
 import { AdminDialogScreen } from './pages/AdminDialogScreen.jsx'
 import { useScene } from './hooks/useScene.js'
@@ -7,12 +7,25 @@ import { DEFAULT_PART } from './data/constants.js'
 export function App() {
   const { currentPart, setCurrentPart } = useScene(DEFAULT_PART)
   const [selectedAvatarId, setSelectedAvatarId] = useState(null)
+  const [selectedHostId, setSelectedHostId] = useState(() => {
+    if (typeof window === 'undefined') return null
+    return window.localStorage.getItem('selectedHostId') || null
+  })
   const [viewMode, setViewMode] = useState('game')
 
   const handlePartChange = (part) => setCurrentPart(part)
   const handleSelectOption = (index, option, part) => {
     console.log('Antwort gewählt:', option?.label, 'Teil:', part)
   }
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (selectedHostId) {
+      window.localStorage.setItem('selectedHostId', selectedHostId)
+    } else {
+      window.localStorage.removeItem('selectedHostId')
+    }
+  }, [selectedHostId])
 
   return (
     <div className="app">
@@ -55,6 +68,8 @@ export function App() {
             onSelectOption={handleSelectOption}
             selectedAvatarId={selectedAvatarId}
             onSelectAvatar={setSelectedAvatarId}
+            selectedHostId={selectedHostId}
+            onSelectHost={setSelectedHostId}
           />
         ) : (
           <AdminDialogScreen />

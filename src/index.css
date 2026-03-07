@@ -149,25 +149,6 @@ html, body {
   height: 100%;
 }
 
-.scene__player-onstage {
-  position: absolute;
-  left: 20%;
-  bottom: 16%;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 4px solid rgba(160, 223, 255, 0.8);
-  background: rgba(255, 255, 255, 0.95);
-  overflow: hidden;
-  box-shadow: 0 10px 28px rgba(7, 20, 37, 0.48);
-  z-index: 18;
-}
-
-.scene__player-onstage-img {
-  width: 100%;
-  height: 100%;
-}
-
 /* -----------------------------------------------
    Chatbox rechts
    ----------------------------------------------- */
@@ -308,13 +289,6 @@ html, body {
   .scene__player-dock {
     left: 0.5rem;
     bottom: calc(min(68vh, 620px) + 1rem);
-  }
-
-  .scene__player-onstage {
-    width: 118px;
-    height: 118px;
-    left: 11%;
-    bottom: calc(min(68vh, 620px) + 2.5rem);
   }
 }
 
@@ -689,4 +663,27 @@ html, body {
   .admin__layout {
     grid-template-columns: 1fr;
   }
+}
+
+.admin__flow-title {
+  margin: 1rem 0 0.5rem;
+}
+
+.admin__flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin__flow-step {
+  border: 1px dashed #9ab4c8;
+  border-radius: 10px;
+  padding: 0.55rem 0.6rem;
+  background: #f6fbff;
+  color: #28435b;
+}
+
+.admin__flow-step strong {
+  display: block;
+  margin-bottom: 0.2rem;
 }

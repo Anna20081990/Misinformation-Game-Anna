@@ -1,16 +1,20 @@
 import { useEffect, useRef } from 'react'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 
-function getHostDisplayName(characterId, speakerName) {
-  const id = String(characterId || '').toLowerCase()
+function getHostDisplayName(hostId, speakerName, selectedHostId) {
+  const id = String(hostId || '').toLowerCase()
   const name = String(speakerName || '').toLowerCase()
 
+  if (id === 'host' && selectedHostId === 'clara') return 'Clara Blick'
+  if (id === 'host' && selectedHostId === 'uwe') return 'Uwe R. Blick'
+  if (id === 'selected' && selectedHostId === 'clara') return 'Clara Blick'
+  if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe R. Blick'
   if (id === 'clara' || name.includes('clara')) return 'Clara Blick'
   if (id === 'uwe' || name.includes('uwe')) return 'Uwe R. Blick'
   return speakerName || 'Host'
 }
 
-export function ChatPanel({ messages = [], options = [], onSelectOption }) {
+export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId }) {
   const scrollRef = useRef(null)
 
   useEffect(() => {
@@ -29,7 +33,7 @@ export function ChatPanel({ messages = [], options = [], onSelectOption }) {
         {messages.map((message) => {
           const hostDisplayName = message.speakerType === 'player'
             ? message.speakerName
-            : getHostDisplayName(message.characterId, message.speakerName)
+            : getHostDisplayName(message.hostId ?? message.characterId, message.speakerName, selectedHostId)
 
           return (
           <article
@@ -37,7 +41,7 @@ export function ChatPanel({ messages = [], options = [], onSelectOption }) {
             className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
           >
             {message.speakerType !== 'player' && (
-              <HostAvatar characterId={message.characterId} speakerName={hostDisplayName} />
+              <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={hostDisplayName} />
             )}
             <div className="chat-message__bubble">
               {message.speakerName && message.speakerType !== 'player' && (

@@ -1,4 +1,5 @@
 import { SCENES } from '../../src/data/scenes.js'
+const HOST_IDS = new Set(['selected', 'clara', 'uwe'])
 
 function assert(condition, message, status = 400) {
   if (!condition) {
@@ -28,12 +29,12 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
   const normalizedBubbles = speechBubbles.map((bubble, index) => {
     assert(bubble && typeof bubble === 'object', `speechBubbles[${index}] muss ein Objekt sein.`)
     assert(typeof bubble.text === 'string' && bubble.text.trim(), `speechBubbles[${index}].text ist erforderlich.`)
+    const hostId = String(bubble.hostId ?? bubble.characterId ?? 'selected').toLowerCase()
+    assert(HOST_IDS.has(hostId), `speechBubbles[${index}].hostId muss einer der Werte selected, clara oder uwe sein.`)
 
     return {
-      characterId: bubble.characterId ?? null,
-      speakerName: bubble.speakerName ?? null,
+      hostId,
       text: bubble.text.trim(),
-      anchor: bubble.anchor ?? 'left',
     }
   })
 
@@ -71,6 +72,10 @@ export function validateSceneDialogLogic(sceneEntry) {
     assert(Number.isInteger(step.stepIndex) && step.stepIndex >= 0, `Szene ${sceneEntry.sceneId}: ungültiger stepIndex ${step.stepIndex}.`)
     assert(Array.isArray(step.speechBubbles), `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: speechBubbles muss ein Array sein.`)
     assert(Array.isArray(step.options), `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: options muss ein Array sein.`)
+    for (const bubble of step.speechBubbles) {
+      const hostId = String(bubble?.hostId ?? '').toLowerCase()
+      assert(HOST_IDS.has(hostId), `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: ungültiger hostId ${hostId}.`)
+    }
 
     for (const option of step.options) {
       if (option.nextStep != null) {

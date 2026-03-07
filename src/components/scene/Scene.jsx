@@ -5,12 +5,11 @@ import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 /**
  * Container: Hintergrund + Chatbox rechts + Spieler-Avatar links unten.
  */
-export function Scene({ scene, messages = [], options = [], onSelectOption, selectedAvatarId }) {
+export function Scene({ scene, messages = [], options = [], onSelectOption, selectedAvatarId, selectedHostId }) {
   if (!scene) return null
 
-  const { id, backgroundImage, backgroundPlaceholder } = scene
+  const { backgroundImage, backgroundPlaceholder } = scene
   const AvatarComponent = getPlayerAvatarComponent(selectedAvatarId)
-  const showPlayerOnBackground = id === 2 && Boolean(selectedAvatarId)
 
   return (
     <div className="scene">
@@ -24,14 +23,9 @@ export function Scene({ scene, messages = [], options = [], onSelectOption, sele
           messages={messages}
           options={options}
           onSelectOption={onSelectOption}
+          selectedHostId={selectedHostId}
         />
       </div>
-
-      {showPlayerOnBackground && (
-        <div className="scene__player-onstage" aria-hidden="true">
-          <AvatarComponent className="scene__player-onstage-img" />
-        </div>
-      )}
 
       <div className="scene__player-dock" aria-hidden="true">
         <div className="scene__player-avatar">
