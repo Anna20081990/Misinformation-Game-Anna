@@ -423,9 +423,6 @@ export function AdminDialogScreen() {
             />
           </label>
           <p className="admin__hint">Aenderungen werden mit Speichern uebernommen.</p>
-          <button type="button" className="admin__action" onClick={saveStep} disabled={loading}>
-            Activity Config speichern
-          </button>
 
           <div className="admin__actions">
             <button type="button" className="admin__action" onClick={saveStep} disabled={loading}>Speichern</button>
