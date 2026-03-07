@@ -99,9 +99,9 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
   topic: 'Thema: Einfuehrung eines verpflichtenden Wochenmottos',
   randomizeChoices: true,
   choices: [
-    { id: 'p1', text: '„Die Stadt diskutiert ein woechentliches Motto fuer oeffentliche Einrichtungen.“' },
-    { id: 'p2', text: '„Immer mehr Menschen sprechen sich fuer ein Wochenmotto aus.“' },
-    { id: 'p3', text: '„Alle wissen laengst, dass ein Wochenmotto ueberfaellig ist.“' },
+    { id: 'p1', text: '„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“' },
+    { id: 'p2', text: '„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“' },
+    { id: 'p3', text: '„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”' },
   ],
   correctChoiceId: 'p3',
   success: { id: 'rightA', nextStep: 4 },
@@ -193,6 +193,7 @@ export function GameScreen({
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const resetOnActivity2TransitionRef = useRef(false)
+  const resetOnPart3Activity2TransitionRef = useRef(false)
   const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
 
   useEffect(() => {
@@ -362,8 +363,8 @@ export function GameScreen({
         ? (backendTrendSubmitOptions.length
           ? backendTrendSubmitOptions
           : [
-            { id: 'submit_easy3', label: 'Das ist einfach.', kind: 'submit', disabled: !selectedTrendChoiceId },
-            { id: 'submit_unsure3', label: 'Ich habe eigentlich keine Ahnung.', kind: 'submit', disabled: !selectedTrendChoiceId },
+            { id: 'submit_easy3', label: 'Das schreit nach Konrad!', kind: 'submit', disabled: !selectedTrendChoiceId },
+            { id: 'submit_unsure3', label: 'Konrad - bist du es?', kind: 'submit', disabled: !selectedTrendChoiceId },
           ])
       : displayOptions
   const monitorOptions = isPart2Activity1Context
@@ -418,8 +419,8 @@ export function GameScreen({
     const enteredActivity = samePart && prev.type !== 'activity' && currentType === 'activity'
     const enteredSummary = samePart && prev.type === 'activity' && currentType === 'summary'
 
-    // For Teil 2 monitor flow: start each activity phase and summary with a clean thread.
-    if (currentPart === 2 && (enteredActivity || enteredSummary)) {
+    // For monitor activities: start with a clean thread when entering activity sections.
+    if (((currentPart === 2) && (enteredActivity || enteredSummary)) || ((currentPart === 3) && enteredActivity)) {
       setChatMessages([])
       appendedStepKeysRef.current = new Set()
     }
@@ -546,9 +547,14 @@ export function GameScreen({
           nextStep: part3Activity1Config?.failure?.nextStep ?? 31,
         }
 
+      resetOnPart3Activity2TransitionRef.current = Boolean(
+        isCorrect && mappedOption.id === (part3Activity1Config?.success?.id || 'rightA')
+      )
       setLastSubmittedTrendChoiceId(selectedTrendChoiceId)
       setLastSubmittedTrendChoiceOrder(trendChoiceOrder)
       option = { ...mappedOption, label: option.label }
+    } else if (!isPart3Activity1InputStep) {
+      resetOnPart3Activity2TransitionRef.current = false
     }
 
     onSelectOption?.(index, option, currentPart)
@@ -598,6 +604,15 @@ export function GameScreen({
           appendedStepKeysRef.current = new Set()
         }
 
+        if (resetOnPart3Activity2TransitionRef.current && currentPart === 3 && Number(option.nextStep) === 4) {
+          setChatMessages([])
+          setSelectedTrendChoiceId('')
+          setLastSubmittedTrendChoiceId('')
+          setTrendChoiceOrder([])
+          setLastSubmittedTrendChoiceOrder([])
+          appendedStepKeysRef.current = new Set()
+        }
+
         if (resetOnRetryPart2) {
           setChatMessages([])
           setSelectedSentenceIndexes([])
@@ -621,6 +636,7 @@ export function GameScreen({
         }
 
         resetOnActivity2TransitionRef.current = false
+        resetOnPart3Activity2TransitionRef.current = false
         setStepIndex(option.nextStep)
       }
     }, 220)

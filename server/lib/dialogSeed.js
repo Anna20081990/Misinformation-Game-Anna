@@ -171,8 +171,8 @@ function scene3Steps() {
     step(3, 'activity', [
       bubble('selected', 'Aktivität 1: Welche Aussage erzeugt am stärksten den Eindruck von Konsens?'),
     ], [
-      option('submit_easy3', 'Das ist einfach.'),
-      option('submit_unsure3', 'Ich habe eigentlich keine Ahnung.'),
+      option('submit_easy3', 'Das schreit nach Konrad!'),
+      option('submit_unsure3', 'Konrad - bist du es?'),
     ], {
       activityConfig: {
         mode: 'intensity-choice',
@@ -182,7 +182,7 @@ function scene3Steps() {
         choices: [
           {
             id: 'p1',
-            text: '„Die Stadt diskutiert ein wöchentliches Motto für öffentliche Einrichtungen.“',
+            text: '„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“',
           },
           {
             id: 'p2',
@@ -190,7 +190,7 @@ function scene3Steps() {
           },
           {
             id: 'p3',
-            text: '„Alle wissen längst, dass ein Wochenmotto überfällig ist.“',
+            text: '„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”',
           },
         ],
         correctChoiceId: 'p3',
@@ -199,10 +199,11 @@ function scene3Steps() {
       },
     }),
     step(31, 'activity', [
-      bubble('selected', 'Zu schwach für Social Proof. Suche den höchsten Gruppendruck.'),
+      bubble('selected', 'Noch nicht ganz. Suche den Beitrag mit der stärksten Mehrheitsbehauptung.'),
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
-      bubble('selected', 'Richtig erkannt. Welche Variante nutzt nun am stärksten die Mehrheitsillusion?', 'rightA'),
+      bubble('selected', 'Richtig erkannt, das war die stärkste Mehrheitsbehauptung.', 'rightA'),
+      bubble('selected', 'Weiter mit Aktivität 2.', 'rightA'),
       bubble('selected', 'Nach dem Retry: Welche Variante erzeugt jetzt den stärksten Konsensdruck?', 'retry'),
     ], [
       option('wrongB', '„Wir sollten Argumente vergleichen.“', 41),

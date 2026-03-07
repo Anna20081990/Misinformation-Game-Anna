@@ -506,11 +506,11 @@
           "options": [
             {
               "id": "submit_easy3",
-              "label": "Das ist einfach."
+              "label": "Das schreit nach Konrad!"
             },
             {
               "id": "submit_unsure3",
-              "label": "Ich habe eigentlich keine Ahnung."
+              "label": "Konrad - bist du es?"
             }
           ],
           "activityConfig": {
@@ -521,7 +521,7 @@
             "choices": [
               {
                 "id": "p1",
-                "text": "„Die Stadt diskutiert ein wöchentliches Motto für öffentliche Einrichtungen.“"
+                "text": "„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“"
               },
               {
                 "id": "p2",
@@ -529,7 +529,7 @@
               },
               {
                 "id": "p3",
-                "text": "„Alle wissen längst, dass ein Wochenmotto überfällig ist.“"
+                "text": "„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”"
               }
             ],
             "correctChoiceId": "p3",
@@ -549,7 +549,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Zu schwach für Social Proof. Suche den höchsten Gruppendruck."
+              "text": "Noch nicht ganz. Suche den Beitrag mit der stärksten Mehrheitsbehauptung."
             }
           ],
           "options": [
@@ -566,7 +566,12 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Richtig erkannt. Welche Variante nutzt nun am stärksten die Mehrheitsillusion?",
+              "text": "Richtig erkannt, das war die stärkste Mehrheitsbehauptung.",
+              "showOnOptionId": "rightA"
+            },
+            {
+              "hostId": "selected",
+              "text": "Weiter mit Aktivität 2.",
               "showOnOptionId": "rightA"
             },
             {
