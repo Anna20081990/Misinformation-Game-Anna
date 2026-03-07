@@ -149,6 +149,10 @@ export function GameScreen({
       try {
         const data = await getSceneDialogs(currentPart)
         if (!active) return
+        if (Number(data?.sceneId) !== Number(currentPart)) {
+          setSceneDialogs(null)
+          return
+        }
         setSceneDialogs(data)
       } catch {
         if (!active) return
