@@ -125,6 +125,7 @@ export function GameScreen({
   const [sceneDialogs, setSceneDialogs] = useState(null)
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
+  const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
 
   useEffect(() => {
     setStepIndex(0)
@@ -193,6 +194,26 @@ export function GameScreen({
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
   }, [currentPart, stepData.stepIndex, onStepChange])
+
+  useEffect(() => {
+    const currentType = String(stepData.type || '').toLowerCase()
+    const prev = previousStepMetaRef.current
+    const samePart = prev.part === currentPart
+    const enteredActivity = samePart && prev.type !== 'activity' && currentType === 'activity'
+    const enteredSummary = samePart && prev.type === 'activity' && currentType === 'summary'
+
+    // For Teil 2 monitor flow: start each activity phase and summary with a clean thread.
+    if (currentPart === 2 && (enteredActivity || enteredSummary)) {
+      setChatMessages([])
+      appendedStepKeysRef.current = new Set()
+    }
+
+    previousStepMetaRef.current = {
+      part: currentPart,
+      type: currentType,
+      stepIndex: stepData.stepIndex ?? 0,
+    }
+  }, [currentPart, stepData.stepIndex, stepData.type])
 
   useEffect(() => {
     const effectiveStepIndex = stepData.stepIndex ?? stepIndex
