@@ -293,16 +293,34 @@ function scene4Steps() {
       bubble('selected', 'Noch nicht ganz. Ordne klar zwischen Sachebene und persönlichem Angriff.', 'wrongA'),
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
-      bubble('selected', 'Treffer. Welche Reaktion verschiebt die Debatte jetzt von Sache auf Person?', 'rightA'),
-      bubble('selected', 'Weiter geht’s: Wähle die klarste persönliche Verschiebung.', 'retry'),
+      bubble('selected', 'Stark sortiert. Weiter mit Aktivität 2.', 'rightA'),
+      bubble('selected', 'Der Stadtrat plant eine offizielle Stadtfarbe. Ziel ist ein „klarer Wiedererkennungswert - auch für zukünftigen Tourismus aus dem Orbit“.'),
+      bubble('selected', 'Aufgabe: Wo kippt die Debatte von der Idee zur Person?'),
+      bubble('selected', 'Retry: Wähle jetzt erneut den Beitrag mit klarer Diskreditierung.', 'retry'),
     ], [
-      option('wrongB', '„Dein Argument hat Lücken bei den Zahlen.“', 41),
-      option('rightB', '„Man merkt, dass du nur Aufmerksamkeit willst.“', 5),
-    ]),
+      option('submit_ouch6', 'Autsch. Unter die Gürtellinie.'),
+      option('submit_far6', 'Geht das schon zu weit?'),
+    ], {
+      activityConfig: {
+        mode: 'intensity-choice',
+        title: 'Aktivität 2: Wo kippt es zur Person?',
+        topic: 'Thema: Offizielle Stadtfarbe',
+        randomizeChoices: true,
+        choices: [
+          { id: 'a', text: '„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt.“' },
+          { id: 'b', text: '„Beige als Leuchtsignal für Außerirdische - das muss man sich erstmal trauen.“' },
+          { id: 'c', text: '„Kein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.“' },
+        ],
+        correctChoiceId: 'c',
+        success: { id: 'rightB', nextStep: 5 },
+        failure: { id: 'wrongB', nextStep: 41 },
+      },
+    }),
     step(41, 'activity', [
-      bubble('selected', 'Noch nicht. Das war sachlich. Wähle die Option mit persönlicher Unterstellung.'),
-    ], [option('retry', 'Nochmal wählen.', 4)]),
+      bubble('selected', 'Noch nicht ganz. Gesucht ist die Aussage, die klar die Person statt die Idee angreift.'),
+    ], [option('retry', 'Nochmal prüfen.', 4)]),
     step(5, 'summary', [
+      bubble('selected', 'Richtig erkannt: Das war eine klare Diffamierung.', 'rightB'),
       bubble('selected', 'Sauber analysiert. Ihr trennt nun klar zwischen Kritik und Diffamierung.'),
       bubble('selected', 'Karrierestufe freigeschaltet: Zertifizierte/r Debattenarchitekt/in.'),
     ], [option('next', 'Weiter zum Abschluss.', null, 5)]),

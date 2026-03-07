@@ -859,27 +859,62 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Treffer. Welche Reaktion verschiebt die Debatte jetzt von Sache auf Person?",
+              "text": "Stark sortiert. Weiter mit Aktivität 2.",
               "showOnOptionId": "rightA"
             },
             {
               "hostId": "selected",
-              "text": "Weiter geht’s: Wähle die klarste persönliche Verschiebung.",
+              "text": "Der Stadtrat plant eine offizielle Stadtfarbe. Ziel ist ein „klarer Wiedererkennungswert - auch für zukünftigen Tourismus aus dem Orbit“."
+            },
+            {
+              "hostId": "selected",
+              "text": "Aufgabe: Wo kippt die Debatte von der Idee zur Person?"
+            },
+            {
+              "hostId": "selected",
+              "text": "Retry: Wähle jetzt erneut den Beitrag mit klarer Diskreditierung.",
               "showOnOptionId": "retry"
             }
           ],
           "options": [
             {
-              "id": "wrongB",
-              "label": "„Dein Argument hat Lücken bei den Zahlen.“",
-              "nextStep": 41
+              "id": "submit_ouch6",
+              "label": "Autsch. Unter die Gürtellinie."
             },
             {
-              "id": "rightB",
-              "label": "„Man merkt, dass du nur Aufmerksamkeit willst.“",
-              "nextStep": 5
+              "id": "submit_far6",
+              "label": "Geht das schon zu weit?"
             }
-          ]
+          ],
+          "activityConfig": {
+            "mode": "intensity-choice",
+            "title": "Aktivität 2: Wo kippt es zur Person?",
+            "topic": "Thema: Offizielle Stadtfarbe",
+            "randomizeChoices": true,
+            "choices": [
+              {
+                "id": "a",
+                "text": "„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt.“"
+              },
+              {
+                "id": "b",
+                "text": "„Beige als Leuchtsignal für Außerirdische - das muss man sich erstmal trauen.“"
+              },
+              {
+                "id": "c",
+                "text": "„Kein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.“"
+              }
+            ],
+            "correctChoiceId": "c",
+            "success": {
+              "id": "rightB",
+              "nextStep": 5
+            },
+            "failure": {
+              "id": "wrongB",
+              "nextStep": 41
+            }
+          }
         },
         {
           "stepIndex": 41,
@@ -887,13 +922,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Noch nicht. Das war sachlich. Wähle die Option mit persönlicher Unterstellung."
+              "text": "Noch nicht ganz. Gesucht ist die Aussage, die klar die Person statt die Idee angreift."
             }
           ],
           "options": [
             {
               "id": "retry",
-              "label": "Nochmal wählen.",
+              "label": "Nochmal prüfen.",
               "nextStep": 4
             }
           ]
@@ -902,6 +937,11 @@
           "stepIndex": 5,
           "type": "summary",
           "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Richtig erkannt: Das war eine klare Diffamierung.",
+              "showOnOptionId": "rightB"
+            },
             {
               "hostId": "selected",
               "text": "Sauber analysiert. Ihr trennt nun klar zwischen Kritik und Diffamierung."
