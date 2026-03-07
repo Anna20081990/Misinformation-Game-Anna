@@ -59,6 +59,14 @@ const PART0_FALLBACK_STEPS = [
     ],
   },
 ]
+const PART2_ACTIVITY1_SENTENCES = [
+  'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.',
+  'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.',
+  'Schon wieder trifft es die normalen Leute.',
+  'Der Vorschlag wird nächste Woche beraten.',
+  'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.',
+]
+const PART2_ACTIVITY1_CORRECT_INDEXES = [1, 2, 4]
 
 function isAvatarOption(option) {
   const id = String(option?.id || '').toLowerCase()
@@ -123,6 +131,7 @@ export function GameScreen({
   const [lastSelectedOptionId, setLastSelectedOptionId] = useState(null)
   const [chatMessages, setChatMessages] = useState([])
   const [sceneDialogs, setSceneDialogs] = useState(null)
+  const [selectedSentenceIndexes, setSelectedSentenceIndexes] = useState([])
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
@@ -132,6 +141,7 @@ export function GameScreen({
     setLastSelectedOptionId(null)
     setChatMessages([])
     setSceneDialogs(null)
+    setSelectedSentenceIndexes([])
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -182,6 +192,7 @@ export function GameScreen({
     getFallbackStep(scene, currentPart, stepIndex)
 
   const options = stepData.options || []
+  const isPart2Activity1 = currentPart === 2 && Number(stepData.stepIndex) === 3
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -191,6 +202,28 @@ export function GameScreen({
 
     return option
   })
+  const sentenceOptions = isPart2Activity1
+    ? PART2_ACTIVITY1_SENTENCES.map((sentence, index) => ({
+      id: `sentence-${index + 1}`,
+      kind: 'sentence',
+      label: sentence,
+      selected: selectedSentenceIndexes.includes(index),
+      sentenceIndex: index,
+    }))
+    : []
+  const submitOptions = isPart2Activity1
+    ? [
+      { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit' },
+      { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit' },
+    ]
+    : displayOptions
+  const monitorOptions = isPart2Activity1 ? [...sentenceOptions, ...submitOptions] : displayOptions
+
+  useEffect(() => {
+    if (!isPart2Activity1 && selectedSentenceIndexes.length) {
+      setSelectedSentenceIndexes([])
+    }
+  }, [isPart2Activity1, selectedSentenceIndexes.length])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -246,6 +279,28 @@ export function GameScreen({
   }, [currentPart, stepData, stepIndex, selectedHostId, lastSelectedOptionId])
 
   const handleSelectOption = (index, option) => {
+    if (isPart2Activity1 && option?.kind === 'sentence') {
+      const sentenceIndex = Number(option.sentenceIndex)
+      setSelectedSentenceIndexes((prev) => (
+        prev.includes(sentenceIndex)
+          ? prev.filter((item) => item !== sentenceIndex)
+          : [...prev, sentenceIndex].sort((a, b) => a - b)
+      ))
+      return
+    }
+
+    if (isPart2Activity1 && option?.kind === 'submit') {
+      const isCorrect =
+        selectedSentenceIndexes.length === PART2_ACTIVITY1_CORRECT_INDEXES.length &&
+        PART2_ACTIVITY1_CORRECT_INDEXES.every((item) => selectedSentenceIndexes.includes(item))
+
+      const targetId = isCorrect ? 'rightA' : 'wrongA'
+      const mappedOption = options.find((item) => item.id === targetId)
+      if (!mappedOption) return
+
+      option = { ...mappedOption, label: option.label }
+    }
+
     onSelectOption?.(index, option, currentPart)
     setLastSelectedOptionId(option?.id ?? null)
 
@@ -292,9 +347,9 @@ export function GameScreen({
     return (
       <MonitorActivityScene
         messages={chatMessages}
-        options={displayOptions}
+        options={monitorOptions}
         onSelectOption={handleSelectOption}
-        variant={activityVariantByPart[currentPart] || 'monitor'}
+        variant={isPart2Activity1 ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
       />
     )
   }

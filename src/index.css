@@ -281,6 +281,48 @@ html, body {
   font-size: 1.08rem;
 }
 
+.monitor-select {
+  border: 1px solid rgba(142, 201, 238, 0.38);
+  border-radius: 14px;
+  background: rgba(7, 25, 43, 0.5);
+  padding: 0.75rem;
+}
+
+.monitor-select__title {
+  margin: 0 0 0.55rem;
+  color: #d7efff;
+  font-size: 1.05rem;
+}
+
+.monitor-select__sentences {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.monitor-select__sentence {
+  width: 100%;
+  border: 1px solid rgba(152, 204, 236, 0.34);
+  background: rgba(233, 246, 255, 0.94);
+  color: #13283e;
+  text-align: left;
+  border-radius: 10px;
+  padding: 0.58rem 0.66rem;
+  font-size: 0.97rem;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.12s, background 0.2s;
+}
+
+.monitor-select__sentence:hover {
+  transform: translateY(-1px);
+  border-color: #8fd9ff;
+}
+
+.monitor-select__sentence--selected {
+  border-color: #6de2a1;
+  background: #dff9e7;
+}
+
 .monitor-scene__options {
   border-top: 1px solid rgba(140, 195, 232, 0.32);
   padding: 0.9rem;

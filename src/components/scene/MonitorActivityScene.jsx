@@ -36,6 +36,26 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
             </header>
 
             <div className="monitor-scene__messages" ref={scrollRef}>
+              {variant === 'monitor-select' && (
+                <section className="monitor-select" aria-label="Beitrag analysieren">
+                  <h3 className="monitor-select__title">Beitrag</h3>
+                  <div className="monitor-select__sentences">
+                    {options
+                      .filter((opt) => opt.kind === 'sentence')
+                      .map((sentence, index) => (
+                        <button
+                          key={sentence.id ?? `sentence-${index}`}
+                          type="button"
+                          className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
+                          onClick={() => onSelectOption?.(index, sentence)}
+                        >
+                          {sentence.label}
+                        </button>
+                      ))}
+                  </div>
+                </section>
+              )}
+
               {messages.map((message) => (
                 <article
                   key={message.id}
@@ -55,7 +75,9 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
             </div>
 
             <footer className="monitor-scene__options" role="group" aria-label="Aktivitätsoptionen">
-              {options.map((option, index) => (
+              {options
+                .filter((option) => option.kind !== 'sentence')
+                .map((option, index) => (
                 <button
                   key={option.id ?? index}
                   type="button"
@@ -65,7 +87,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                 >
                   {option.label}
                 </button>
-              ))}
+                ))}
             </footer>
           </div>
         </div>
