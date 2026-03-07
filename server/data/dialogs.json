@@ -9,95 +9,95 @@
       "steps": [
         {
           "stepIndex": 0,
+          "type": "intro",
           "speechBubbles": [
             {
               "hostId": "clara",
-              "text": "Willkommen vor dem Media Lab! Schön, dass ihr da seid. Hier startet euer Sommerpraktikum – wir analysieren Debatten auf TikTalk und schauen uns dabei drei besonders auffällige Profile an."
+              "text": "Willkommen im Media Lab Regelreich. Heute startet euer Sommerpraktikum."
             },
             {
               "hostId": "uwe",
-              "text": "Bevor es losgeht: Wählt, mit wem ihr ins Praktikum starten wollt – oder ob ihr direkt mehr zu den Fallakten wissen möchtet."
+              "text": "Ihr könnt wählen, wer euch als Host durch die Fallakten begleitet."
             }
           ],
           "options": [
             {
               "id": "clara",
-              "label": "Mit Clara starten.",
+              "label": "Ich starte mit Clara Blick.",
               "nextStep": 1
             },
             {
               "id": "uwe",
-              "label": "Mit Uwe-R. starten.",
+              "label": "Ich starte mit Uwe R. Blick.",
               "nextStep": 1
             }
           ]
         },
         {
           "stepIndex": 1,
+          "type": "intro",
           "speechBubbles": [
             {
-              "hostId": "clara",
-              "text": "Super! Die drei Fallakten heißen Emma Pör, Konrad Sens und Didi Fam. Jeder steht für ein typisches Muster: emotionale Zuspitzung, Mitläufereffekt oder Diskreditierung. Im Praktikum lernt ihr, genau das zu erkennen."
+              "hostId": "selected",
+              "text": "Perfekt. Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam."
             },
             {
-              "hostId": "uwe",
-              "text": "Keine Sorge – das ist keine Prüfung. Ihr bekommt Feedback und könnt Dinge wiederholen. Am Ende schafft ihr alle Stufen."
+              "hostId": "selected",
+              "text": "Jede Fallakte zeigt ein eigenes Manipulationsmuster in Debatten."
             }
           ],
           "options": [
             {
               "id": "ok",
-              "label": "Klingt gut, ich bin bereit.",
+              "label": "Klingt gut, wie laufen die Kapitel ab?",
               "nextStep": 2
             },
             {
-              "id": "frage",
-              "label": "Was genau machen wir in den Fallakten?",
+              "id": "skepsis",
+              "label": "Klingt groß. Gibt es klare Aufgaben?",
               "nextStep": 2
             }
           ]
         },
         {
           "stepIndex": 2,
+          "type": "intro",
           "speechBubbles": [
             {
-              "hostId": "clara",
-              "text": "Ihr bekommt Einführungen zu jeder Strategie, dann Beispielposts aus TikTalk – und danach kleine Analyseaufträge. Wenn ihr etwas falsch zuordnet, erklären wir es und ihr probiert es erneut."
+              "hostId": "selected",
+              "text": "Jedes Kapitel folgt derselben Struktur: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung."
             },
             {
-              "hostId": "uwe",
-              "text": "Nach jedem Kapitel steigt ihr eine Karrierestufe auf – von der Musterbeobachtung bis zur zertifizierten Debattenarchitektin bzw. zum Debattenarchitekten. Klingt absurd, ist aber so."
+              "hostId": "selected",
+              "text": "Fehler sind erlaubt. Ihr bekommt Feedback und könnt direkt erneut probieren."
             }
           ],
           "options": [
             {
-              "id": "los",
-              "label": "Ja, lass uns loslegen!",
+              "id": "bereit",
+              "label": "Verstanden, ich bin bereit.",
               "nextStep": 3
             },
             {
-              "id": "noch",
-              "label": "Noch eine kurze Frage, bitte.",
+              "id": "frage",
+              "label": "Noch eine kurze Frage, dann los.",
               "nextStep": 3
             }
           ]
         },
         {
           "stepIndex": 3,
+          "type": "transition",
           "speechBubbles": [
             {
-              "hostId": "clara",
-              "text": "Dann auf ins Praktikum! Wir starten im Keller mit der ersten Fallakte – Emma Pör. Bis gleich!"
-            },
-            {
-              "hostId": "uwe",
-              "text": "Viel Erfolg. Bei Fragen sind wir da."
+              "hostId": "selected",
+              "text": "Dann starten wir im Keller mit Fallakte 1: Emma Pör und emotionaler Zuspitzung."
             }
           ],
           "options": [
             {
               "id": "weiter",
-              "label": "Weiter zum Keller (Teil 2)",
+              "label": "Weiter in den Keller.",
               "nextPart": 2
             }
           ]
@@ -109,20 +109,159 @@
       "steps": [
         {
           "stepIndex": 0,
+          "type": "intro",
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Im Keller geht es um Fallakte 1: Emma Pör. Hier liegt der Fokus auf emotionaler Zuspitzung – Stichwort Empörung."
+              "text": "Fallakte Emma Pör: Hier dominiert emotionale Zuspitzung."
+            },
+            {
+              "hostId": "selected",
+              "text": "Achtet auf Wörter, die gezielt Empörung erzeugen und Einzelfälle verallgemeinern."
             }
           ],
           "options": [
             {
-              "id": "ok",
-              "label": "Verstanden. Klingt logisch."
+              "id": "next",
+              "label": "Alles klar, zeig mir Beispiele.",
+              "nextStep": 1
+            }
+          ]
+        },
+        {
+          "stepIndex": 1,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Beispiel A: Ein Einzelfall wird als Beweis dargestellt, dass „immer alles schlimmer“ wird."
             },
             {
-              "id": "frage",
-              "label": "Moment, das klingt verdächtig nach Drama."
+              "hostId": "selected",
+              "text": "Das wirkt plausibel, aber es fehlt die Einordnung."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Verstanden, nächstes Beispiel.",
+              "nextStep": 2
+            }
+          ]
+        },
+        {
+          "stepIndex": 2,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Beispiel B: Dramatische Formulierungen steigern die Empörung, obwohl die Fakten dünn sind."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter zur Aktivität.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 3,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Aktivität 1: Welche Markierung zeigt die stärkste emotionale Zuspitzung?"
+            }
+          ],
+          "options": [
+            {
+              "id": "wrongA",
+              "label": "„Es gab Kritik am Vorschlag.“",
+              "nextStep": 31
+            },
+            {
+              "id": "rightA",
+              "label": "„Ganz Regelreich wird absichtlich ruiniert!“",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 31,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Ich versuche es nochmal.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 4,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Aktivität 2: Welche Variante erzeugt die höchste Empörung?"
+            }
+          ],
+          "options": [
+            {
+              "id": "rightB",
+              "label": "„Das ist ein Skandal, der uns alle bedroht!“",
+              "nextStep": 5
+            },
+            {
+              "id": "wrongB",
+              "label": "„Der Punkt sollte genauer geprüft werden.“",
+              "nextStep": 41
+            }
+          ]
+        },
+        {
+          "stepIndex": 41,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Hier fehlte die emotionale Intensität. Nimm die maximal aufgeladene Version."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Nochmal wählen.",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 5,
+          "type": "summary",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sehr gut. Ihr habt Empörung als Muster erkannt: Übertreibung, Dramatisierung, Einzelfall-Logik."
+            },
+            {
+              "hostId": "selected",
+              "text": "Karrierestufe freigeschaltet: Junior-Analyst/in für kommunikative Phänomene."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter zu Fallakte 2.",
+              "nextPart": 3
             }
           ]
         }
@@ -133,20 +272,155 @@
       "steps": [
         {
           "stepIndex": 0,
+          "type": "intro",
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Im Großraumbüro warten wir auf Fallakte 2: Konrad Sens. Thema: Mitläufereffekt und der Illusion von Konsens."
+              "text": "Fallakte Konrad Sens: Fokus Mitläufereffekt und scheinbarer Konsens."
+            },
+            {
+              "hostId": "selected",
+              "text": "Achtet auf Formulierungen wie „alle“, „jeder weiß“ oder vage Mehrheitsbehauptungen."
             }
           ],
           "options": [
             {
-              "id": "weiter",
-              "label": "Weiter zum Auftrag!"
+              "id": "next",
+              "label": "Klar, Beispiele bitte.",
+              "nextStep": 1
+            }
+          ]
+        },
+        {
+          "stepIndex": 1,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Beispiel A: „Die meisten haben längst verstanden...“ ohne nachvollziehbare Quelle."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter.",
+              "nextStep": 2
+            }
+          ]
+        },
+        {
+          "stepIndex": 2,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Beispiel B: Likes und Kommentare werden als Qualitätsbeweis verkauft."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Zur Aktivität.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 3,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Aktivität 1: Welche Aussage erzeugt am stärksten den Eindruck von Konsens?"
+            }
+          ],
+          "options": [
+            {
+              "id": "rightA",
+              "label": "„Alle vernünftigen Leute sehen das inzwischen genauso.“",
+              "nextStep": 4
             },
             {
-              "id": "kurz",
-              "label": "Kurz zusammenfassen, bitte."
+              "id": "wrongA",
+              "label": "„Einige finden die Idee interessant.“",
+              "nextStep": 31
+            }
+          ]
+        },
+        {
+          "stepIndex": 4,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Aktivität 2: Welche Variante nutzt am stärksten die Mehrheitsillusion?"
+            }
+          ],
+          "options": [
+            {
+              "id": "wrongB",
+              "label": "„Wir sollten Argumente vergleichen.“",
+              "nextStep": 41
+            },
+            {
+              "id": "rightB",
+              "label": "„Schon 9 von 10 sind dafür, du willst doch nicht Außenseiter sein.“",
+              "nextStep": 5
+            }
+          ]
+        },
+        {
+          "stepIndex": 5,
+          "type": "summary",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Stark. Ihr habt Konsens-Signale von echten Belegen unterschieden."
+            },
+            {
+              "hostId": "selected",
+              "text": "Karrierestufe freigeschaltet: Spezialist/in für rhetorische Dynamiken."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter zu Fallakte 3.",
+              "nextPart": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 31,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Zu schwach für Social Proof. Suche den höchsten Gruppendruck."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Nochmal.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 41,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Das war zu neutral. Entscheidend ist der soziale Druck auf Zugehörigkeit."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Erneut wählen.",
+              "nextStep": 4
             }
           ]
         }
@@ -157,20 +431,155 @@
       "steps": [
         {
           "stepIndex": 0,
+          "type": "intro",
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Im Einzelbüro geht es um Didi Fam: Diskreditierung und Diffamierung. Angriffe auf Personen statt auf Argumente."
+              "text": "Fallakte Didi Fam: Hier geht es um Diskreditierung und Diffamierung."
+            },
+            {
+              "hostId": "selected",
+              "text": "Kernfrage: Wird ein Argument geprüft oder die Person angegriffen?"
             }
           ],
           "options": [
             {
-              "id": "los",
-              "label": "Alles klar, ich bin bereit."
+              "id": "next",
+              "label": "Verstanden, Beispiele.",
+              "nextStep": 1
+            }
+          ]
+        },
+        {
+          "stepIndex": 1,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Beispiel A: „Der Vorschlag ist falsch, weil die Person dahinter lächerlich ist.“"
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter.",
+              "nextStep": 2
+            }
+          ]
+        },
+        {
+          "stepIndex": 2,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Beispiel B: Motive werden unterstellt, statt Inhalte zu prüfen."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Zur Aktivität.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 3,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Aktivität 1: Welche Aussage ist klare Diffamierung?"
+            }
+          ],
+          "options": [
+            {
+              "id": "rightA",
+              "label": "„Mit so einer Person muss man gar nicht diskutieren.“",
+              "nextStep": 4
             },
             {
-              "id": "beispiel",
-              "label": "Zeig mir ein Beispiel."
+              "id": "wrongA",
+              "label": "„Die Daten im Beitrag sind unvollständig.“",
+              "nextStep": 31
+            }
+          ]
+        },
+        {
+          "stepIndex": 31,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Das war legitime Kritik am Inhalt. Gesucht ist ein persönlicher Angriff."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Nochmal.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 4,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Aktivität 2: Welche Reaktion verschiebt die Debatte von Sache auf Person?"
+            }
+          ],
+          "options": [
+            {
+              "id": "wrongB",
+              "label": "„Dein Argument hat Lücken bei den Zahlen.“",
+              "nextStep": 41
+            },
+            {
+              "id": "rightB",
+              "label": "„Man merkt, dass du nur Aufmerksamkeit willst.“",
+              "nextStep": 5
+            }
+          ]
+        },
+        {
+          "stepIndex": 41,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Noch nicht. Das war sachlich. Wähle die Option mit persönlicher Unterstellung."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry",
+              "label": "Nochmal wählen.",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 5,
+          "type": "summary",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sauber analysiert. Ihr trennt nun klar zwischen Kritik und Diffamierung."
+            },
+            {
+              "hostId": "selected",
+              "text": "Karrierestufe freigeschaltet: Zertifizierte/r Debattenarchitekt/in."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter zum Abschluss.",
+              "nextPart": 5
             }
           ]
         }
@@ -181,24 +590,81 @@
       "steps": [
         {
           "stepIndex": 0,
+          "type": "intro",
           "speechBubbles": [
             {
               "hostId": "clara",
-              "text": "Ihr habt alle drei Fallakten durchgearbeitet. Das Praktikum ist offiziell abgeschlossen."
+              "text": "Willkommen im Corner Office. Das Praktikum ist offiziell abgeschlossen."
             },
             {
               "hostId": "uwe",
-              "text": "Wir bieten euch eine feste Stelle im Media Lab an. Was sagt ihr?"
+              "text": "Ihr habt alle drei Fallakten solide durchdrungen."
             }
           ],
           "options": [
             {
-              "id": "ja",
-              "label": "Ja, sehr gerne!"
+              "id": "next",
+              "label": "Danke, was ist das Fazit?",
+              "nextStep": 1
+            }
+          ]
+        },
+        {
+          "stepIndex": 1,
+          "type": "summary",
+          "speechBubbles": [
+            {
+              "hostId": "clara",
+              "text": "Empörung erkannt, Konsens-Illusion entlarvt, Diffamierung sauber abgegrenzt."
             },
             {
-              "id": "überlegen",
-              "label": "Ich überlege es mir."
+              "hostId": "uwe",
+              "text": "Genau diese analytische Trennung macht euch im Media Lab wertvoll."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Wie geht es weiter?",
+              "nextStep": 2
+            }
+          ]
+        },
+        {
+          "stepIndex": 2,
+          "type": "summary",
+          "speechBubbles": [
+            {
+              "hostId": "clara",
+              "text": "Wir bieten euch eine feste Stelle im Media Lab Regelreich an."
+            }
+          ],
+          "options": [
+            {
+              "id": "accept",
+              "label": "Ich nehme an. Sehr gern.",
+              "nextStep": 3
+            },
+            {
+              "id": "ponder",
+              "label": "Ich denke kurz nach, klingt aber stark.",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 3,
+          "type": "transition",
+          "speechBubbles": [
+            {
+              "hostId": "uwe",
+              "text": "Abschlussprofil gespeichert. Willkommen im Team der Debattenarchitekt/innen."
+            }
+          ],
+          "options": [
+            {
+              "id": "end",
+              "label": "Ende anzeigen."
             }
           ]
         }

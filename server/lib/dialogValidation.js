@@ -1,5 +1,6 @@
 import { SCENES } from '../../src/data/scenes.js'
 const HOST_IDS = new Set(['selected', 'clara', 'uwe'])
+const STEP_TYPES = new Set(['intro', 'example', 'activity', 'summary', 'transition', 'dialog'])
 
 function assert(condition, message, status = 400) {
   if (!condition) {
@@ -19,6 +20,8 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
 
   const stepIndex = payload.stepIndex ?? fallbackStepIndex
   assert(Number.isInteger(stepIndex) && stepIndex >= 0, 'stepIndex muss eine ganze Zahl >= 0 sein.')
+  const type = String(payload.type ?? 'dialog').toLowerCase()
+  assert(STEP_TYPES.has(type), 'type muss einer der Werte intro, example, activity, summary, transition oder dialog sein.')
 
   const speechBubbles = payload.speechBubbles ?? []
   assert(Array.isArray(speechBubbles), 'speechBubbles muss ein Array sein.')
@@ -60,7 +63,7 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
     return normalized
   })
 
-  return { stepIndex, speechBubbles: normalizedBubbles, options: normalizedOptions }
+  return { stepIndex, type, speechBubbles: normalizedBubbles, options: normalizedOptions }
 }
 
 export function validateSceneDialogLogic(sceneEntry) {
@@ -70,6 +73,8 @@ export function validateSceneDialogLogic(sceneEntry) {
 
   for (const step of steps) {
     assert(Number.isInteger(step.stepIndex) && step.stepIndex >= 0, `Szene ${sceneEntry.sceneId}: ungültiger stepIndex ${step.stepIndex}.`)
+    const type = String(step.type ?? 'dialog').toLowerCase()
+    assert(STEP_TYPES.has(type), `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: ungültiger type ${type}.`)
     assert(Array.isArray(step.speechBubbles), `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: speechBubbles muss ein Array sein.`)
     assert(Array.isArray(step.options), `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: options muss ein Array sein.`)
     for (const bubble of step.speechBubbles) {

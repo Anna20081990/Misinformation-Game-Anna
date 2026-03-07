@@ -3,8 +3,10 @@ import {
   createSceneDialogStep,
   deleteSceneDialogStep,
   getSceneDialogs,
+  getSceneFlow,
   getScenes,
   seedDialogsFromGame,
+  seedSceneDialogs,
   updateSceneDialogStep,
 } from '../api/dialogApi.js'
 
@@ -14,9 +16,19 @@ const HOST_CHOICES = [
   { id: 'uwe', label: 'Uwe R. Blick' },
 ]
 
+const STEP_TYPES = [
+  { id: 'intro', label: 'Einführung' },
+  { id: 'example', label: 'Beispiel' },
+  { id: 'activity', label: 'Aktivität' },
+  { id: 'summary', label: 'Zusammenfassung' },
+  { id: 'transition', label: 'Übergang' },
+  { id: 'dialog', label: 'Dialog' },
+]
+
 function emptyForm(stepIndex = 0) {
   return {
     stepIndex,
+    type: 'dialog',
     speechBubbles: [{ hostId: 'selected', text: '' }],
     options: [{ id: '', label: '', nextStep: '', nextPart: '' }],
   }
@@ -31,6 +43,7 @@ function toNumberOrNull(value) {
 function normalizeForApi(formData) {
   return {
     stepIndex: Number(formData.stepIndex),
+    type: formData.type || 'dialog',
     speechBubbles: formData.speechBubbles
       .filter((item) => item.text && item.text.trim())
       .map((item) => ({
@@ -59,6 +72,7 @@ function normalizeForApi(formData) {
 function fromStep(step) {
   return {
     stepIndex: step.stepIndex,
+    type: step.type ?? 'dialog',
     speechBubbles: (step.speechBubbles || []).map((item) => ({
       hostId: item.hostId ?? 'selected',
       text: item.text ?? '',
@@ -76,6 +90,7 @@ export function AdminDialogScreen() {
   const [scenes, setScenes] = useState([])
   const [selectedSceneId, setSelectedSceneId] = useState(null)
   const [sceneDialogs, setSceneDialogs] = useState({ sceneId: null, steps: [] })
+  const [sceneFlow, setSceneFlow] = useState({ nodes: [], edges: [] })
   const [editingStepIndex, setEditingStepIndex] = useState(null)
   const [formData, setFormData] = useState(emptyForm(0))
   const [status, setStatus] = useState('')
@@ -88,19 +103,29 @@ export function AdminDialogScreen() {
   )
 
   const flowItems = useMemo(() => {
-    return sortedSteps.map((step) => {
-      const links = (step.options || []).map((opt) => {
-        if (opt.nextStep != null) return `${opt.label} → Step ${opt.nextStep}`
-        if (opt.nextPart != null) return `${opt.label} → Teil ${opt.nextPart}`
-        return `${opt.label} → Ende`
+    const edgesByStep = new Map()
+    for (const edge of sceneFlow.edges || []) {
+      const key = edge.fromStepIndex
+      const list = edgesByStep.get(key) || []
+      list.push(edge)
+      edgesByStep.set(key, list)
+    }
+
+    return (sceneFlow.nodes || []).map((node) => {
+      const edges = edgesByStep.get(node.stepIndex) || []
+      const links = edges.map((edge) => {
+        if (edge.target === 'step') return `${edge.optionLabel} -> Step ${edge.toStepIndex}`
+        if (edge.target === 'scene') return `${edge.optionLabel} -> Teil ${edge.toSceneId}`
+        return `${edge.optionLabel} -> Ende`
       })
 
       return {
-        stepIndex: step.stepIndex,
+        stepIndex: node.stepIndex,
+        type: node.type,
         links,
       }
     })
-  }, [sortedSteps])
+  }, [sceneFlow])
 
   async function loadScenes() {
     setLoading(true)
@@ -125,10 +150,14 @@ export function AdminDialogScreen() {
     setLoading(true)
     setError('')
     try {
-      const data = await getSceneDialogs(sceneId)
-      setSceneDialogs(data)
+      const [dialogData, flowData] = await Promise.all([
+        getSceneDialogs(sceneId),
+        getSceneFlow(sceneId),
+      ])
+      setSceneDialogs(dialogData)
+      setSceneFlow(flowData)
       setEditingStepIndex(null)
-      const nextIndex = Math.max(-1, ...(data.steps || []).map((step) => step.stepIndex)) + 1
+      const nextIndex = Math.max(-1, ...(dialogData.steps || []).map((step) => step.stepIndex)) + 1
       setFormData(emptyForm(nextIndex))
     } catch (err) {
       setError(err.message)
@@ -222,7 +251,7 @@ export function AdminDialogScreen() {
     }
   }
 
-  async function importExistingDialogs() {
+  async function importAllDialogs() {
     setLoading(true)
     setError('')
     setStatus('')
@@ -239,14 +268,38 @@ export function AdminDialogScreen() {
     }
   }
 
+  async function importSelectedScene() {
+    if (selectedSceneId == null) return
+
+    setLoading(true)
+    setError('')
+    setStatus('')
+
+    try {
+      const result = await seedSceneDialogs(selectedSceneId)
+      setStatus(`${result.message} (${result.stepCount} Schritte)`)
+      await loadDialogs(selectedSceneId)
+      await loadScenes()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section className="admin">
       <div className="admin__header">
         <h1 className="admin__title">Dialogverwaltung</h1>
-        <p className="admin__subtitle">Branching-Dialoge aus dem Backend bearbeiten.</p>
-        <button type="button" className="admin__action" onClick={importExistingDialogs} disabled={loading}>
-          Bestehende Konversationen importieren
-        </button>
+        <p className="admin__subtitle">Szenen 0-5 mit kompletter Dialoglogik und Verzweigungen.</p>
+        <div className="admin__actions">
+          <button type="button" className="admin__action" onClick={importAllDialogs} disabled={loading}>
+            Alle Szenen importieren
+          </button>
+          <button type="button" className="admin__action" onClick={importSelectedScene} disabled={loading || selectedSceneId == null}>
+            Gewählte Szene neu befüllen
+          </button>
+        </div>
       </div>
 
       <div className="admin__layout">
@@ -270,7 +323,7 @@ export function AdminDialogScreen() {
 
         <aside className="admin__panel">
           <div className="admin__panel-head">
-            <h2>Dialogschritte</h2>
+            <h2>Konversation</h2>
             <button type="button" className="admin__action" onClick={startNewStep}>Neu</button>
           </div>
           <div className="admin__list">
@@ -282,6 +335,7 @@ export function AdminDialogScreen() {
                 onClick={() => selectStep(step.stepIndex)}
               >
                 <span>Step {step.stepIndex}</span>
+                <small>Typ: {step.type ?? 'dialog'}</small>
                 <small>{step.options?.length || 0} Verzweigungen</small>
               </button>
             ))}
@@ -292,12 +346,8 @@ export function AdminDialogScreen() {
           <div className="admin__flow">
             {flowItems.map((item) => (
               <div key={`flow-${item.stepIndex}`} className="admin__flow-step">
-                <strong>Step {item.stepIndex}</strong>
-                {item.links.length ? (
-                  item.links.map((line, index) => <div key={`flow-${item.stepIndex}-${index}`}>{line}</div>)
-                ) : (
-                  <div>Keine ausgehende Verzweigung</div>
-                )}
+                <strong>Step {item.stepIndex} ({item.type})</strong>
+                {item.links.length ? item.links.map((line, index) => <div key={`flow-${item.stepIndex}-${index}`}>{line}</div>) : <div>Keine ausgehende Verzweigung</div>}
               </div>
             ))}
             {!flowItems.length && <div>Kein Flow vorhanden.</div>}
@@ -309,14 +359,7 @@ export function AdminDialogScreen() {
             <h2>{editingStepIndex == null ? 'Neuer Dialogschritt' : `Step ${editingStepIndex} bearbeiten`}</h2>
             <div className="admin__actions">
               <button type="button" className="admin__action" onClick={saveStep} disabled={loading}>Speichern</button>
-              <button
-                type="button"
-                className="admin__danger"
-                onClick={removeStep}
-                disabled={loading || editingStepIndex == null}
-              >
-                Löschen
-              </button>
+              <button type="button" className="admin__danger" onClick={removeStep} disabled={loading || editingStepIndex == null}>Löschen</button>
             </div>
           </div>
 
@@ -328,6 +371,15 @@ export function AdminDialogScreen() {
               disabled={editingStepIndex != null}
               onChange={(event) => setFormData((prev) => ({ ...prev, stepIndex: Number(event.target.value) }))}
             />
+          </label>
+
+          <label className="admin__field">
+            <span>Step Typ</span>
+            <select value={formData.type} onChange={(event) => setFormData((prev) => ({ ...prev, type: event.target.value }))}>
+              {STEP_TYPES.map((choice) => (
+                <option key={choice.id} value={choice.id}>{choice.label}</option>
+              ))}
+            </select>
           </label>
 
           <h3>Host-Nachrichten</h3>
@@ -345,78 +397,40 @@ export function AdminDialogScreen() {
                 <span>Text</span>
                 <textarea rows="3" value={bubble.text} onChange={(event) => updateBubble(index, 'text', event.target.value)} />
               </label>
-              <button
-                type="button"
-                className="admin__link"
-                onClick={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    speechBubbles: prev.speechBubbles.filter((_, i) => i !== index),
-                  }))
-                }
-                disabled={formData.speechBubbles.length <= 1}
-              >
+              <button type="button" className="admin__link" onClick={() => setFormData((prev) => ({ ...prev, speechBubbles: prev.speechBubbles.filter((_, i) => i !== index) }))} disabled={formData.speechBubbles.length <= 1}>
                 Nachricht entfernen
               </button>
             </div>
           ))}
-          <button
-            type="button"
-            className="admin__action"
-            onClick={() =>
-              setFormData((prev) => ({
-                ...prev,
-                speechBubbles: [...prev.speechBubbles, { hostId: 'selected', text: '' }],
-              }))
-            }
-          >
+          <button type="button" className="admin__action" onClick={() => setFormData((prev) => ({ ...prev, speechBubbles: [...prev.speechBubbles, { hostId: 'selected', text: '' }] }))}>
             Nachricht hinzufügen
           </button>
 
           <h3>Antwortoptionen / Branches</h3>
-          {(formData.options || []).map((option, index) => (
+          {(formData.options || []).map((optionItem, index) => (
             <div key={`option-${index}`} className="admin__block">
               <label className="admin__field">
                 <span>ID</span>
-                <input value={option.id} onChange={(event) => updateOption(index, 'id', event.target.value)} />
+                <input value={optionItem.id} onChange={(event) => updateOption(index, 'id', event.target.value)} />
               </label>
               <label className="admin__field admin__field--full">
                 <span>Label</span>
-                <input value={option.label} onChange={(event) => updateOption(index, 'label', event.target.value)} />
+                <input value={optionItem.label} onChange={(event) => updateOption(index, 'label', event.target.value)} />
               </label>
               <label className="admin__field">
                 <span>nextStep</span>
-                <input value={option.nextStep} onChange={(event) => updateOption(index, 'nextStep', event.target.value)} />
+                <input value={optionItem.nextStep} onChange={(event) => updateOption(index, 'nextStep', event.target.value)} />
               </label>
               <label className="admin__field">
                 <span>nextPart</span>
-                <input value={option.nextPart} onChange={(event) => updateOption(index, 'nextPart', event.target.value)} />
+                <input value={optionItem.nextPart} onChange={(event) => updateOption(index, 'nextPart', event.target.value)} />
               </label>
-              <button
-                type="button"
-                className="admin__link"
-                onClick={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    options: prev.options.filter((_, i) => i !== index),
-                  }))
-                }
-                disabled={formData.options.length <= 1}
-              >
+              <button type="button" className="admin__link" onClick={() => setFormData((prev) => ({ ...prev, options: prev.options.filter((_, i) => i !== index) }))} disabled={formData.options.length <= 1}>
                 Option entfernen
               </button>
             </div>
           ))}
-          <button
-            type="button"
-            className="admin__action"
-            onClick={() =>
-              setFormData((prev) => ({
-                ...prev,
-                options: [...prev.options, { id: '', label: '', nextStep: '', nextPart: '' }],
-              }))
-            }
-          >
+          <button type="button" className="admin__action" onClick={() => setFormData((prev) => ({ ...prev, options: [...prev.options, { id: '', label: '', nextStep: '', nextPart: '' }] }))}>
             Option hinzufügen
           </button>
 

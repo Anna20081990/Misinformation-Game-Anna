@@ -13,7 +13,7 @@ import {
   replaceAllSceneDialogs,
   updateSceneDialogs,
 } from './lib/dialogStore.js'
-import { buildSeedDialogs } from './lib/dialogSeed.js'
+import { buildSeedDialogs, buildSeedSceneDialogs } from './lib/dialogSeed.js'
 
 const app = express()
 
@@ -32,6 +32,27 @@ app.post('/api/dialogs/seed', async (_req, res, next) => {
       message: 'Dialoge aus dem Spielstand wurden in die Datenbank übernommen.',
       scenes: seeded.length,
       steps: seeded.reduce((sum, scene) => sum + (scene.steps?.length || 0), 0),
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/scenes/:sceneId/dialogs/seed', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    ensureSceneExists(sceneId)
+
+    const seededScene = buildSeedSceneDialogs(sceneId)
+    const updated = await updateSceneDialogs(sceneId, () => {
+      validateSceneDialogLogic(seededScene)
+      return seededScene
+    })
+
+    res.json({
+      message: `Szene ${sceneId} wurde mit Seed-Dialogen befüllt.`,
+      sceneId,
+      stepCount: updated.steps.length,
     })
   } catch (error) {
     next(error)
@@ -87,6 +108,66 @@ app.get('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
     return res.json(step)
   } catch (error) {
     return next(error)
+  }
+})
+
+app.get('/api/scenes/:sceneId/flow', async (req, res, next) => {
+  try {
+    const sceneId = Number(req.params.sceneId)
+    ensureSceneExists(sceneId)
+
+    const entry = await getSceneDialogs(sceneId)
+    const steps = [...(entry?.steps ?? [])].sort((a, b) => a.stepIndex - b.stepIndex)
+    const stepSet = new Set(steps.map((step) => step.stepIndex))
+
+    const nodes = steps.map((step) => ({
+      id: `step-${step.stepIndex}`,
+      stepIndex: step.stepIndex,
+      type: step.type ?? 'dialog',
+      label: `Step ${step.stepIndex}`,
+      optionCount: step.options?.length ?? 0,
+    }))
+
+    const edges = []
+    for (const step of steps) {
+      for (const opt of step.options ?? []) {
+        if (opt.nextStep != null) {
+          edges.push({
+            fromStepIndex: step.stepIndex,
+            toStepIndex: opt.nextStep,
+            optionId: opt.id,
+            optionLabel: opt.label,
+            target: 'step',
+            dangling: !stepSet.has(opt.nextStep),
+          })
+          continue
+        }
+
+        if (opt.nextPart != null) {
+          edges.push({
+            fromStepIndex: step.stepIndex,
+            toSceneId: opt.nextPart,
+            optionId: opt.id,
+            optionLabel: opt.label,
+            target: 'scene',
+            dangling: false,
+          })
+          continue
+        }
+
+        edges.push({
+          fromStepIndex: step.stepIndex,
+          optionId: opt.id,
+          optionLabel: opt.label,
+          target: 'end',
+          dangling: false,
+        })
+      }
+    }
+
+    res.json({ sceneId, nodes, edges })
+  } catch (error) {
+    next(error)
   }
 })
 

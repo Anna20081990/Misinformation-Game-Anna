@@ -48,8 +48,18 @@ export function deleteSceneDialogStep(sceneId, stepIndex) {
   })
 }
 
+export function getSceneFlow(sceneId) {
+  return request(`/api/scenes/${sceneId}/flow`)
+}
+
 export function seedDialogsFromGame() {
   return request('/api/dialogs/seed', {
+    method: 'POST',
+  })
+}
+
+export function seedSceneDialogs(sceneId) {
+  return request(`/api/scenes/${sceneId}/dialogs/seed`, {
     method: 'POST',
   })
 }
