@@ -4,6 +4,7 @@ import {
   deleteSceneDialogStep,
   getSceneDialogs,
   getScenes,
+  seedDialogsFromGame,
   updateSceneDialogStep,
 } from '../api/dialogApi.js'
 
@@ -107,7 +108,7 @@ export function AdminDialogScreen() {
     try {
       const data = await getScenes()
       setScenes(data)
-      const firstSceneId = data[0]?.sceneId ?? null
+      const firstSceneId = data.find((scene) => scene.sceneId === 1)?.sceneId ?? data[0]?.sceneId ?? null
       if (selectedSceneId == null && firstSceneId != null) {
         setSelectedSceneId(firstSceneId)
       }
@@ -221,11 +222,31 @@ export function AdminDialogScreen() {
     }
   }
 
+  async function importExistingDialogs() {
+    setLoading(true)
+    setError('')
+    setStatus('')
+
+    try {
+      const result = await seedDialogsFromGame()
+      setStatus(`${result.message} (${result.steps} Schritte in ${result.scenes} Szenen)`)
+      await loadScenes()
+      await loadDialogs(selectedSceneId ?? 1)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section className="admin">
       <div className="admin__header">
         <h1 className="admin__title">Dialogverwaltung</h1>
         <p className="admin__subtitle">Branching-Dialoge aus dem Backend bearbeiten.</p>
+        <button type="button" className="admin__action" onClick={importExistingDialogs} disabled={loading}>
+          Bestehende Konversationen importieren
+        </button>
       </div>
 
       <div className="admin__layout">

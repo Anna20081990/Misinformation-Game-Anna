@@ -47,3 +47,9 @@ export function deleteSceneDialogStep(sceneId, stepIndex) {
     method: 'DELETE',
   })
 }
+
+export function seedDialogsFromGame() {
+  return request('/api/dialogs/seed', {
+    method: 'POST',
+  })
+}

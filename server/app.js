@@ -10,8 +10,10 @@ import {
 import {
   getAllSceneDialogs,
   getSceneDialogs,
+  replaceAllSceneDialogs,
   updateSceneDialogs,
 } from './lib/dialogStore.js'
+import { buildSeedDialogs } from './lib/dialogSeed.js'
 
 const app = express()
 
@@ -20,6 +22,20 @@ app.use(express.json({ limit: '1mb' }))
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, service: 'regelreich-dialog-backend' })
+})
+
+app.post('/api/dialogs/seed', async (_req, res, next) => {
+  try {
+    const seeded = buildSeedDialogs()
+    await replaceAllSceneDialogs(seeded)
+    res.json({
+      message: 'Dialoge aus dem Spielstand wurden in die Datenbank übernommen.',
+      scenes: seeded.length,
+      steps: seeded.reduce((sum, scene) => sum + (scene.steps?.length || 0), 0),
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.get('/api/scenes', async (_req, res, next) => {

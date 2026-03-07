@@ -57,3 +57,13 @@ export async function updateSceneDialogs(sceneId, updater) {
   await queueWrite(data)
   return clone(data.scenes[effectiveIndex])
 }
+
+export async function replaceAllSceneDialogs(nextScenes) {
+  const data = await readData()
+  data.scenes = Array.isArray(nextScenes)
+    ? [...nextScenes].sort((a, b) => Number(a.sceneId) - Number(b.sceneId))
+    : []
+
+  await queueWrite(data)
+  return clone(data.scenes)
+}
