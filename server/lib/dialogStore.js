@@ -1,5 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { buildSeedDialogs } from './dialogSeed.js'
+import { SCENES } from '../../src/data/scenes.js'
 
 const DATA_FILE = path.resolve(process.cwd(), 'server/data/dialogs.json')
 let writeQueue = Promise.resolve()
@@ -9,12 +11,21 @@ function clone(obj) {
 }
 
 async function readData() {
-  const raw = await readFile(DATA_FILE, 'utf-8')
-  const parsed = JSON.parse(raw)
-  if (!parsed || !Array.isArray(parsed.scenes)) {
-    throw new Error('Ungültiges Datenformat in dialogs.json')
+  try {
+    const raw = await readFile(DATA_FILE, 'utf-8')
+    const parsed = JSON.parse(raw)
+    if (!parsed || !Array.isArray(parsed.scenes)) {
+      throw new Error('Ungültiges Datenformat in dialogs.json')
+    }
+    return parsed
+  } catch (error) {
+    if (error?.code === 'ENOENT') {
+      const seeded = { scenes: buildSeedDialogs() }
+      await writeFile(DATA_FILE, `${JSON.stringify(seeded, null, 2)}\n`, 'utf-8')
+      return seeded
+    }
+    throw error
   }
-  return parsed
 }
 
 function queueWrite(nextData) {
@@ -27,7 +38,30 @@ function queueWrite(nextData) {
 
 export async function getAllSceneDialogs() {
   const data = await readData()
-  return data.scenes.sort((a, b) => a.sceneId - b.sceneId)
+  const sceneMap = new Map((data.scenes || []).map((scene) => [Number(scene.sceneId), scene]))
+  let mutated = false
+
+  for (const scene of SCENES) {
+    if (!sceneMap.has(scene.id)) {
+      sceneMap.set(scene.id, { sceneId: scene.id, steps: [] })
+      mutated = true
+    }
+  }
+
+  const scenes = [...sceneMap.values()].sort((a, b) => Number(a.sceneId) - Number(b.sceneId))
+  const hasAnySteps = scenes.some((scene) => (scene.steps || []).length > 0)
+
+  if (!hasAnySteps) {
+    const seededScenes = buildSeedDialogs()
+    await queueWrite({ scenes: seededScenes })
+    return seededScenes
+  }
+
+  if (mutated) {
+    await queueWrite({ scenes })
+  }
+
+  return scenes
 }
 
 export async function getSceneDialogs(sceneId) {

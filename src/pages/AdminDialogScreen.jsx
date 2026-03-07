@@ -5,8 +5,6 @@ import {
   getSceneDialogs,
   getSceneFlow,
   getScenes,
-  seedDialogsFromGame,
-  seedSceneDialogs,
   updateSceneDialogStep,
 } from '../api/dialogApi.js'
 
@@ -251,55 +249,11 @@ export function AdminDialogScreen() {
     }
   }
 
-  async function importAllDialogs() {
-    setLoading(true)
-    setError('')
-    setStatus('')
-
-    try {
-      const result = await seedDialogsFromGame()
-      setStatus(`${result.message} (${result.steps} Schritte in ${result.scenes} Szenen)`)
-      await loadScenes()
-      await loadDialogs(selectedSceneId ?? 1)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function importSelectedScene() {
-    if (selectedSceneId == null) return
-
-    setLoading(true)
-    setError('')
-    setStatus('')
-
-    try {
-      const result = await seedSceneDialogs(selectedSceneId)
-      setStatus(`${result.message} (${result.stepCount} Schritte)`)
-      await loadDialogs(selectedSceneId)
-      await loadScenes()
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <section className="admin">
       <div className="admin__header">
         <h1 className="admin__title">Dialogverwaltung</h1>
         <p className="admin__subtitle">Szenen 0-5 mit kompletter Dialoglogik und Verzweigungen.</p>
-        <div className="admin__actions">
-          <button type="button" className="admin__action" onClick={importAllDialogs} disabled={loading}>
-            Alle Szenen importieren
-          </button>
-          <button type="button" className="admin__action" onClick={importSelectedScene} disabled={loading || selectedSceneId == null}>
-            Gewählte Szene neu befüllen
-          </button>
-        </div>
       </div>
 
       <div className="admin__layout">
