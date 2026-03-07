@@ -119,9 +119,35 @@ function scene2Steps() {
       bubble('selected', 'Aktivität 2: Welche Variante erzeugt die höchste Empörung?', 'rightA'),
       bubble('selected', 'Guter Retry. Aktivität 2: Welche Variante erzeugt jetzt die höchste Empörung?', 'retry'),
     ], [
-      option('rightB', '„Das ist ein Skandal, der uns alle bedroht!“', 5),
-      option('wrongB', '„Der Punkt sollte genauer geprüft werden.“', 41),
-    ]),
+      option('submit_easy', 'Das ist einfach.'),
+      option('submit_unsure2', 'Ich habe eigentlich keine Ahnung.'),
+    ], {
+      activityConfig: {
+        mode: 'intensity-choice',
+        title: 'Aktivität 2: Intensitätswahl',
+        topic: 'Thema: Einführung einer offiziellen Mittagsglocke',
+        choices: [
+          {
+            id: 'a',
+            heading: 'A - Sachlich',
+            text: '„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“',
+          },
+          {
+            id: 'b',
+            heading: 'B - Leicht emotionalisiert',
+            text: '„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“',
+          },
+          {
+            id: 'c',
+            heading: 'C - Stark zugespitzt',
+            text: '„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“',
+          },
+        ],
+        correctChoiceId: 'c',
+        success: { id: 'rightB', nextStep: 5 },
+        failure: { id: 'wrongB', nextStep: 41 },
+      },
+    }),
     step(41, 'activity', [
       bubble('selected', 'Hier fehlte die emotionale Intensität. Nimm die maximal aufgeladene Version.'),
     ], [option('retry', 'Nochmal wählen.', 4)]),

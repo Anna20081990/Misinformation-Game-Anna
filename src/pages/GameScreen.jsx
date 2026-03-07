@@ -71,6 +71,31 @@ const PART2_ACTIVITY1_FALLBACK_CONFIG = {
   success: { id: 'rightA', nextStep: 4 },
   failure: { id: 'wrongA', nextStep: 31 },
 }
+const PART2_ACTIVITY2_FALLBACK_CONFIG = {
+  mode: 'intensity-choice',
+  title: 'Aktivität 2: Intensitätswahl',
+  topic: 'Thema: Einführung einer offiziellen Mittagsglocke',
+  choices: [
+    {
+      id: 'a',
+      heading: 'A - Sachlich',
+      text: '„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“',
+    },
+    {
+      id: 'b',
+      heading: 'B - Leicht emotionalisiert',
+      text: '„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“',
+    },
+    {
+      id: 'c',
+      heading: 'C - Stark zugespitzt',
+      text: '„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“',
+    },
+  ],
+  correctChoiceId: 'c',
+  success: { id: 'rightB', nextStep: 5 },
+  failure: { id: 'wrongB', nextStep: 41 },
+}
 
 function isAvatarOption(option) {
   const id = String(option?.id || '').toLowerCase()
@@ -137,6 +162,7 @@ export function GameScreen({
   const [sceneDialogs, setSceneDialogs] = useState(null)
   const [selectedSentenceIndexes, setSelectedSentenceIndexes] = useState([])
   const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
+  const [selectedIntensityChoiceId, setSelectedIntensityChoiceId] = useState('')
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
   const resetOnActivity2TransitionRef = useRef(false)
@@ -149,6 +175,7 @@ export function GameScreen({
     setSceneDialogs(null)
     setSelectedSentenceIndexes([])
     setLastSubmittedSentenceIndexes([])
+    setSelectedIntensityChoiceId('')
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
 
@@ -204,6 +231,11 @@ export function GameScreen({
   const part2Activity1Config = isPart2Activity1Context
     ? (stepData.activityConfig || PART2_ACTIVITY1_FALLBACK_CONFIG)
     : null
+  const isPart2Activity2InputStep = currentPart === 2 && Number(stepData.stepIndex) === 4
+  const isPart2Activity2Context = isPart2Activity2InputStep
+  const part2Activity2Config = isPart2Activity2Context
+    ? (stepData.activityConfig || PART2_ACTIVITY2_FALLBACK_CONFIG)
+    : null
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
   const displayOptions = options.map((option) => {
@@ -224,9 +256,24 @@ export function GameScreen({
       sentenceId: sentence.id,
     }))
     : []
+  const intensityChoiceOptions = isPart2Activity2Context
+    ? (part2Activity2Config?.choices || []).map((choice) => ({
+      id: choice.id,
+      kind: 'choice',
+      label: choice.heading,
+      detailText: choice.text,
+      selected: selectedIntensityChoiceId === choice.id,
+      choiceId: choice.id,
+      groupTitle: part2Activity2Config?.title || 'Aktivität 2',
+      topic: part2Activity2Config?.topic || '',
+    }))
+    : []
   const backendSubmitOptions = options
     .filter((item) => item.id === 'submit_confident' || item.id === 'submit_unsure')
     .map((item) => ({ ...item, kind: 'submit', disabled: selectedSentenceIndexes.length === 0 }))
+  const backendActivity2SubmitOptions = options
+    .filter((item) => item.id === 'submit_easy' || item.id === 'submit_unsure2')
+    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedIntensityChoiceId }))
   const submitOptions = isPart2Activity1InputStep
     ? (backendSubmitOptions.length
       ? backendSubmitOptions
@@ -234,8 +281,19 @@ export function GameScreen({
         { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
         { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
       ])
-    : displayOptions
-  const monitorOptions = isPart2Activity1Context ? [...sentenceOptions, ...submitOptions] : displayOptions
+    : isPart2Activity2InputStep
+      ? (backendActivity2SubmitOptions.length
+        ? backendActivity2SubmitOptions
+        : [
+          { id: 'submit_easy', label: 'Das ist einfach.', kind: 'submit', disabled: !selectedIntensityChoiceId },
+          { id: 'submit_unsure2', label: 'Ich habe eigentlich keine Ahnung.', kind: 'submit', disabled: !selectedIntensityChoiceId },
+        ])
+      : displayOptions
+  const monitorOptions = isPart2Activity1Context
+    ? [...sentenceOptions, ...submitOptions]
+    : isPart2Activity2Context
+      ? [...intensityChoiceOptions, ...submitOptions]
+      : displayOptions
 
   useEffect(() => {
     if (!isPart2Activity1Context && selectedSentenceIndexes.length) {
@@ -244,7 +302,10 @@ export function GameScreen({
     if (!isPart2Activity1Context && lastSubmittedSentenceIndexes.length) {
       setLastSubmittedSentenceIndexes([])
     }
-  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length])
+    if (!isPart2Activity2Context && selectedIntensityChoiceId) {
+      setSelectedIntensityChoiceId('')
+    }
+  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -344,6 +405,27 @@ export function GameScreen({
       resetOnActivity2TransitionRef.current = false
     }
 
+    if (isPart2Activity2InputStep && option?.kind === 'choice') {
+      setSelectedIntensityChoiceId(String(option.choiceId || ''))
+      return
+    }
+
+    if (isPart2Activity2InputStep && option?.kind === 'submit') {
+      const correctChoiceId = String(part2Activity2Config?.correctChoiceId || 'c')
+      const isCorrect = selectedIntensityChoiceId === correctChoiceId
+      const mappedOption = isCorrect
+        ? {
+          id: part2Activity2Config?.success?.id || 'rightB',
+          nextStep: part2Activity2Config?.success?.nextStep ?? 5,
+        }
+        : {
+          id: part2Activity2Config?.failure?.id || 'wrongB',
+          nextStep: part2Activity2Config?.failure?.nextStep ?? 41,
+        }
+
+      option = { ...mappedOption, label: option.label }
+    }
+
     onSelectOption?.(index, option, currentPart)
     setLastSelectedOptionId(option?.id ?? null)
 
@@ -394,6 +476,7 @@ export function GameScreen({
           setChatMessages([])
           setSelectedSentenceIndexes([])
           setLastSubmittedSentenceIndexes([])
+          setSelectedIntensityChoiceId('')
           appendedStepKeysRef.current = new Set()
           setLastSelectedOptionId(null)
         }
@@ -410,7 +493,7 @@ export function GameScreen({
         messages={chatMessages}
         options={monitorOptions}
         onSelectOption={handleSelectOption}
-        variant={isPart2Activity1Context ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
+        variant={(isPart2Activity1Context || isPart2Activity2Context) ? 'monitor-select' : (activityVariantByPart[currentPart] || 'monitor')}
       />
     )
   }

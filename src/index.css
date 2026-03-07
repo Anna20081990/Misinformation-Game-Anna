@@ -325,6 +325,51 @@ html, body {
   line-height: 1.7;
 }
 
+.monitor-choice {
+  margin-top: 0.7rem;
+}
+
+.monitor-choice__topic {
+  margin: 0 0 0.6rem;
+  color: #d7efff;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.monitor-choice__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.monitor-choice__item {
+  border: 1px solid rgba(152, 204, 236, 0.3);
+  background: rgba(18, 54, 84, 0.48);
+  color: #e7f5ff;
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.12s;
+}
+
+.monitor-choice__item:hover {
+  border-color: rgba(143, 217, 255, 0.78);
+  background: rgba(39, 95, 138, 0.62);
+  transform: translateY(-1px);
+}
+
+.monitor-choice__item--selected {
+  border-color: #6de2a1;
+  background: #dff9e7;
+  color: #123119;
+}
+
+.monitor-choice__item p {
+  margin: 0.35rem 0 0;
+  line-height: 1.45;
+}
+
 .monitor-scene__options {
   border-top: 1px solid rgba(140, 195, 232, 0.32);
   padding: 0.9rem;

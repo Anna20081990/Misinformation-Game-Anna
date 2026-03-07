@@ -5,7 +5,8 @@ import { HostAvatar } from '../layout/HostAvatar.jsx'
 export function MonitorActivityScene({ messages = [], options = [], onSelectOption, variant = 'monitor' }) {
   const scrollRef = useRef(null)
   const sentenceOptions = options.filter((opt) => opt.kind === 'sentence')
-  const actionOptions = options.filter((option) => option.kind !== 'sentence')
+  const choiceOptions = options.filter((opt) => opt.kind === 'choice')
+  const actionOptions = options.filter((option) => option.kind !== 'sentence' && option.kind !== 'choice')
   const titleByVariant = {
     monitor: 'Stand-PC Monitor',
     tablet: 'Tablet Interface',
@@ -60,22 +61,46 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
 
               {variant === 'monitor-select' && (
                 <section className="monitor-select" aria-label="Beitrag analysieren">
-                  <h3 className="monitor-select__title">Beitrag</h3>
-                  <p className="monitor-select__paragraph">
-                    {sentenceOptions.map((sentence, index) => (
-                      <span key={`sentence-wrap-${sentence.id ?? index}`}>
-                        <button
-                          type="button"
-                          className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
-                          onClick={() => onSelectOption?.(index, sentence)}
-                          disabled={Boolean(sentence.disabled)}
-                        >
-                          {sentence.label}
-                        </button>
-                        {index < sentenceOptions.length - 1 && <span> </span>}
-                      </span>
-                    ))}
-                  </p>
+                  {!!sentenceOptions.length && (
+                    <>
+                      <h3 className="monitor-select__title">Beitrag</h3>
+                      <p className="monitor-select__paragraph">
+                        {sentenceOptions.map((sentence, index) => (
+                          <span key={`sentence-wrap-${sentence.id ?? index}`}>
+                            <button
+                              type="button"
+                              className={`monitor-select__sentence ${sentence.selected ? 'monitor-select__sentence--selected' : ''}`}
+                              onClick={() => onSelectOption?.(index, sentence)}
+                              disabled={Boolean(sentence.disabled)}
+                            >
+                              {sentence.label}
+                            </button>
+                            {index < sentenceOptions.length - 1 && <span> </span>}
+                          </span>
+                        ))}
+                      </p>
+                    </>
+                  )}
+
+                  {!!choiceOptions.length && (
+                    <div className="monitor-choice">
+                      <h3 className="monitor-select__title">{choiceOptions[0]?.groupTitle || 'Aktivität 2'}</h3>
+                      {!!choiceOptions[0]?.topic && <p className="monitor-choice__topic">{choiceOptions[0]?.topic}</p>}
+                      <div className="monitor-choice__list">
+                        {choiceOptions.map((choice, index) => (
+                          <button
+                            key={choice.id ?? `choice-${index}`}
+                            type="button"
+                            className={`monitor-choice__item ${choice.selected ? 'monitor-choice__item--selected' : ''}`}
+                            onClick={() => onSelectOption?.(index, choice)}
+                          >
+                            <strong>{choice.label}</strong>
+                            <p>{choice.detailText}</p>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </section>
               )}
 
