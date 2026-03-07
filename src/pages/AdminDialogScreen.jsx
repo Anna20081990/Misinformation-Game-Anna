@@ -331,10 +331,6 @@ export function AdminDialogScreen() {
         <div className="admin__editor">
           <div className="admin__panel-head">
             <h2>{editingStepIndex == null ? 'Neuer Dialogschritt' : `Step ${editingStepIndex} bearbeiten`}</h2>
-            <div className="admin__actions">
-              <button type="button" className="admin__action" onClick={saveStep} disabled={loading}>Speichern</button>
-              <button type="button" className="admin__danger" onClick={removeStep} disabled={loading || editingStepIndex == null}>Löschen</button>
-            </div>
           </div>
 
           <label className="admin__field">
@@ -426,6 +422,15 @@ export function AdminDialogScreen() {
               placeholder='{"mode":"sentence-marking","sentences":[...]}'
             />
           </label>
+          <p className="admin__hint">Aenderungen werden mit Speichern uebernommen.</p>
+          <button type="button" className="admin__action" onClick={saveStep} disabled={loading}>
+            Activity Config speichern
+          </button>
+
+          <div className="admin__actions">
+            <button type="button" className="admin__action" onClick={saveStep} disabled={loading}>Speichern</button>
+            <button type="button" className="admin__danger" onClick={removeStep} disabled={loading || editingStepIndex == null}>Löschen</button>
+          </div>
 
           {loading && <p className="admin__hint">Lade...</p>}
           {status && <p className="admin__success">{status}</p>}
