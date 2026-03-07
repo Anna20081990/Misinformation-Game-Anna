@@ -1,18 +1,16 @@
 import { SceneBackground } from './SceneBackground.jsx'
-import { SpeechBubble } from '../dialogue/SpeechBubble.jsx'
-import { PlayerInteraction } from '../interaction/PlayerInteraction.jsx'
+import { ChatPanel } from '../chat/ChatPanel.jsx'
+import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
 /**
- * Container: Hintergrund + Sprechblasen (NPCs) + Spieler-Interaktion (Avatar + Sprechblase unten links).
- * speechBubbles und interaction können von außen kommen (z. B. aktueller Konversationsschritt).
- * Sprechblasengröße passt sich dem Text dynamisch an.
+ * Container: Hintergrund + Chatbox rechts + Spieler-Avatar links unten.
  */
-export function Scene({ scene, speechBubbles: speechBubblesOverride, interaction: interactionOverride, onSelectOption, selectedAvatarId }) {
+export function Scene({ scene, messages = [], options = [], onSelectOption, selectedAvatarId }) {
   if (!scene) return null
 
-  const { backgroundImage, backgroundPlaceholder, speechBubbles: sceneBubbles = [], interaction: sceneInteraction } = scene
-  const speechBubbles = speechBubblesOverride ?? sceneBubbles
-  const interaction = interactionOverride ?? sceneInteraction
+  const { id, backgroundImage, backgroundPlaceholder } = scene
+  const AvatarComponent = getPlayerAvatarComponent(selectedAvatarId)
+  const showPlayerOnBackground = id === 2 && Boolean(selectedAvatarId)
 
   return (
     <div className="scene">
@@ -20,28 +18,26 @@ export function Scene({ scene, speechBubbles: speechBubblesOverride, interaction
         backgroundImage={backgroundImage}
         backgroundPlaceholder={backgroundPlaceholder}
       />
-      <div className="scene__content">
-        <div className="scene__bubbles">
-          {speechBubbles.map((bubble, index) => (
-            <div
-              key={`${bubble.characterId}-${index}`}
-              className="scene__bubble-wrapper"
-              data-anchor={bubble.anchor}
-            >
-              <SpeechBubble
-                text={bubble.text}
-                speakerName={bubble.speakerName}
-                anchorTo={bubble.anchor || 'left'}
-              />
-            </div>
-          ))}
+
+      <div className="scene__chat-wrap">
+        <ChatPanel
+          messages={messages}
+          options={options}
+          onSelectOption={onSelectOption}
+        />
+      </div>
+
+      {showPlayerOnBackground && (
+        <div className="scene__player-onstage" aria-hidden="true">
+          <AvatarComponent className="scene__player-onstage-img" />
+        </div>
+      )}
+
+      <div className="scene__player-dock" aria-hidden="true">
+        <div className="scene__player-avatar">
+          <AvatarComponent className="scene__player-avatar-img" />
         </div>
       </div>
-      <PlayerInteraction
-        options={interaction?.options ?? []}
-        onSelect={onSelectOption}
-        selectedAvatarId={selectedAvatarId}
-      />
     </div>
   )
 }
