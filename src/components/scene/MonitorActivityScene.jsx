@@ -35,7 +35,7 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
   const isRetryOnly = actionOptions.length > 0 && actionOptions.every((option) => option.id === 'retry')
   const leadCount = isRetryOnly
     ? 0
-    : ((isChoiceMode || isBoosterMode || isBucketMode) ? 2 : (isSentenceMode ? 1 : messages.length))
+    : ((isChoiceMode || isBoosterMode || isBucketMode) ? messages.length : (isSentenceMode ? 1 : messages.length))
   const leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
   const trailingMessages = messages.slice(Math.min(leadCount, messages.length))
   const bucketTitle = bucketOptions[0]?.groupTitle || 'Aktivität'
