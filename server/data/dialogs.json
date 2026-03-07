@@ -748,21 +748,72 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Aktivität 1: Welche Aussage ist klare Diffamierung?"
+              "text": "In mehreren Verwaltungsgebäuden wurde eine neue, einheitliche Aufzugmusik eingeführt. Offiziell soll sie „Verweildauer emotional rahmen“."
+            },
+            {
+              "hostId": "selected",
+              "text": "Aktivität 1: Didi Fam verschiebt Diskussionen gern von der Sachebene auf Personen. Ordne die Aussagen: Was ist sachliche Kritik und was ist typisch für Didi?"
             }
           ],
           "options": [
             {
-              "id": "rightA",
-              "label": "„Mit so einer Person muss man gar nicht diskutieren.“",
-              "nextStep": 4
+              "id": "submit_sorted5",
+              "label": "Einsortiert. Didi kann kommen."
             },
             {
+              "id": "submit_unsure5",
+              "label": "Ich hoffe, ich habe niemanden falsch beschuldigt."
+            }
+          ],
+          "activityConfig": {
+            "mode": "bucket-sort",
+            "title": "Aktivität 1: Sache oder Angriff",
+            "topic": "Thema: Einführung einer einheitlichen Aufzugmusik",
+            "prompt": "Ordne alle Aussagen in die zwei Buckets ein.",
+            "unassignedLabel": "Beiträge",
+            "bucketDefinitions": [
+              {
+                "id": "content",
+                "label": "Kritik am Inhalt"
+              },
+              {
+                "id": "person",
+                "label": "Angriff auf Person"
+              }
+            ],
+            "items": [
+              {
+                "id": "a1",
+                "text": "„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche.“"
+              },
+              {
+                "id": "a2",
+                "text": "„Wer diese Musik gut findet, hat offenbar keinen Geschmack.“"
+              },
+              {
+                "id": "a3",
+                "text": "„Die Entscheidung wurde ohne ausreichende Rückmeldung der Nutzer getroffen.“"
+              },
+              {
+                "id": "a4",
+                "text": "„Typisch für diese Entscheidungsträger - immer am Alltag vorbei.“"
+              }
+            ],
+            "correctAssignments": {
+              "a1": "content",
+              "a2": "person",
+              "a3": "content",
+              "a4": "person"
+            },
+            "success": {
+              "id": "rightA",
+              "nextStep": 4
+            },
+            "failure": {
               "id": "wrongA",
-              "label": "„Die Daten im Beitrag sind unvollständig.“",
               "nextStep": 31
             }
-          ]
+          }
         },
         {
           "stepIndex": 31,
@@ -770,7 +821,28 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das war legitime Kritik am Inhalt. Gesucht ist ein persönlicher Angriff."
+              "text": "Noch nicht vollständig: Ordne bitte alle Aussagen ein, bevor du bestätigst.",
+              "showOnOptionId": "wrongAIncomplete"
+            },
+            {
+              "hostId": "selected",
+              "text": "Du hast nur sachliche Kritik markiert. Prüfe, welche Aussagen Personen angreifen.",
+              "showOnOptionId": "wrongAOnlyContent"
+            },
+            {
+              "hostId": "selected",
+              "text": "Das passt noch nicht. Du hast die Aussagen größtenteils in die falschen Buckets eingeordnet.",
+              "showOnOptionId": "wrongAAllWrong"
+            },
+            {
+              "hostId": "selected",
+              "text": "Teilweise richtig. Einige Aussagen sind noch im falschen Bucket.",
+              "showOnOptionId": "wrongAMixed"
+            },
+            {
+              "hostId": "selected",
+              "text": "Noch nicht ganz. Ordne klar zwischen Sachebene und persönlichem Angriff.",
+              "showOnOptionId": "wrongA"
             }
           ],
           "options": [

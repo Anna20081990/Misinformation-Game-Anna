@@ -1,13 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 
 export function MonitorActivityScene({ messages = [], options = [], onSelectOption, variant = 'monitor' }) {
   const scrollRef = useRef(null)
+  const dragItemIdRef = useRef('')
+  const [dragOverBucketId, setDragOverBucketId] = useState('')
   const sentenceOptions = options.filter((opt) => opt.kind === 'sentence')
   const choiceOptions = options.filter((opt) => opt.kind === 'choice')
   const boosterOptions = options.filter((opt) => opt.kind === 'booster')
-  const actionOptions = options.filter((option) => option.kind !== 'sentence' && option.kind !== 'choice' && option.kind !== 'booster')
+  const bucketOptions = options.filter((opt) => opt.kind === 'bucket-assignment')
+  const actionOptions = options.filter((option) => option.kind !== 'sentence' && option.kind !== 'choice' && option.kind !== 'booster' && option.kind !== 'bucket-assignment')
   const titleByVariant = {
     monitor: 'Stand-PC Monitor',
     tablet: 'Tablet Interface',
@@ -28,12 +31,18 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
   const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
   const isBoosterMode = !!boosterOptions.length
+  const isBucketMode = !!bucketOptions.length
   const isRetryOnly = actionOptions.length > 0 && actionOptions.every((option) => option.id === 'retry')
   const leadCount = isRetryOnly
     ? 0
-    : ((isChoiceMode || isBoosterMode) ? 2 : (isSentenceMode ? 1 : messages.length))
+    : ((isChoiceMode || isBoosterMode || isBucketMode) ? 2 : (isSentenceMode ? 1 : messages.length))
   const leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
   const trailingMessages = messages.slice(Math.min(leadCount, messages.length))
+  const bucketTitle = bucketOptions[0]?.groupTitle || 'Aktivität'
+  const bucketTopic = bucketOptions[0]?.topic || ''
+  const bucketPrompt = bucketOptions[0]?.prompt || ''
+  const bucketDefinitions = bucketOptions[0]?.bucketDefinitions || []
+  const unassignedBucketLabel = bucketOptions[0]?.unassignedLabel || 'Nicht zugeordnet'
 
   return (
     <div className="scene">
@@ -130,6 +139,100 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
                           >
                             <p className="monitor-choice__text">{choice.text}</p>
                           </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {!!bucketOptions.length && (
+                    <div className="monitor-choice">
+                      <h3 className="monitor-select__title">{bucketTopic || bucketTitle}</h3>
+                      {!!bucketPrompt && <p className="monitor-choice__topic">{bucketPrompt}</p>}
+
+                      <div
+                        className={`monitor-bucket monitor-bucket--unassigned ${dragOverBucketId === 'unassigned' ? 'monitor-bucket--dragover' : ''}`}
+                        onDragOver={(event) => {
+                          event.preventDefault()
+                          if (!bucketOptions[0]?.disabled) setDragOverBucketId('unassigned')
+                        }}
+                        onDragLeave={() => setDragOverBucketId('')}
+                        onDrop={(event) => {
+                          event.preventDefault()
+                          const itemId = dragItemIdRef.current
+                          setDragOverBucketId('')
+                          if (!itemId || bucketOptions[0]?.disabled) return
+                          onSelectOption?.(0, { kind: 'bucket-drop', itemId, bucketId: '' })
+                          dragItemIdRef.current = ''
+                        }}
+                      >
+                        <h4 className="monitor-bucket__title">{unassignedBucketLabel}</h4>
+                        <div className="monitor-bucket__items">
+                          {bucketOptions
+                            .filter((item) => !item.assignedBucketId)
+                            .map((item) => (
+                              <button
+                                key={item.id}
+                                type="button"
+                                className="monitor-bucket__item"
+                                draggable={!item.disabled}
+                                disabled={Boolean(item.disabled)}
+                                onDragStart={() => {
+                                  dragItemIdRef.current = item.itemId
+                                }}
+                                onDragEnd={() => {
+                                  dragItemIdRef.current = ''
+                                  setDragOverBucketId('')
+                                }}
+                              >
+                                {item.text}
+                              </button>
+                            ))}
+                        </div>
+                      </div>
+
+                      <div className="monitor-bucket-grid">
+                        {bucketDefinitions.map((bucket) => (
+                          <div
+                            key={bucket.id}
+                            className={`monitor-bucket ${dragOverBucketId === bucket.id ? 'monitor-bucket--dragover' : ''}`}
+                            onDragOver={(event) => {
+                              event.preventDefault()
+                              if (!bucketOptions[0]?.disabled) setDragOverBucketId(bucket.id)
+                            }}
+                            onDragLeave={() => setDragOverBucketId('')}
+                            onDrop={(event) => {
+                              event.preventDefault()
+                              const itemId = dragItemIdRef.current
+                              setDragOverBucketId('')
+                              if (!itemId || bucketOptions[0]?.disabled) return
+                              onSelectOption?.(0, { kind: 'bucket-drop', itemId, bucketId: bucket.id })
+                              dragItemIdRef.current = ''
+                            }}
+                          >
+                            <h4 className="monitor-bucket__title">{bucket.label}</h4>
+                            <div className="monitor-bucket__items">
+                              {bucketOptions
+                                .filter((item) => item.assignedBucketId === bucket.id)
+                                .map((item) => (
+                                  <button
+                                    key={item.id}
+                                    type="button"
+                                    className="monitor-bucket__item"
+                                    draggable={!item.disabled}
+                                    disabled={Boolean(item.disabled)}
+                                    onDragStart={() => {
+                                      dragItemIdRef.current = item.itemId
+                                    }}
+                                    onDragEnd={() => {
+                                      dragItemIdRef.current = ''
+                                      setDragOverBucketId('')
+                                    }}
+                                  >
+                                    {item.text}
+                                  </button>
+                                ))}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>

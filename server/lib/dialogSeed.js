@@ -253,13 +253,44 @@ function scene4Steps() {
       bubble('selected', 'Beispiel B: Motive werden unterstellt, statt Inhalte zu prüfen.'),
     ], [option('next', 'Zur Aktivität.', 3)]),
     step(3, 'activity', [
-      bubble('selected', 'Aktivität 1: Welche Aussage ist klare Diffamierung?'),
+      bubble('selected', 'In mehreren Verwaltungsgebäuden wurde eine neue, einheitliche Aufzugmusik eingeführt. Offiziell soll sie „Verweildauer emotional rahmen“.'),
+      bubble('selected', 'Aktivität 1: Didi Fam verschiebt Diskussionen gern von der Sachebene auf Personen. Ordne die Aussagen: Was ist sachliche Kritik und was ist typisch für Didi?'),
     ], [
-      option('rightA', '„Mit so einer Person muss man gar nicht diskutieren.“', 4),
-      option('wrongA', '„Die Daten im Beitrag sind unvollständig.“', 31),
-    ]),
+      option('submit_sorted5', 'Einsortiert. Didi kann kommen.'),
+      option('submit_unsure5', 'Ich hoffe, ich habe niemanden falsch beschuldigt.'),
+    ], {
+      activityConfig: {
+        mode: 'bucket-sort',
+        title: 'Aktivität 1: Sache oder Angriff',
+        topic: 'Thema: Einführung einer einheitlichen Aufzugmusik',
+        prompt: 'Ordne alle Aussagen in die zwei Buckets ein.',
+        unassignedLabel: 'Beiträge',
+        bucketDefinitions: [
+          { id: 'content', label: 'Kritik am Inhalt' },
+          { id: 'person', label: 'Angriff auf Person' },
+        ],
+        items: [
+          { id: 'a1', text: '„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche.“' },
+          { id: 'a2', text: '„Wer diese Musik gut findet, hat offenbar keinen Geschmack.“' },
+          { id: 'a3', text: '„Die Entscheidung wurde ohne ausreichende Rückmeldung der Nutzer getroffen.“' },
+          { id: 'a4', text: '„Typisch für diese Entscheidungsträger - immer am Alltag vorbei.“' },
+        ],
+        correctAssignments: {
+          a1: 'content',
+          a2: 'person',
+          a3: 'content',
+          a4: 'person',
+        },
+        success: { id: 'rightA', nextStep: 4 },
+        failure: { id: 'wrongA', nextStep: 31 },
+      },
+    }),
     step(31, 'activity', [
-      bubble('selected', 'Das war legitime Kritik am Inhalt. Gesucht ist ein persönlicher Angriff.'),
+      bubble('selected', 'Noch nicht vollständig: Ordne bitte alle Aussagen ein, bevor du bestätigst.', 'wrongAIncomplete'),
+      bubble('selected', 'Du hast nur sachliche Kritik markiert. Prüfe, welche Aussagen Personen angreifen.', 'wrongAOnlyContent'),
+      bubble('selected', 'Das passt noch nicht. Du hast die Aussagen größtenteils in die falschen Buckets eingeordnet.', 'wrongAAllWrong'),
+      bubble('selected', 'Teilweise richtig. Einige Aussagen sind noch im falschen Bucket.', 'wrongAMixed'),
+      bubble('selected', 'Noch nicht ganz. Ordne klar zwischen Sachebene und persönlichem Angriff.', 'wrongA'),
     ], [option('retry', 'Nochmal.', 3)]),
     step(4, 'activity', [
       bubble('selected', 'Treffer. Welche Reaktion verschiebt die Debatte jetzt von Sache auf Person?', 'rightA'),

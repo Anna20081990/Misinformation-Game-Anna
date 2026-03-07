@@ -381,6 +381,57 @@ html, body {
   line-height: 1.45;
 }
 
+.monitor-bucket-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.monitor-bucket {
+  border: 1px dashed rgba(131, 191, 235, 0.55);
+  border-radius: 12px;
+  padding: 0.6rem;
+  background: rgba(10, 38, 63, 0.5);
+  min-height: 112px;
+}
+
+.monitor-bucket--unassigned {
+  margin-top: 0.75rem;
+}
+
+.monitor-bucket--dragover {
+  border-color: #7ce0ff;
+  box-shadow: inset 0 0 0 1px rgba(124, 224, 255, 0.45);
+}
+
+.monitor-bucket__title {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+  color: #d9f0ff;
+}
+
+.monitor-bucket__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.monitor-bucket__item {
+  border: 1px solid rgba(120, 184, 226, 0.5);
+  border-radius: 10px;
+  padding: 0.45rem 0.55rem;
+  text-align: left;
+  color: #d9ecff;
+  background: rgba(17, 55, 87, 0.72);
+  cursor: grab;
+}
+
+.monitor-bucket__item:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
 .monitor-scene__options {
   border-top: 1px solid rgba(140, 195, 232, 0.32);
   padding: 0.9rem;
