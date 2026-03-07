@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Scene } from '../components/scene/Scene.jsx'
+import { MonitorActivityScene } from '../components/scene/MonitorActivityScene.jsx'
 import { getSceneById } from '../data/scenes.js'
 import { getPart1Step } from '../data/conversations/part1.js'
 import { getSceneDialogs } from '../api/dialogApi.js'
@@ -180,6 +181,7 @@ export function GameScreen({
     getFallbackStep(scene, currentPart, stepIndex)
 
   const options = stepData.options || []
+  const isMonitorActivityMode = currentPart === 2 && String(stepData.type || '').toLowerCase() === 'activity'
   const displayOptions = options.map((option) => {
     if (currentPart === 0 && String(option?.id || '').toLowerCase() === 'continue') {
       return { ...option, disabled: !selectedAvatarId }
@@ -262,6 +264,10 @@ export function GameScreen({
         setStepIndex(option.nextStep)
       }
     }, 220)
+  }
+
+  if (isMonitorActivityMode) {
+    return <MonitorActivityScene messages={chatMessages} options={displayOptions} onSelectOption={handleSelectOption} />
   }
 
   return (
