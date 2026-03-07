@@ -1121,9 +1121,22 @@ export function GameScreen({
     )
   }
 
+  const sceneForRender =
+    currentPart === 2
+      ? {
+        ...scene,
+        backgroundImage:
+          selectedHostId === 'clara'
+            ? '/backgrounds/keller-klara.png'
+            : selectedHostId === 'uwe'
+              ? '/backgrounds/keller-uwe.png'
+              : scene.backgroundImage,
+      }
+      : scene
+
   return (
     <Scene
-      scene={scene}
+      scene={sceneForRender}
       messages={chatMessages}
       options={displayOptions}
       onSelectOption={handleSelectOption}
