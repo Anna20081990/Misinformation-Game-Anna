@@ -10,7 +10,7 @@ const PART0_FALLBACK_STEPS = [
     type: 'intro',
     speechBubbles: [
       {
-        hostId: 'selected',
+        hostId: 'ambassador',
         text: 'Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen.',
       },
     ],
@@ -24,17 +24,17 @@ const PART0_FALLBACK_STEPS = [
     type: 'intro',
     speechBubbles: [
       {
-        hostId: 'selected',
+        hostId: 'ambassador',
         text: 'Stark, das passt zu Regelreich. Dann legen wir direkt los.',
         showOnOptionId: 'ready',
       },
       {
-        hostId: 'selected',
+        hostId: 'ambassador',
         text: 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.',
         showOnOptionId: 'hesitant',
       },
       {
-        hostId: 'selected',
+        hostId: 'ambassador',
         text: 'Wähle jetzt deinen Avatar für das Praktikum.',
       },
     ],
@@ -49,7 +49,7 @@ const PART0_FALLBACK_STEPS = [
     type: 'transition',
     speechBubbles: [
       {
-        hostId: 'selected',
+        hostId: 'ambassador',
         text: 'Perfekt. Weiter geht es jetzt ins Media Lab.',
       },
     ],
@@ -65,6 +65,7 @@ function isAvatarOption(option) {
 }
 
 function getHostFullName(hostId) {
+  if (hostId === 'ambassador') return 'Botschafter Regelreich'
   if (hostId === 'clara') return 'Clara Blick'
   if (hostId === 'uwe') return 'Uwe R. Blick'
   return 'Host'
@@ -72,6 +73,7 @@ function getHostFullName(hostId) {
 
 function normalizeHostId(raw, selectedHostId) {
   const id = String(raw || 'selected').toLowerCase()
+  if (id === 'ambassador') return 'ambassador'
   if (id === 'clara' || id === 'uwe') return id
   if (id === 'selected') return selectedHostId || 'selected'
   return selectedHostId || 'selected'
@@ -201,13 +203,12 @@ export function GameScreen({
 
     const hostMessages = effectiveBubbles.map((bubble, index) => {
       const resolvedHostId = normalizeHostId(bubble.hostId, selectedHostId)
-      const effectiveHostId = currentPart === 0 ? 'host' : resolvedHostId
 
       return {
         id: `${key}:host:${index}`,
         speakerType: 'host',
-        hostId: effectiveHostId,
-        speakerName: currentPart === 0 ? 'Botschafter Regelreich' : getHostFullName(resolvedHostId),
+        hostId: resolvedHostId,
+        speakerName: getHostFullName(resolvedHostId),
         text: bubble.text,
       }
     })

@@ -9,6 +9,7 @@ import {
 } from '../api/dialogApi.js'
 
 const HOST_CHOICES = [
+  { id: 'ambassador', label: 'Botschafter Regelreich' },
   { id: 'selected', label: 'Gewählter Host (aus Teil 1)' },
   { id: 'clara', label: 'Clara Blick' },
   { id: 'uwe', label: 'Uwe R. Blick' },

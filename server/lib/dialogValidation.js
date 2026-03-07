@@ -1,5 +1,5 @@
 import { SCENES } from '../../src/data/scenes.js'
-const HOST_IDS = new Set(['selected', 'clara', 'uwe'])
+const HOST_IDS = new Set(['selected', 'clara', 'uwe', 'ambassador'])
 const STEP_TYPES = new Set(['intro', 'example', 'activity', 'summary', 'transition', 'dialog'])
 
 function assert(condition, message, status = 400) {
@@ -33,7 +33,7 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
     assert(bubble && typeof bubble === 'object', `speechBubbles[${index}] muss ein Objekt sein.`)
     assert(typeof bubble.text === 'string' && bubble.text.trim(), `speechBubbles[${index}].text ist erforderlich.`)
     const hostId = String(bubble.hostId ?? bubble.characterId ?? 'selected').toLowerCase()
-    assert(HOST_IDS.has(hostId), `speechBubbles[${index}].hostId muss einer der Werte selected, clara oder uwe sein.`)
+    assert(HOST_IDS.has(hostId), `speechBubbles[${index}].hostId muss einer der Werte selected, clara, uwe oder ambassador sein.`)
     const showOnOptionId = bubble.showOnOptionId == null ? null : String(bubble.showOnOptionId).trim()
     assert(showOnOptionId == null || showOnOptionId.length > 0, `speechBubbles[${index}].showOnOptionId darf nicht leer sein.`)
 

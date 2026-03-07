@@ -54,22 +54,22 @@ function scene1Steps() {
 function scene0Steps() {
   return [
     step(0, 'intro', [
-      bubble('selected', 'Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen.'),
+      bubble('ambassador', 'Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen.'),
     ], [
       option('ready', 'Ich bin bereit!', 1),
       option('hesitant', 'Muss ich?', 1),
     ]),
     step(1, 'intro', [
-      bubble('selected', 'Stark, das passt zu Regelreich. Dann legen wir direkt los.', 'ready'),
-      bubble('selected', 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.', 'hesitant'),
-      bubble('selected', 'Wähle jetzt deinen Avatar für das Praktikum.'),
+      bubble('ambassador', 'Stark, das passt zu Regelreich. Dann legen wir direkt los.', 'ready'),
+      bubble('ambassador', 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.', 'hesitant'),
+      bubble('ambassador', 'Wähle jetzt deinen Avatar für das Praktikum.'),
     ], [
       option('avatar1', 'Avatar 1', 2),
       option('avatar2', 'Avatar 2', 2),
       option('avatar3', 'Avatar 3', 2),
     ]),
     step(2, 'transition', [
-      bubble('selected', 'Perfekt. Weiter geht es jetzt ins Media Lab.'),
+      bubble('ambassador', 'Perfekt. Weiter geht es jetzt ins Media Lab.'),
     ], [
       option('continue', 'Weiter zu Teil 1', null, 1),
     ]),
