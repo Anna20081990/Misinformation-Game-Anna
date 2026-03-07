@@ -28,7 +28,10 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
   const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
   const isBoosterMode = !!boosterOptions.length
-  const leadCount = (isChoiceMode || isBoosterMode) ? 2 : (isSentenceMode ? 1 : messages.length)
+  const isRetryOnly = actionOptions.length > 0 && actionOptions.every((option) => option.id === 'retry')
+  const leadCount = isRetryOnly
+    ? 0
+    : ((isChoiceMode || isBoosterMode) ? 2 : (isSentenceMode ? 1 : messages.length))
   const leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
   const trailingMessages = messages.slice(Math.min(leadCount, messages.length))
 
