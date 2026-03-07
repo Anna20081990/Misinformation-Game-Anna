@@ -299,6 +299,9 @@ export function GameScreen({
   const transitionTimerRef = useRef(null)
   const resetOnActivity2TransitionRef = useRef(false)
   const resetOnPart3Activity2TransitionRef = useRef(false)
+  const resetOnPart3SummaryTransitionRef = useRef(false)
+  const resetOnPart4Activity2TransitionRef = useRef(false)
+  const resetOnPart4WrongFeedbackTransitionRef = useRef(false)
   const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
 
   useEffect(() => {
@@ -804,6 +807,7 @@ export function GameScreen({
             : { ...baseWrongOption, id: 'wrongBMixed' }
 
       setLastSubmittedBoosterChoiceIds(selectedBoosterChoiceIds)
+      resetOnPart3SummaryTransitionRef.current = Boolean(isCorrect)
       option = { ...mappedOption, label: option.label }
     }
 
@@ -854,6 +858,8 @@ export function GameScreen({
                 : baseWrongOption
 
       setLastSubmittedBucketAssignments(selectedAssignments)
+      resetOnPart4Activity2TransitionRef.current = Boolean(isCorrect)
+      resetOnPart4WrongFeedbackTransitionRef.current = Boolean(!isCorrect)
       option = { ...mappedOption, label: option.label }
     }
 
@@ -916,6 +922,25 @@ export function GameScreen({
           appendedStepKeysRef.current = new Set()
         }
 
+        if (resetOnPart3SummaryTransitionRef.current && currentPart === 3 && Number(option.nextStep) === 5) {
+          setChatMessages([])
+          setSelectedBoosterChoiceIds([])
+          setLastSubmittedBoosterChoiceIds([])
+          appendedStepKeysRef.current = new Set()
+        }
+
+        if (resetOnPart4Activity2TransitionRef.current && currentPart === 4 && Number(option.nextStep) === 4) {
+          setChatMessages([])
+          setBucketAssignments({})
+          setLastSubmittedBucketAssignments({})
+          appendedStepKeysRef.current = new Set()
+        }
+
+        if (resetOnPart4WrongFeedbackTransitionRef.current && currentPart === 4 && Number(option.nextStep) === 31) {
+          setChatMessages([])
+          appendedStepKeysRef.current = new Set()
+        }
+
         if (resetOnRetryPart2) {
           setChatMessages([])
           setSelectedSentenceIndexes([])
@@ -950,6 +975,9 @@ export function GameScreen({
 
         resetOnActivity2TransitionRef.current = false
         resetOnPart3Activity2TransitionRef.current = false
+        resetOnPart3SummaryTransitionRef.current = false
+        resetOnPart4Activity2TransitionRef.current = false
+        resetOnPart4WrongFeedbackTransitionRef.current = false
         setStepIndex(option.nextStep)
       }
     }, 220)
