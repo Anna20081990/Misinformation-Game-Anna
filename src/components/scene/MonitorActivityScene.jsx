@@ -33,11 +33,20 @@ export function MonitorActivityScene({ messages = [], options = [], onSelectOpti
   const isBoosterMode = !!boosterOptions.length
   const isBucketMode = !!bucketOptions.length
   const isRetryOnly = actionOptions.length > 0 && actionOptions.every((option) => option.id === 'retry')
-  const leadCount = isRetryOnly
-    ? 0
-    : ((isChoiceMode || isBoosterMode || isBucketMode) ? messages.length : (isSentenceMode ? 1 : messages.length))
-  const leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
-  const trailingMessages = messages.slice(Math.min(leadCount, messages.length))
+  let leadMessages = []
+  let trailingMessages = messages
+
+  if (isRetryOnly && (isChoiceMode || isBoosterMode || isBucketMode)) {
+    const firstPlayerIndex = messages.findIndex((message) => message.speakerType === 'player')
+    if (firstPlayerIndex > 0) {
+      leadMessages = messages.slice(0, firstPlayerIndex)
+      trailingMessages = messages.slice(firstPlayerIndex)
+    }
+  } else {
+    const leadCount = (isChoiceMode || isBoosterMode || isBucketMode) ? messages.length : (isSentenceMode ? 1 : messages.length)
+    leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
+    trailingMessages = messages.slice(Math.min(leadCount, messages.length))
+  }
   const bucketTitle = bucketOptions[0]?.groupTitle || 'Aktivität'
   const bucketTopic = bucketOptions[0]?.topic || ''
   const bucketPrompt = bucketOptions[0]?.prompt || ''
