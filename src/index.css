@@ -465,7 +465,9 @@ html, body {
    ----------------------------------------------- */
 .avatar-selection-scene {
   min-height: calc(100vh - 3rem);
-  background: #ffffff;
+  background:
+    linear-gradient(180deg, rgba(250, 253, 255, 0.2) 0%, rgba(245, 251, 255, 0.35) 100%),
+    url('/backgrounds/regelreich-panorama.svg') center / cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -475,6 +477,11 @@ html, body {
 .avatar-selection {
   text-align: center;
   max-width: 900px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(22, 57, 87, 0.22);
+  border-radius: 18px;
+  box-shadow: 0 14px 36px rgba(13, 34, 52, 0.18);
+  padding: 1.2rem 1.2rem 1.5rem;
 }
 
 .avatar-selection__title {
