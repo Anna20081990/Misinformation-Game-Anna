@@ -179,7 +179,7 @@ export function App() {
               key={id}
               type="button"
               className={`app__nav-btn ${currentPart === id ? 'app__nav-btn--active' : ''}`}
-              onClick={() => setCurrentPart(id)}
+              onClick={() => handlePartChange(id)}
               aria-pressed={currentPart === id}
               aria-label={`Teil ${id}`}
             >

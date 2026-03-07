@@ -172,7 +172,8 @@ export function GameScreen({
     }
   }, [])
 
-  const sortedBackendSteps = [...(sceneDialogs?.steps || [])].sort((a, b) => a.stepIndex - b.stepIndex)
+  const effectiveSceneDialogs = Number(sceneDialogs?.sceneId) === Number(currentPart) ? sceneDialogs : null
+  const sortedBackendSteps = [...(effectiveSceneDialogs?.steps || [])].sort((a, b) => a.stepIndex - b.stepIndex)
   const stepData =
     sortedBackendSteps.find((step) => step.stepIndex === stepIndex) ||
     sortedBackendSteps[0] ||
