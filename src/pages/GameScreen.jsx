@@ -45,6 +45,8 @@ export function GameScreen({
   currentPart,
   onPartChange,
   onSelectOption,
+  stepJumpRequest,
+  onStepChange,
   selectedAvatarId,
   onSelectAvatar,
   selectedHostId,
@@ -65,6 +67,15 @@ export function GameScreen({
     setSceneDialogs(null)
     appendedStepKeysRef.current = new Set()
   }, [currentPart])
+
+  useEffect(() => {
+    if (!stepJumpRequest) return
+
+    setStepIndex(stepJumpRequest.stepIndex ?? 0)
+    setLastSelectedOptionId(null)
+    setChatMessages([])
+    appendedStepKeysRef.current = new Set()
+  }, [stepJumpRequest])
 
   useEffect(() => {
     let active = true
@@ -101,6 +112,10 @@ export function GameScreen({
     getFallbackStep(scene, currentPart, stepIndex)
 
   const options = stepData.options || []
+
+  useEffect(() => {
+    onStepChange?.(currentPart, stepData.stepIndex ?? 0)
+  }, [currentPart, stepData.stepIndex, onStepChange])
 
   useEffect(() => {
     if (currentPart === 0) return

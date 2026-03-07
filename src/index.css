@@ -50,7 +50,7 @@ html, body {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.6rem;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(6px);
 }
@@ -104,7 +104,52 @@ html, body {
 .app__main {
   flex: 1;
   position: relative;
-  padding-top: 3rem;
+  padding-top: 6.3rem;
+}
+
+.app__subnav {
+  margin-top: 0.45rem;
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.app__subnav-btn {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(7, 21, 37, 0.62);
+  color: #e8f3ff;
+  border-radius: 12px;
+  padding: 0.28rem 0.5rem 0.35rem;
+  min-width: 96px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.app__subnav-btn:hover {
+  background: rgba(21, 52, 83, 0.74);
+}
+
+.app__subnav-btn--active {
+  background: #eaf4fb;
+  color: #10253a;
+  border-color: #ffffff;
+}
+
+.app__subnav-index {
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.app__subnav-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.15;
 }
 
 /* -----------------------------------------------
