@@ -12,12 +12,20 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen.',
+        text: 'Willkommen in Regelreich!\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen - sie entstehen im Gespräch.',
+      },
+      {
+        hostId: 'ambassador',
+        text: 'Neue Vorschläge werden veröffentlicht. Bürger und Bürgerinnen kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen.',
+      },
+      {
+        hostId: 'ambassador',
+        text: 'Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen.',
       },
     ],
     options: [
-      { id: 'ready', label: 'Ich bin bereit!', nextStep: 1 },
-      { id: 'hesitant', label: 'Muss ich?', nextStep: 1 },
+      { id: 'plausible', label: 'Klingt vernünftig.', nextStep: 1 },
+      { id: 'tiktalk_ernst', label: 'TikTalk - dein Ernst?', nextStep: 1 },
     ],
   },
   {
@@ -26,36 +34,78 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Stark, das passt zu Regelreich. Dann legen wir direkt los.',
-        showOnOptionId: 'ready',
+        text: 'Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Man wusste: Es wird diskutiert, es wird kommentiert - und irgendwann kehrt wieder Ordnung ein.',
       },
       {
         hostId: 'ambassador',
-        text: 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.',
-        showOnOptionId: 'hesitant',
-      },
-      {
-        hostId: 'ambassador',
-        text: 'Wähle jetzt deinen Avatar für das Praktikum.',
+        text: 'Doch in den letzten Monaten hat sich etwas verschoben. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Und manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht.',
       },
     ],
     options: [
-      { id: 'avatar1', label: 'Avatar 1', nextStep: 2 },
-      { id: 'avatar2', label: 'Avatar 2', nextStep: 2 },
-      { id: 'avatar3', label: 'Avatar 3', nextStep: 2 },
+      { id: 'zufall', label: 'Zufall?', nextStep: 2 },
     ],
   },
   {
     stepIndex: 2,
+    type: 'intro',
+    speechBubbles: [
+      {
+        hostId: 'ambassador',
+        text: 'Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\nSie treten unter Pseudonymen auf.\nSie behaupten, sie würden Debatten nur beschleunigen.\nIntern werden sie "Die notorischen Drei" genannt.',
+      },
+    ],
+    options: [
+      { id: 'wer_sie', label: 'Wer sind sie?', nextStep: 3 },
+    ],
+  },
+  {
+    stepIndex: 3,
+    type: 'intro',
+    speechBubbles: [
+      {
+        hostId: 'ambassador',
+        text: 'Emma Pör. Konrad Sens. Didi Fam. Sie arbeiten verdeckt - und sie haben ein bemerkenswertes Talent.',
+      },
+    ],
+    options: [
+      { id: 'welches_talent', label: 'Welches Talent?', nextStep: 4 },
+    ],
+  },
+  {
+    stepIndex: 4,
+    type: 'intro',
+    speechBubbles: [
+      {
+        hostId: 'ambassador',
+        text: 'Diskussionen in eine Richtung zu lenken. Mal lauter, mal leiser - aber selten zufällig.',
+      },
+      {
+        hostId: 'ambassador',
+        text: 'Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\nDeine Aufgabe: Herausfinden, wie sie das tun.',
+      },
+    ],
+    options: [
+      { id: 'spannend', label: 'Klingt spannend.', nextStep: 5 },
+      { id: 'hoffe_unbekannt', label: 'Ich hoffe, sie wissen nicht, dass ich komme.', nextStep: 5 },
+    ],
+  },
+  {
+    stepIndex: 5,
     type: 'transition',
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Perfekt. Weiter geht es jetzt ins Media Lab.',
+        text: 'Stark. Neugier ist hier ein Vorteil. Dann legen wir direkt los.',
+        showOnOptionId: 'spannend',
+      },
+      {
+        hostId: 'ambassador',
+        text: 'Keine Sorge.\nSie wissen nur, dass jemand kommt - nicht, wer.',
+        showOnOptionId: 'hoffe_unbekannt',
       },
     ],
     options: [
-      { id: 'continue', label: 'Weiter zu Teil 1', nextPart: 1 },
+      { id: 'continue', label: 'Zum Media Lab gehen', nextPart: 1 },
     ],
   },
 ]
@@ -238,8 +288,8 @@ function isAvatarOption(option) {
 }
 
 function getHostFullName(hostId) {
-  if (hostId === 'ambassador') return 'Botschafter Regelreich'
-  if (hostId === 'clara') return 'Clara Blick'
+  if (hostId === 'ambassador') return 'Botschafterin Regelreich'
+  if (hostId === 'clara') return 'Klara Blick'
   if (hostId === 'uwe') return 'Uwe R. Blick'
   return 'Host'
 }
@@ -250,6 +300,21 @@ function normalizeHostId(raw, selectedHostId) {
   if (id === 'clara' || id === 'uwe') return id
   if (id === 'selected') return selectedHostId || 'selected'
   return selectedHostId || 'selected'
+}
+
+function buildDialogsVersionId(steps = []) {
+  const payload = JSON.stringify(steps)
+  let hash = 0
+  for (let i = 0; i < payload.length; i += 1) {
+    hash = (hash * 31 + payload.charCodeAt(i)) >>> 0
+  }
+  return hash.toString(16).padStart(8, '0')
+}
+
+function getStepZeroPreview(entry) {
+  const zeroStep = (entry?.steps || []).find((step) => Number(step?.stepIndex) === 0) || (entry?.steps || [])[0]
+  const firstBubble = (zeroStep?.speechBubbles || [])[0]
+  return String(firstBubble?.text || '').replace(/\s+/g, ' ').slice(0, 40)
 }
 
 function getFallbackStep(scene, currentPart, stepIndex) {
@@ -295,6 +360,7 @@ export function GameScreen({
   const [lastSelectedOptionId, setLastSelectedOptionId] = useState(null)
   const [chatMessages, setChatMessages] = useState([])
   const [sceneDialogs, setSceneDialogs] = useState(null)
+  const [dialogLoadError, setDialogLoadError] = useState('')
   const [selectedSentenceIndexes, setSelectedSentenceIndexes] = useState([])
   const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
   const [selectedIntensityChoiceId, setSelectedIntensityChoiceId] = useState('')
@@ -328,6 +394,7 @@ export function GameScreen({
     setLastSelectedOptionId(null)
     setChatMessages([])
     setSceneDialogs(null)
+    setDialogLoadError('')
     setSelectedSentenceIndexes([])
     setLastSubmittedSentenceIndexes([])
     setSelectedIntensityChoiceId('')
@@ -355,6 +422,7 @@ export function GameScreen({
     setStepIndex(stepJumpRequest.stepIndex ?? 0)
     setLastSelectedOptionId(null)
     setChatMessages([])
+    setDialogLoadError('')
     setSelectedBoosterChoiceIds([])
     setLastSubmittedBoosterChoiceIds([])
     setBucketAssignments({})
@@ -375,12 +443,24 @@ export function GameScreen({
         if (!active) return
         if (Number(data?.sceneId) !== Number(currentPart)) {
           setSceneDialogs(null)
+          setDialogLoadError(`Ungültige Dialogantwort für Teil ${currentPart} (sceneId mismatch).`)
+          console.warn(`[Dialogs] part=${currentPart} source=fallback reason=scene-id-mismatch`)
           return
         }
         setSceneDialogs(data)
-      } catch {
+        setChatMessages([])
+        appendedStepKeysRef.current = new Set()
+        setDialogLoadError('')
+        console.info(
+          `[Dialogs] part=${currentPart} source=api version=${buildDialogsVersionId(data?.steps || [])} preview="${getStepZeroPreview(data)}"`
+        )
+      } catch (error) {
         if (!active) return
         setSceneDialogs(null)
+        setDialogLoadError(error?.message || 'Dialoge konnten nicht geladen werden.')
+        const fallbackStep = getFallbackStep(scene, currentPart, 0)
+        const fallbackPreview = String(fallbackStep?.speechBubbles?.[0]?.text || '').replace(/\s+/g, ' ').slice(0, 40)
+        console.warn(`[Dialogs] part=${currentPart} source=fallback preview="${fallbackPreview}"`)
       }
     }
 
@@ -398,10 +478,23 @@ export function GameScreen({
 
   const effectiveSceneDialogs = Number(sceneDialogs?.sceneId) === Number(currentPart) ? sceneDialogs : null
   const sortedBackendSteps = [...(effectiveSceneDialogs?.steps || [])].sort((a, b) => a.stepIndex - b.stepIndex)
+  const requiresBackendDialogs = currentPart >= 0 && currentPart <= 5
+  const backendUnavailableForPart = requiresBackendDialogs && !sortedBackendSteps.length
+  const backendErrorStep = {
+    stepIndex: 0,
+    type: 'error',
+    speechBubbles: [
+      {
+        hostId: 'ambassador',
+        text: `Backend-Dialoge für Teil ${currentPart} konnten nicht geladen werden.\n${dialogLoadError || 'Bitte Backend/API prüfen und neu laden.'}`,
+      },
+    ],
+    options: [],
+  }
   const stepData =
     sortedBackendSteps.find((step) => step.stepIndex === stepIndex) ||
     sortedBackendSteps[0] ||
-    getFallbackStep(scene, currentPart, stepIndex)
+    (backendUnavailableForPart ? backendErrorStep : getFallbackStep(scene, currentPart, stepIndex))
 
   const options = stepData.options || []
   const isPart2Activity1InputStep = currentPart === 2 && Number(stepData.stepIndex) === 3
@@ -436,8 +529,9 @@ export function GameScreen({
     : PART4_ACTIVITY2_FALLBACK_CONFIG
   const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
+  const hasAvatarOptionInCurrentStep = options.some((option) => isAvatarOption(option))
   const displayOptions = options.map((option) => {
-    if (currentPart === 0 && String(option?.id || '').toLowerCase() === 'continue') {
+    if (currentPart === 0 && String(option?.id || '').toLowerCase() === 'continue' && hasAvatarOptionInCurrentStep) {
       return { ...option, disabled: !selectedAvatarId }
     }
 
@@ -452,6 +546,9 @@ export function GameScreen({
       selected: effectiveSentenceSelection.includes(sentence.id),
       disabled: !isPart2Activity1InputStep,
       sentenceId: sentence.id,
+      postAuthorName: 'Emma Pör',
+      postAuthorAvatar: '/backgrounds/emma-poer.png',
+      hideTitle: true,
     }))
     : []
   const effectiveIntensityChoiceId = isPart2Activity2InputStep ? selectedIntensityChoiceId : lastSubmittedIntensityChoiceId
@@ -472,6 +569,10 @@ export function GameScreen({
       choiceId: choice.id,
       groupTitle: part2Activity2Config?.title || 'Aktivität 2',
       topic: part2Activity2Config?.topic || '',
+      postAuthorName: 'Emma Pör',
+      postAuthorAvatar: '/backgrounds/emma-poer.png',
+      hideTitle: true,
+      hideTopic: true,
     }))
     : []
   const effectiveTrendChoiceId = isPart3Activity1InputStep ? selectedTrendChoiceId : lastSubmittedTrendChoiceId
@@ -492,6 +593,10 @@ export function GameScreen({
       choiceId: choice.id,
       groupTitle: part3Activity1Config?.title || 'Aktivität 1',
       topic: part3Activity1Config?.topic || '',
+      postAuthorName: 'Konrad Sens',
+      postAuthorAvatar: '/backgrounds/konrad_sens.png',
+      hideTitle: true,
+      hideTopic: true,
     }))
     : []
   const effectiveBoosterChoiceIds = isPart3Activity2InputStep ? selectedBoosterChoiceIds : lastSubmittedBoosterChoiceIds
@@ -507,6 +612,10 @@ export function GameScreen({
       topic: part3Activity2Config?.topic || '',
       prompt: part3Activity2Config?.prompt || '',
       neutralPost: part3Activity2Config?.neutralPost || '',
+      postAuthorName: 'Konrad Sens',
+      postAuthorAvatar: '/backgrounds/konrad_sens.png',
+      hideTitle: true,
+      hideTopic: true,
     }))
     : []
   const effectiveBucketAssignments = isPart4Activity1InputStep ? bucketAssignments : lastSubmittedBucketAssignments
@@ -523,6 +632,10 @@ export function GameScreen({
       prompt: part4Activity1Config?.prompt || '',
       unassignedLabel: part4Activity1Config?.unassignedLabel || 'Beiträge',
       bucketDefinitions: part4Activity1Config?.bucketDefinitions || [],
+      postAuthorName: 'Didi Fam',
+      postAuthorAvatar: '/backgrounds/didi-fam.png',
+      hideTitle: true,
+      hideTopic: true,
     }))
     : []
   const effectivePart4ChoiceId = isPart4Activity2InputStep ? selectedPart4ChoiceId : lastSubmittedPart4ChoiceId
@@ -543,6 +656,10 @@ export function GameScreen({
       choiceId: choice.id,
       groupTitle: part4Activity2Config?.title || 'Aktivität 2',
       topic: part4Activity2Config?.topic || '',
+      postAuthorName: 'Didi Fam',
+      postAuthorAvatar: '/backgrounds/didi-fam.png',
+      hideTitle: true,
+      hideTopic: true,
     }))
     : []
   const backendSubmitOptions = options
@@ -1114,6 +1231,9 @@ export function GameScreen({
     const part2SelectMode = isPart2Activity1Context || isPart2Activity2Context
     const part3SelectMode = isPart3Activity1Context || isPart3Activity2Context
     const part4SelectMode = isPart4Activity1Context || isPart4Activity2Context
+    const hostGenderBackground = selectedHostId === 'uwe'
+      ? '/backgrounds/grossraum_mann.png'
+      : '/backgrounds/grossraum_frau.png'
     const monitorVariant = part2SelectMode
       ? 'keller-monitor-select'
       : part3SelectMode
@@ -1132,9 +1252,9 @@ export function GameScreen({
           part2SelectMode
             ? '/backgrounds/keller-monitor.png'
             : part3SelectMode
-              ? '/backgrounds/grossraum-monitor.png'
+              ? '/backgrounds/grossraum_monitor.png'
               : part4SelectMode
-                ? '/backgrounds/einzelbuero-tablet.png'
+                ? '/backgrounds/einzelbuero_tablet.png'
                 : null
         }
       />
@@ -1143,26 +1263,34 @@ export function GameScreen({
 
   const hostSpecificBackground = (() => {
     if (selectedHostId !== 'clara' && selectedHostId !== 'uwe') return scene.backgroundImage
+    const hostGenderBackground = selectedHostId === 'uwe'
+      ? '/backgrounds/grossraum_mann.png'
+      : '/backgrounds/grossraum_frau.png'
+    const currentStepIndex = Number(stepData?.stepIndex ?? stepIndex ?? 0)
     if (currentPart === 2) {
       return selectedHostId === 'clara'
         ? '/backgrounds/keller-klara.png'
         : '/backgrounds/keller-uwe.png'
     }
     if (currentPart === 3) {
-      return selectedHostId === 'clara'
-        ? '/backgrounds/grossraumbuero-clara.png'
-        : '/backgrounds/grossraumbuero-uwe.png'
+      if ([0, 1, 2, 5].includes(currentStepIndex)) return hostGenderBackground
+      return '/backgrounds/grossraum_monitor.png'
     }
     if (currentPart === 4) {
-      return selectedHostId === 'clara'
-        ? '/backgrounds/einzelbuero-clara.png'
-        : '/backgrounds/einzelbuero-uwe.png'
+      const part4HostBackground = selectedHostId === 'uwe'
+        ? '/backgrounds/einzelbuero_mann.png'
+        : '/backgrounds/einzelbuero_frau.png'
+      if ([0, 1, 2, 5].includes(currentStepIndex)) return part4HostBackground
+      return '/backgrounds/einzelbuero_tablet.png'
+    }
+    if (currentPart === 5) {
+      return '/backgrounds/kuppelsaal.png'
     }
     return scene.backgroundImage
   })()
 
   const sceneForRender =
-    [2, 3, 4].includes(currentPart)
+    [2, 3, 4, 5].includes(currentPart)
       ? { ...scene, backgroundImage: hostSpecificBackground }
       : scene
 

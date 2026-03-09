@@ -17,7 +17,16 @@ import { buildSeedDialogs, buildSeedSceneDialogs } from './lib/dialogSeed.js'
 
 const app = express()
 
-app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173'] }))
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin) return callback(null, true)
+    const isLocalhost = /^https?:\/\/localhost(?::\d+)?$/i.test(origin)
+    const isLoopback = /^https?:\/\/127(?:\.\d{1,3}){3}(?::\d+)?$/i.test(origin)
+    const isPrivateLan = /^https?:\/\/(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?::\d+)?$/i.test(origin)
+    if (isLocalhost || isLoopback || isPrivateLan) return callback(null, true)
+    return callback(new Error(`CORS blocked for origin: ${origin}`))
+  },
+}))
 app.use(express.json({ limit: '1mb' }))
 
 app.get('/api/health', (_req, res) => {

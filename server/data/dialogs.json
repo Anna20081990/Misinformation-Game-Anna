@@ -9,18 +9,26 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen."
+              "text": "Willkommen in Regelreich.\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen - sie entstehen im Gespräch."
+            },
+            {
+              "hostId": "ambassador",
+              "text": "Neue Vorschläge werden veröffentlicht. Bürger und Bürgerinnen kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen."
+            },
+            {
+              "hostId": "ambassador",
+              "text": "Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen."
             }
           ],
           "options": [
             {
-              "id": "ready",
-              "label": "Ich bin bereit!",
+              "id": "plausible",
+              "label": "Klingt vernünftig.",
               "nextStep": 1
             },
             {
-              "id": "hesitant",
-              "label": "Muss ich?",
+              "id": "tiktalk_ernst",
+              "label": "TikTalk - dein Ernst?",
               "nextStep": 1
             }
           ]
@@ -31,50 +39,100 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Stark, das passt zu Regelreich. Dann legen wir direkt los.",
-              "showOnOptionId": "ready"
+              "text": "Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Man wusste: Es wird diskutiert, es wird kommentiert - und irgendwann kehrt wieder Ordnung ein."
             },
             {
               "hostId": "ambassador",
-              "text": "Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.",
-              "showOnOptionId": "hesitant"
-            },
-            {
-              "hostId": "ambassador",
-              "text": "Wähle jetzt deinen Avatar für das Praktikum."
+              "text": "Doch in den letzten Monaten hat sich etwas verschoben. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Und manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht."
             }
           ],
           "options": [
             {
-              "id": "avatar1",
-              "label": "Avatar 1",
-              "nextStep": 2
-            },
-            {
-              "id": "avatar2",
-              "label": "Avatar 2",
-              "nextStep": 2
-            },
-            {
-              "id": "avatar3",
-              "label": "Avatar 3",
+              "id": "zufall",
+              "label": "Zufall?",
               "nextStep": 2
             }
           ]
         },
         {
           "stepIndex": 2,
+          "type": "intro",
+          "speechBubbles": [
+            {
+              "hostId": "ambassador",
+              "text": "Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\nSie treten unter Pseudonymen auf.\nSie behaupten, sie würden Debatten nur beschleunigen.\nIntern werden sie \"Die notorischen Drei\" genannt."
+            }
+          ],
+          "options": [
+            {
+              "id": "wer_sie",
+              "label": "Wer sind sie?",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 3,
+          "type": "intro",
+          "speechBubbles": [
+            {
+              "hostId": "ambassador",
+              "text": "Emma Pör. Konrad Sens. Didi Fam. Sie arbeiten verdeckt - und sie haben ein bemerkenswertes Talent."
+            }
+          ],
+          "options": [
+            {
+              "id": "welches_talent",
+              "label": "Welches Talent?",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 4,
+          "type": "intro",
+          "speechBubbles": [
+            {
+              "hostId": "ambassador",
+              "text": "Diskussionen in eine Richtung zu lenken. Mal lauter, mal leiser - aber selten zufällig."
+            },
+            {
+              "hostId": "ambassador",
+              "text": "Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\nDeine Aufgabe: Herausfinden, wie sie das tun."
+            }
+          ],
+          "options": [
+            {
+              "id": "spannend",
+              "label": "Klingt spannend.",
+              "nextStep": 5
+            },
+            {
+              "id": "hoffe_unbekannt",
+              "label": "Ich hoffe, sie wissen nicht, dass ich komme.",
+              "nextStep": 5
+            }
+          ]
+        },
+        {
+          "stepIndex": 5,
           "type": "transition",
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Perfekt. Weiter geht es jetzt ins Media Lab."
+              "text": "Stark. Neugier ist hier ein Vorteil. Dann legen wir direkt los.",
+              "showOnOptionId": "spannend"
+            },
+            {
+              "hostId": "ambassador",
+              "text": "Keine Sorge.\nSie wissen nur, dass jemand kommt - nicht, wer.",
+              "showOnOptionId": "hoffe_unbekannt"
             }
           ],
           "options": [
             {
               "id": "continue",
-              "label": "Weiter zu Teil 1",
+              "label": "Zum Media Lab gehen",
               "nextPart": 1
             }
           ]
@@ -90,22 +148,22 @@
           "speechBubbles": [
             {
               "hostId": "clara",
-              "text": "Willkommen im Media Lab Regelreich. Heute startet euer Sommerpraktikum."
+              "text": "Willkommen vor dem Media Lab! Schön, dass ihr da seid. Hier startet euer Sommerpraktikum – wir analysieren Debatten auf TikTalk und schauen uns dabei drei besonders auffällige Profile an."
             },
             {
               "hostId": "uwe",
-              "text": "Ihr könnt wählen, wer euch als Host durch die Fallakten begleitet."
+              "text": "Bevor es losgeht: Wählt, mit wem ihr ins Praktikum starten wollt – oder ob ihr direkt mehr zu den Fallakten wissen möchtet."
             }
           ],
           "options": [
             {
               "id": "clara",
-              "label": "Ich starte mit Clara Blick.",
+              "label": "Mit Clara starten.",
               "nextStep": 1
             },
             {
               "id": "uwe",
-              "label": "Ich starte mit Uwe R. Blick.",
+              "label": "Mit Uwe-R. starten.",
               "nextStep": 1
             }
           ]
@@ -115,29 +173,23 @@
           "type": "intro",
           "speechBubbles": [
             {
-              "hostId": "selected",
-              "text": "Gute Wahl. Ihr startet mit einem klaren Blick auf Muster und Dynamiken.",
-              "showOnOptionId": "clara"
+              "hostId": "clara",
+              "text": "Super! Die drei Fallakten heißen Emma Pör, Konrad Sens und Didi Fam. Jeder steht für ein typisches Muster: emotionale Zuspitzung, Mitläufereffekt oder Diskreditierung. Im Praktikum lernt ihr, genau das zu erkennen."
             },
             {
-              "hostId": "selected",
-              "text": "Starke Entscheidung. Dann gehen wir pragmatisch und analytisch vor.",
-              "showOnOptionId": "uwe"
-            },
-            {
-              "hostId": "selected",
-              "text": "Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam."
+              "hostId": "uwe",
+              "text": "Keine Sorge – das ist keine Prüfung. Ihr bekommt Feedback und könnt Dinge wiederholen. Am Ende schafft ihr alle Stufen."
             }
           ],
           "options": [
             {
               "id": "ok",
-              "label": "Klingt gut, wie laufen die Kapitel ab?",
+              "label": "Klingt gut, ich bin bereit.",
               "nextStep": 2
             },
             {
-              "id": "skepsis",
-              "label": "Klingt groß. Gibt es klare Aufgaben?",
+              "id": "frage",
+              "label": "Was genau machen wir in den Fallakten?",
               "nextStep": 2
             }
           ]
@@ -147,25 +199,23 @@
           "type": "intro",
           "speechBubbles": [
             {
-              "hostId": "selected",
-              "text": "Kurzfassung: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung.",
-              "showOnOptionId": "ok"
+              "hostId": "clara",
+              "text": "Ihr bekommt Einführungen zu jeder Strategie, dann Beispielposts aus TikTalk – und danach kleine Analyseaufträge. Wenn ihr etwas falsch zuordnet, erklären wir es und ihr probiert es erneut."
             },
             {
-              "hostId": "selected",
-              "text": "Ja, es gibt klare Aufgaben und direktes Feedback in jedem Schritt.",
-              "showOnOptionId": "skepsis"
+              "hostId": "uwe",
+              "text": "Nach jedem Kapitel steigt ihr eine Karrierestufe auf – von der Musterbeobachtung bis zur zertifizierten Debattenarchitektin bzw. zum Debattenarchitekten. Klingt absurd, ist aber so."
             }
           ],
           "options": [
             {
-              "id": "bereit",
-              "label": "Verstanden, ich bin bereit.",
+              "id": "los",
+              "label": "Ja, lass uns loslegen!",
               "nextStep": 3
             },
             {
-              "id": "frage",
-              "label": "Noch eine kurze Frage, dann los.",
+              "id": "noch",
+              "label": "Noch eine kurze Frage, bitte.",
               "nextStep": 3
             }
           ]
@@ -175,14 +225,18 @@
           "type": "transition",
           "speechBubbles": [
             {
-              "hostId": "selected",
-              "text": "Dann starten wir im Keller mit Fallakte 1: Emma Pör und emotionaler Zuspitzung."
+              "hostId": "clara",
+              "text": "Dann auf ins Praktikum! Wir starten im Keller mit der ersten Fallakte – Emma Pör. Bis gleich!"
+            },
+            {
+              "hostId": "uwe",
+              "text": "Viel Erfolg. Bei Fragen sind wir da."
             }
           ],
           "options": [
             {
               "id": "weiter",
-              "label": "Weiter in den Keller.",
+              "label": "Weiter zum Keller (Teil 2)",
               "nextPart": 2
             }
           ]
@@ -257,7 +311,11 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Aktivität 1: Welche Markierung zeigt die stärkste emotionale Zuspitzung?"
+              "text": "In Regelreich wird aktuell diskutiert, ob bei öffentlichen Veranstaltungen nur noch Regenschirme in „Einheitsgrau“ erlaubt sein sollen. Ziel ist eine „optische Harmonie bei Niederschlag“."
+            },
+            {
+              "hostId": "selected",
+              "text": "Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines Problem machen."
             }
           ],
           "options": [
@@ -275,28 +333,28 @@
             "sentences": [
               {
                 "id": "s1",
-                "text": "Die Stadt plant, für öffentliche Veranstaltungen eine einheitliche Regenschirmfarbe vorzuschlagen."
+                "text": "Die Stadt plant, die Parkzeiten im Zentrum anzupassen."
               },
               {
                 "id": "s2",
-                "text": "Gestern stand eine ältere Dame im Regen, weil ihr alter Schirm nicht mehr erlaubt war."
+                "text": "Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden."
               },
               {
                 "id": "s3",
-                "text": "Der Vorschlag soll nächste Woche abgestimmt werden."
+                "text": "Schon wieder trifft es die normalen Leute."
               },
               {
                 "id": "s4",
-                "text": "Schon wieder werden die normalen Leute im Stich gelassen."
+                "text": "Der Vorschlag wird nächste Woche beraten."
               },
               {
                 "id": "s5",
-                "text": "Wenn das so weitergeht, ist bald nichts Alltägliches mehr sicher."
+                "text": "So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander."
               }
             ],
             "correctSentenceIds": [
               "s2",
-              "s4",
+              "s3",
               "s5"
             ],
             "success": {
@@ -315,12 +373,16 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Stark erkannt, genau das war die emotionale Zuspitzung.",
+              "text": "Sehr gut! Ein Einzelfall wird zum Beweis erklärt, daraus wird Empörung, und am Ende steht die große Warnung: Das ist Emma in Reinform!",
               "showOnOptionId": "rightA"
             },
             {
               "hostId": "selected",
-              "text": "Aktivität 2: Welche Variante erzeugt die höchste Empörung?"
+              "text": "Die Stadt erwägt, die Wartebereiche im Hauptbahnhof künftig mit einem festgelegten Farbverlauf zu gestalten, um eine „emotionale Aufenthaltskurve“ beim Warten auf Züge zu unterstützen."
+            },
+            {
+              "hostId": "selected",
+              "text": "Welche Version würde Emma Pör am ehesten posten, um maximale Empörung zu erzeugen?"
             },
             {
               "hostId": "selected",

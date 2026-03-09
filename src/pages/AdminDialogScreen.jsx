@@ -11,7 +11,7 @@ import {
 const HOST_CHOICES = [
   { id: 'ambassador', label: 'Botschafter Regelreich' },
   { id: 'selected', label: 'Gewählter Host (aus Teil 1)' },
-  { id: 'clara', label: 'Clara Blick' },
+  { id: 'clara', label: 'Klara Blick' },
   { id: 'uwe', label: 'Uwe R. Blick' },
 ]
 

@@ -20,13 +20,24 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   }
 
   if (id === 'ambassador') return 'Botschafter Regelreich'
-  if (id === 'host' && selectedHostId === 'clara') return 'Clara Blick'
+  if (id === 'host' && selectedHostId === 'clara') return 'Klara Blick'
   if (id === 'host' && selectedHostId === 'uwe') return 'Uwe R. Blick'
-  if (id === 'selected' && selectedHostId === 'clara') return 'Clara Blick'
+  if (id === 'selected' && selectedHostId === 'clara') return 'Klara Blick'
   if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe R. Blick'
-  if (id === 'clara' || name.includes('clara')) return 'Clara Blick'
+  if (id === 'clara' || name.includes('clara')) return 'Klara Blick'
   if (id === 'uwe' || name.includes('uwe')) return 'Uwe R. Blick'
   return speakerName || 'Host'
+}
+
+function renderMessageText(text) {
+  const normalized = String(text ?? '').replace(/\r\n?/g, '\n')
+  const paragraphs = normalized.split(/\n{2,}/)
+
+  return paragraphs.map((paragraph, index) => (
+    <p key={`p-${index}`} className="chat-message__paragraph" style={{ whiteSpace: 'pre-wrap' }}>
+      {paragraph}
+    </p>
+  ))
 }
 
 export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId, selectedAvatarId, title = 'Media Lab Luminara' }) {
@@ -64,7 +75,7 @@ export function ChatPanel({ messages = [], options = [], onSelectOption, selecte
               {message.speakerName && message.speakerType !== 'player' && (
                 <strong className="chat-message__speaker">{hostDisplayName}</strong>
               )}
-              <p>{message.text}</p>
+              {renderMessageText(message.text)}
             </div>
           </article>
           )

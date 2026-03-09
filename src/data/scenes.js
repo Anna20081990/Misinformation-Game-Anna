@@ -20,7 +20,7 @@ export const SCENES = [
     backgroundImage: '/backgrounds/media-lab.png',
     backgroundPlaceholder: 'linear-gradient(160deg, #87CEEB 0%, #B0E0E6 50%, #E0F4FF 100%)',
     characters: [
-      { id: 'clara', name: 'Clara Blick', avatarUrl: null, position: { x: '18%', y: '62%' }, align: 'left' },
+      { id: 'clara', name: 'Klara Blick', avatarUrl: null, position: { x: '18%', y: '62%' }, align: 'left' },
       { id: 'uwe', name: 'Uwe-R. Blick', avatarUrl: null, position: { x: '72%', y: '62%' }, align: 'right' },
     ],
     speechBubbles: [
@@ -94,7 +94,7 @@ export const SCENES = [
     backgroundImage: '/backgrounds/kuppelsaal.png',
     backgroundPlaceholder: 'linear-gradient(150deg, #1a2a4a 0%, #2d4a6e 35%, #4a6fa5 70%, #87CEEB 100%)',
     characters: [
-      { id: 'clara', name: 'Clara Blick', avatarUrl: null, position: { x: '25%', y: '62%' }, align: 'left' },
+      { id: 'clara', name: 'Klara Blick', avatarUrl: null, position: { x: '25%', y: '62%' }, align: 'left' },
       { id: 'uwe', name: 'Uwe-R. Blick', avatarUrl: null, position: { x: '75%', y: '62%' }, align: 'right' },
     ],
     speechBubbles: [

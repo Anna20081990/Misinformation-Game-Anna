@@ -1,4 +1,5 @@
 import { SCENES } from '../../src/data/scenes.js'
+import { PART1_CONVERSATION } from '../../src/data/conversations/part1.js'
 
 function step(stepIndex, type, speechBubbles, options, extras = {}) {
   return { stepIndex, type, speechBubbles, options, ...extras }
@@ -20,58 +21,59 @@ function option(id, label, nextStep = null, nextPart = null) {
 }
 
 function scene1Steps() {
-  return [
-    step(0, 'intro', [
-      bubble('clara', 'Willkommen im Media Lab Regelreich. Heute startet euer Sommerpraktikum.'),
-      bubble('uwe', 'Ihr könnt wählen, wer euch als Host durch die Fallakten begleitet.'),
-    ], [
-      option('clara', 'Ich starte mit Clara Blick.', 1),
-      option('uwe', 'Ich starte mit Uwe R. Blick.', 1),
-    ]),
-    step(1, 'intro', [
-      bubble('selected', 'Gute Wahl. Ihr startet mit einem klaren Blick auf Muster und Dynamiken.', 'clara'),
-      bubble('selected', 'Starke Entscheidung. Dann gehen wir pragmatisch und analytisch vor.', 'uwe'),
-      bubble('selected', 'Ihr arbeitet an drei Fallakten: Emma Pör, Konrad Sens und Didi Fam.'),
-    ], [
-      option('ok', 'Klingt gut, wie laufen die Kapitel ab?', 2),
-      option('skepsis', 'Klingt groß. Gibt es klare Aufgaben?', 2),
-    ]),
-    step(2, 'intro', [
-      bubble('selected', 'Kurzfassung: Einführung, Beispiele, zwei Aktivitäten, Zusammenfassung.', 'ok'),
-      bubble('selected', 'Ja, es gibt klare Aufgaben und direktes Feedback in jedem Schritt.', 'skepsis'),
-    ], [
-      option('bereit', 'Verstanden, ich bin bereit.', 3),
-      option('frage', 'Noch eine kurze Frage, dann los.', 3),
-    ]),
-    step(3, 'transition', [
-      bubble('selected', 'Dann starten wir im Keller mit Fallakte 1: Emma Pör und emotionaler Zuspitzung.'),
-    ], [
-      option('weiter', 'Weiter in den Keller.', null, 2),
-    ]),
-  ]
+  return PART1_CONVERSATION.map((item) => {
+    const stepType = item.stepIndex === 3 ? 'transition' : 'intro'
+    const speechBubbles = (item.speechBubbles || []).map((entry) => {
+      const rawId = String(entry.characterId || entry.hostId || 'selected').toLowerCase()
+      const hostId = rawId === 'clara' || rawId === 'uwe' || rawId === 'ambassador' ? rawId : 'selected'
+      return bubble(hostId, entry.text)
+    })
+    const options = (item.options || []).map((entry) =>
+      option(entry.id, entry.label, entry.nextStep ?? null, entry.nextPart ?? null),
+    )
+
+    return step(item.stepIndex, stepType, speechBubbles, options)
+  })
 }
 
 function scene0Steps() {
   return [
     step(0, 'intro', [
-      bubble('ambassador', 'Willkommen in Regelreich. In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen. Sie entstehen im Gespräch. Neue Vorschläge werden veröffentlicht. Bürger kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen. Der Mittelpunkt dieser Debatten ist TikTalk. Eine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen. Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Doch in den letzten Monaten hat sich etwas verändert. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Manche Debatten kippen plötzlich in eine Richtung, die kaum noch sachlich wirkt. Im Media Lab Regelreich spricht man inzwischen von drei auffälligen Mustern. Intern wurden dafür Fallakten angelegt. Um diese Fälle systematisch zu untersuchen, wurden zusätzliche Sommerpraktika ausgeschrieben. Du bist hier, um bei der Aufklärung zu helfen.'),
+      bubble('ambassador', 'Willkommen in Regelreich.\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen - sie entstehen im Gespräch.'),
+      bubble('ambassador', 'Neue Vorschläge werden veröffentlicht. Bürger und Bürgerinnen kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen.'),
+      bubble('ambassador', 'Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen.'),
     ], [
-      option('ready', 'Ich bin bereit!', 1),
-      option('hesitant', 'Muss ich?', 1),
+      option('plausible', 'Klingt vernünftig.', 1),
+      option('tiktalk_ernst', 'TikTalk - dein Ernst?', 1),
     ]),
     step(1, 'intro', [
-      bubble('ambassador', 'Stark, das passt zu Regelreich. Dann legen wir direkt los.', 'ready'),
-      bubble('ambassador', 'Alles gut, du musst nicht perfekt starten. Wir gehen Schritt für Schritt gemeinsam durch.', 'hesitant'),
-      bubble('ambassador', 'Wähle jetzt deinen Avatar für das Praktikum.'),
+      bubble('ambassador', 'Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Man wusste: Es wird diskutiert, es wird kommentiert - und irgendwann kehrt wieder Ordnung ein.'),
+      bubble('ambassador', 'Doch in den letzten Monaten hat sich etwas verschoben. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Und manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht.'),
     ], [
-      option('avatar1', 'Avatar 1', 2),
-      option('avatar2', 'Avatar 2', 2),
-      option('avatar3', 'Avatar 3', 2),
+      option('zufall', 'Zufall?', 2),
     ]),
-    step(2, 'transition', [
-      bubble('ambassador', 'Perfekt. Weiter geht es jetzt ins Media Lab.'),
+    step(2, 'intro', [
+      bubble('ambassador', 'Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\nSie treten unter Pseudonymen auf.\nSie behaupten, sie würden Debatten nur beschleunigen.\nIntern werden sie "Die notorischen Drei" genannt.'),
     ], [
-      option('continue', 'Weiter zu Teil 1', null, 1),
+      option('wer_sie', 'Wer sind sie?', 3),
+    ]),
+    step(3, 'intro', [
+      bubble('ambassador', 'Emma Pör. Konrad Sens. Didi Fam. Sie arbeiten verdeckt - und sie haben ein bemerkenswertes Talent.'),
+    ], [
+      option('welches_talent', 'Welches Talent?', 4),
+    ]),
+    step(4, 'intro', [
+      bubble('ambassador', 'Diskussionen in eine Richtung zu lenken. Mal lauter, mal leiser - aber selten zufällig.'),
+      bubble('ambassador', 'Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\nDeine Aufgabe: Herausfinden, wie sie das tun.'),
+    ], [
+      option('spannend', 'Klingt spannend.', 5),
+      option('hoffe_unbekannt', 'Ich hoffe, sie wissen nicht, dass ich komme.', 5),
+    ]),
+    step(5, 'transition', [
+      bubble('ambassador', 'Stark. Neugier ist hier ein Vorteil. Dann legen wir direkt los.', 'spannend'),
+      bubble('ambassador', 'Keine Sorge.\nSie wissen nur, dass jemand kommt - nicht, wer.', 'hoffe_unbekannt'),
+    ], [
+      option('continue', 'Zum Media Lab gehen', null, 1),
     ]),
   ]
 }
@@ -90,7 +92,8 @@ function scene2Steps() {
       bubble('selected', 'Beispiel B: Dramatische Formulierungen steigern die Empörung, obwohl die Fakten dünn sind.'),
     ], [option('next', 'Weiter zur Aktivität.', 3)]),
     step(3, 'activity', [
-      bubble('selected', 'Aktivität 1: Welche Markierung zeigt die stärkste emotionale Zuspitzung?'),
+      bubble('selected', '„In Regelreich wird aktuell diskutiert, ob bei öffentlichen Veranstaltungen nur noch Regenschirme in „Einheitsgrau“ erlaubt sein sollen. Ziel ist eine „optische Harmonie bei Niederschlag“.“'),
+      bubble('selected', '„Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines Problem machen.“'),
     ], [
       option('submit_confident', 'Ich bin mir sicher.'),
       option('submit_unsure', 'Ich hoffe, es stimmt.'),
@@ -117,6 +120,7 @@ function scene2Steps() {
     step(4, 'activity', [
       bubble('selected', 'Stark erkannt, genau das war die emotionale Zuspitzung.', 'rightA'),
       bubble('selected', 'Aktivität 2: Welche Variante erzeugt die höchste Empörung?'),
+      bubble('selected', 'Welche Version würde Emma Pör am ehesten posten, um maximale Empörung zu erzeugen?'),
       bubble('selected', 'Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.', 'retry'),
     ], [
       option('submit_easy', 'Das ist einfach.'),

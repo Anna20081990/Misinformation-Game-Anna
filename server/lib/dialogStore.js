@@ -1,9 +1,13 @@
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFile, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { buildSeedDialogs } from './dialogSeed.js'
 import { SCENES } from '../../src/data/scenes.js'
 
 const DATA_FILE = path.resolve(process.cwd(), 'server/data/dialogs.json')
+const SEED_SOURCE_FILES = [
+  path.resolve(process.cwd(), 'server/lib/dialogSeed.js'),
+  path.resolve(process.cwd(), 'src/data/conversations/part1.js'),
+]
 let writeQueue = Promise.resolve()
 
 function clone(obj) {
@@ -13,10 +17,12 @@ function clone(obj) {
 async function readData() {
   try {
     const raw = await readFile(DATA_FILE, 'utf-8')
-    const parsed = JSON.parse(raw)
+    let parsed = JSON.parse(raw)
     if (!parsed || !Array.isArray(parsed.scenes)) {
       throw new Error('Ungültiges Datenformat in dialogs.json')
     }
+
+    parsed = await syncDataFromSeedIfSourcesChanged(parsed)
     return parsed
   } catch (error) {
     if (error?.code === 'ENOENT') {
@@ -26,6 +32,26 @@ async function readData() {
     }
     throw error
   }
+}
+
+async function syncDataFromSeedIfSourcesChanged(currentData) {
+  if (process.env.DIALOGS_AUTO_SYNC_SEED === '0') {
+    return currentData
+  }
+
+  const dataStat = await stat(DATA_FILE).catch(() => null)
+  if (!dataStat) return currentData
+
+  const sourceStats = await Promise.all(SEED_SOURCE_FILES.map((file) => stat(file).catch(() => null)))
+  const latestSourceMtimeMs = sourceStats.reduce((max, item) => Math.max(max, item?.mtimeMs ?? 0), 0)
+
+  if (!latestSourceMtimeMs || latestSourceMtimeMs <= dataStat.mtimeMs) {
+    return currentData
+  }
+
+  const seeded = { scenes: buildSeedDialogs() }
+  await writeFile(DATA_FILE, `${JSON.stringify(seeded, null, 2)}\n`, 'utf-8')
+  return seeded
 }
 
 function queueWrite(nextData) {

@@ -1,19 +1,24 @@
 function resolveHostId(characterId, speakerName) {
   const id = String(characterId || '').toLowerCase()
-  if (id === 'clara' || id === 'uwe') return id
+  if (id === 'clara' || id === 'uwe' || id === 'ambassador') return id
 
   const name = String(speakerName || '').toLowerCase()
   if (name.includes('clara')) return 'clara'
   if (name.includes('uwe')) return 'uwe'
+  if (name.includes('botschafterin')) return 'ambassador'
   return 'host'
 }
 
 function ClaraAvatar() {
-  return <img src="/backgrounds/avatar-klara.png" className="host-avatar__img" alt="Clara Blick" />
+  return <img src="/backgrounds/avatar-klara.png" className="host-avatar__img" alt="Klara Blick" />
 }
 
 function UweAvatar() {
   return <img src="/backgrounds/avatar-uwe.png" className="host-avatar__img" alt="Uwe R. Blick" />
+}
+
+function AmbassadorAvatar() {
+  return <img src="/backgrounds/botschafterin.png" className="host-avatar__img" alt="Botschafterin Regelreich" />
 }
 
 function GenericHostAvatar() {
@@ -37,6 +42,7 @@ export function HostAvatar({ characterId, speakerName }) {
     <div className="host-avatar" aria-label={speakerName || 'Host'}>
       {hostId === 'clara' && <ClaraAvatar />}
       {hostId === 'uwe' && <UweAvatar />}
+      {hostId === 'ambassador' && <AmbassadorAvatar />}
       {hostId === 'host' && <GenericHostAvatar />}
     </div>
   )

@@ -179,6 +179,10 @@ html, body {
   z-index: 20;
 }
 
+.scene__player-dock {
+  display: none !important;
+}
+
 .scene__player-avatar {
   width: 110px;
   height: 110px;
@@ -279,6 +283,7 @@ html, body {
 .monitor-message__bubble p {
   margin: 0;
   font-size: 1.08rem;
+  white-space: pre-line;
 }
 
 .monitor-select {
@@ -294,9 +299,29 @@ html, body {
   font-size: 1.05rem;
 }
 
+.monitor-post-author {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.monitor-post-author__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(183, 226, 255, 0.7);
+}
+
+.monitor-post-author__name {
+  color: #d7efff;
+  font-size: 0.98rem;
+}
+
 .monitor-select__sentence {
-  border: 1px solid rgba(152, 204, 236, 0.25);
-  background: rgba(18, 54, 84, 0.48);
+  border: 1px solid #d5dadd;
+  background: #eceff1;
   color: #e7f5ff;
   text-align: left;
   border-radius: 8px;
@@ -305,6 +330,9 @@ html, body {
   line-height: 1.55;
   cursor: pointer;
   transition: border-color 0.2s, transform 0.12s, background 0.2s;
+  text-shadow: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .monitor-select__sentence:hover {
@@ -313,9 +341,10 @@ html, body {
 }
 
 .monitor-select__sentence--selected {
-  border-color: #6de2a1;
-  background: #dff9e7;
-  color: #123119;
+  border-color: #fff;
+  background: #eceff1;
+  color: #000;
+  font-weight: 700;
 }
 
 .monitor-select__paragraph {
@@ -323,6 +352,28 @@ html, body {
   color: #dbeeff;
   font-size: 1rem;
   line-height: 1.7;
+}
+
+.monitor-select__paragraph--post {
+  background: #e8f4ff;
+  color: #000;
+  border: 1px solid rgba(168, 200, 227, 0.75);
+  border-radius: 12px;
+  padding: 0.7rem 0.8rem;
+}
+
+.monitor-select__paragraph--post .monitor-select__sentence,
+.monitor-select__paragraph--post .monitor-select__sentence:hover,
+.monitor-select__paragraph--post .monitor-select__sentence--selected {
+  color: #000;
+}
+
+.monitor-select__paragraph--post .monitor-select__sentence--selected,
+.monitor-select__paragraph--post .monitor-select__sentence--selected:hover {
+  border-color: #fff !important;
+  background: #eceff1 !important;
+  color: #000 !important;
+  font-weight: 700 !important;
 }
 
 .monitor-choice {
@@ -536,6 +587,44 @@ html, body {
   box-shadow: none;
 }
 
+.monitor-scene--keller-monitor-select .monitor-scene__bezel {
+  left: calc(52.2% - 2vh);
+}
+
+.monitor-scene--grossraum-monitor-select .monitor-scene__bezel {
+  top: calc(53% - 8vh);
+  left: calc(52.2% - 5vh);
+  width: min(calc(50vw + 5vw), 1200px);
+  height: min(55vh, 605px);
+}
+
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__bezel {
+  top: calc(53% - 8vh);
+  height: min(70vh, 770px);
+}
+
+.monitor-scene--grossraum-monitor-select .monitor-scene__messages {
+  flex: 0 1 90%;
+  min-height: 0;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.monitor-scene--grossraum-monitor-select .monitor-scene__options {
+  transform: translateY(-3vh);
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.monitor-scene--grossraum-monitor-select .monitor-scene__option {
+  width: calc(50% - 0.3rem);
+  max-width: 360px;
+}
+
 .monitor-scene--keller-monitor-select,
 .monitor-scene--grossraum-monitor-select,
 .monitor-scene--einzelbuero-tablet-select {
@@ -562,6 +651,7 @@ html, body {
 .monitor-scene--einzelbuero-tablet-select .monitor-scene__options {
   border-top: none;
   padding: 0.45rem 0;
+  transform: translateY(-5vh);
 }
 
 .monitor-scene--keller-monitor-select .monitor-scene__messages,
@@ -730,9 +820,18 @@ html, body {
   font-size: 0.9rem;
 }
 
-.chat-message__bubble p {
+.chat-message__paragraph {
   margin: 0;
   font-size: 1.02rem;
+  white-space: pre-line;
+}
+
+.speech-bubble__text {
+  white-space: pre-line;
+}
+
+.chat-message__paragraph + .chat-message__paragraph {
+  margin-top: 0.65rem;
 }
 
 .chat-panel__options {
@@ -1283,4 +1382,103 @@ html, body {
 .admin__flow-step strong {
   display: block;
   margin-bottom: 0.2rem;
+}
+
+/* Final override for Emma Poer sentence post styling (Part 2.3). */
+.monitor-select__paragraph--post .monitor-select__sentence,
+.monitor-select__paragraph--post .monitor-select__sentence:hover,
+.monitor-select__paragraph--post .monitor-select__sentence--selected,
+.monitor-select__paragraph--post .monitor-select__sentence--selected:hover {
+  background: #eceff1 !important;
+  border-color: #fff !important;
+  color: #000 !important;
+  font-weight: 400;
+  text-shadow: none !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.monitor-select__paragraph--post .monitor-select__sentence:hover,
+.monitor-select__paragraph--post .monitor-select__sentence--selected {
+  font-weight: 700 !important;
+}
+
+.monitor-select__paragraph--post .monitor-select__sentence--selected:hover {
+  font-weight: 400 !important;
+}
+
+/* Emma Poer post cards in Part 2.4 */
+.monitor-choice--post .monitor-choice__item,
+.monitor-choice--post .monitor-choice__item:hover,
+.monitor-choice--post .monitor-choice__item--selected {
+  background: #e8f4ff !important;
+  border: 1px solid rgba(168, 200, 227, 0.75) !important;
+  color: #000 !important;
+}
+
+.monitor-choice--post .monitor-choice__text {
+  color: #000 !important;
+}
+
+.monitor-choice--post .monitor-choice__item:hover,
+.monitor-choice--post .monitor-choice__item--selected {
+  font-weight: 700 !important;
+}
+
+.monitor-choice--post .monitor-bucket__item {
+  background: #e8f4ff !important;
+  border: 1px solid rgba(168, 200, 227, 0.75) !important;
+  color: #000 !important;
+}
+
+.monitor-choice--post .monitor-bucket__item:hover {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Final override: move buttons up in 3.3/3.4 */
+.monitor-scene--grossraum-monitor-select .monitor-scene__options {
+  transform: none !important;
+  position: relative;
+  top: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.6rem !important;
+}
+
+.monitor-scene--grossraum-monitor-select .monitor-scene__option {
+  width: calc(50% - 0.3rem) !important;
+  max-width: 360px !important;
+}
+
+.monitor-scene--grossraum-monitor-select .monitor-scene__messages {
+  flex: 0 1 70% !important;
+  min-height: 0 !important;
+  max-height: 70% !important;
+  overflow-y: auto !important;
+}
+
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__options {
+  transform: none !important;
+  position: relative;
+  top: -3vh !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.6rem !important;
+}
+
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__option {
+  width: fit-content !important;
+  min-width: 360px !important;
+  max-width: 620px !important;
+  white-space: nowrap !important;
+}
+
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__messages {
+  position: relative;
+  top: 5%;
 }

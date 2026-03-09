@@ -132,6 +132,7 @@ export function App() {
   })
   const [viewMode, setViewMode] = useState('game')
   const [dialogsByPart, setDialogsByPart] = useState({})
+  const [dialogApiStatus, setDialogApiStatus] = useState({ ok: true, failedParts: [], lastError: '' })
   const [activeStepByPart, setActiveStepByPart] = useState({})
   const [stepJumpRequest, setStepJumpRequest] = useState({ part: DEFAULT_PART, stepIndex: 0, nonce: 0 })
 
@@ -166,22 +167,32 @@ export function App() {
     let active = true
 
     async function loadDialogsForNavigation() {
-      const parts = [1, 2, 3, 4, 5]
+      const parts = [0, 1, 2, 3, 4, 5]
       const loaded = {}
+      const failedParts = []
+      let lastError = ''
 
       await Promise.all(
         parts.map(async (part) => {
           try {
             const data = await getSceneDialogs(part)
             loaded[part] = data
-          } catch {
+          } catch (error) {
             loaded[part] = null
+            failedParts.push(part)
+            lastError = error?.message || String(error || '')
+            console.error(`[Dialog API] Teil ${part} konnte nicht geladen werden.`, error)
           }
         })
       )
 
       if (!active) return
       setDialogsByPart(loaded)
+      setDialogApiStatus({
+        ok: failedParts.length === 0,
+        failedParts,
+        lastError,
+      })
     }
 
     loadDialogsForNavigation()
@@ -197,6 +208,11 @@ export function App() {
   return (
     <div className="app">
       <header className="app__header">
+        {!dialogApiStatus.ok && (
+          <div role="status" aria-live="polite" style={{ marginBottom: '0.75rem', color: '#8b0000', fontWeight: 600 }}>
+            Backend-Dialoge nicht erreichbar (Teile: {dialogApiStatus.failedParts.join(', ')}). Letzter Fehler: {dialogApiStatus.lastError || 'unbekannt'}
+          </div>
+        )}
         <nav className="app__nav">
           <button
             type="button"
@@ -252,7 +268,9 @@ export function App() {
             onSelectOption={handleSelectOption}
             stepJumpRequest={stepJumpRequest.part === currentPart ? stepJumpRequest : null}
             onStepChange={(part, stepIndex) => {
-              setActiveStepByPart((prev) => ({ ...prev, [part]: stepIndex }))
+              setActiveStepByPart((prev) => (
+                prev[part] === stepIndex ? prev : { ...prev, [part]: stepIndex }
+              ))
             }}
             selectedAvatarId={selectedAvatarId}
             onSelectAvatar={setSelectedAvatarId}

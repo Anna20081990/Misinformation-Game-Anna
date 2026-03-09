@@ -10,6 +10,10 @@ function assert(condition, message, status = 400) {
   }
 }
 
+function normalizeDialogText(rawText) {
+  return String(rawText).replace(/\r\n?/g, '\n').trim()
+}
+
 export function ensureSceneExists(sceneId) {
   const exists = SCENES.some((scene) => scene.id === Number(sceneId))
   assert(exists, `Szene ${sceneId} existiert nicht.`, 404)
@@ -33,7 +37,8 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
 
   const normalizedBubbles = speechBubbles.map((bubble, index) => {
     assert(bubble && typeof bubble === 'object', `speechBubbles[${index}] muss ein Objekt sein.`)
-    assert(typeof bubble.text === 'string' && bubble.text.trim(), `speechBubbles[${index}].text ist erforderlich.`)
+    const normalizedText = normalizeDialogText(bubble.text ?? '')
+    assert(normalizedText, `speechBubbles[${index}].text ist erforderlich.`)
     const hostId = String(bubble.hostId ?? bubble.characterId ?? 'selected').toLowerCase()
     assert(HOST_IDS.has(hostId), `speechBubbles[${index}].hostId muss einer der Werte selected, clara, uwe oder ambassador sein.`)
     const showOnOptionId = bubble.showOnOptionId == null ? null : String(bubble.showOnOptionId).trim()
@@ -41,7 +46,7 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
 
     return {
       hostId,
-      text: bubble.text.trim(),
+      text: normalizedText,
       ...(showOnOptionId ? { showOnOptionId } : {}),
     }
   })
