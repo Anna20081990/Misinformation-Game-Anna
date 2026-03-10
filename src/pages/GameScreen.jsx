@@ -1010,7 +1010,7 @@ export function GameScreen({
         postAuthorName: 'Konrad Sens',
         postAuthorAvatar: '/backgrounds/konrad_sens.png',
         hideTitle: true,
-        hideTopic: true,
+        hideTopic: false,
         promptAfterNeutralPost: true,
         promptHostId: selectedHostId || 'selected',
         promptSpeakerName: getHostFullName(selectedHostId || 'selected'),

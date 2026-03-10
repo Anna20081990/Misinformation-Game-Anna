@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { renderMessageParagraphs } from '../chat/ChatPanel.jsx'
@@ -42,12 +42,6 @@ export function MonitorActivityScene({
     'keller-monitor-select':
       'linear-gradient(180deg, #112f22 0%, #0c2219 100%)',
   }
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }, [messages])
 
   const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
