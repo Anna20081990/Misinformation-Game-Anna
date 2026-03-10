@@ -290,6 +290,14 @@ html, body {
   margin-top: 0.8em;
 }
 
+.monitor-message--embedded {
+  margin-bottom: 1rem;
+}
+
+.monitor-message--embedded + .monitor-message--embedded {
+  margin-top: 0.35rem;
+}
+
 .monitor-select {
   border: 1px solid rgba(142, 201, 238, 0.38);
   border-radius: 14px;
@@ -395,6 +403,10 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.monitor-choice__list--spaced {
+  margin-top: 1.2rem;
 }
 
 .monitor-choice__item {

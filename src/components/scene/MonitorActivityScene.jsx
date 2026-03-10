@@ -268,7 +268,7 @@ export function MonitorActivityScene({
                       )}
                       {!!boosterOptions[0]?.neutralPost &&
                         (boosterRenderNeutralPostAsMessage ? (
-                          <article className="monitor-message monitor-message--host">
+                          <article className="monitor-message monitor-message--host monitor-message--embedded">
                             <HostAvatar
                               characterId={boosterNeutralPostHostId}
                               speakerName={boosterPostAuthorName}
@@ -298,7 +298,7 @@ export function MonitorActivityScene({
                       {!boosterHideTopic &&
                         !!boosterOptions[0]?.prompt &&
                         boosterPromptAfterNeutralPost && (
-                          <article className="monitor-message monitor-message--host">
+                          <article className="monitor-message monitor-message--host monitor-message--embedded">
                             <HostAvatar
                               characterId={boosterPromptHostId}
                               speakerName={boosterPromptSpeakerName}
@@ -316,7 +316,7 @@ export function MonitorActivityScene({
                             </div>
                           </article>
                         )}
-                      <div className="monitor-choice__list">
+                      <div className="monitor-choice__list monitor-choice__list--spaced">
                         {boosterOptions.map((choice, index) => (
                           <button
                             key={choice.id ?? `booster-${index}`}

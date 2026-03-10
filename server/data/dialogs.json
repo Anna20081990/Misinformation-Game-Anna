@@ -1046,8 +1046,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Ich sehe: Du bist top motiviert! Dass versuchen wir es als Nächstes damit.",
-              "showOnOptionId": "continue_to_activity2"
+              "text": "Ich sehe: Du bist top motiviert! Dass versuchen wir es als Nächstes damit."
             }
           ],
           "options": [
