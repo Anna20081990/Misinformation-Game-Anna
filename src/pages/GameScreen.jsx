@@ -875,7 +875,7 @@ export function GameScreen({
   const isPart3Activity2InputStep =
     currentPart === 3 && Number(stepData.stepIndex) === 4
   const isPart3Activity2Context =
-    currentPart === 3 && [4, 41, 42, 43].includes(Number(stepData.stepIndex))
+    currentPart === 3 && [4, 41, 42, 43, 44].includes(Number(stepData.stepIndex))
   const part3Activity2Config = isPart3Activity2Context
     ? resolveBoosterChoiceConfig(
         stepData.activityConfig,

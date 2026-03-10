@@ -53,7 +53,7 @@ export function MonitorActivityScene({
   const shouldSplitActivityThread =
     actionOptions.length > 0 &&
     (isSentenceMode || isChoiceMode || isBoosterMode || isBucketMode) &&
-    firstPlayerIndex > 0
+    firstPlayerIndex >= 0
   let leadMessages = []
   let trailingMessages = messages
 
