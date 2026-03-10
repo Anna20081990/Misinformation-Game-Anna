@@ -414,6 +414,207 @@
           ]
         },
         {
+          "stepIndex": 1,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Perfekt.\n\nHier siehst du typische Beiträge von Emma.",
+              "showOnOptionId": "ready"
+            },
+            {
+              "hostId": "selected",
+              "text": "Die Stadt hat heute eine neue Taubenstatistik veröffentlicht.\n\nMein Onkel meinte gestern schon, dass vor seinem Balkon plötzlich drei Tauben saßen.\n\nSchon wieder wird uns etwas verschwiegen.\n\nWenn selbst Tauben hier strategisch verteilt werden, läuft etwas gewaltig schief."
+            },
+            {
+              "hostId": "selected",
+              "text": "Ein einzelner Satz eines Verwandten – und plötzlich wirkt das Ganze wie ein großes Problem."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Verstanden, nächstes Beispiel.",
+              "nextStep": 2
+            }
+          ]
+        },
+        {
+          "stepIndex": 2,
+          "type": "example",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Die Stadt testet eine neue Anzeige für öffentliche Uhren.\n\nEin Freund meinte, die Uhr am Bahnhof sei gestern für einen Moment stehen geblieben.\n\nWenn selbst die Zeit hier nicht mehr zuverlässig läuft, was gerät dann noch ins Stocken?\n\nIrgendetwas fühlt sich hier nicht mehr stabil an."
+            },
+            {
+              "hostId": "selected",
+              "text": "Eine stehende Uhr – und schon soll uns das verunsichern."
+            }
+          ],
+          "options": [
+            {
+              "id": "next",
+              "label": "Weiter.",
+              "nextStep": 20
+            }
+          ]
+        },
+        {
+          "stepIndex": 3,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "In Regelreich wird aktuell diskutiert, ob bei öffentlichen Veranstaltungen nur noch Regenschirme in „Einheitsgrau“ erlaubt sein sollen. Ziel ist eine „optische Harmonie bei Niederschlag“."
+            },
+            {
+              "hostId": "selected",
+              "text": "Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines Problem machen."
+            }
+          ],
+          "options": [
+            {
+              "id": "submit_confident",
+              "label": "Empörungs-Level: Hoch."
+            },
+            {
+              "id": "submit_unsure",
+              "label": "Das klingt verdächtig dramatisch."
+            }
+          ],
+          "activityConfig": {
+            "mode": "sentence-marking",
+            "sentences": [
+              {
+                "id": "s1",
+                "text": "Die Stadt plant, die Parkzeiten im Zentrum anzupassen."
+              },
+              {
+                "id": "s2",
+                "text": "Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden."
+              },
+              {
+                "id": "s3",
+                "text": "Schon wieder trifft es die normalen Leute."
+              },
+              {
+                "id": "s4",
+                "text": "Der Vorschlag wird nächste Woche beraten."
+              },
+              {
+                "id": "s5",
+                "text": "So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander."
+              }
+            ],
+            "correctSentenceIds": [
+              "s2",
+              "s3",
+              "s5"
+            ],
+            "success": {
+              "id": "rightA",
+              "nextStep": 4
+            },
+            "failure": {
+              "id": "wrongA",
+              "branchIds": [
+                "wrongPartial",
+                "wrongMixed"
+              ],
+              "nextStep": 31
+            }
+          }
+        },
+        {
+          "stepIndex": 4,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sehr gut! Ein Einzelfall wird zum Beweis erklärt, daraus wird Empörung, und am Ende steht die große Warnung: Das ist Emma in Reinform!",
+              "showOnOptionId": "rightA"
+            },
+            {
+              "hostId": "selected",
+              "text": "Die Stadt erwägt, die Wartebereiche im Hauptbahnhof künftig mit einem festgelegten Farbverlauf zu gestalten, um eine ‚emotionale Aufenthaltskurve‘ beim Warten auf Züge zu unterstützen."
+            },
+            {
+              "hostId": "selected",
+              "text": "Welche Version würde Emma Pör am ehesten posten, um maximale Empörung zu erzeugen?"
+            },
+            {
+              "hostId": "selected",
+              "text": "Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.",
+              "showOnOptionId": "retry"
+            }
+          ],
+          "options": [
+            {
+              "id": "submit_easy",
+              "label": "Das eskaliert stilvoll."
+            },
+            {
+              "id": "submit_unsure2",
+              "label": "Ist das schon Drama?"
+            }
+          ],
+          "activityConfig": {
+            "mode": "intensity-choice",
+            "title": "Aktivität 2: Intensitätswahl",
+            "topic": "Thema: Einführung einer offiziellen Mittagsglocke",
+            "randomizeChoices": true,
+            "choices": [
+              {
+                "id": "a",
+                "text": "„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“"
+              },
+              {
+                "id": "b",
+                "text": "„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“"
+              },
+              {
+                "id": "c",
+                "text": "„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“"
+              }
+            ],
+            "correctChoiceId": "c",
+            "success": {
+              "id": "rightB",
+              "nextStep": 5
+            },
+            "failure": {
+              "id": "wrongB",
+              "branchIds": [
+                "wrongBPartial",
+                "wrongBMixed"
+              ],
+              "nextStep": 41
+            }
+          }
+        },
+        {
+          "stepIndex": 5,
+          "type": "summary",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Damit hast du Emma Pör einmal in Aktion erlebt.\n\nSie braucht keinen großen Skandal.\n\nEin Einzelfall reicht. Ein Gefühl reicht. Und plötzlich wirkt es, als stünde die ganze Stadt auf dem Spiel."
+            },
+            {
+              "hostId": "selected",
+              "text": "Sie vergrößert. Sie verallgemeinert. Und sie dreht an der Lautstärke."
+            }
+          ],
+          "options": [
+            {
+              "id": "and_now",
+              "label": "Und jetzt?",
+              "nextStep": 51
+            }
+          ]
+        },
+        {
           "stepIndex": 10,
           "type": "intro",
           "speechBubbles": [
@@ -511,53 +712,6 @@
           ]
         },
         {
-          "stepIndex": 1,
-          "type": "example",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Perfekt.\n\nHier siehst du typische Beiträge von Emma.",
-              "showOnOptionId": "ready"
-            },
-            {
-              "hostId": "selected",
-              "text": "Die Stadt hat heute eine neue Taubenstatistik veröffentlicht.\n\nMein Onkel meinte gestern schon, dass vor seinem Balkon plötzlich drei Tauben saßen.\n\nSchon wieder wird uns etwas verschwiegen.\n\nWenn selbst Tauben hier strategisch verteilt werden, läuft etwas gewaltig schief."
-            },
-            {
-              "hostId": "selected",
-              "text": "Ein einzelner Satz eines Verwandten – und plötzlich wirkt das Ganze wie ein großes Problem."
-            }
-          ],
-          "options": [
-            {
-              "id": "next",
-              "label": "Verstanden, nächstes Beispiel.",
-              "nextStep": 2
-            }
-          ]
-        },
-        {
-          "stepIndex": 2,
-          "type": "example",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Die Stadt testet eine neue Anzeige für öffentliche Uhren.\n\nEin Freund meinte, die Uhr am Bahnhof sei gestern für einen Moment stehen geblieben.\n\nWenn selbst die Zeit hier nicht mehr zuverlässig läuft, was gerät dann noch ins Stocken?\n\nIrgendetwas fühlt sich hier nicht mehr stabil an."
-            },
-            {
-              "hostId": "selected",
-              "text": "Eine stehende Uhr – und schon soll uns das verunsichern."
-            }
-          ],
-          "options": [
-            {
-              "id": "next",
-              "label": "Weiter.",
-              "nextStep": 20
-            }
-          ]
-        },
-        {
           "stepIndex": 20,
           "type": "intro",
           "speechBubbles": [
@@ -582,72 +736,6 @@
               "nextStep": 3
             }
           ]
-        },
-        {
-          "stepIndex": 3,
-          "type": "activity",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "„In Regelreich wird aktuell diskutiert, ob bei öffentlichen Veranstaltungen nur noch Regenschirme in „Einheitsgrau“ erlaubt sein sollen. Ziel ist eine „optische Harmonie bei Niederschlag“.“"
-            },
-            {
-              "hostId": "selected",
-              "text": "„Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines Problem machen.“"
-            }
-          ],
-          "options": [
-            {
-              "id": "submit_confident",
-              "label": "Empörungs-Level: Hoch."
-            },
-            {
-              "id": "submit_unsure",
-              "label": "Das klingt verdächtig dramatisch."
-            }
-          ],
-          "activityConfig": {
-            "mode": "sentence-marking",
-            "sentences": [
-              {
-                "id": "s1",
-                "text": "Die Stadt plant, die Parkzeiten im Zentrum anzupassen."
-              },
-              {
-                "id": "s2",
-                "text": "Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden."
-              },
-              {
-                "id": "s3",
-                "text": "Schon wieder trifft es die normalen Leute."
-              },
-              {
-                "id": "s4",
-                "text": "Der Vorschlag wird nächste Woche beraten."
-              },
-              {
-                "id": "s5",
-                "text": "So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander."
-              }
-            ],
-            "correctSentenceIds": [
-              "s2",
-              "s3",
-              "s5"
-            ],
-            "success": {
-              "id": "rightA",
-              "nextStep": 4
-            },
-            "failure": {
-              "id": "wrongA",
-              "branchIds": [
-                "wrongPartial",
-                "wrongMixed"
-              ],
-              "nextStep": 31
-            }
-          }
         },
         {
           "stepIndex": 31,
@@ -677,73 +765,6 @@
           ]
         },
         {
-          "stepIndex": 4,
-          "type": "activity",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Sehr gut! Ein Einzelfall wird zum Beweis erklärt, daraus wird Empörung, und am Ende steht die große Warnung: Das ist Emma in Reinform!",
-              "showOnOptionId": "rightA"
-            },
-            {
-              "hostId": "selected",
-              "text": "Die Stadt erwägt, die Wartebereiche im Hauptbahnhof künftig mit einem festgelegten Farbverlauf zu gestalten, um eine ‚emotionale Aufenthaltskurve‘ beim Warten auf Züge zu unterstützen."
-            },
-            {
-              "hostId": "selected",
-              "text": "Welche Version würde Emma Pör am ehesten posten, um maximale Empörung zu erzeugen?"
-            },
-            {
-              "hostId": "selected",
-              "text": "Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.",
-              "showOnOptionId": "retry"
-            }
-          ],
-          "options": [
-            {
-              "id": "submit_easy",
-              "label": "Das eskaliert stilvoll."
-            },
-            {
-              "id": "submit_unsure2",
-              "label": "Ist das schon Drama?"
-            }
-          ],
-          "activityConfig": {
-            "mode": "intensity-choice",
-            "title": "Aktivität 2: Intensitätswahl",
-            "topic": "Thema: Einführung einer offiziellen Mittagsglocke",
-            "randomizeChoices": true,
-            "choices": [
-              {
-                "id": "a",
-                "text": "„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“"
-              },
-              {
-                "id": "b",
-                "text": "„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“"
-              },
-              {
-                "id": "c",
-                "text": "„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“"
-              }
-            ],
-            "correctChoiceId": "c",
-            "success": {
-              "id": "rightB",
-              "nextStep": 5
-            },
-            "failure": {
-              "id": "wrongB",
-              "branchIds": [
-                "wrongBPartial",
-                "wrongBMixed"
-              ],
-              "nextStep": 41
-            }
-          }
-        },
-        {
           "stepIndex": 41,
           "type": "activity",
           "speechBubbles": [
@@ -757,27 +778,6 @@
               "id": "retry",
               "label": "Nochmal wählen.",
               "nextStep": 4
-            }
-          ]
-        },
-        {
-          "stepIndex": 5,
-          "type": "summary",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Damit hast du Emma Pör einmal in Aktion erlebt.\n\nSie braucht keinen großen Skandal.\n\nEin Einzelfall reicht. Ein Gefühl reicht. Und plötzlich wirkt es, als stünde die ganze Stadt auf dem Spiel."
-            },
-            {
-              "hostId": "selected",
-              "text": "Sie vergrößert. Sie verallgemeinert. Und sie dreht an der Lautstärke."
-            }
-          ],
-          "options": [
-            {
-              "id": "and_now",
-              "label": "Und jetzt?",
-              "nextStep": 51
             }
           ]
         },

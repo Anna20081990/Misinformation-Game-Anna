@@ -49,6 +49,7 @@ export function MonitorActivityScene({
     }
   }, [messages, options])
 
+  const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
   const isBoosterMode = !!boosterOptions.length
   const isBucketMode = !!bucketOptions.length
@@ -58,7 +59,10 @@ export function MonitorActivityScene({
   let leadMessages = []
   let trailingMessages = messages
 
-  if (isRetryOnly && (isChoiceMode || isBoosterMode || isBucketMode)) {
+  if (
+    isRetryOnly &&
+    (isSentenceMode || isChoiceMode || isBoosterMode || isBucketMode)
+  ) {
     const firstPlayerIndex = messages.findIndex(
       (message) => message.speakerType === 'player'
     )
