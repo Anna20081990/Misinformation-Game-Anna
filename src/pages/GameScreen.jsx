@@ -574,14 +574,14 @@ function resolveBoosterSubmission(config, selectedBoosterChoiceIds) {
     correctChoiceIds.every((item) => selectedBoosterChoiceIds.includes(item))
 
   const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongB', 41)
-  const successTarget = getResolvedFlowTarget(config, 'success', 'rightB', 5)
+  const successTarget = getResolvedFlowTarget(config, 'success', 'rightB', 42)
   const mappedOption = isCorrect
     ? successTarget
     : selectedCorrectCount === 0
-      ? failureTarget
+      ? { ...failureTarget, id: 'wrongBWeak', nextStep: 43 }
       : selectedWrongCount === 0
-        ? { ...failureTarget, id: 'wrongBPartial' }
-        : { ...failureTarget, id: 'wrongBMixed' }
+        ? { ...failureTarget, id: 'wrongBSingle', nextStep: 44 }
+        : { ...failureTarget, id: 'wrongBMixed', nextStep: 41 }
 
   return {
     isCorrect,
@@ -875,7 +875,7 @@ export function GameScreen({
   const isPart3Activity2InputStep =
     currentPart === 3 && Number(stepData.stepIndex) === 4
   const isPart3Activity2Context =
-    currentPart === 3 && [4, 41].includes(Number(stepData.stepIndex))
+    currentPart === 3 && [4, 41, 42, 43].includes(Number(stepData.stepIndex))
   const part3Activity2Config = isPart3Activity2Context
     ? resolveBoosterChoiceConfig(
         stepData.activityConfig,
@@ -1656,6 +1656,14 @@ export function GameScreen({
         if (
           transitionFlags.resetOnPart3Summary &&
           currentPart === 3 &&
+          Number(option.nextStep) === 5
+        ) {
+          resetFlowState({ clearMessages: true, resetBooster: true })
+        }
+
+        if (
+          currentPart === 3 &&
+          Number(stepData.stepIndex) === 42 &&
           Number(option.nextStep) === 5
         ) {
           resetFlowState({ clearMessages: true, resetBooster: true })

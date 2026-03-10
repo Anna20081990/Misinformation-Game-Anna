@@ -1006,57 +1006,23 @@
           }
         },
         {
-          "stepIndex": 32,
-          "type": "activity",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Treffer. ‚Alle sind sich einig‘ – das ist kein Hinweis mehr, das ist eine Abkürzung zur Mehrheit. Genau Konrad.",
-              "showOnOptionId": "rightA"
-            }
-          ],
-          "options": [
-            {
-              "id": "continue_to_activity2",
-              "label": "Bereit für mehr.",
-              "nextStep": 4
-            }
-          ]
-        },
-        {
-          "stepIndex": 33,
-          "type": "activity",
-          "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Das ist fast schon seriöser Journalismus. Konrad würde hier mindestens eine Mehrheit hineinformulieren – sonst läuft niemand mit."
-            }
-          ],
-          "options": [
-            {
-              "id": "retry_low",
-              "label": "Nochmal prüfen",
-              "nextStep": 3
-            }
-          ]
-        },
-        {
           "stepIndex": 4,
           "type": "activity",
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Ich sehe: Du bist top motiviert! Dass versuchen wir es als Nächstes damit."
+              "text": "Ich sehe: Du bist top motiviert! \n\nDann versuchen wir es als Nächstes damit.",
+              "showOnOptionId": "continue_to_activity2"
             }
           ],
           "options": [
             {
               "id": "submit_confident4",
-              "label": "Das wirkt nach echtem Konsens."
+              "label": "Das gibt Rückenwind."
             },
             {
               "id": "submit_unsure4",
-              "label": "Ich bin unsicher."
+              "label": "Konsensmaschine aktiviert."
             }
           ],
           "activityConfig": {
@@ -1084,7 +1050,7 @@
               },
               {
                 "id": "e",
-                "text": "„Dieser Beitrag hat bereits mehr als 4.200 Likes.“"
+                "text": "„Es gibt niemanden in meinem Umfeld, der diese Initiative nicht unterstützt.”"
               },
               {
                 "id": "f",
@@ -1097,13 +1063,14 @@
             ],
             "success": {
               "id": "rightB",
-              "nextStep": 5
+              "nextStep": 42
             },
             "failure": {
               "id": "wrongB",
               "branchIds": [
-                "wrongBPartial",
-                "wrongBMixed"
+                "wrongBMixed",
+                "wrongBWeak",
+                "wrongBSingle"
               ],
               "nextStep": 41
             }
@@ -1254,28 +1221,106 @@
           ]
         },
         {
+          "stepIndex": 32,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Treffer. ‚Alle sind sich einig‘ – das ist kein Hinweis mehr, das ist eine Abkürzung zur Mehrheit. Genau Konrad.",
+              "showOnOptionId": "rightA"
+            }
+          ],
+          "options": [
+            {
+              "id": "continue_to_activity2",
+              "label": "Bereit für mehr.",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 33,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Das ist fast schon seriöser Journalismus. Konrad würde hier mindestens eine Mehrheit hineinformulieren – sonst läuft niemand mit."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry_low",
+              "label": "Nochmal prüfen",
+              "nextStep": 3
+            }
+          ]
+        },
+        {
           "stepIndex": 41,
           "type": "activity",
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das waren nur neutrale oder irrelevante Ergänzungen. Suche nach klaren Mehrheits- oder Metriksignalen."
-            },
-            {
-              "hostId": "selected",
-              "text": "Du hast schon einen richtigen Verstärker gewählt, aber noch nicht alle erwischt.",
-              "showOnOptionId": "wrongBPartial"
-            },
-            {
-              "hostId": "selected",
-              "text": "Teilweise richtig, aber du hast auch neutrale Ergänzungen gewählt. Fokussiere auf starke Konsenssignale.",
+              "text": "Schon nicht schlecht. Aber manches wirkt noch wie Einzelmeinungen.",
               "showOnOptionId": "wrongBMixed"
             }
           ],
           "options": [
             {
-              "id": "retry",
-              "label": "Erneut wählen.",
+              "id": "retry_partial",
+              "label": "Einzelmeinungen abräumen",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 42,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sehr gut. Jetzt wirkt es nicht wie eine Meinung – sondern wie eine Bewegung. Genau Konrads Handschrift.",
+              "showOnOptionId": "rightB"
+            }
+          ],
+          "options": [
+            {
+              "id": "continue_to_summary",
+              "label": "Handschrift entziffert.",
+              "nextStep": 5
+            }
+          ]
+        },
+        {
+          "stepIndex": 43,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Das wirkt wie Einzelmeinungen.\n\nKonrad Sens will, dass es nach Mehrheit klingt – nicht nach Nachbarschaftsplauderei."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry_weak",
+              "label": "Stärker zuspitzen",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 44,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Schon nicht schlecht. Aber der soziale Rückenwind könnte noch stärker wehen."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry_single",
+              "label": "Windmaschine an!",
               "nextStep": 4
             }
           ]
