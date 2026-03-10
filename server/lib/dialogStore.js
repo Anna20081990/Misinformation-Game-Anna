@@ -1,89 +1,70 @@
 import { readFile, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { buildSeedDialogs } from './dialogSeed.js'
+import { validateDialogsData } from './dialogValidation.js'
 import { SCENES } from '../../src/data/scenes.js'
 
 const DATA_FILE = path.resolve(process.cwd(), 'server/data/dialogs.json')
-const SEED_SOURCE_FILES = [
-  path.resolve(process.cwd(), 'server/lib/dialogSeed.js'),
-  path.resolve(process.cwd(), 'src/data/conversations/part1.js'),
-]
 let writeQueue = Promise.resolve()
 
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj))
 }
 
+function normalizeScenes(scenes) {
+  const sceneMap = new Map(
+    (scenes || []).map((scene) => [Number(scene.sceneId), clone(scene)])
+  )
+
+  for (const scene of SCENES) {
+    if (!sceneMap.has(scene.id)) {
+      sceneMap.set(scene.id, { sceneId: scene.id, steps: [] })
+    }
+  }
+
+  return [...sceneMap.values()].sort(
+    (a, b) => Number(a.sceneId) - Number(b.sceneId)
+  )
+}
+
+async function writeValidatedData(nextData) {
+  const scenes = normalizeScenes(nextData.scenes)
+  const validated = { scenes }
+  validateDialogsData(validated)
+  const content = `${JSON.stringify(validated, null, 2)}\n`
+  await writeFile(DATA_FILE, content, 'utf-8')
+  return validated
+}
+
 async function readData() {
   try {
     const raw = await readFile(DATA_FILE, 'utf-8')
-    let parsed = JSON.parse(raw)
-    if (!parsed || !Array.isArray(parsed.scenes)) {
-      throw new Error('Ungültiges Datenformat in dialogs.json')
-    }
-
-    parsed = await syncDataFromSeedIfSourcesChanged(parsed)
-    return parsed
+    const parsed = JSON.parse(raw)
+    const normalized = { scenes: normalizeScenes(parsed?.scenes) }
+    validateDialogsData(normalized)
+    return normalized
   } catch (error) {
     if (error?.code === 'ENOENT') {
       const seeded = { scenes: buildSeedDialogs() }
-      await writeFile(DATA_FILE, `${JSON.stringify(seeded, null, 2)}\n`, 'utf-8')
-      return seeded
+      return writeValidatedData(seeded)
     }
     throw error
   }
 }
 
-async function syncDataFromSeedIfSourcesChanged(currentData) {
-  if (process.env.DIALOGS_AUTO_SYNC_SEED === '0') {
-    return currentData
-  }
-
-  const dataStat = await stat(DATA_FILE).catch(() => null)
-  if (!dataStat) return currentData
-
-  const sourceStats = await Promise.all(SEED_SOURCE_FILES.map((file) => stat(file).catch(() => null)))
-  const latestSourceMtimeMs = sourceStats.reduce((max, item) => Math.max(max, item?.mtimeMs ?? 0), 0)
-
-  if (!latestSourceMtimeMs || latestSourceMtimeMs <= dataStat.mtimeMs) {
-    return currentData
-  }
-
-  const seeded = { scenes: buildSeedDialogs() }
-  await writeFile(DATA_FILE, `${JSON.stringify(seeded, null, 2)}\n`, 'utf-8')
-  return seeded
-}
-
 function queueWrite(nextData) {
   writeQueue = writeQueue.then(async () => {
-    const content = `${JSON.stringify(nextData, null, 2)}\n`
-    await writeFile(DATA_FILE, content, 'utf-8')
+    await writeValidatedData(nextData)
   })
   return writeQueue
 }
 
 export async function getAllSceneDialogs() {
   const data = await readData()
-  const sceneMap = new Map((data.scenes || []).map((scene) => [Number(scene.sceneId), scene]))
-  let mutated = false
+  const scenes = normalizeScenes(data.scenes)
 
-  for (const scene of SCENES) {
-    if (!sceneMap.has(scene.id)) {
-      sceneMap.set(scene.id, { sceneId: scene.id, steps: [] })
-      mutated = true
-    }
-  }
-
-  const scenes = [...sceneMap.values()].sort((a, b) => Number(a.sceneId) - Number(b.sceneId))
-  const hasAnySteps = scenes.some((scene) => (scene.steps || []).length > 0)
-
-  if (!hasAnySteps) {
-    const seededScenes = buildSeedDialogs()
-    await queueWrite({ scenes: seededScenes })
-    return seededScenes
-  }
-
-  if (mutated) {
+  const dataStat = await stat(DATA_FILE).catch(() => null)
+  if (dataStat && scenes.length !== data.scenes.length) {
     await queueWrite({ scenes })
   }
 
@@ -97,7 +78,9 @@ export async function getSceneDialogs(sceneId) {
 
 export async function updateSceneDialogs(sceneId, updater) {
   const data = await readData()
-  const index = data.scenes.findIndex((entry) => entry.sceneId === Number(sceneId))
+  const index = data.scenes.findIndex(
+    (entry) => entry.sceneId === Number(sceneId)
+  )
 
   if (index === -1) {
     data.scenes.push({ sceneId: Number(sceneId), steps: [] })

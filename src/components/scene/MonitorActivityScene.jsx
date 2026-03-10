@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
+import { renderMessageParagraphs } from '../chat/ChatPanel.jsx'
 
 export function MonitorActivityScene({
   messages = [],
@@ -16,18 +17,30 @@ export function MonitorActivityScene({
   const sentenceOptions = options.filter((opt) => opt.kind === 'sentence')
   const choiceOptions = options.filter((opt) => opt.kind === 'choice')
   const boosterOptions = options.filter((opt) => opt.kind === 'booster')
-  const bucketOptions = options.filter((opt) => opt.kind === 'bucket-assignment')
-  const actionOptions = options.filter((option) => option.kind !== 'sentence' && option.kind !== 'choice' && option.kind !== 'booster' && option.kind !== 'bucket-assignment')
+  const bucketOptions = options.filter(
+    (opt) => opt.kind === 'bucket-assignment'
+  )
+  const actionOptions = options.filter(
+    (option) =>
+      option.kind !== 'sentence' &&
+      option.kind !== 'choice' &&
+      option.kind !== 'booster' &&
+      option.kind !== 'bucket-assignment'
+  )
   const titleByVariant = {
     monitor: 'Stand-PC Monitor',
     tablet: 'Tablet Interface',
     hologram: 'Hologramm Interface',
   }
   const backgroundByVariant = {
-    monitor: 'radial-gradient(circle at 50% 20%, #213a56 0%, #0d1a2a 55%, #070f18 100%)',
-    tablet: 'radial-gradient(circle at 40% 20%, #2b3b58 0%, #132035 58%, #0a1421 100%)',
-    hologram: 'radial-gradient(circle at 50% 18%, #102b45 0%, #081a2a 52%, #050c14 100%)',
-    'keller-monitor-select': 'linear-gradient(180deg, #112f22 0%, #0c2219 100%)',
+    monitor:
+      'radial-gradient(circle at 50% 20%, #213a56 0%, #0d1a2a 55%, #070f18 100%)',
+    tablet:
+      'radial-gradient(circle at 40% 20%, #2b3b58 0%, #132035 58%, #0a1421 100%)',
+    hologram:
+      'radial-gradient(circle at 50% 18%, #102b45 0%, #081a2a 52%, #050c14 100%)',
+    'keller-monitor-select':
+      'linear-gradient(180deg, #112f22 0%, #0c2219 100%)',
   }
 
   useEffect(() => {
@@ -36,16 +49,19 @@ export function MonitorActivityScene({
     }
   }, [messages, options])
 
-  const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
   const isBoosterMode = !!boosterOptions.length
   const isBucketMode = !!bucketOptions.length
-  const isRetryOnly = actionOptions.length > 0 && actionOptions.every((option) => option.id === 'retry')
+  const isRetryOnly =
+    actionOptions.length > 0 &&
+    actionOptions.every((option) => option.id === 'retry')
   let leadMessages = []
   let trailingMessages = messages
 
   if (isRetryOnly && (isChoiceMode || isBoosterMode || isBucketMode)) {
-    const firstPlayerIndex = messages.findIndex((message) => message.speakerType === 'player')
+    const firstPlayerIndex = messages.findIndex(
+      (message) => message.speakerType === 'player'
+    )
     if (firstPlayerIndex > 0) {
       leadMessages = messages.slice(0, firstPlayerIndex)
       trailingMessages = messages.slice(firstPlayerIndex)
@@ -59,7 +75,8 @@ export function MonitorActivityScene({
   const bucketTopic = bucketOptions[0]?.topic || ''
   const bucketPrompt = bucketOptions[0]?.prompt || ''
   const bucketDefinitions = bucketOptions[0]?.bucketDefinitions || []
-  const unassignedBucketLabel = bucketOptions[0]?.unassignedLabel || 'Nicht zugeordnet'
+  const unassignedBucketLabel =
+    bucketOptions[0]?.unassignedLabel || 'Nicht zugeordnet'
   const bucketPostAuthorName = bucketOptions[0]?.postAuthorName || ''
   const bucketPostAuthorAvatar = bucketOptions[0]?.postAuthorAvatar || ''
   const bucketHideTitle = Boolean(bucketOptions[0]?.hideTitle)
@@ -82,14 +99,20 @@ export function MonitorActivityScene({
     <div className="scene">
       <SceneBackground
         backgroundImage={backgroundImage}
-        backgroundPlaceholder={backgroundPlaceholder || backgroundByVariant[variant] || backgroundByVariant.monitor}
+        backgroundPlaceholder={
+          backgroundPlaceholder ||
+          backgroundByVariant[variant] ||
+          backgroundByVariant.monitor
+        }
       />
 
       <div className={`monitor-scene monitor-scene--${variant}`}>
         <div className="monitor-scene__bezel">
           <div className="monitor-scene__screen">
             <header className="monitor-scene__header">
-              <h2 className="monitor-scene__title">{titleByVariant[variant] || titleByVariant.monitor}</h2>
+              <h2 className="monitor-scene__title">
+                {titleByVariant[variant] || titleByVariant.monitor}
+              </h2>
             </header>
 
             <div className="monitor-scene__messages" ref={scrollRef}>
@@ -99,30 +122,48 @@ export function MonitorActivityScene({
                   className={`monitor-message monitor-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
                 >
                   {message.speakerType !== 'player' && (
-                    <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={message.speakerName} />
+                    <HostAvatar
+                      characterId={message.hostId ?? message.characterId}
+                      speakerName={message.speakerName}
+                    />
                   )}
                   <div className="monitor-message__bubble">
                     {message.speakerType !== 'player' && (
-                      <strong className="monitor-message__speaker">{message.speakerName || 'Host'}</strong>
+                      <strong className="monitor-message__speaker">
+                        {message.speakerName || 'Host'}
+                      </strong>
                     )}
-                    <p>{message.text}</p>
+                    {renderMessageParagraphs(message.text, {
+                      className: 'monitor-message__paragraph',
+                    })}
                   </div>
                 </article>
               ))}
 
               {isSelectVariant && (
-                <section className="monitor-select" aria-label="Beitrag analysieren">
+                <section
+                  className="monitor-select"
+                  aria-label="Beitrag analysieren"
+                >
                   {!!sentenceOptions.length && (
                     <>
                       {!!sentencePostAuthorName && (
                         <div className="monitor-post-author">
                           {!!sentencePostAuthorAvatar && (
-                            <img className="monitor-post-author__avatar" src={sentencePostAuthorAvatar} alt={sentencePostAuthorName} />
+                            <img
+                              className="monitor-post-author__avatar"
+                              src={sentencePostAuthorAvatar}
+                              alt={sentencePostAuthorName}
+                            />
                           )}
-                          <strong className="monitor-post-author__name">{sentencePostAuthorName}</strong>
+                          <strong className="monitor-post-author__name">
+                            {sentencePostAuthorName}
+                          </strong>
                         </div>
                       )}
-                      {!sentenceHideTitle && <h3 className="monitor-select__title">Beitrag</h3>}
+                      {!sentenceHideTitle && (
+                        <h3 className="monitor-select__title">Beitrag</h3>
+                      )}
                       <p className="monitor-select__paragraph monitor-select__paragraph--post">
                         {sentenceOptions.map((sentence, index) => (
                           <span key={`sentence-wrap-${sentence.id ?? index}`}>
@@ -134,7 +175,9 @@ export function MonitorActivityScene({
                             >
                               {sentence.label}
                             </button>
-                            {index < sentenceOptions.length - 1 && <span> </span>}
+                            {index < sentenceOptions.length - 1 && (
+                              <span> </span>
+                            )}
                           </span>
                         ))}
                       </p>
@@ -142,17 +185,33 @@ export function MonitorActivityScene({
                   )}
 
                   {!!choiceOptions.length && (
-                    <div className={`monitor-choice ${choicePostAuthorName ? 'monitor-choice--post' : ''}`}>
+                    <div
+                      className={`monitor-choice ${choicePostAuthorName ? 'monitor-choice--post' : ''}`}
+                    >
                       {!!choicePostAuthorName && (
                         <div className="monitor-post-author">
                           {!!choicePostAuthorAvatar && (
-                            <img className="monitor-post-author__avatar" src={choicePostAuthorAvatar} alt={choicePostAuthorName} />
+                            <img
+                              className="monitor-post-author__avatar"
+                              src={choicePostAuthorAvatar}
+                              alt={choicePostAuthorName}
+                            />
                           )}
-                          <strong className="monitor-post-author__name">{choicePostAuthorName}</strong>
+                          <strong className="monitor-post-author__name">
+                            {choicePostAuthorName}
+                          </strong>
                         </div>
                       )}
-                      {!choiceHideTitle && <h3 className="monitor-select__title">{choiceOptions[0]?.groupTitle || 'Aktivität 2'}</h3>}
-                      {!choiceHideTopic && !!choiceOptions[0]?.topic && <p className="monitor-choice__topic">{choiceOptions[0]?.topic}</p>}
+                      {!choiceHideTitle && (
+                        <h3 className="monitor-select__title">
+                          {choiceOptions[0]?.groupTitle || 'Aktivität 2'}
+                        </h3>
+                      )}
+                      {!choiceHideTopic && !!choiceOptions[0]?.topic && (
+                        <p className="monitor-choice__topic">
+                          {choiceOptions[0]?.topic}
+                        </p>
+                      )}
                       <div className="monitor-choice__list">
                         {choiceOptions.map((choice, index) => (
                           <button
@@ -162,7 +221,9 @@ export function MonitorActivityScene({
                             onClick={() => onSelectOption?.(index, choice)}
                             disabled={Boolean(choice.disabled)}
                           >
-                            <p className="monitor-choice__text">{choice.text}</p>
+                            <p className="monitor-choice__text">
+                              {choice.text}
+                            </p>
                           </button>
                         ))}
                       </div>
@@ -170,20 +231,43 @@ export function MonitorActivityScene({
                   )}
 
                   {!!boosterOptions.length && (
-                    <div className={`monitor-choice ${boosterPostAuthorName ? 'monitor-choice--post' : ''}`}>
+                    <div
+                      className={`monitor-choice ${boosterPostAuthorName ? 'monitor-choice--post' : ''}`}
+                    >
                       {!!boosterPostAuthorName && (
                         <div className="monitor-post-author">
                           {!!boosterPostAuthorAvatar && (
-                            <img className="monitor-post-author__avatar" src={boosterPostAuthorAvatar} alt={boosterPostAuthorName} />
+                            <img
+                              className="monitor-post-author__avatar"
+                              src={boosterPostAuthorAvatar}
+                              alt={boosterPostAuthorName}
+                            />
                           )}
-                          <strong className="monitor-post-author__name">{boosterPostAuthorName}</strong>
+                          <strong className="monitor-post-author__name">
+                            {boosterPostAuthorName}
+                          </strong>
                         </div>
                       )}
-                      {!boosterHideTitle && <h3 className="monitor-select__title">{boosterOptions[0]?.topic || boosterOptions[0]?.groupTitle || 'Aktivität 2'}</h3>}
-                      {!boosterHideTopic && !!boosterOptions[0]?.prompt && <p className="monitor-choice__topic">{boosterOptions[0]?.prompt}</p>}
+                      {!boosterHideTitle && (
+                        <h3 className="monitor-select__title">
+                          {boosterOptions[0]?.topic ||
+                            boosterOptions[0]?.groupTitle ||
+                            'Aktivität 2'}
+                        </h3>
+                      )}
+                      {!boosterHideTopic && !!boosterOptions[0]?.prompt && (
+                        <p className="monitor-choice__topic">
+                          {boosterOptions[0]?.prompt}
+                        </p>
+                      )}
                       {!!boosterOptions[0]?.neutralPost && (
-                        <div className="monitor-choice__item monitor-choice__item--neutral" aria-label="Ausgangspost">
-                          <p className="monitor-choice__text">{boosterOptions[0]?.neutralPost}</p>
+                        <div
+                          className="monitor-choice__item monitor-choice__item--neutral"
+                          aria-label="Ausgangspost"
+                        >
+                          <p className="monitor-choice__text">
+                            {boosterOptions[0]?.neutralPost}
+                          </p>
                         </div>
                       )}
                       <div className="monitor-choice__list">
@@ -195,7 +279,9 @@ export function MonitorActivityScene({
                             onClick={() => onSelectOption?.(index, choice)}
                             disabled={Boolean(choice.disabled)}
                           >
-                            <p className="monitor-choice__text">{choice.text}</p>
+                            <p className="monitor-choice__text">
+                              {choice.text}
+                            </p>
                           </button>
                         ))}
                       </div>
@@ -203,23 +289,38 @@ export function MonitorActivityScene({
                   )}
 
                   {!!bucketOptions.length && (
-                    <div className={`monitor-choice ${bucketPostAuthorName ? 'monitor-choice--post' : ''}`}>
+                    <div
+                      className={`monitor-choice ${bucketPostAuthorName ? 'monitor-choice--post' : ''}`}
+                    >
                       {!!bucketPostAuthorName && (
                         <div className="monitor-post-author">
                           {!!bucketPostAuthorAvatar && (
-                            <img className="monitor-post-author__avatar" src={bucketPostAuthorAvatar} alt={bucketPostAuthorName} />
+                            <img
+                              className="monitor-post-author__avatar"
+                              src={bucketPostAuthorAvatar}
+                              alt={bucketPostAuthorName}
+                            />
                           )}
-                          <strong className="monitor-post-author__name">{bucketPostAuthorName}</strong>
+                          <strong className="monitor-post-author__name">
+                            {bucketPostAuthorName}
+                          </strong>
                         </div>
                       )}
-                      {!bucketHideTitle && <h3 className="monitor-select__title">{bucketTopic || bucketTitle}</h3>}
-                      {!bucketHideTopic && !!bucketPrompt && <p className="monitor-choice__topic">{bucketPrompt}</p>}
+                      {!bucketHideTitle && (
+                        <h3 className="monitor-select__title">
+                          {bucketTopic || bucketTitle}
+                        </h3>
+                      )}
+                      {!bucketHideTopic && !!bucketPrompt && (
+                        <p className="monitor-choice__topic">{bucketPrompt}</p>
+                      )}
 
                       <div
                         className={`monitor-bucket monitor-bucket--unassigned ${dragOverBucketId === 'unassigned' ? 'monitor-bucket--dragover' : ''}`}
                         onDragOver={(event) => {
                           event.preventDefault()
-                          if (!bucketOptions[0]?.disabled) setDragOverBucketId('unassigned')
+                          if (!bucketOptions[0]?.disabled)
+                            setDragOverBucketId('unassigned')
                         }}
                         onDragLeave={() => setDragOverBucketId('')}
                         onDrop={(event) => {
@@ -227,11 +328,17 @@ export function MonitorActivityScene({
                           const itemId = dragItemIdRef.current
                           setDragOverBucketId('')
                           if (!itemId || bucketOptions[0]?.disabled) return
-                          onSelectOption?.(0, { kind: 'bucket-drop', itemId, bucketId: '' })
+                          onSelectOption?.(0, {
+                            kind: 'bucket-drop',
+                            itemId,
+                            bucketId: '',
+                          })
                           dragItemIdRef.current = ''
                         }}
                       >
-                        <h4 className="monitor-bucket__title">{unassignedBucketLabel}</h4>
+                        <h4 className="monitor-bucket__title">
+                          {unassignedBucketLabel}
+                        </h4>
                         <div className="monitor-bucket__items">
                           {bucketOptions
                             .filter((item) => !item.assignedBucketId)
@@ -263,7 +370,8 @@ export function MonitorActivityScene({
                             className={`monitor-bucket ${dragOverBucketId === bucket.id ? 'monitor-bucket--dragover' : ''}`}
                             onDragOver={(event) => {
                               event.preventDefault()
-                              if (!bucketOptions[0]?.disabled) setDragOverBucketId(bucket.id)
+                              if (!bucketOptions[0]?.disabled)
+                                setDragOverBucketId(bucket.id)
                             }}
                             onDragLeave={() => setDragOverBucketId('')}
                             onDrop={(event) => {
@@ -271,14 +379,22 @@ export function MonitorActivityScene({
                               const itemId = dragItemIdRef.current
                               setDragOverBucketId('')
                               if (!itemId || bucketOptions[0]?.disabled) return
-                              onSelectOption?.(0, { kind: 'bucket-drop', itemId, bucketId: bucket.id })
+                              onSelectOption?.(0, {
+                                kind: 'bucket-drop',
+                                itemId,
+                                bucketId: bucket.id,
+                              })
                               dragItemIdRef.current = ''
                             }}
                           >
-                            <h4 className="monitor-bucket__title">{bucket.label}</h4>
+                            <h4 className="monitor-bucket__title">
+                              {bucket.label}
+                            </h4>
                             <div className="monitor-bucket__items">
                               {bucketOptions
-                                .filter((item) => item.assignedBucketId === bucket.id)
+                                .filter(
+                                  (item) => item.assignedBucketId === bucket.id
+                                )
                                 .map((item) => (
                                   <button
                                     key={item.id}
@@ -312,19 +428,30 @@ export function MonitorActivityScene({
                   className={`monitor-message monitor-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
                 >
                   {message.speakerType !== 'player' && (
-                    <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={message.speakerName} />
+                    <HostAvatar
+                      characterId={message.hostId ?? message.characterId}
+                      speakerName={message.speakerName}
+                    />
                   )}
                   <div className="monitor-message__bubble">
                     {message.speakerType !== 'player' && (
-                      <strong className="monitor-message__speaker">{message.speakerName || 'Host'}</strong>
+                      <strong className="monitor-message__speaker">
+                        {message.speakerName || 'Host'}
+                      </strong>
                     )}
-                    <p>{message.text}</p>
+                    {renderMessageParagraphs(message.text, {
+                      className: 'monitor-message__paragraph',
+                    })}
                   </div>
                 </article>
               ))}
             </div>
 
-            <footer className="monitor-scene__options" role="group" aria-label="Aktivitätsoptionen">
+            <footer
+              className="monitor-scene__options"
+              role="group"
+              aria-label="Aktivitätsoptionen"
+            >
               {actionOptions.map((option, index) => (
                 <button
                   key={option.id ?? index}
@@ -335,7 +462,7 @@ export function MonitorActivityScene({
                 >
                   {option.label}
                 </button>
-                ))}
+              ))}
             </footer>
           </div>
         </div>

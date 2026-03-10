@@ -178,19 +178,23 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Arbeit ja. Panik nein."
+              "text": "Arbeit ja. Panik nein.",
+              "showOnOptionId": "workload"
             },
             {
               "hostId": "clara",
-              "text": "Wir analysieren Muster. Und Muster lassen sich sortieren."
+              "text": "Wir analysieren Muster. Und Muster lassen sich sortieren.",
+              "showOnOptionId": "workload"
             },
             {
               "hostId": "uwe",
-              "text": "Der Kaffee ist solide."
+              "text": "Der Kaffee ist solide.",
+              "showOnOptionId": "coffee"
             },
             {
               "hostId": "clara",
-              "text": "Aber spannender sind die Debatten."
+              "text": "Aber spannender sind die Debatten.",
+              "showOnOptionId": "coffee"
             }
           ],
           "options": [
@@ -262,19 +266,23 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Ganz so dramatisch ist es nicht."
+              "text": "Ganz so dramatisch ist es nicht.",
+              "showOnOptionId": "solve_cases"
             },
             {
               "hostId": "clara",
-              "text": "Aber ja. Du wirst ihre Strategien analysieren."
+              "text": "Aber ja. Du wirst ihre Strategien analysieren.",
+              "showOnOptionId": "solve_cases"
             },
             {
               "hostId": "uwe",
-              "text": "Mit weniger Trenchcoat."
+              "text": "Mit weniger Trenchcoat.",
+              "showOnOptionId": "detective_work"
             },
             {
               "hostId": "clara",
-              "text": "Aber mit ähnlich viel Beobachtung."
+              "text": "Aber mit ähnlich viel Beobachtung.",
+              "showOnOptionId": "detective_work"
             }
           ],
           "options": [
@@ -325,19 +333,23 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "So ist der Plan."
+              "text": "So ist der Plan.",
+              "showOnOptionId": "real_progress"
             },
             {
               "hostId": "clara",
-              "text": "Kompetenz hat hier eine eigene Etagenstruktur."
+              "text": "Kompetenz hat hier eine eigene Etagenstruktur.",
+              "showOnOptionId": "real_progress"
             },
             {
               "hostId": "uwe",
-              "text": "Exakt."
+              "text": "Exakt.",
+              "showOnOptionId": "to_corner_office"
             },
             {
               "hostId": "clara",
-              "text": "Wer Muster erkennt, kommt nach oben."
+              "text": "Wer Muster erkennt, kommt nach oben.",
+              "showOnOptionId": "to_corner_office"
             }
           ],
           "options": [
@@ -629,6 +641,10 @@
             },
             "failure": {
               "id": "wrongA",
+              "branchIds": [
+                "wrongPartial",
+                "wrongMixed"
+              ],
               "nextStep": 31
             }
           }
@@ -719,6 +735,10 @@
             },
             "failure": {
               "id": "wrongB",
+              "branchIds": [
+                "wrongBPartial",
+                "wrongBMixed"
+              ],
               "nextStep": 41
             }
           }
@@ -1102,6 +1122,10 @@
             },
             "failure": {
               "id": "wrongB",
+              "branchIds": [
+                "wrongBPartial",
+                "wrongBMixed"
+              ],
               "nextStep": 41
             }
           }
@@ -1440,6 +1464,12 @@
             },
             "failure": {
               "id": "wrongA",
+              "branchIds": [
+                "wrongAIncomplete",
+                "wrongAOnlyContent",
+                "wrongAAllWrong",
+                "wrongAMixed"
+              ],
               "nextStep": 31
             }
           }

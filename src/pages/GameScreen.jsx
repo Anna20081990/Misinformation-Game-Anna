@@ -41,9 +41,7 @@ const PART0_FALLBACK_STEPS = [
         text: 'Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beiträge verbreiten sich ungewöhnlich stark.\n\nUnd manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht.',
       },
     ],
-    options: [
-      { id: 'zufall', label: 'Zufall?', nextStep: 2 },
-    ],
+    options: [{ id: 'zufall', label: 'Zufall?', nextStep: 2 }],
   },
   {
     stepIndex: 2,
@@ -54,9 +52,7 @@ const PART0_FALLBACK_STEPS = [
         text: 'Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚beschleunigen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt.',
       },
     ],
-    options: [
-      { id: 'wer_sie', label: 'Wer sind sie?', nextStep: 3 },
-    ],
+    options: [{ id: 'wer_sie', label: 'Wer sind sie?', nextStep: 3 }],
   },
   {
     stepIndex: 3,
@@ -67,9 +63,7 @@ const PART0_FALLBACK_STEPS = [
         text: 'Emma Pör. Konrad Sens. Didi Fam.\n\nSie arbeiten verdeckt – und sie haben ein bemerkenswertes Talent.',
       },
     ],
-    options: [
-      { id: 'welches_talent', label: 'Welches Talent?', nextStep: 4 },
-    ],
+    options: [{ id: 'welches_talent', label: 'Welches Talent?', nextStep: 4 }],
   },
   {
     stepIndex: 4,
@@ -86,7 +80,11 @@ const PART0_FALLBACK_STEPS = [
     ],
     options: [
       { id: 'spannend', label: 'Klingt spannend.', nextStep: 5 },
-      { id: 'hoffe_unbekannt', label: 'Ich hoffe, sie wissen nicht, dass ich komme.', nextStep: 5 },
+      {
+        id: 'hoffe_unbekannt',
+        label: 'Ich hoffe, sie wissen nicht, dass ich komme.',
+        nextStep: 5,
+      },
     ],
   },
   {
@@ -104,18 +102,25 @@ const PART0_FALLBACK_STEPS = [
         showOnOptionId: 'hoffe_unbekannt',
       },
     ],
-    options: [
-      { id: 'continue', label: 'Zum Media Lab gehen', nextPart: 1 },
-    ],
+    options: [{ id: 'continue', label: 'Zum Media Lab gehen', nextPart: 1 }],
   },
 ]
 const PART2_ACTIVITY1_FALLBACK_CONFIG = {
   sentences: [
-    { id: 's1', text: 'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.' },
-    { id: 's2', text: 'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.' },
+    {
+      id: 's1',
+      text: 'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.',
+    },
+    {
+      id: 's2',
+      text: 'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.',
+    },
     { id: 's3', text: 'Schon wieder trifft es die normalen Leute.' },
     { id: 's4', text: 'Der Vorschlag wird nächste Woche beraten.' },
-    { id: 's5', text: 'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.' },
+    {
+      id: 's5',
+      text: 'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.',
+    },
   ],
   correctSentenceIds: ['s2', 's3', 's5'],
   success: { id: 'rightA', nextStep: 4 },
@@ -149,9 +154,18 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
   topic: 'Thema: Einfuehrung eines verpflichtenden Wochenmottos',
   randomizeChoices: true,
   choices: [
-    { id: 'p1', text: '„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“' },
-    { id: 'p2', text: '„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“' },
-    { id: 'p3', text: '„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”' },
+    {
+      id: 'p1',
+      text: '„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“',
+    },
+    {
+      id: 'p2',
+      text: '„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“',
+    },
+    {
+      id: 'p3',
+      text: '„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”',
+    },
   ],
   correctChoiceId: 'p3',
   success: { id: 'rightA', nextStep: 4 },
@@ -161,12 +175,17 @@ const PART3_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'consensus-boosters',
   title: 'Aktivität 2: Konsens-Verstärker',
   topic: 'Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen',
-  prompt: 'Aktivität 2: Welche Ergänzungen lassen den Beitrag so wirken, als gäbe es bereits breiten Konsens?',
-  neutralPost: '„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“',
+  prompt:
+    'Aktivität 2: Welche Ergänzungen lassen den Beitrag so wirken, als gäbe es bereits breiten Konsens?',
+  neutralPost:
+    '„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“',
   choices: [
     { id: 'a', text: '„Ich finde die Idee interessant.“' },
     { id: 'b', text: '„Mein Nachbar unterstützt das inzwischen auch.“' },
-    { id: 'c', text: '„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“' },
+    {
+      id: 'c',
+      text: '„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“',
+    },
     { id: 'd', text: '„#EndlichOrdnung“' },
     { id: 'e', text: '„Dieser Beitrag hat bereits mehr als 4.200 Likes.“' },
     { id: 'f', text: '„Mal sehen, was daraus wird.“' },
@@ -179,17 +198,30 @@ const PART4_ACTIVITY1_FALLBACK_CONFIG = {
   mode: 'bucket-sort',
   title: 'Aktivität 1: Sache oder Angriff',
   topic: 'Thema: Einheitliche Aufzugmusik in Verwaltungsgebäuden',
-  prompt: 'Ordne die Aussagen ein: Was ist Kritik am Inhalt und was ist ein Angriff auf Personen?',
+  prompt:
+    'Ordne die Aussagen ein: Was ist Kritik am Inhalt und was ist ein Angriff auf Personen?',
   unassignedLabel: 'Beiträge',
   bucketDefinitions: [
     { id: 'content', label: 'Kritik am Inhalt' },
     { id: 'person', label: 'Angriff auf Person' },
   ],
   items: [
-    { id: 'a1', text: '„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche.“' },
-    { id: 'a2', text: '„Wer diese Musik gut findet, hat offenbar keinen Geschmack.“' },
-    { id: 'a3', text: '„Die Entscheidung wurde ohne ausreichende Rückmeldung der Nutzer getroffen.“' },
-    { id: 'a4', text: '„Typisch für diese Entscheidungsträger - immer am Alltag vorbei.“' },
+    {
+      id: 'a1',
+      text: '„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche.“',
+    },
+    {
+      id: 'a2',
+      text: '„Wer diese Musik gut findet, hat offenbar keinen Geschmack.“',
+    },
+    {
+      id: 'a3',
+      text: '„Die Entscheidung wurde ohne ausreichende Rückmeldung der Nutzer getroffen.“',
+    },
+    {
+      id: 'a4',
+      text: '„Typisch für diese Entscheidungsträger - immer am Alltag vorbei.“',
+    },
   ],
   correctAssignments: {
     a1: 'content',
@@ -206,9 +238,18 @@ const PART4_ACTIVITY2_FALLBACK_CONFIG = {
   topic: 'Thema: Offizielle Stadtfarbe',
   randomizeChoices: true,
   choices: [
-    { id: 'a', text: '„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt.“' },
-    { id: 'b', text: '„Beige als Leuchtsignal für Außerirdische - das muss man sich erstmal trauen.“' },
-    { id: 'c', text: '„Kein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.“' },
+    {
+      id: 'a',
+      text: '„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt.“',
+    },
+    {
+      id: 'b',
+      text: '„Beige als Leuchtsignal für Außerirdische - das muss man sich erstmal trauen.“',
+    },
+    {
+      id: 'c',
+      text: '„Kein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.“',
+    },
   ],
   correctChoiceId: 'c',
   success: { id: 'rightB', nextStep: 5 },
@@ -220,12 +261,23 @@ function resolveSentenceMarkingConfig(config, fallback) {
   return {
     ...fallback,
     ...config,
-    sentences: Array.isArray(config.sentences) && config.sentences.length ? config.sentences : fallback.sentences,
-    correctSentenceIds: Array.isArray(config.correctSentenceIds) && config.correctSentenceIds.length
-      ? config.correctSentenceIds
-      : fallback.correctSentenceIds,
-    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
-    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
+    sentences:
+      Array.isArray(config.sentences) && config.sentences.length
+        ? config.sentences
+        : fallback.sentences,
+    correctSentenceIds:
+      Array.isArray(config.correctSentenceIds) &&
+      config.correctSentenceIds.length
+        ? config.correctSentenceIds
+        : fallback.correctSentenceIds,
+    success:
+      config.success && typeof config.success === 'object'
+        ? config.success
+        : fallback.success,
+    failure:
+      config.failure && typeof config.failure === 'object'
+        ? config.failure
+        : fallback.failure,
   }
 }
 
@@ -234,9 +286,18 @@ function resolveIntensityChoiceConfig(config, fallback) {
   return {
     ...fallback,
     ...config,
-    choices: Array.isArray(config.choices) && config.choices.length ? config.choices : fallback.choices,
-    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
-    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
+    choices:
+      Array.isArray(config.choices) && config.choices.length
+        ? config.choices
+        : fallback.choices,
+    success:
+      config.success && typeof config.success === 'object'
+        ? config.success
+        : fallback.success,
+    failure:
+      config.failure && typeof config.failure === 'object'
+        ? config.failure
+        : fallback.failure,
     correctChoiceId: config.correctChoiceId || fallback.correctChoiceId,
   }
 }
@@ -246,12 +307,22 @@ function resolveBoosterChoiceConfig(config, fallback) {
   return {
     ...fallback,
     ...config,
-    choices: Array.isArray(config.choices) && config.choices.length ? config.choices : fallback.choices,
-    correctChoiceIds: Array.isArray(config.correctChoiceIds) && config.correctChoiceIds.length
-      ? config.correctChoiceIds
-      : fallback.correctChoiceIds,
-    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
-    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
+    choices:
+      Array.isArray(config.choices) && config.choices.length
+        ? config.choices
+        : fallback.choices,
+    correctChoiceIds:
+      Array.isArray(config.correctChoiceIds) && config.correctChoiceIds.length
+        ? config.correctChoiceIds
+        : fallback.correctChoiceIds,
+    success:
+      config.success && typeof config.success === 'object'
+        ? config.success
+        : fallback.success,
+    failure:
+      config.failure && typeof config.failure === 'object'
+        ? config.failure
+        : fallback.failure,
   }
 }
 
@@ -264,12 +335,22 @@ function resolveBucketSortConfig(config, fallback) {
       Array.isArray(config.bucketDefinitions) && config.bucketDefinitions.length
         ? config.bucketDefinitions
         : fallback.bucketDefinitions,
-    items: Array.isArray(config.items) && config.items.length ? config.items : fallback.items,
-    correctAssignments: config.correctAssignments && typeof config.correctAssignments === 'object'
-      ? config.correctAssignments
-      : fallback.correctAssignments,
-    success: config.success && typeof config.success === 'object' ? config.success : fallback.success,
-    failure: config.failure && typeof config.failure === 'object' ? config.failure : fallback.failure,
+    items:
+      Array.isArray(config.items) && config.items.length
+        ? config.items
+        : fallback.items,
+    correctAssignments:
+      config.correctAssignments && typeof config.correctAssignments === 'object'
+        ? config.correctAssignments
+        : fallback.correctAssignments,
+    success:
+      config.success && typeof config.success === 'object'
+        ? config.success
+        : fallback.success,
+    failure:
+      config.failure && typeof config.failure === 'object'
+        ? config.failure
+        : fallback.failure,
   }
 }
 
@@ -284,7 +365,12 @@ function shuffleArray(items = []) {
 
 function isAvatarOption(option) {
   const id = String(option?.id || '').toLowerCase()
-  return option?.kind === 'avatar' || id === 'avatar1' || id === 'avatar2' || id === 'avatar3'
+  return (
+    option?.kind === 'avatar' ||
+    id === 'avatar1' ||
+    id === 'avatar2' ||
+    id === 'avatar3'
+  )
 }
 
 function getHostFullName(hostId) {
@@ -312,14 +398,21 @@ function buildDialogsVersionId(steps = []) {
 }
 
 function getStepZeroPreview(entry) {
-  const zeroStep = (entry?.steps || []).find((step) => Number(step?.stepIndex) === 0) || (entry?.steps || [])[0]
+  const zeroStep =
+    (entry?.steps || []).find((step) => Number(step?.stepIndex) === 0) ||
+    (entry?.steps || [])[0]
   const firstBubble = (zeroStep?.speechBubbles || [])[0]
-  return String(firstBubble?.text || '').replace(/\s+/g, ' ').slice(0, 40)
+  return String(firstBubble?.text || '')
+    .replace(/\s+/g, ' ')
+    .slice(0, 40)
 }
 
 function getFallbackStep(scene, currentPart, stepIndex) {
   if (currentPart === 0) {
-    return PART0_FALLBACK_STEPS.find((step) => step.stepIndex === stepIndex) || PART0_FALLBACK_STEPS[0]
+    return (
+      PART0_FALLBACK_STEPS.find((step) => step.stepIndex === stepIndex) ||
+      PART0_FALLBACK_STEPS[0]
+    )
   }
 
   if (currentPart === 1) {
@@ -345,6 +438,177 @@ function getFallbackStep(scene, currentPart, stepIndex) {
   }
 }
 
+function createTransitionFlags(overrides = {}) {
+  return {
+    resetOnPart2Activity2: false,
+    resetOnPart3Activity2: false,
+    resetOnPart3Summary: false,
+    resetOnPart4Activity2: false,
+    resetOnPart4WrongFeedback: false,
+    resetOnPart4Summary: false,
+    ...overrides,
+  }
+}
+
+function getResolvedFlowTarget(config, type, fallbackId, fallbackNextStep) {
+  const target = config?.[type]
+  return {
+    id: target?.id || fallbackId,
+    nextStep: target?.nextStep ?? fallbackNextStep,
+  }
+}
+
+function buildStepHostMessages({
+  currentPart,
+  effectiveStepIndex,
+  speechBubbles,
+  lastSelectedOptionId,
+  selectedHostId,
+}) {
+  const visibleBubbles = speechBubbles.some((bubble) => bubble.showOnOptionId)
+    ? speechBubbles.filter(
+        (bubble) =>
+          !bubble.showOnOptionId || bubble.showOnOptionId === lastSelectedOptionId
+      )
+    : speechBubbles
+
+  return visibleBubbles.map((bubble, index) => {
+    const resolvedHostId = normalizeHostId(bubble.hostId, selectedHostId)
+    return {
+      id: `${currentPart}:${effectiveStepIndex}:host:${index}`,
+      speakerType: 'host',
+      hostId: resolvedHostId,
+      speakerName: getHostFullName(resolvedHostId),
+      text: bubble.text,
+    }
+  })
+}
+
+function buildPlayerMessage(currentPart, index, option) {
+  if (!option?.label || isAvatarOption(option)) return null
+
+  return {
+    id: `player:${currentPart}:${Date.now()}:${index}`,
+    speakerType: 'player',
+    speakerName: 'Du',
+    text: option.label,
+  }
+}
+
+function resolveSentenceMarkingSubmission(config, selectedSentenceIndexes) {
+  const correctSentenceIds = config?.correctSentenceIds || []
+  const selectedCorrectCount = selectedSentenceIndexes.filter((item) =>
+    correctSentenceIds.includes(item)
+  ).length
+  const selectedWrongCount = selectedSentenceIndexes.length - selectedCorrectCount
+  const isCorrect =
+    selectedSentenceIndexes.length === correctSentenceIds.length &&
+    correctSentenceIds.every((item) => selectedSentenceIndexes.includes(item))
+
+  const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongA', 31)
+  const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 4)
+  const mappedOption = isCorrect
+    ? successTarget
+    : selectedCorrectCount === 0
+      ? failureTarget
+      : selectedWrongCount === 0
+        ? { ...failureTarget, id: 'wrongPartial' }
+        : { ...failureTarget, id: 'wrongMixed' }
+
+  return {
+    isCorrect,
+    mappedOption,
+    lastSubmittedSentenceIndexes: selectedSentenceIndexes,
+  }
+}
+
+function resolveSingleChoiceSubmission(config, selectedChoiceId, defaults) {
+  const correctChoiceId = String(config?.correctChoiceId || defaults.correctChoiceId)
+  const isCorrect = selectedChoiceId === correctChoiceId
+  return {
+    isCorrect,
+    mappedOption: isCorrect
+      ? getResolvedFlowTarget(
+          config,
+          'success',
+          defaults.successId,
+          defaults.successNextStep
+        )
+      : getResolvedFlowTarget(
+          config,
+          'failure',
+          defaults.failureId,
+          defaults.failureNextStep
+        ),
+  }
+}
+
+function resolveBoosterSubmission(config, selectedBoosterChoiceIds) {
+  const correctChoiceIds = config?.correctChoiceIds || []
+  const selectedCorrectCount = selectedBoosterChoiceIds.filter((item) =>
+    correctChoiceIds.includes(item)
+  ).length
+  const selectedWrongCount =
+    selectedBoosterChoiceIds.length - selectedCorrectCount
+  const isCorrect =
+    selectedBoosterChoiceIds.length === correctChoiceIds.length &&
+    correctChoiceIds.every((item) => selectedBoosterChoiceIds.includes(item))
+
+  const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongB', 41)
+  const successTarget = getResolvedFlowTarget(config, 'success', 'rightB', 5)
+  const mappedOption = isCorrect
+    ? successTarget
+    : selectedCorrectCount === 0
+      ? failureTarget
+      : selectedWrongCount === 0
+        ? { ...failureTarget, id: 'wrongBPartial' }
+        : { ...failureTarget, id: 'wrongBMixed' }
+
+  return {
+    isCorrect,
+    mappedOption,
+    lastSubmittedBoosterChoiceIds: selectedBoosterChoiceIds,
+  }
+}
+
+function resolveBucketSortSubmission(config, bucketAssignments) {
+  const items = config?.items || []
+  const correctAssignments = config?.correctAssignments || {}
+  const selectedAssignments = bucketAssignments || {}
+  const totalCount = items.length
+  const assignedCount = items.filter((item) =>
+    Boolean(selectedAssignments[item.id])
+  ).length
+  const correctCount = items.filter(
+    (item) => selectedAssignments[item.id] === correctAssignments[item.id]
+  ).length
+  const wrongCount = assignedCount - correctCount
+  const assignedPersonCount = items.filter(
+    (item) => selectedAssignments[item.id] === 'person'
+  ).length
+  const isCorrect = totalCount > 0 && correctCount === totalCount
+
+  const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongA', 31)
+  const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 4)
+  const mappedOption = isCorrect
+    ? successTarget
+    : assignedCount < totalCount
+      ? { ...failureTarget, id: 'wrongAIncomplete' }
+      : assignedPersonCount === 0
+        ? { ...failureTarget, id: 'wrongAOnlyContent' }
+        : correctCount === 0
+          ? { ...failureTarget, id: 'wrongAAllWrong' }
+          : wrongCount > 0
+            ? { ...failureTarget, id: 'wrongAMixed' }
+            : failureTarget
+
+  return {
+    isCorrect,
+    mappedOption,
+    lastSubmittedBucketAssignments: selectedAssignments,
+  }
+}
+
 export function GameScreen({
   currentPart,
   onPartChange,
@@ -363,76 +627,119 @@ export function GameScreen({
   const [sceneDialogs, setSceneDialogs] = useState(null)
   const [dialogLoadError, setDialogLoadError] = useState('')
   const [selectedSentenceIndexes, setSelectedSentenceIndexes] = useState([])
-  const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] = useState([])
+  const [lastSubmittedSentenceIndexes, setLastSubmittedSentenceIndexes] =
+    useState([])
   const [selectedIntensityChoiceId, setSelectedIntensityChoiceId] = useState('')
-  const [lastSubmittedIntensityChoiceId, setLastSubmittedIntensityChoiceId] = useState('')
+  const [lastSubmittedIntensityChoiceId, setLastSubmittedIntensityChoiceId] =
+    useState('')
   const [intensityChoiceOrder, setIntensityChoiceOrder] = useState([])
-  const [lastSubmittedIntensityChoiceOrder, setLastSubmittedIntensityChoiceOrder] = useState([])
+  const [
+    lastSubmittedIntensityChoiceOrder,
+    setLastSubmittedIntensityChoiceOrder,
+  ] = useState([])
   const [selectedTrendChoiceId, setSelectedTrendChoiceId] = useState('')
-  const [lastSubmittedTrendChoiceId, setLastSubmittedTrendChoiceId] = useState('')
+  const [lastSubmittedTrendChoiceId, setLastSubmittedTrendChoiceId] =
+    useState('')
   const [trendChoiceOrder, setTrendChoiceOrder] = useState([])
-  const [lastSubmittedTrendChoiceOrder, setLastSubmittedTrendChoiceOrder] = useState([])
+  const [lastSubmittedTrendChoiceOrder, setLastSubmittedTrendChoiceOrder] =
+    useState([])
   const [selectedBoosterChoiceIds, setSelectedBoosterChoiceIds] = useState([])
-  const [lastSubmittedBoosterChoiceIds, setLastSubmittedBoosterChoiceIds] = useState([])
+  const [lastSubmittedBoosterChoiceIds, setLastSubmittedBoosterChoiceIds] =
+    useState([])
   const [bucketAssignments, setBucketAssignments] = useState({})
-  const [lastSubmittedBucketAssignments, setLastSubmittedBucketAssignments] = useState({})
+  const [lastSubmittedBucketAssignments, setLastSubmittedBucketAssignments] =
+    useState({})
   const [selectedPart4ChoiceId, setSelectedPart4ChoiceId] = useState('')
-  const [lastSubmittedPart4ChoiceId, setLastSubmittedPart4ChoiceId] = useState('')
+  const [lastSubmittedPart4ChoiceId, setLastSubmittedPart4ChoiceId] =
+    useState('')
   const [part4ChoiceOrder, setPart4ChoiceOrder] = useState([])
-  const [lastSubmittedPart4ChoiceOrder, setLastSubmittedPart4ChoiceOrder] = useState([])
+  const [lastSubmittedPart4ChoiceOrder, setLastSubmittedPart4ChoiceOrder] =
+    useState([])
   const appendedStepKeysRef = useRef(new Set())
   const transitionTimerRef = useRef(null)
-  const resetOnActivity2TransitionRef = useRef(false)
-  const resetOnPart3Activity2TransitionRef = useRef(false)
-  const resetOnPart3SummaryTransitionRef = useRef(false)
-  const resetOnPart4Activity2TransitionRef = useRef(false)
-  const resetOnPart4WrongFeedbackTransitionRef = useRef(false)
-  const resetOnPart4SummaryTransitionRef = useRef(false)
-  const previousStepMetaRef = useRef({ part: null, type: null, stepIndex: null })
+  const previousStepMetaRef = useRef({
+    part: null,
+    type: null,
+    stepIndex: null,
+  })
+
+  function resetFlowState({
+    clearMessages = false,
+    resetLastSelectedOptionId = false,
+    resetSentence = false,
+    resetIntensity = false,
+    resetTrend = false,
+    resetBooster = false,
+    resetBucket = false,
+    resetPart4Choice = false,
+  } = {}) {
+    if (clearMessages) {
+      setChatMessages([])
+      appendedStepKeysRef.current = new Set()
+    }
+    if (resetLastSelectedOptionId) {
+      setLastSelectedOptionId(null)
+    }
+    if (resetSentence) {
+      setSelectedSentenceIndexes([])
+      setLastSubmittedSentenceIndexes([])
+    }
+    if (resetIntensity) {
+      setSelectedIntensityChoiceId('')
+      setLastSubmittedIntensityChoiceId('')
+      setIntensityChoiceOrder([])
+      setLastSubmittedIntensityChoiceOrder([])
+    }
+    if (resetTrend) {
+      setSelectedTrendChoiceId('')
+      setLastSubmittedTrendChoiceId('')
+      setTrendChoiceOrder([])
+      setLastSubmittedTrendChoiceOrder([])
+    }
+    if (resetBooster) {
+      setSelectedBoosterChoiceIds([])
+      setLastSubmittedBoosterChoiceIds([])
+    }
+    if (resetBucket) {
+      setBucketAssignments({})
+      setLastSubmittedBucketAssignments({})
+    }
+    if (resetPart4Choice) {
+      setSelectedPart4ChoiceId('')
+      setLastSubmittedPart4ChoiceId('')
+      setPart4ChoiceOrder([])
+      setLastSubmittedPart4ChoiceOrder([])
+    }
+  }
 
   useEffect(() => {
     setStepIndex(0)
-    setLastSelectedOptionId(null)
-    setChatMessages([])
     setSceneDialogs(null)
     setDialogLoadError('')
-    setSelectedSentenceIndexes([])
-    setLastSubmittedSentenceIndexes([])
-    setSelectedIntensityChoiceId('')
-    setLastSubmittedIntensityChoiceId('')
-    setIntensityChoiceOrder([])
-    setLastSubmittedIntensityChoiceOrder([])
-    setSelectedTrendChoiceId('')
-    setLastSubmittedTrendChoiceId('')
-    setTrendChoiceOrder([])
-    setLastSubmittedTrendChoiceOrder([])
-    setSelectedBoosterChoiceIds([])
-    setLastSubmittedBoosterChoiceIds([])
-    setBucketAssignments({})
-    setLastSubmittedBucketAssignments({})
-    setSelectedPart4ChoiceId('')
-    setLastSubmittedPart4ChoiceId('')
-    setPart4ChoiceOrder([])
-    setLastSubmittedPart4ChoiceOrder([])
-    appendedStepKeysRef.current = new Set()
+    resetFlowState({
+      clearMessages: true,
+      resetLastSelectedOptionId: true,
+      resetSentence: true,
+      resetIntensity: true,
+      resetTrend: true,
+      resetBooster: true,
+      resetBucket: true,
+      resetPart4Choice: true,
+    })
   }, [currentPart])
 
   useEffect(() => {
     if (!stepJumpRequest) return
 
     setStepIndex(stepJumpRequest.stepIndex ?? 0)
-    setLastSelectedOptionId(null)
-    setChatMessages([])
     setDialogLoadError('')
-    setSelectedBoosterChoiceIds([])
-    setLastSubmittedBoosterChoiceIds([])
-    setBucketAssignments({})
-    setLastSubmittedBucketAssignments({})
-    setSelectedPart4ChoiceId('')
-    setLastSubmittedPart4ChoiceId('')
-    setPart4ChoiceOrder([])
-    setLastSubmittedPart4ChoiceOrder([])
-    appendedStepKeysRef.current = new Set()
+    resetFlowState({
+      clearMessages: true,
+      resetLastSelectedOptionId: true,
+      resetBooster: true,
+      resetBucket: true,
+      resetPart4Choice: true,
+    })
   }, [stepJumpRequest])
 
   useEffect(() => {
@@ -444,8 +751,12 @@ export function GameScreen({
         if (!active) return
         if (Number(data?.sceneId) !== Number(currentPart)) {
           setSceneDialogs(null)
-          setDialogLoadError(`Ungültige Dialogantwort für Teil ${currentPart} (sceneId mismatch).`)
-          console.warn(`[Dialogs] part=${currentPart} source=fallback reason=scene-id-mismatch`)
+          setDialogLoadError(
+            `Ungültige Dialogantwort für Teil ${currentPart} (sceneId mismatch).`
+          )
+          console.warn(
+            `[Dialogs] part=${currentPart} source=fallback reason=scene-id-mismatch`
+          )
           return
         }
         setSceneDialogs(data)
@@ -458,10 +769,18 @@ export function GameScreen({
       } catch (error) {
         if (!active) return
         setSceneDialogs(null)
-        setDialogLoadError(error?.message || 'Dialoge konnten nicht geladen werden.')
+        setDialogLoadError(
+          error?.message || 'Dialoge konnten nicht geladen werden.'
+        )
         const fallbackStep = getFallbackStep(scene, currentPart, 0)
-        const fallbackPreview = String(fallbackStep?.speechBubbles?.[0]?.text || '').replace(/\s+/g, ' ').slice(0, 40)
-        console.warn(`[Dialogs] part=${currentPart} source=fallback preview="${fallbackPreview}"`)
+        const fallbackPreview = String(
+          fallbackStep?.speechBubbles?.[0]?.text || ''
+        )
+          .replace(/\s+/g, ' ')
+          .slice(0, 40)
+        console.warn(
+          `[Dialogs] part=${currentPart} source=fallback preview="${fallbackPreview}"`
+        )
       }
     }
 
@@ -477,10 +796,14 @@ export function GameScreen({
     }
   }, [])
 
-  const effectiveSceneDialogs = Number(sceneDialogs?.sceneId) === Number(currentPart) ? sceneDialogs : null
-  const sortedBackendSteps = [...(effectiveSceneDialogs?.steps || [])].sort((a, b) => a.stepIndex - b.stepIndex)
+  const effectiveSceneDialogs =
+    Number(sceneDialogs?.sceneId) === Number(currentPart) ? sceneDialogs : null
+  const sortedBackendSteps = [...(effectiveSceneDialogs?.steps || [])].sort(
+    (a, b) => a.stepIndex - b.stepIndex
+  )
   const requiresBackendDialogs = currentPart >= 0 && currentPart <= 5
-  const backendUnavailableForPart = requiresBackendDialogs && !sortedBackendSteps.length
+  const backendUnavailableForPart =
+    requiresBackendDialogs && !sortedBackendSteps.length
   const backendErrorStep = {
     stepIndex: 0,
     type: 'error',
@@ -495,65 +818,111 @@ export function GameScreen({
   const stepData =
     sortedBackendSteps.find((step) => step.stepIndex === stepIndex) ||
     sortedBackendSteps[0] ||
-    (backendUnavailableForPart ? backendErrorStep : getFallbackStep(scene, currentPart, stepIndex))
+    (backendUnavailableForPart
+      ? backendErrorStep
+      : getFallbackStep(scene, currentPart, stepIndex))
 
   const options = stepData.options || []
-  const isPart2Activity1InputStep = currentPart === 2 && Number(stepData.stepIndex) === 3
-  const isPart2Activity1Context = currentPart === 2 && [3, 31].includes(Number(stepData.stepIndex))
+  const isPart2Activity1InputStep =
+    currentPart === 2 && Number(stepData.stepIndex) === 3
+  const isPart2Activity1Context =
+    currentPart === 2 && [3, 31].includes(Number(stepData.stepIndex))
   const part2Activity1Config = isPart2Activity1Context
-    ? resolveSentenceMarkingConfig(stepData.activityConfig, PART2_ACTIVITY1_FALLBACK_CONFIG)
+    ? resolveSentenceMarkingConfig(
+        stepData.activityConfig,
+        PART2_ACTIVITY1_FALLBACK_CONFIG
+      )
     : PART2_ACTIVITY1_FALLBACK_CONFIG
-  const isPart2Activity2InputStep = currentPart === 2 && Number(stepData.stepIndex) === 4
-  const isPart2Activity2Context = currentPart === 2 && [4, 41].includes(Number(stepData.stepIndex))
+  const isPart2Activity2InputStep =
+    currentPart === 2 && Number(stepData.stepIndex) === 4
+  const isPart2Activity2Context =
+    currentPart === 2 && [4, 41].includes(Number(stepData.stepIndex))
   const part2Activity2Config = isPart2Activity2Context
-    ? resolveIntensityChoiceConfig(stepData.activityConfig, PART2_ACTIVITY2_FALLBACK_CONFIG)
+    ? resolveIntensityChoiceConfig(
+        stepData.activityConfig,
+        PART2_ACTIVITY2_FALLBACK_CONFIG
+      )
     : PART2_ACTIVITY2_FALLBACK_CONFIG
-  const isPart3Activity1InputStep = currentPart === 3 && Number(stepData.stepIndex) === 3
-  const isPart3Activity1Context = currentPart === 3 && [3, 31].includes(Number(stepData.stepIndex))
+  const isPart3Activity1InputStep =
+    currentPart === 3 && Number(stepData.stepIndex) === 3
+  const isPart3Activity1Context =
+    currentPart === 3 && [3, 31].includes(Number(stepData.stepIndex))
   const part3Activity1Config = isPart3Activity1Context
-    ? resolveIntensityChoiceConfig(stepData.activityConfig, PART3_ACTIVITY1_FALLBACK_CONFIG)
+    ? resolveIntensityChoiceConfig(
+        stepData.activityConfig,
+        PART3_ACTIVITY1_FALLBACK_CONFIG
+      )
     : PART3_ACTIVITY1_FALLBACK_CONFIG
-  const isPart3Activity2InputStep = currentPart === 3 && Number(stepData.stepIndex) === 4
-  const isPart3Activity2Context = currentPart === 3 && [4, 41].includes(Number(stepData.stepIndex))
+  const isPart3Activity2InputStep =
+    currentPart === 3 && Number(stepData.stepIndex) === 4
+  const isPart3Activity2Context =
+    currentPart === 3 && [4, 41].includes(Number(stepData.stepIndex))
   const part3Activity2Config = isPart3Activity2Context
-    ? resolveBoosterChoiceConfig(stepData.activityConfig, PART3_ACTIVITY2_FALLBACK_CONFIG)
+    ? resolveBoosterChoiceConfig(
+        stepData.activityConfig,
+        PART3_ACTIVITY2_FALLBACK_CONFIG
+      )
     : PART3_ACTIVITY2_FALLBACK_CONFIG
-  const isPart4Activity1InputStep = currentPart === 4 && Number(stepData.stepIndex) === 3
-  const isPart4Activity1Context = currentPart === 4 && [3, 31].includes(Number(stepData.stepIndex))
+  const isPart4Activity1InputStep =
+    currentPart === 4 && Number(stepData.stepIndex) === 3
+  const isPart4Activity1Context =
+    currentPart === 4 && [3, 31].includes(Number(stepData.stepIndex))
   const part4Activity1Config = isPart4Activity1Context
-    ? resolveBucketSortConfig(stepData.activityConfig, PART4_ACTIVITY1_FALLBACK_CONFIG)
+    ? resolveBucketSortConfig(
+        stepData.activityConfig,
+        PART4_ACTIVITY1_FALLBACK_CONFIG
+      )
     : PART4_ACTIVITY1_FALLBACK_CONFIG
-  const isPart4Activity2InputStep = currentPart === 4 && Number(stepData.stepIndex) === 4
-  const isPart4Activity2Context = currentPart === 4 && [4, 41].includes(Number(stepData.stepIndex))
+  const isPart4Activity2InputStep =
+    currentPart === 4 && Number(stepData.stepIndex) === 4
+  const isPart4Activity2Context =
+    currentPart === 4 && [4, 41].includes(Number(stepData.stepIndex))
   const part4Activity2Config = isPart4Activity2Context
-    ? resolveIntensityChoiceConfig(stepData.activityConfig, PART4_ACTIVITY2_FALLBACK_CONFIG)
+    ? resolveIntensityChoiceConfig(
+        stepData.activityConfig,
+        PART4_ACTIVITY2_FALLBACK_CONFIG
+      )
     : PART4_ACTIVITY2_FALLBACK_CONFIG
-  const isMonitorActivityMode = [2, 3, 4].includes(currentPart) && String(stepData.type || '').toLowerCase() === 'activity'
+  const isMonitorActivityMode =
+    [2, 3, 4].includes(currentPart) &&
+    String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
-  const hasAvatarOptionInCurrentStep = options.some((option) => isAvatarOption(option))
+  const hasAvatarOptionInCurrentStep = options.some((option) =>
+    isAvatarOption(option)
+  )
   const displayOptions = options.map((option) => {
-    if (currentPart === 0 && String(option?.id || '').toLowerCase() === 'continue' && hasAvatarOptionInCurrentStep) {
+    if (
+      currentPart === 0 &&
+      String(option?.id || '').toLowerCase() === 'continue' &&
+      hasAvatarOptionInCurrentStep
+    ) {
       return { ...option, disabled: !selectedAvatarId }
     }
 
     return option
   })
-  const effectiveSentenceSelection = isPart2Activity1InputStep ? selectedSentenceIndexes : lastSubmittedSentenceIndexes
+  const effectiveSentenceSelection = isPart2Activity1InputStep
+    ? selectedSentenceIndexes
+    : lastSubmittedSentenceIndexes
   const sentenceOptions = isPart2Activity1Context
     ? (part2Activity1Config?.sentences || []).map((sentence, index) => ({
-      id: sentence.id || `sentence-${index + 1}`,
-      kind: 'sentence',
-      label: sentence.text,
-      selected: effectiveSentenceSelection.includes(sentence.id),
-      disabled: !isPart2Activity1InputStep,
-      sentenceId: sentence.id,
-      postAuthorName: 'Emma Pör',
-      postAuthorAvatar: '/backgrounds/emma-poer.png',
-      hideTitle: true,
-    }))
+        id: sentence.id || `sentence-${index + 1}`,
+        kind: 'sentence',
+        label: sentence.text,
+        selected: effectiveSentenceSelection.includes(sentence.id),
+        disabled: !isPart2Activity1InputStep,
+        sentenceId: sentence.id,
+        postAuthorName: 'Emma Pör',
+        postAuthorAvatar: '/backgrounds/emma-poer.png',
+        hideTitle: true,
+      }))
     : []
-  const effectiveIntensityChoiceId = isPart2Activity2InputStep ? selectedIntensityChoiceId : lastSubmittedIntensityChoiceId
-  const part2ChoiceOrder = isPart2Activity2InputStep ? intensityChoiceOrder : lastSubmittedIntensityChoiceOrder
+  const effectiveIntensityChoiceId = isPart2Activity2InputStep
+    ? selectedIntensityChoiceId
+    : lastSubmittedIntensityChoiceId
+  const part2ChoiceOrder = isPart2Activity2InputStep
+    ? intensityChoiceOrder
+    : lastSubmittedIntensityChoiceOrder
   const orderedPart2Choices = (() => {
     const choices = part2Activity2Config?.choices || []
     if (!part2ChoiceOrder.length) return choices
@@ -562,22 +931,26 @@ export function GameScreen({
   })()
   const intensityChoiceOptions = isPart2Activity2Context
     ? orderedPart2Choices.map((choice) => ({
-      id: choice.id,
-      kind: 'choice',
-      text: choice.text,
-      selected: effectiveIntensityChoiceId === choice.id,
-      disabled: !isPart2Activity2InputStep,
-      choiceId: choice.id,
-      groupTitle: part2Activity2Config?.title || 'Aktivität 2',
-      topic: part2Activity2Config?.topic || '',
-      postAuthorName: 'Emma Pör',
-      postAuthorAvatar: '/backgrounds/emma-poer.png',
-      hideTitle: true,
-      hideTopic: true,
-    }))
+        id: choice.id,
+        kind: 'choice',
+        text: choice.text,
+        selected: effectiveIntensityChoiceId === choice.id,
+        disabled: !isPart2Activity2InputStep,
+        choiceId: choice.id,
+        groupTitle: part2Activity2Config?.title || 'Aktivität 2',
+        topic: part2Activity2Config?.topic || '',
+        postAuthorName: 'Emma Pör',
+        postAuthorAvatar: '/backgrounds/emma-poer.png',
+        hideTitle: true,
+        hideTopic: true,
+      }))
     : []
-  const effectiveTrendChoiceId = isPart3Activity1InputStep ? selectedTrendChoiceId : lastSubmittedTrendChoiceId
-  const part3ChoiceOrder = isPart3Activity1InputStep ? trendChoiceOrder : lastSubmittedTrendChoiceOrder
+  const effectiveTrendChoiceId = isPart3Activity1InputStep
+    ? selectedTrendChoiceId
+    : lastSubmittedTrendChoiceId
+  const part3ChoiceOrder = isPart3Activity1InputStep
+    ? trendChoiceOrder
+    : lastSubmittedTrendChoiceOrder
   const orderedPart3Choices = (() => {
     const choices = part3Activity1Config?.choices || []
     if (!part3ChoiceOrder.length) return choices
@@ -586,61 +959,69 @@ export function GameScreen({
   })()
   const trendChoiceOptions = isPart3Activity1Context
     ? orderedPart3Choices.map((choice) => ({
-      id: choice.id,
-      kind: 'choice',
-      text: choice.text,
-      selected: effectiveTrendChoiceId === choice.id,
-      disabled: !isPart3Activity1InputStep,
-      choiceId: choice.id,
-      groupTitle: part3Activity1Config?.title || 'Aktivität 1',
-      topic: part3Activity1Config?.topic || '',
-      postAuthorName: 'Konrad Sens',
-      postAuthorAvatar: '/backgrounds/konrad_sens.png',
-      hideTitle: true,
-      hideTopic: true,
-    }))
+        id: choice.id,
+        kind: 'choice',
+        text: choice.text,
+        selected: effectiveTrendChoiceId === choice.id,
+        disabled: !isPart3Activity1InputStep,
+        choiceId: choice.id,
+        groupTitle: part3Activity1Config?.title || 'Aktivität 1',
+        topic: part3Activity1Config?.topic || '',
+        postAuthorName: 'Konrad Sens',
+        postAuthorAvatar: '/backgrounds/konrad_sens.png',
+        hideTitle: true,
+        hideTopic: true,
+      }))
     : []
-  const effectiveBoosterChoiceIds = isPart3Activity2InputStep ? selectedBoosterChoiceIds : lastSubmittedBoosterChoiceIds
+  const effectiveBoosterChoiceIds = isPart3Activity2InputStep
+    ? selectedBoosterChoiceIds
+    : lastSubmittedBoosterChoiceIds
   const boosterChoiceOptions = isPart3Activity2Context
     ? (part3Activity2Config?.choices || []).map((choice) => ({
-      id: choice.id,
-      kind: 'booster',
-      text: choice.text,
-      selected: effectiveBoosterChoiceIds.includes(choice.id),
-      disabled: !isPart3Activity2InputStep,
-      choiceId: choice.id,
-      groupTitle: part3Activity2Config?.title || 'Aktivität 2',
-      topic: part3Activity2Config?.topic || '',
-      prompt: part3Activity2Config?.prompt || '',
-      neutralPost: part3Activity2Config?.neutralPost || '',
-      postAuthorName: 'Konrad Sens',
-      postAuthorAvatar: '/backgrounds/konrad_sens.png',
-      hideTitle: true,
-      hideTopic: true,
-    }))
+        id: choice.id,
+        kind: 'booster',
+        text: choice.text,
+        selected: effectiveBoosterChoiceIds.includes(choice.id),
+        disabled: !isPart3Activity2InputStep,
+        choiceId: choice.id,
+        groupTitle: part3Activity2Config?.title || 'Aktivität 2',
+        topic: part3Activity2Config?.topic || '',
+        prompt: part3Activity2Config?.prompt || '',
+        neutralPost: part3Activity2Config?.neutralPost || '',
+        postAuthorName: 'Konrad Sens',
+        postAuthorAvatar: '/backgrounds/konrad_sens.png',
+        hideTitle: true,
+        hideTopic: true,
+      }))
     : []
-  const effectiveBucketAssignments = isPart4Activity1InputStep ? bucketAssignments : lastSubmittedBucketAssignments
+  const effectiveBucketAssignments = isPart4Activity1InputStep
+    ? bucketAssignments
+    : lastSubmittedBucketAssignments
   const bucketAssignmentOptions = isPart4Activity1Context
     ? (part4Activity1Config?.items || []).map((item) => ({
-      id: item.id,
-      itemId: item.id,
-      kind: 'bucket-assignment',
-      text: item.text,
-      assignedBucketId: effectiveBucketAssignments[item.id] || '',
-      disabled: !isPart4Activity1InputStep,
-      groupTitle: part4Activity1Config?.title || 'Aktivität 1',
-      topic: part4Activity1Config?.topic || '',
-      prompt: part4Activity1Config?.prompt || '',
-      unassignedLabel: part4Activity1Config?.unassignedLabel || 'Beiträge',
-      bucketDefinitions: part4Activity1Config?.bucketDefinitions || [],
-      postAuthorName: 'Didi Fam',
-      postAuthorAvatar: '/backgrounds/didi-fam.png',
-      hideTitle: true,
-      hideTopic: true,
-    }))
+        id: item.id,
+        itemId: item.id,
+        kind: 'bucket-assignment',
+        text: item.text,
+        assignedBucketId: effectiveBucketAssignments[item.id] || '',
+        disabled: !isPart4Activity1InputStep,
+        groupTitle: part4Activity1Config?.title || 'Aktivität 1',
+        topic: part4Activity1Config?.topic || '',
+        prompt: part4Activity1Config?.prompt || '',
+        unassignedLabel: part4Activity1Config?.unassignedLabel || 'Beiträge',
+        bucketDefinitions: part4Activity1Config?.bucketDefinitions || [],
+        postAuthorName: 'Didi Fam',
+        postAuthorAvatar: '/backgrounds/didi-fam.png',
+        hideTitle: true,
+        hideTopic: true,
+      }))
     : []
-  const effectivePart4ChoiceId = isPart4Activity2InputStep ? selectedPart4ChoiceId : lastSubmittedPart4ChoiceId
-  const part4ChoiceOrderSource = isPart4Activity2InputStep ? part4ChoiceOrder : lastSubmittedPart4ChoiceOrder
+  const effectivePart4ChoiceId = isPart4Activity2InputStep
+    ? selectedPart4ChoiceId
+    : lastSubmittedPart4ChoiceId
+  const part4ChoiceOrderSource = isPart4Activity2InputStep
+    ? part4ChoiceOrder
+    : lastSubmittedPart4ChoiceOrder
   const orderedPart4Choices = (() => {
     const choices = part4Activity2Config?.choices || []
     if (!part4ChoiceOrderSource.length) return choices
@@ -649,83 +1030,177 @@ export function GameScreen({
   })()
   const part4ChoiceOptions = isPart4Activity2Context
     ? orderedPart4Choices.map((choice) => ({
-      id: choice.id,
-      kind: 'choice',
-      text: choice.text,
-      selected: effectivePart4ChoiceId === choice.id,
-      disabled: !isPart4Activity2InputStep,
-      choiceId: choice.id,
-      groupTitle: part4Activity2Config?.title || 'Aktivität 2',
-      topic: part4Activity2Config?.topic || '',
-      postAuthorName: 'Didi Fam',
-      postAuthorAvatar: '/backgrounds/didi-fam.png',
-      hideTitle: true,
-      hideTopic: true,
-    }))
+        id: choice.id,
+        kind: 'choice',
+        text: choice.text,
+        selected: effectivePart4ChoiceId === choice.id,
+        disabled: !isPart4Activity2InputStep,
+        choiceId: choice.id,
+        groupTitle: part4Activity2Config?.title || 'Aktivität 2',
+        topic: part4Activity2Config?.topic || '',
+        postAuthorName: 'Didi Fam',
+        postAuthorAvatar: '/backgrounds/didi-fam.png',
+        hideTitle: true,
+        hideTopic: true,
+      }))
     : []
   const backendSubmitOptions = options
-    .filter((item) => item.id === 'submit_confident' || item.id === 'submit_unsure')
-    .map((item) => ({ ...item, kind: 'submit', disabled: selectedSentenceIndexes.length === 0 }))
+    .filter(
+      (item) => item.id === 'submit_confident' || item.id === 'submit_unsure'
+    )
+    .map((item) => ({
+      ...item,
+      kind: 'submit',
+      disabled: selectedSentenceIndexes.length === 0,
+    }))
   const backendActivity2SubmitOptions = options
     .filter((item) => item.id === 'submit_easy' || item.id === 'submit_unsure2')
-    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedIntensityChoiceId }))
+    .map((item) => ({
+      ...item,
+      kind: 'submit',
+      disabled: !selectedIntensityChoiceId,
+    }))
   const backendTrendSubmitOptions = options
-    .filter((item) => item.id === 'submit_easy3' || item.id === 'submit_unsure3')
-    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedTrendChoiceId }))
+    .filter(
+      (item) => item.id === 'submit_easy3' || item.id === 'submit_unsure3'
+    )
+    .map((item) => ({
+      ...item,
+      kind: 'submit',
+      disabled: !selectedTrendChoiceId,
+    }))
   const backendBoosterSubmitOptions = options
-    .filter((item) => item.id === 'submit_confident4' || item.id === 'submit_unsure4')
-    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedBoosterChoiceIds.length }))
+    .filter(
+      (item) => item.id === 'submit_confident4' || item.id === 'submit_unsure4'
+    )
+    .map((item) => ({
+      ...item,
+      kind: 'submit',
+      disabled: !selectedBoosterChoiceIds.length,
+    }))
   const totalBucketItems = (part4Activity1Config?.items || []).length
-  const assignedBucketItemsCount = Object.keys(bucketAssignments || {}).filter((id) => Boolean(bucketAssignments[id])).length
+  const assignedBucketItemsCount = Object.keys(bucketAssignments || {}).filter(
+    (id) => Boolean(bucketAssignments[id])
+  ).length
   const backendBucketSubmitOptions = options
-    .filter((item) => item.id === 'submit_sorted5' || item.id === 'submit_unsure5')
-    .map((item) => ({ ...item, kind: 'submit', disabled: assignedBucketItemsCount < totalBucketItems }))
+    .filter(
+      (item) => item.id === 'submit_sorted5' || item.id === 'submit_unsure5'
+    )
+    .map((item) => ({
+      ...item,
+      kind: 'submit',
+      disabled: assignedBucketItemsCount < totalBucketItems,
+    }))
   const backendPart4SubmitOptions = options
     .filter((item) => item.id === 'submit_ouch6' || item.id === 'submit_far6')
-    .map((item) => ({ ...item, kind: 'submit', disabled: !selectedPart4ChoiceId }))
+    .map((item) => ({
+      ...item,
+      kind: 'submit',
+      disabled: !selectedPart4ChoiceId,
+    }))
   const submitOptions = isPart2Activity1InputStep
-    ? (backendSubmitOptions.length
+    ? backendSubmitOptions.length
       ? backendSubmitOptions
       : [
-        { id: 'submit_confident', label: 'Ich bin mir sicher.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
-        { id: 'submit_unsure', label: 'Ich hoffe, es stimmt.', kind: 'submit', disabled: selectedSentenceIndexes.length === 0 },
-      ])
+          {
+            id: 'submit_confident',
+            label: 'Ich bin mir sicher.',
+            kind: 'submit',
+            disabled: selectedSentenceIndexes.length === 0,
+          },
+          {
+            id: 'submit_unsure',
+            label: 'Ich hoffe, es stimmt.',
+            kind: 'submit',
+            disabled: selectedSentenceIndexes.length === 0,
+          },
+        ]
     : isPart2Activity2InputStep
-      ? (backendActivity2SubmitOptions.length
+      ? backendActivity2SubmitOptions.length
         ? backendActivity2SubmitOptions
         : [
-          { id: 'submit_easy', label: 'Das ist einfach.', kind: 'submit', disabled: !selectedIntensityChoiceId },
-          { id: 'submit_unsure2', label: 'Ich habe eigentlich keine Ahnung.', kind: 'submit', disabled: !selectedIntensityChoiceId },
-        ])
+            {
+              id: 'submit_easy',
+              label: 'Das ist einfach.',
+              kind: 'submit',
+              disabled: !selectedIntensityChoiceId,
+            },
+            {
+              id: 'submit_unsure2',
+              label: 'Ich habe eigentlich keine Ahnung.',
+              kind: 'submit',
+              disabled: !selectedIntensityChoiceId,
+            },
+          ]
       : isPart3Activity1InputStep
-        ? (backendTrendSubmitOptions.length
+        ? backendTrendSubmitOptions.length
           ? backendTrendSubmitOptions
           : [
-            { id: 'submit_easy3', label: 'Das schreit nach Konrad!', kind: 'submit', disabled: !selectedTrendChoiceId },
-            { id: 'submit_unsure3', label: 'Konrad - bist du es?', kind: 'submit', disabled: !selectedTrendChoiceId },
-          ])
+              {
+                id: 'submit_easy3',
+                label: 'Das schreit nach Konrad!',
+                kind: 'submit',
+                disabled: !selectedTrendChoiceId,
+              },
+              {
+                id: 'submit_unsure3',
+                label: 'Konrad - bist du es?',
+                kind: 'submit',
+                disabled: !selectedTrendChoiceId,
+              },
+            ]
         : isPart3Activity2InputStep
-          ? (backendBoosterSubmitOptions.length
+          ? backendBoosterSubmitOptions.length
             ? backendBoosterSubmitOptions
             : [
-              { id: 'submit_confident4', label: 'Das wirkt nach echtem Konsens.', kind: 'submit', disabled: !selectedBoosterChoiceIds.length },
-              { id: 'submit_unsure4', label: 'Ich bin unsicher.', kind: 'submit', disabled: !selectedBoosterChoiceIds.length },
-            ])
+                {
+                  id: 'submit_confident4',
+                  label: 'Das wirkt nach echtem Konsens.',
+                  kind: 'submit',
+                  disabled: !selectedBoosterChoiceIds.length,
+                },
+                {
+                  id: 'submit_unsure4',
+                  label: 'Ich bin unsicher.',
+                  kind: 'submit',
+                  disabled: !selectedBoosterChoiceIds.length,
+                },
+              ]
           : isPart4Activity1InputStep
-            ? (backendBucketSubmitOptions.length
+            ? backendBucketSubmitOptions.length
               ? backendBucketSubmitOptions
               : [
-                { id: 'submit_sorted5', label: 'Einsortiert. Didi kann kommen.', kind: 'submit', disabled: assignedBucketItemsCount < totalBucketItems },
-                { id: 'submit_unsure5', label: 'Ich hoffe, ich habe niemanden falsch beschuldigt.', kind: 'submit', disabled: assignedBucketItemsCount < totalBucketItems },
-              ])
+                  {
+                    id: 'submit_sorted5',
+                    label: 'Einsortiert. Didi kann kommen.',
+                    kind: 'submit',
+                    disabled: assignedBucketItemsCount < totalBucketItems,
+                  },
+                  {
+                    id: 'submit_unsure5',
+                    label: 'Ich hoffe, ich habe niemanden falsch beschuldigt.',
+                    kind: 'submit',
+                    disabled: assignedBucketItemsCount < totalBucketItems,
+                  },
+                ]
             : isPart4Activity2InputStep
-              ? (backendPart4SubmitOptions.length
+              ? backendPart4SubmitOptions.length
                 ? backendPart4SubmitOptions
                 : [
-                  { id: 'submit_ouch6', label: 'Autsch. Unter die Gürtellinie.', kind: 'submit', disabled: !selectedPart4ChoiceId },
-                  { id: 'submit_far6', label: 'Geht das schon zu weit?', kind: 'submit', disabled: !selectedPart4ChoiceId },
-                ])
-          : displayOptions
+                    {
+                      id: 'submit_ouch6',
+                      label: 'Autsch. Unter die Gürtellinie.',
+                      kind: 'submit',
+                      disabled: !selectedPart4ChoiceId,
+                    },
+                    {
+                      id: 'submit_far6',
+                      label: 'Geht das schon zu weit?',
+                      kind: 'submit',
+                      disabled: !selectedPart4ChoiceId,
+                    },
+                  ]
+              : displayOptions
   const monitorOptions = isPart2Activity1Context
     ? [...sentenceOptions, ...submitOptions]
     : isPart2Activity2Context
@@ -738,23 +1213,29 @@ export function GameScreen({
             ? [...bucketAssignmentOptions, ...submitOptions]
             : isPart4Activity2Context
               ? [...part4ChoiceOptions, ...submitOptions]
-          : displayOptions
+              : displayOptions
 
   useEffect(() => {
     if (!isPart2Activity2InputStep) return
     if (intensityChoiceOrder.length) return
     const ids = (part2Activity2Config?.choices || []).map((choice) => choice.id)
     if (!ids.length) return
-    const randomized = part2Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    const randomized =
+      part2Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
     setIntensityChoiceOrder(randomized)
-  }, [isPart2Activity2InputStep, intensityChoiceOrder.length, part2Activity2Config])
+  }, [
+    isPart2Activity2InputStep,
+    intensityChoiceOrder.length,
+    part2Activity2Config,
+  ])
 
   useEffect(() => {
     if (!isPart3Activity1InputStep) return
     if (trendChoiceOrder.length) return
     const ids = (part3Activity1Config?.choices || []).map((choice) => choice.id)
     if (!ids.length) return
-    const randomized = part3Activity1Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    const randomized =
+      part3Activity1Config?.randomizeChoices === false ? ids : shuffleArray(ids)
     setTrendChoiceOrder(randomized)
   }, [isPart3Activity1InputStep, trendChoiceOrder.length, part3Activity1Config])
 
@@ -763,7 +1244,8 @@ export function GameScreen({
     if (part4ChoiceOrder.length) return
     const ids = (part4Activity2Config?.choices || []).map((choice) => choice.id)
     if (!ids.length) return
-    const randomized = part4Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
+    const randomized =
+      part4Activity2Config?.randomizeChoices === false ? ids : shuffleArray(ids)
     setPart4ChoiceOrder(randomized)
   }, [isPart4Activity2InputStep, part4ChoiceOrder.length, part4Activity2Config])
 
@@ -807,7 +1289,10 @@ export function GameScreen({
     if (!isPart4Activity1Context && Object.keys(bucketAssignments).length) {
       setBucketAssignments({})
     }
-    if (!isPart4Activity1Context && Object.keys(lastSubmittedBucketAssignments).length) {
+    if (
+      !isPart4Activity1Context &&
+      Object.keys(lastSubmittedBucketAssignments).length
+    ) {
       setLastSubmittedBucketAssignments({})
     }
     if (!isPart4Activity2Context && selectedPart4ChoiceId) {
@@ -822,7 +1307,32 @@ export function GameScreen({
     if (!isPart4Activity2Context && lastSubmittedPart4ChoiceOrder.length) {
       setLastSubmittedPart4ChoiceOrder([])
     }
-  }, [isPart2Activity1Context, selectedSentenceIndexes.length, lastSubmittedSentenceIndexes.length, isPart2Activity2Context, selectedIntensityChoiceId, lastSubmittedIntensityChoiceId, intensityChoiceOrder.length, lastSubmittedIntensityChoiceOrder.length, isPart3Activity1Context, selectedTrendChoiceId, lastSubmittedTrendChoiceId, trendChoiceOrder.length, lastSubmittedTrendChoiceOrder.length, isPart3Activity2Context, selectedBoosterChoiceIds.length, lastSubmittedBoosterChoiceIds.length, isPart4Activity1Context, bucketAssignments, lastSubmittedBucketAssignments, isPart4Activity2Context, selectedPart4ChoiceId, lastSubmittedPart4ChoiceId, part4ChoiceOrder.length, lastSubmittedPart4ChoiceOrder.length])
+  }, [
+    isPart2Activity1Context,
+    selectedSentenceIndexes.length,
+    lastSubmittedSentenceIndexes.length,
+    isPart2Activity2Context,
+    selectedIntensityChoiceId,
+    lastSubmittedIntensityChoiceId,
+    intensityChoiceOrder.length,
+    lastSubmittedIntensityChoiceOrder.length,
+    isPart3Activity1Context,
+    selectedTrendChoiceId,
+    lastSubmittedTrendChoiceId,
+    trendChoiceOrder.length,
+    lastSubmittedTrendChoiceOrder.length,
+    isPart3Activity2Context,
+    selectedBoosterChoiceIds.length,
+    lastSubmittedBoosterChoiceIds.length,
+    isPart4Activity1Context,
+    bucketAssignments,
+    lastSubmittedBucketAssignments,
+    isPart4Activity2Context,
+    selectedPart4ChoiceId,
+    lastSubmittedPart4ChoiceId,
+    part4ChoiceOrder.length,
+    lastSubmittedPart4ChoiceOrder.length,
+  ])
 
   useEffect(() => {
     onStepChange?.(currentPart, stepData.stepIndex ?? 0)
@@ -832,18 +1342,22 @@ export function GameScreen({
     const currentType = String(stepData.type || '').toLowerCase()
     const prev = previousStepMetaRef.current
     const samePart = prev.part === currentPart
-    const enteredActivity = samePart && prev.type !== 'activity' && currentType === 'activity'
-    const enteredSummary = samePart && prev.type === 'activity' && currentType === 'summary'
-    const enteredPart3Activity1 = currentPart === 3 && Number(stepData.stepIndex) === 3 && Number(prev.stepIndex) !== 3
+    const enteredActivity =
+      samePart && prev.type !== 'activity' && currentType === 'activity'
+    const enteredSummary =
+      samePart && prev.type === 'activity' && currentType === 'summary'
+    const enteredPart3Activity1 =
+      currentPart === 3 &&
+      Number(stepData.stepIndex) === 3 &&
+      Number(prev.stepIndex) !== 3
 
     // For monitor activities: start with a clean thread when entering activity sections.
     if (
-      ((currentPart === 2) && (enteredActivity || enteredSummary)) ||
-      ((currentPart === 3) && (enteredActivity || enteredPart3Activity1)) ||
-      ((currentPart === 4) && enteredActivity)
+      (currentPart === 2 && (enteredActivity || enteredSummary)) ||
+      (currentPart === 3 && (enteredActivity || enteredPart3Activity1)) ||
+      (currentPart === 4 && enteredActivity)
     ) {
-      setChatMessages([])
-      appendedStepKeysRef.current = new Set()
+      resetFlowState({ clearMessages: true })
     }
 
     previousStepMetaRef.current = {
@@ -859,70 +1373,40 @@ export function GameScreen({
     if (appendedStepKeysRef.current.has(key)) return
 
     appendedStepKeysRef.current.add(key)
-    const speechBubbles = stepData.speechBubbles || []
-    const hasConditional = speechBubbles.some((bubble) => bubble.showOnOptionId)
-    const effectiveBubbles = hasConditional
-      ? speechBubbles.filter((bubble) => !bubble.showOnOptionId || bubble.showOnOptionId === lastSelectedOptionId)
-      : speechBubbles
-
-    const hostMessages = effectiveBubbles.map((bubble, index) => {
-      const resolvedHostId = normalizeHostId(bubble.hostId, selectedHostId)
-
-      return {
-        id: `${key}:host:${index}`,
-        speakerType: 'host',
-        hostId: resolvedHostId,
-        speakerName: getHostFullName(resolvedHostId),
-        text: bubble.text,
-      }
+    const hostMessages = buildStepHostMessages({
+      currentPart,
+      effectiveStepIndex,
+      speechBubbles: stepData.speechBubbles || [],
+      lastSelectedOptionId,
+      selectedHostId,
     })
 
     setChatMessages((prev) => [...prev, ...hostMessages])
   }, [currentPart, stepData, stepIndex, selectedHostId, lastSelectedOptionId])
 
   const handleSelectOption = (index, option) => {
+    let transitionFlags = createTransitionFlags()
+
     if (isPart2Activity1InputStep && option?.kind === 'sentence') {
       const sentenceId = String(option.sentenceId || '')
-      setSelectedSentenceIndexes((prev) => (
+      setSelectedSentenceIndexes((prev) =>
         prev.includes(sentenceId)
           ? prev.filter((item) => item !== sentenceId)
           : [...prev, sentenceId].sort()
-      ))
+      )
       return
     }
 
     if (isPart2Activity1InputStep && option?.kind === 'submit') {
-      const correctSentenceIds = part2Activity1Config?.correctSentenceIds || []
-      const selectedCorrectCount = selectedSentenceIndexes.filter((item) => correctSentenceIds.includes(item)).length
-      const selectedWrongCount = selectedSentenceIndexes.length - selectedCorrectCount
-      const isCorrect =
-        selectedSentenceIndexes.length === correctSentenceIds.length &&
-        correctSentenceIds.every((item) => selectedSentenceIndexes.includes(item))
-
-      const baseWrongOption = {
-        id: part2Activity1Config?.failure?.id || 'wrongA',
-        nextStep: part2Activity1Config?.failure?.nextStep ?? 31,
-      }
-      const mappedOption = isCorrect
-        ? {
-          id: part2Activity1Config?.success?.id || 'rightA',
-          nextStep: part2Activity1Config?.success?.nextStep ?? 4,
-        }
-        : selectedCorrectCount === 0
-          ? baseWrongOption
-          : selectedWrongCount === 0
-            ? { ...baseWrongOption, id: 'wrongPartial' }
-            : { ...baseWrongOption, id: 'wrongMixed' }
-
-      if (!mappedOption) return
-
-      resetOnActivity2TransitionRef.current = Boolean(
-        isCorrect && mappedOption.id === (part2Activity1Config?.success?.id || 'rightA')
+      const submission = resolveSentenceMarkingSubmission(
+        part2Activity1Config,
+        selectedSentenceIndexes
       )
-      setLastSubmittedSentenceIndexes(selectedSentenceIndexes)
-      option = { ...mappedOption, label: option.label }
-    } else {
-      resetOnActivity2TransitionRef.current = false
+      transitionFlags = createTransitionFlags({
+        resetOnPart2Activity2: submission.isCorrect,
+      })
+      setLastSubmittedSentenceIndexes(submission.lastSubmittedSentenceIndexes)
+      option = { ...submission.mappedOption, label: option.label }
     }
 
     if (isPart2Activity2InputStep && option?.kind === 'choice') {
@@ -931,21 +1415,20 @@ export function GameScreen({
     }
 
     if (isPart2Activity2InputStep && option?.kind === 'submit') {
-      const correctChoiceId = String(part2Activity2Config?.correctChoiceId || 'c')
-      const isCorrect = selectedIntensityChoiceId === correctChoiceId
-      const mappedOption = isCorrect
-        ? {
-          id: part2Activity2Config?.success?.id || 'rightB',
-          nextStep: part2Activity2Config?.success?.nextStep ?? 5,
+      const submission = resolveSingleChoiceSubmission(
+        part2Activity2Config,
+        selectedIntensityChoiceId,
+        {
+          correctChoiceId: 'c',
+          successId: 'rightB',
+          successNextStep: 5,
+          failureId: 'wrongB',
+          failureNextStep: 41,
         }
-        : {
-          id: part2Activity2Config?.failure?.id || 'wrongB',
-          nextStep: part2Activity2Config?.failure?.nextStep ?? 41,
-        }
-
+      )
       setLastSubmittedIntensityChoiceId(selectedIntensityChoiceId)
       setLastSubmittedIntensityChoiceOrder(intensityChoiceOrder)
-      option = { ...mappedOption, label: option.label }
+      option = { ...submission.mappedOption, label: option.label }
     }
 
     if (isPart3Activity1InputStep && option?.kind === 'choice') {
@@ -954,64 +1437,45 @@ export function GameScreen({
     }
 
     if (isPart3Activity1InputStep && option?.kind === 'submit') {
-      const correctChoiceId = String(part3Activity1Config?.correctChoiceId || 'p3')
-      const isCorrect = selectedTrendChoiceId === correctChoiceId
-      const mappedOption = isCorrect
-        ? {
-          id: part3Activity1Config?.success?.id || 'rightA',
-          nextStep: part3Activity1Config?.success?.nextStep ?? 4,
+      const submission = resolveSingleChoiceSubmission(
+        part3Activity1Config,
+        selectedTrendChoiceId,
+        {
+          correctChoiceId: 'p3',
+          successId: 'rightA',
+          successNextStep: 4,
+          failureId: 'wrongA',
+          failureNextStep: 31,
         }
-        : {
-          id: part3Activity1Config?.failure?.id || 'wrongA',
-          nextStep: part3Activity1Config?.failure?.nextStep ?? 31,
-        }
-
-      resetOnPart3Activity2TransitionRef.current = Boolean(
-        isCorrect && mappedOption.id === (part3Activity1Config?.success?.id || 'rightA')
       )
+      transitionFlags = createTransitionFlags({
+        resetOnPart3Activity2: submission.isCorrect,
+      })
       setLastSubmittedTrendChoiceId(selectedTrendChoiceId)
       setLastSubmittedTrendChoiceOrder(trendChoiceOrder)
-      option = { ...mappedOption, label: option.label }
-    } else if (!isPart3Activity1InputStep) {
-      resetOnPart3Activity2TransitionRef.current = false
+      option = { ...submission.mappedOption, label: option.label }
     }
 
     if (isPart3Activity2InputStep && option?.kind === 'booster') {
       const choiceId = String(option.choiceId || '')
-      setSelectedBoosterChoiceIds((prev) => (
+      setSelectedBoosterChoiceIds((prev) =>
         prev.includes(choiceId)
           ? prev.filter((item) => item !== choiceId)
           : [...prev, choiceId].sort()
-      ))
+      )
       return
     }
 
     if (isPart3Activity2InputStep && option?.kind === 'submit') {
-      const correctChoiceIds = part3Activity2Config?.correctChoiceIds || []
-      const selectedCorrectCount = selectedBoosterChoiceIds.filter((item) => correctChoiceIds.includes(item)).length
-      const selectedWrongCount = selectedBoosterChoiceIds.length - selectedCorrectCount
-      const isCorrect =
-        selectedBoosterChoiceIds.length === correctChoiceIds.length &&
-        correctChoiceIds.every((item) => selectedBoosterChoiceIds.includes(item))
-
-      const baseWrongOption = {
-        id: part3Activity2Config?.failure?.id || 'wrongB',
-        nextStep: part3Activity2Config?.failure?.nextStep ?? 41,
-      }
-      const mappedOption = isCorrect
-        ? {
-          id: part3Activity2Config?.success?.id || 'rightB',
-          nextStep: part3Activity2Config?.success?.nextStep ?? 5,
-        }
-        : selectedCorrectCount === 0
-          ? baseWrongOption
-          : selectedWrongCount === 0
-            ? { ...baseWrongOption, id: 'wrongBPartial' }
-            : { ...baseWrongOption, id: 'wrongBMixed' }
-
-      setLastSubmittedBoosterChoiceIds(selectedBoosterChoiceIds)
-      resetOnPart3SummaryTransitionRef.current = Boolean(isCorrect)
-      option = { ...mappedOption, label: option.label }
+      const submission = resolveBoosterSubmission(
+        part3Activity2Config,
+        selectedBoosterChoiceIds
+      )
+      transitionFlags = createTransitionFlags({
+        resetOnPart3Summary: submission.isCorrect,
+      })
+      setLastSubmittedBoosterChoiceIds(submission.lastSubmittedBoosterChoiceIds)
+      option = { ...submission.mappedOption, label: option.label }
     }
 
     if (isPart4Activity1InputStep && option?.kind === 'bucket-drop') {
@@ -1031,39 +1495,18 @@ export function GameScreen({
     }
 
     if (isPart4Activity1InputStep && option?.kind === 'submit') {
-      const items = part4Activity1Config?.items || []
-      const correctAssignments = part4Activity1Config?.correctAssignments || {}
-      const selectedAssignments = bucketAssignments || {}
-      const totalCount = items.length
-      const assignedCount = items.filter((item) => Boolean(selectedAssignments[item.id])).length
-      const correctCount = items.filter((item) => selectedAssignments[item.id] === correctAssignments[item.id]).length
-      const wrongCount = assignedCount - correctCount
-      const assignedPersonCount = items.filter((item) => selectedAssignments[item.id] === 'person').length
-      const isCorrect = totalCount > 0 && correctCount === totalCount
-
-      const baseWrongOption = {
-        id: part4Activity1Config?.failure?.id || 'wrongA',
-        nextStep: part4Activity1Config?.failure?.nextStep ?? 31,
-      }
-      const mappedOption = isCorrect
-        ? {
-          id: part4Activity1Config?.success?.id || 'rightA',
-          nextStep: part4Activity1Config?.success?.nextStep ?? 4,
-        }
-        : assignedCount < totalCount
-          ? { ...baseWrongOption, id: 'wrongAIncomplete' }
-          : assignedPersonCount === 0
-            ? { ...baseWrongOption, id: 'wrongAOnlyContent' }
-            : correctCount === 0
-              ? { ...baseWrongOption, id: 'wrongAAllWrong' }
-              : wrongCount > 0
-                ? { ...baseWrongOption, id: 'wrongAMixed' }
-                : baseWrongOption
-
-      setLastSubmittedBucketAssignments(selectedAssignments)
-      resetOnPart4Activity2TransitionRef.current = Boolean(isCorrect)
-      resetOnPart4WrongFeedbackTransitionRef.current = Boolean(!isCorrect)
-      option = { ...mappedOption, label: option.label }
+      const submission = resolveBucketSortSubmission(
+        part4Activity1Config,
+        bucketAssignments
+      )
+      transitionFlags = createTransitionFlags({
+        resetOnPart4Activity2: submission.isCorrect,
+        resetOnPart4WrongFeedback: !submission.isCorrect,
+      })
+      setLastSubmittedBucketAssignments(
+        submission.lastSubmittedBucketAssignments
+      )
+      option = { ...submission.mappedOption, label: option.label }
     }
 
     if (isPart4Activity2InputStep && option?.kind === 'choice') {
@@ -1072,22 +1515,23 @@ export function GameScreen({
     }
 
     if (isPart4Activity2InputStep && option?.kind === 'submit') {
-      const correctChoiceId = String(part4Activity2Config?.correctChoiceId || 'c')
-      const isCorrect = selectedPart4ChoiceId === correctChoiceId
-      const mappedOption = isCorrect
-        ? {
-          id: part4Activity2Config?.success?.id || 'rightB',
-          nextStep: part4Activity2Config?.success?.nextStep ?? 5,
+      const submission = resolveSingleChoiceSubmission(
+        part4Activity2Config,
+        selectedPart4ChoiceId,
+        {
+          correctChoiceId: 'c',
+          successId: 'rightB',
+          successNextStep: 5,
+          failureId: 'wrongB',
+          failureNextStep: 41,
         }
-        : {
-          id: part4Activity2Config?.failure?.id || 'wrongB',
-          nextStep: part4Activity2Config?.failure?.nextStep ?? 41,
-        }
-
-      resetOnPart4SummaryTransitionRef.current = Boolean(isCorrect)
+      )
+      transitionFlags = createTransitionFlags({
+        resetOnPart4Summary: submission.isCorrect,
+      })
       setLastSubmittedPart4ChoiceId(selectedPart4ChoiceId)
       setLastSubmittedPart4ChoiceOrder(part4ChoiceOrder)
-      option = { ...mappedOption, label: option.label }
+      option = { ...submission.mappedOption, label: option.label }
     }
 
     onSelectOption?.(index, option, currentPart)
@@ -1097,21 +1541,15 @@ export function GameScreen({
       onSelectAvatar?.(String(option.id).toLowerCase())
     }
 
-    const selectedFromPart1 = currentPart === 1 && (option?.id === 'clara' || option?.id === 'uwe')
+    const selectedFromPart1 =
+      currentPart === 1 && (option?.id === 'clara' || option?.id === 'uwe')
     if (selectedFromPart1) {
       onSelectHost?.(option.id)
     }
 
-    if (option?.label && !isAvatarOption(option)) {
-      setChatMessages((prev) => [
-        ...prev,
-        {
-          id: `player:${currentPart}:${Date.now()}:${index}`,
-          speakerType: 'player',
-          speakerName: 'Du',
-          text: option.label,
-        },
-      ])
+    const playerMessage = buildPlayerMessage(currentPart, index, option)
+    if (playerMessage) {
+      setChatMessages((prev) => [...prev, playerMessage])
     }
 
     if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current)
@@ -1131,98 +1569,92 @@ export function GameScreen({
       }
 
       if (option?.nextStep != null) {
-        if (resetOnActivity2TransitionRef.current && currentPart === 2 && Number(option.nextStep) === 4) {
-          setChatMessages([])
-          setSelectedSentenceIndexes([])
-          setLastSubmittedSentenceIndexes([])
-          appendedStepKeysRef.current = new Set()
+        if (
+          transitionFlags.resetOnPart2Activity2 &&
+          currentPart === 2 &&
+          Number(option.nextStep) === 4
+        ) {
+          resetFlowState({ clearMessages: true, resetSentence: true })
         }
 
-        if (resetOnPart3Activity2TransitionRef.current && currentPart === 3 && Number(option.nextStep) === 4) {
-          setChatMessages([])
-          setSelectedTrendChoiceId('')
-          setLastSubmittedTrendChoiceId('')
-          setTrendChoiceOrder([])
-          setLastSubmittedTrendChoiceOrder([])
-          setSelectedBoosterChoiceIds([])
-          setLastSubmittedBoosterChoiceIds([])
-          appendedStepKeysRef.current = new Set()
+        if (
+          transitionFlags.resetOnPart3Activity2 &&
+          currentPart === 3 &&
+          Number(option.nextStep) === 4
+        ) {
+          resetFlowState({
+            clearMessages: true,
+            resetTrend: true,
+            resetBooster: true,
+          })
         }
 
-        if (resetOnPart3SummaryTransitionRef.current && currentPart === 3 && Number(option.nextStep) === 5) {
-          setChatMessages([])
-          setSelectedBoosterChoiceIds([])
-          setLastSubmittedBoosterChoiceIds([])
-          appendedStepKeysRef.current = new Set()
+        if (
+          transitionFlags.resetOnPart3Summary &&
+          currentPart === 3 &&
+          Number(option.nextStep) === 5
+        ) {
+          resetFlowState({ clearMessages: true, resetBooster: true })
         }
 
-        if (resetOnPart4Activity2TransitionRef.current && currentPart === 4 && Number(option.nextStep) === 4) {
-          setChatMessages([])
-          setBucketAssignments({})
-          setLastSubmittedBucketAssignments({})
-          setSelectedPart4ChoiceId('')
-          setLastSubmittedPart4ChoiceId('')
-          setPart4ChoiceOrder([])
-          setLastSubmittedPart4ChoiceOrder([])
-          appendedStepKeysRef.current = new Set()
+        if (
+          transitionFlags.resetOnPart4Activity2 &&
+          currentPart === 4 &&
+          Number(option.nextStep) === 4
+        ) {
+          resetFlowState({
+            clearMessages: true,
+            resetBucket: true,
+            resetPart4Choice: true,
+          })
         }
 
-        if (resetOnPart4WrongFeedbackTransitionRef.current && currentPart === 4 && Number(option.nextStep) === 31) {
-          setChatMessages([])
-          appendedStepKeysRef.current = new Set()
+        if (
+          transitionFlags.resetOnPart4WrongFeedback &&
+          currentPart === 4 &&
+          Number(option.nextStep) === 31
+        ) {
+          resetFlowState({ clearMessages: true })
         }
 
-        if (resetOnPart4SummaryTransitionRef.current && currentPart === 4 && Number(option.nextStep) === 5) {
-          setChatMessages([])
-          setSelectedPart4ChoiceId('')
-          setLastSubmittedPart4ChoiceId('')
-          setPart4ChoiceOrder([])
-          setLastSubmittedPart4ChoiceOrder([])
-          appendedStepKeysRef.current = new Set()
+        if (
+          transitionFlags.resetOnPart4Summary &&
+          currentPart === 4 &&
+          Number(option.nextStep) === 5
+        ) {
+          resetFlowState({
+            clearMessages: true,
+            resetPart4Choice: true,
+          })
         }
 
         if (resetOnRetryPart2) {
-          setChatMessages([])
-          setSelectedSentenceIndexes([])
-          setLastSubmittedSentenceIndexes([])
-          setSelectedIntensityChoiceId('')
-          setLastSubmittedIntensityChoiceId('')
-          setIntensityChoiceOrder([])
-          setLastSubmittedIntensityChoiceOrder([])
-          appendedStepKeysRef.current = new Set()
-          setLastSelectedOptionId(null)
+          resetFlowState({
+            clearMessages: true,
+            resetLastSelectedOptionId: true,
+            resetSentence: true,
+            resetIntensity: true,
+          })
         }
 
         if (resetOnRetryPart3) {
-          setChatMessages([])
-          setSelectedTrendChoiceId('')
-          setLastSubmittedTrendChoiceId('')
-          setTrendChoiceOrder([])
-          setLastSubmittedTrendChoiceOrder([])
-          setSelectedBoosterChoiceIds([])
-          setLastSubmittedBoosterChoiceIds([])
-          appendedStepKeysRef.current = new Set()
-          setLastSelectedOptionId(null)
+          resetFlowState({
+            clearMessages: true,
+            resetLastSelectedOptionId: true,
+            resetTrend: true,
+            resetBooster: true,
+          })
         }
 
         if (resetOnRetryPart4) {
-          setChatMessages([])
-          setBucketAssignments({})
-          setLastSubmittedBucketAssignments({})
-          setSelectedPart4ChoiceId('')
-          setLastSubmittedPart4ChoiceId('')
-          setPart4ChoiceOrder([])
-          setLastSubmittedPart4ChoiceOrder([])
-          appendedStepKeysRef.current = new Set()
-          setLastSelectedOptionId(null)
+          resetFlowState({
+            clearMessages: true,
+            resetLastSelectedOptionId: true,
+            resetBucket: true,
+            resetPart4Choice: true,
+          })
         }
 
-        resetOnActivity2TransitionRef.current = false
-        resetOnPart3Activity2TransitionRef.current = false
-        resetOnPart3SummaryTransitionRef.current = false
-        resetOnPart4Activity2TransitionRef.current = false
-        resetOnPart4WrongFeedbackTransitionRef.current = false
-        resetOnPart4SummaryTransitionRef.current = false
         setStepIndex(option.nextStep)
       }
     }, 220)
@@ -1232,16 +1664,13 @@ export function GameScreen({
     const part2SelectMode = isPart2Activity1Context || isPart2Activity2Context
     const part3SelectMode = isPart3Activity1Context || isPart3Activity2Context
     const part4SelectMode = isPart4Activity1Context || isPart4Activity2Context
-    const hostGenderBackground = selectedHostId === 'uwe'
-      ? '/backgrounds/grossraum_mann.png'
-      : '/backgrounds/grossraum_frau.png'
     const monitorVariant = part2SelectMode
       ? 'keller-monitor-select'
       : part3SelectMode
         ? 'grossraum-monitor-select'
         : part4SelectMode
           ? 'einzelbuero-tablet-select'
-        : (activityVariantByPart[currentPart] || 'monitor')
+          : activityVariantByPart[currentPart] || 'monitor'
 
     return (
       <MonitorActivityScene
@@ -1263,10 +1692,12 @@ export function GameScreen({
   }
 
   const hostSpecificBackground = (() => {
-    if (selectedHostId !== 'clara' && selectedHostId !== 'uwe') return scene.backgroundImage
-    const hostGenderBackground = selectedHostId === 'uwe'
-      ? '/backgrounds/grossraum_mann.png'
-      : '/backgrounds/grossraum_frau.png'
+    if (selectedHostId !== 'clara' && selectedHostId !== 'uwe')
+      return scene.backgroundImage
+    const hostGenderBackground =
+      selectedHostId === 'uwe'
+        ? '/backgrounds/grossraum_mann.png'
+        : '/backgrounds/grossraum_frau.png'
     const currentStepIndex = Number(stepData?.stepIndex ?? stepIndex ?? 0)
     if (currentPart === 2) {
       return selectedHostId === 'clara'
@@ -1274,14 +1705,17 @@ export function GameScreen({
         : '/backgrounds/keller-uwe.png'
     }
     if (currentPart === 3) {
-      if ([0, 1, 2, 5, 10, 11, 12, 13, 51].includes(currentStepIndex)) return hostGenderBackground
+      if ([0, 1, 2, 5, 10, 11, 12, 13, 51].includes(currentStepIndex))
+        return hostGenderBackground
       return '/backgrounds/grossraum_monitor.png'
     }
     if (currentPart === 4) {
-      const part4HostBackground = selectedHostId === 'uwe'
-        ? '/backgrounds/einzelbuero_mann.png'
-        : '/backgrounds/einzelbuero_frau.png'
-      if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex)) return part4HostBackground
+      const part4HostBackground =
+        selectedHostId === 'uwe'
+          ? '/backgrounds/einzelbuero_mann.png'
+          : '/backgrounds/einzelbuero_frau.png'
+      if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex))
+        return part4HostBackground
       return '/backgrounds/einzelbuero_tablet.png'
     }
     if (currentPart === 5) {
@@ -1290,10 +1724,9 @@ export function GameScreen({
     return scene.backgroundImage
   })()
 
-  const sceneForRender =
-    [2, 3, 4, 5].includes(currentPart)
-      ? { ...scene, backgroundImage: hostSpecificBackground }
-      : scene
+  const sceneForRender = [2, 3, 4, 5].includes(currentPart)
+    ? { ...scene, backgroundImage: hostSpecificBackground }
+    : scene
 
   return (
     <Scene

@@ -17,16 +17,53 @@ import { buildSeedDialogs, buildSeedSceneDialogs } from './lib/dialogSeed.js'
 
 const app = express()
 
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin) return callback(null, true)
-    const isLocalhost = /^https?:\/\/localhost(?::\d+)?$/i.test(origin)
-    const isLoopback = /^https?:\/\/127(?:\.\d{1,3}){3}(?::\d+)?$/i.test(origin)
-    const isPrivateLan = /^https?:\/\/(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?::\d+)?$/i.test(origin)
-    if (isLocalhost || isLoopback || isPrivateLan) return callback(null, true)
-    return callback(new Error(`CORS blocked for origin: ${origin}`))
-  },
-}))
+function getActivityBranchEdges(step) {
+  const activityConfig = step.activityConfig
+  if (!activityConfig || typeof activityConfig !== 'object') return []
+
+  const edges = []
+  for (const label of ['success', 'failure']) {
+    const result = activityConfig[label]
+    if (result?.nextStep == null) continue
+
+    const branchIds = [
+      result.id,
+      ...(Array.isArray(result.branchIds) ? result.branchIds : []),
+    ]
+      .map((branchId) => String(branchId ?? '').trim())
+      .filter(Boolean)
+
+    for (const branchId of branchIds) {
+      edges.push({
+        fromStepIndex: step.stepIndex,
+        toStepIndex: result.nextStep,
+        optionId: branchId,
+        optionLabel: label,
+        target: 'step',
+      })
+    }
+  }
+
+  return edges
+}
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true)
+      const isLocalhost = /^https?:\/\/localhost(?::\d+)?$/i.test(origin)
+      const isLoopback = /^https?:\/\/127(?:\.\d{1,3}){3}(?::\d+)?$/i.test(
+        origin
+      )
+      const isPrivateLan =
+        /^https?:\/\/(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?::\d+)?$/i.test(
+          origin
+        )
+      if (isLocalhost || isLoopback || isPrivateLan) return callback(null, true)
+      return callback(new Error(`CORS blocked for origin: ${origin}`))
+    },
+  })
+)
 app.use(express.json({ limit: '1mb' }))
 
 app.get('/api/health', (_req, res) => {
@@ -111,7 +148,9 @@ app.get('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
     const step = entry?.steps?.find((item) => item.stepIndex === stepIndex)
 
     if (!step) {
-      return res.status(404).json({ message: `Step ${stepIndex} in Szene ${sceneId} nicht gefunden.` })
+      return res.status(404).json({
+        message: `Step ${stepIndex} in Szene ${sceneId} nicht gefunden.`,
+      })
     }
 
     return res.json(step)
@@ -126,7 +165,9 @@ app.get('/api/scenes/:sceneId/flow', async (req, res, next) => {
     ensureSceneExists(sceneId)
 
     const entry = await getSceneDialogs(sceneId)
-    const steps = [...(entry?.steps ?? [])].sort((a, b) => a.stepIndex - b.stepIndex)
+    const steps = [...(entry?.steps ?? [])].sort(
+      (a, b) => a.stepIndex - b.stepIndex
+    )
     const stepSet = new Set(steps.map((step) => step.stepIndex))
 
     const nodes = steps.map((step) => ({
@@ -172,6 +213,13 @@ app.get('/api/scenes/:sceneId/flow', async (req, res, next) => {
           dangling: false,
         })
       }
+
+      for (const edge of getActivityBranchEdges(step)) {
+        edges.push({
+          ...edge,
+          dangling: !stepSet.has(edge.toStepIndex),
+        })
+      }
     }
 
     res.json({ sceneId, nodes, edges })
@@ -186,13 +234,20 @@ app.post('/api/scenes/:sceneId/dialogs', async (req, res, next) => {
     ensureSceneExists(sceneId)
 
     const current = await getSceneDialogs(sceneId)
-    const maxStep = Math.max(-1, ...(current?.steps ?? []).map((step) => step.stepIndex))
+    const maxStep = Math.max(
+      -1,
+      ...(current?.steps ?? []).map((step) => step.stepIndex)
+    )
     const normalized = normalizeStepPayload(req.body, maxStep + 1)
 
     const updated = await updateSceneDialogs(sceneId, (entry) => {
-      const exists = entry.steps.some((step) => step.stepIndex === normalized.stepIndex)
+      const exists = entry.steps.some(
+        (step) => step.stepIndex === normalized.stepIndex
+      )
       if (exists) {
-        const error = new Error(`Step ${normalized.stepIndex} existiert bereits.`)
+        const error = new Error(
+          `Step ${normalized.stepIndex} existiert bereits.`
+        )
         error.status = 409
         throw error
       }
@@ -225,7 +280,7 @@ app.put('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
       }
 
       const nextSteps = entry.steps.map((step) =>
-        step.stepIndex === stepIndex ? { ...normalized, stepIndex } : step,
+        step.stepIndex === stepIndex ? { ...normalized, stepIndex } : step
       )
 
       const next = { ...entry, steps: nextSteps }
@@ -239,37 +294,40 @@ app.put('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
   }
 })
 
-app.delete('/api/scenes/:sceneId/dialogs/:stepIndex', async (req, res, next) => {
-  try {
-    const sceneId = Number(req.params.sceneId)
-    const stepIndex = Number(req.params.stepIndex)
+app.delete(
+  '/api/scenes/:sceneId/dialogs/:stepIndex',
+  async (req, res, next) => {
+    try {
+      const sceneId = Number(req.params.sceneId)
+      const stepIndex = Number(req.params.stepIndex)
 
-    ensureSceneExists(sceneId)
+      ensureSceneExists(sceneId)
 
-    const updated = await updateSceneDialogs(sceneId, (entry) => {
-      const exists = entry.steps.some((step) => step.stepIndex === stepIndex)
-      if (!exists) {
-        const error = new Error(`Step ${stepIndex} existiert nicht.`)
-        error.status = 404
-        throw error
-      }
+      const updated = await updateSceneDialogs(sceneId, (entry) => {
+        const exists = entry.steps.some((step) => step.stepIndex === stepIndex)
+        if (!exists) {
+          const error = new Error(`Step ${stepIndex} existiert nicht.`)
+          error.status = 404
+          throw error
+        }
 
-      ensureStepNotReferenced(entry, stepIndex)
+        ensureStepNotReferenced(entry, stepIndex)
 
-      const next = {
-        ...entry,
-        steps: entry.steps.filter((step) => step.stepIndex !== stepIndex),
-      }
+        const next = {
+          ...entry,
+          steps: entry.steps.filter((step) => step.stepIndex !== stepIndex),
+        }
 
-      validateSceneDialogLogic(next)
-      return next
-    })
+        validateSceneDialogLogic(next)
+        return next
+      })
 
-    res.json(updated)
-  } catch (error) {
-    next(error)
+      res.json(updated)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 app.use((error, _req, res, _next) => {
   const status = error.status ?? 500

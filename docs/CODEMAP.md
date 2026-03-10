@@ -70,23 +70,14 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 │   │       └── part1.js [CONFIG]
 │   ├── pages/
 │   │   ├── AdminDialogScreen.jsx [CORE]
-│   │   ├── AvatarSelectionScreen.jsx [ENTRY]
 │   │   └── GameScreen.jsx [ENTRY]
 │   └── components/
 │       ├── chat/
 │       │   └── ChatPanel.jsx [CORE]
-│       ├── dialogue/
-│       │   └── SpeechBubble.jsx
-│       ├── interaction/
-│       │   ├── InteractionBox.jsx [CORE]
-│       │   └── PlayerInteraction.jsx [CORE]
 │       ├── layout/
-│       │   ├── GenericAvatar.jsx
 │       │   ├── HostAvatar.jsx [CORE]
-│       │   ├── PlayerAvatars.jsx
-│       │   └── SpeakerPortrait.jsx
+│       │   └── PlayerAvatars.jsx
 │       └── scene/
-│           ├── Character.jsx
 │           ├── MonitorActivityScene.jsx [CORE]
 │           ├── Scene.jsx [CORE]
 │           └── SceneBackground.jsx [CORE]
@@ -101,7 +92,6 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 - `index.html`
 - `src/main.jsx`
 - `src/App.jsx`
-- `src/pages/AvatarSelectionScreen.jsx`
 - `src/pages/GameScreen.jsx`
 - `server/index.js`
 
@@ -115,8 +105,7 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
   - `src/components/scene/SceneBackground.jsx`
   - `src/components/scene/MonitorActivityScene.jsx`
   - `src/components/chat/ChatPanel.jsx`
-  - `src/components/interaction/InteractionBox.jsx`
-  - `src/components/interaction/PlayerInteraction.jsx`
+    - gemeinsame Absatzdarstellung für Laufzeit-Nachrichten
   - `src/components/layout/HostAvatar.jsx`
 - Frontend/backend boundary:
   - `src/api/dialogApi.js`
@@ -144,14 +133,12 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 2. `src/App.jsx`
 3. `src/pages/GameScreen.jsx`
 4. `src/pages/AdminDialogScreen.jsx`
-5. `src/pages/AvatarSelectionScreen.jsx`
-6. `src/components/scene/Scene.jsx`
-7. `src/components/chat/ChatPanel.jsx`
-8. `src/components/interaction/PlayerInteraction.jsx`
-9. `src/hooks/useScene.js`
-10. `src/api/dialogApi.js`
-11. `src/data/scenes.js`
-12. `src/data/constants.js`
-13. `server/index.js`
-14. `server/app.js`
-15. `server/lib/dialogStore.js`
+5. `src/components/scene/Scene.jsx`
+6. `src/components/chat/ChatPanel.jsx`
+7. `src/hooks/useScene.js`
+8. `src/api/dialogApi.js`
+9. `src/data/scenes.js`
+10. `src/data/constants.js`
+11. `server/index.js`
+12. `server/app.js`
+13. `server/lib/dialogStore.js`

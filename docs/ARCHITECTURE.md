@@ -18,7 +18,10 @@ Stand: 2026-03-08
   - Fallback auf statische Daten für Robustheit
   - Verarbeitet bedingte Host-Nachrichten (`showOnOptionId`)
   - Enthält Aktivitäten-Logik für Teile 2-4 (Sentence-Marking, Choice, Booster, Bucket-Sort)
+  - Kapselt Submit-Mapping, Reset-Pfade und Transition-Steuerung über lokale Hilfsfunktionen
   - Übergänge über `nextStep`/`nextPart`, inkl. Chat-Verlaufssynchronisation
+- Laufzeit-Rendering (`src/components/chat/ChatPanel.jsx`, `src/components/scene/MonitorActivityScene.jsx`):
+  - Teilen sich die Absatzdarstellung für Host-/Player-Nachrichten
 - Adminruntime (`src/pages/AdminDialogScreen.jsx`):
   - Szenen- und Step-CRUD
   - Flow-Ansicht pro Step (Kanten auf Step/Teil/Ende)

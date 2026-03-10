@@ -280,10 +280,14 @@ html, body {
   font-size: 0.9rem;
 }
 
-.monitor-message__bubble p {
+.monitor-message__paragraph {
   margin: 0;
   font-size: 1.08rem;
-  white-space: pre-line;
+  white-space: pre-wrap;
+}
+
+.monitor-message__paragraph + .monitor-message__paragraph {
+  margin-top: 0.8em;
 }
 
 .monitor-select {

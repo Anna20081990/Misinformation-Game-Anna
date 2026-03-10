@@ -24,6 +24,20 @@ npm run build
 
 Ausgabe in `dist/`.
 
+## Lokale Quality Checks
+
+```bash
+npm run lint
+npm run format:check
+```
+
+Für automatische Korrekturen:
+
+```bash
+npm run lint:fix
+npm run format
+```
+
 ## Dialog-Backend (lokal)
 
 Das Projekt enthält jetzt ein lokales Backend zum Erstellen, Verwalten und Entfernen von Dialogen inkl. Logikprüfung (`nextStep`, `nextPart`).
@@ -81,6 +95,7 @@ Im Frontend oben auf **Admin** wechseln, um die Dialogverwaltung zu öffnen.
 ```
 
 Hinweise:
+
 - `stepIndex` kann bei `POST` weggelassen werden (wird dann automatisch vergeben).
 - `nextStep` muss auf einen existierenden Schritt derselben Szene zeigen.
 - `nextPart` muss auf eine existierende Szene (0-5) zeigen.

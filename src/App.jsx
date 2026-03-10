@@ -58,7 +58,9 @@ function buildSubchapters(steps = [], part = null) {
         .map((step) => step.stepIndex)
     )
 
-    const entries = PART1_SUBCHAPTERS.filter((entry) => availableStepIndexes.has(entry.stepIndex))
+    const entries = PART1_SUBCHAPTERS.filter((entry) =>
+      availableStepIndexes.has(entry.stepIndex)
+    )
     return entries.map((entry, index) => ({ ...entry, chapterIndex: index }))
   }
 
@@ -86,13 +88,19 @@ function buildSubchapters(steps = [], part = null) {
 
     if (type === 'example') {
       exampleCount += 1
-      entries.push({ stepIndex: step.stepIndex, label: `Beispiel ${exampleCount}` })
+      entries.push({
+        stepIndex: step.stepIndex,
+        label: `Beispiel ${exampleCount}`,
+      })
       continue
     }
 
     if (type === 'activity') {
       activityCount += 1
-      entries.push({ stepIndex: step.stepIndex, label: `Aktivität ${activityCount}` })
+      entries.push({
+        stepIndex: step.stepIndex,
+        label: `Aktivität ${activityCount}`,
+      })
       continue
     }
 
@@ -114,7 +122,10 @@ function buildSubchapters(steps = [], part = null) {
       continue
     }
 
-    entries.push({ stepIndex: step.stepIndex, label: `Schritt ${step.stepIndex}` })
+    entries.push({
+      stepIndex: step.stepIndex,
+      label: `Schritt ${step.stepIndex}`,
+    })
   }
 
   return entries.map((entry, index) => ({ ...entry, chapterIndex: index }))
@@ -123,14 +134,18 @@ function buildSubchapters(steps = [], part = null) {
 function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
   if (!subchapters.length) return 0
 
-  const chapterByStep = new Map(subchapters.map((chapter) => [chapter.stepIndex, chapter.stepIndex]))
+  const chapterByStep = new Map(
+    subchapters.map((chapter) => [chapter.stepIndex, chapter.stepIndex])
+  )
   if (chapterByStep.has(currentStepIndex)) return currentStepIndex
 
   const step = steps.find((item) => item.stepIndex === currentStepIndex)
   if (step && Number(currentStepIndex) >= 10) {
     const type = String(step.type || 'dialog').toLowerCase()
     if (type === 'intro') {
-      const introEntry = subchapters.find((chapter) => chapter.label === 'Intro')
+      const introEntry = subchapters.find(
+        (chapter) => chapter.label === 'Intro'
+      )
       if (introEntry) return introEntry.stepIndex
     }
     if (type === 'example') {
@@ -141,7 +156,9 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
       if (lastExampleEntry) return lastExampleEntry.stepIndex
     }
     if (type === 'transition') {
-      const outroEntry = subchapters.find((chapter) => chapter.label === 'Outro' || chapter.label === 'Summary')
+      const outroEntry = subchapters.find(
+        (chapter) => chapter.label === 'Outro' || chapter.label === 'Summary'
+      )
       if (outroEntry) return outroEntry.stepIndex
     }
   }
@@ -149,7 +166,9 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
   if (step?.options?.length) {
     const candidateChapterSteps = step.options
       .map((option) => option?.nextStep)
-      .filter((nextStep) => Number.isFinite(nextStep) && chapterByStep.has(nextStep))
+      .filter(
+        (nextStep) => Number.isFinite(nextStep) && chapterByStep.has(nextStep)
+      )
       .sort((a, b) => a - b)
     if (candidateChapterSteps.length) return candidateChapterSteps[0]
   }
@@ -171,9 +190,17 @@ export function App() {
   })
   const [viewMode, setViewMode] = useState('game')
   const [dialogsByPart, setDialogsByPart] = useState({})
-  const [dialogApiStatus, setDialogApiStatus] = useState({ ok: true, failedParts: [], lastError: '' })
+  const [dialogApiStatus, setDialogApiStatus] = useState({
+    ok: true,
+    failedParts: [],
+    lastError: '',
+  })
   const [activeStepByPart, setActiveStepByPart] = useState({})
-  const [stepJumpRequest, setStepJumpRequest] = useState({ part: DEFAULT_PART, stepIndex: 0, nonce: 0 })
+  const [stepJumpRequest, setStepJumpRequest] = useState({
+    part: DEFAULT_PART,
+    stepIndex: 0,
+    nonce: 0,
+  })
 
   const handlePartChange = (part) => {
     setCurrentPart(part)
@@ -183,9 +210,9 @@ export function App() {
     console.log('Antwort gewählt:', option?.label, 'Teil:', part)
   }
 
-  const activeSteps = (dialogsByPart[currentPart]?.steps?.length
+  const activeSteps = dialogsByPart[currentPart]?.steps?.length
     ? dialogsByPart[currentPart].steps
-    : (FALLBACK_NAV_STEPS_BY_PART[currentPart] || []))
+    : FALLBACK_NAV_STEPS_BY_PART[currentPart] || []
   const activeSubchapters = buildSubchapters(activeSteps, currentPart)
   const activeChapterStepIndex = resolveActiveChapterStep(
     activeStepByPart[currentPart] ?? 0,
@@ -220,7 +247,10 @@ export function App() {
             loaded[part] = null
             failedParts.push(part)
             lastError = error?.message || String(error || '')
-            console.error(`[Dialog API] Teil ${part} konnte nicht geladen werden.`, error)
+            console.error(
+              `[Dialog API] Teil ${part} konnte nicht geladen werden.`,
+              error
+            )
           }
         })
       )
@@ -241,15 +271,28 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    setActiveStepByPart((prev) => ({ ...prev, [currentPart]: prev[currentPart] ?? 0 }))
+    setActiveStepByPart((prev) => ({
+      ...prev,
+      [currentPart]: prev[currentPart] ?? 0,
+    }))
   }, [currentPart])
 
   return (
     <div className="app">
       <header className="app__header">
         {!dialogApiStatus.ok && (
-          <div role="status" aria-live="polite" style={{ marginBottom: '0.75rem', color: '#8b0000', fontWeight: 600 }}>
-            Backend-Dialoge nicht erreichbar (Teile: {dialogApiStatus.failedParts.join(', ')}). Letzter Fehler: {dialogApiStatus.lastError || 'unbekannt'}
+          <div
+            role="status"
+            aria-live="polite"
+            style={{
+              marginBottom: '0.75rem',
+              color: '#8b0000',
+              fontWeight: 600,
+            }}
+          >
+            Backend-Dialoge nicht erreichbar (Teile:{' '}
+            {dialogApiStatus.failedParts.join(', ')}). Letzter Fehler:{' '}
+            {dialogApiStatus.lastError || 'unbekannt'}
           </div>
         )}
         <nav className="app__nav">
@@ -269,35 +312,48 @@ export function App() {
           </button>
           {viewMode === 'game' &&
             [0, 1, 2, 3, 4, 5].map((id) => (
-            <button
-              key={id}
-              type="button"
-              className={`app__nav-btn ${currentPart === id ? 'app__nav-btn--active' : ''}`}
-              onClick={() => handlePartChange(id)}
-              aria-pressed={currentPart === id}
-              aria-label={`Teil ${id}`}
-            >
-              {id}
-            </button>
-            ))}
-        </nav>
-        {viewMode === 'game' && currentPart > 0 && activeSubchapters.length > 0 && (
-          <nav className="app__subnav" aria-label={`Unterkapitel Teil ${currentPart}`}>
-            {activeSubchapters.map((chapter) => (
               <button
-                key={`${currentPart}.${chapter.chapterIndex}`}
+                key={id}
                 type="button"
-                className={`app__subnav-btn ${activeChapterStepIndex === chapter.stepIndex ? 'app__subnav-btn--active' : ''}`}
-                onClick={() => setStepJumpRequest({ part: currentPart, stepIndex: chapter.stepIndex, nonce: Date.now() })}
-                aria-pressed={activeChapterStepIndex === chapter.stepIndex}
-                aria-label={`Teil ${currentPart}.${chapter.chapterIndex}: ${chapter.label}`}
+                className={`app__nav-btn ${currentPart === id ? 'app__nav-btn--active' : ''}`}
+                onClick={() => handlePartChange(id)}
+                aria-pressed={currentPart === id}
+                aria-label={`Teil ${id}`}
               >
-                <span className="app__subnav-index">{currentPart}.{chapter.chapterIndex}</span>
-                <span className="app__subnav-label">{chapter.label}</span>
+                {id}
               </button>
             ))}
-          </nav>
-        )}
+        </nav>
+        {viewMode === 'game' &&
+          currentPart > 0 &&
+          activeSubchapters.length > 0 && (
+            <nav
+              className="app__subnav"
+              aria-label={`Unterkapitel Teil ${currentPart}`}
+            >
+              {activeSubchapters.map((chapter) => (
+                <button
+                  key={`${currentPart}.${chapter.chapterIndex}`}
+                  type="button"
+                  className={`app__subnav-btn ${activeChapterStepIndex === chapter.stepIndex ? 'app__subnav-btn--active' : ''}`}
+                  onClick={() =>
+                    setStepJumpRequest({
+                      part: currentPart,
+                      stepIndex: chapter.stepIndex,
+                      nonce: Date.now(),
+                    })
+                  }
+                  aria-pressed={activeChapterStepIndex === chapter.stepIndex}
+                  aria-label={`Teil ${currentPart}.${chapter.chapterIndex}: ${chapter.label}`}
+                >
+                  <span className="app__subnav-index">
+                    {currentPart}.{chapter.chapterIndex}
+                  </span>
+                  <span className="app__subnav-label">{chapter.label}</span>
+                </button>
+              ))}
+            </nav>
+          )}
       </header>
       <main className="app__main">
         {viewMode === 'game' ? (
@@ -305,11 +361,13 @@ export function App() {
             currentPart={currentPart}
             onPartChange={handlePartChange}
             onSelectOption={handleSelectOption}
-            stepJumpRequest={stepJumpRequest.part === currentPart ? stepJumpRequest : null}
+            stepJumpRequest={
+              stepJumpRequest.part === currentPart ? stepJumpRequest : null
+            }
             onStepChange={(part, stepIndex) => {
-              setActiveStepByPart((prev) => (
+              setActiveStepByPart((prev) =>
                 prev[part] === stepIndex ? prev : { ...prev, [part]: stepIndex }
-              ))
+              )
             }}
             selectedAvatarId={selectedAvatarId}
             onSelectAvatar={setSelectedAvatarId}

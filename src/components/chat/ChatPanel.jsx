@@ -4,7 +4,12 @@ import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
 function isAvatarOption(option) {
   const id = String(option?.id || '').toLowerCase()
-  return option?.kind === 'avatar' || id === 'avatar1' || id === 'avatar2' || id === 'avatar3'
+  return (
+    option?.kind === 'avatar' ||
+    id === 'avatar1' ||
+    id === 'avatar2' ||
+    id === 'avatar3'
+  )
 }
 
 function getHostDisplayName(hostId, speakerName, selectedHostId) {
@@ -14,7 +19,11 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   // If a specific non-host speaker label is provided (e.g. "Botschafter Regelreich"),
   // prefer it over dynamic host resolution from selectedHostId.
   if (speakerName && id !== 'selected') {
-    if (!name.includes('clara') && !name.includes('uwe') && !name.includes('host')) {
+    if (
+      !name.includes('clara') &&
+      !name.includes('uwe') &&
+      !name.includes('host')
+    ) {
       return speakerName
     }
   }
@@ -29,22 +38,37 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   return speakerName || 'Host'
 }
 
-function renderMessageText(text) {
+export function renderMessageParagraphs(
+  text,
+  { className = 'chat-message__paragraph', style } = {}
+) {
   const normalized = String(text ?? '').replace(/\r\n?/g, '\n')
   const paragraphs = normalized.split(/\n\s*\n+/)
 
   return paragraphs.map((paragraph, index) => (
     <p
       key={`p-${index}`}
-      className="chat-message__paragraph"
-      style={{ whiteSpace: 'pre-wrap', margin: index === 0 ? 0 : '0.8em 0 0 0' }}
+      className={className}
+      style={
+        style ?? {
+          whiteSpace: 'pre-wrap',
+          margin: index === 0 ? 0 : '0.8em 0 0 0',
+        }
+      }
     >
       {paragraph}
     </p>
   ))
 }
 
-export function ChatPanel({ messages = [], options = [], onSelectOption, selectedHostId, selectedAvatarId, title = 'Media Lab Luminara' }) {
+export function ChatPanel({
+  messages = [],
+  options = [],
+  onSelectOption,
+  selectedHostId,
+  selectedAvatarId,
+  title = 'Media Lab Luminara',
+}) {
   const scrollRef = useRef(null)
   const avatarOptions = options.filter((option) => isAvatarOption(option))
   const textOptions = options.filter((option) => !isAvatarOption(option))
@@ -63,34 +87,53 @@ export function ChatPanel({ messages = [], options = [], onSelectOption, selecte
 
       <div className="chat-panel__messages" ref={scrollRef}>
         {messages.map((message) => {
-          const hostDisplayName = message.speakerType === 'player'
-            ? message.speakerName
-            : getHostDisplayName(message.hostId ?? message.characterId, message.speakerName, selectedHostId)
+          const hostDisplayName =
+            message.speakerType === 'player'
+              ? message.speakerName
+              : getHostDisplayName(
+                  message.hostId ?? message.characterId,
+                  message.speakerName,
+                  selectedHostId
+                )
 
           return (
-          <article
-            key={message.id}
-            className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
-          >
-            {message.speakerType !== 'player' && (
-              <HostAvatar characterId={message.hostId ?? message.characterId} speakerName={hostDisplayName} />
-            )}
-            <div className="chat-message__bubble">
-              {message.speakerName && message.speakerType !== 'player' && (
-                <strong className="chat-message__speaker">{hostDisplayName}</strong>
+            <article
+              key={message.id}
+              className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
+            >
+              {message.speakerType !== 'player' && (
+                <HostAvatar
+                  characterId={message.hostId ?? message.characterId}
+                  speakerName={hostDisplayName}
+                />
               )}
-              {renderMessageText(message.text)}
-            </div>
-          </article>
+              <div className="chat-message__bubble">
+                {message.speakerName && message.speakerType !== 'player' && (
+                  <strong className="chat-message__speaker">
+                    {hostDisplayName}
+                  </strong>
+                )}
+                {renderMessageParagraphs(message.text)}
+              </div>
+            </article>
           )
         })}
       </div>
 
-      <footer className="chat-panel__options" role="group" aria-label="Antwortoptionen">
+      <footer
+        className="chat-panel__options"
+        role="group"
+        aria-label="Antwortoptionen"
+      >
         {!!avatarOptions.length && (
-          <div className="chat-panel__avatar-options" role="group" aria-label="Avatar-Auswahl">
+          <div
+            className="chat-panel__avatar-options"
+            role="group"
+            aria-label="Avatar-Auswahl"
+          >
             {avatarOptions.map((option, index) => {
-              const avatarId = option.avatarId || String(option.id || '').toLowerCase()
+              const avatarId =
+                option.avatarId || String(option.id || '').toLowerCase()
               const AvatarComponent = getPlayerAvatarComponent(avatarId)
               const isSelected = avatarId === selectedAvatarId
 
@@ -115,7 +158,9 @@ export function ChatPanel({ messages = [], options = [], onSelectOption, selecte
             key={option.id ?? index}
             type="button"
             className="chat-panel__option"
-            onClick={() => onSelectOption?.(index + avatarOptions.length, option)}
+            onClick={() =>
+              onSelectOption?.(index + avatarOptions.length, option)
+            }
             disabled={Boolean(option.disabled)}
           >
             {option.label}
