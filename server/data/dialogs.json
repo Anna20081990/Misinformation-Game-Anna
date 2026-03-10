@@ -488,39 +488,43 @@
             "sentences": [
               {
                 "id": "s1",
-                "text": "Die Stadt plant, die Parkzeiten im Zentrum anzupassen."
+                "text": "Die Stadt plant, für öffentliche Veranstaltungen eine einheitliche Regenschirmfarbe vorzuschlagen."
               },
               {
                 "id": "s2",
-                "text": "Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden."
+                "text": "Gestern stand eine ältere Dame im Regen, weil ihr alter Schirm nicht mehr erlaubt war."
               },
               {
                 "id": "s3",
-                "text": "Schon wieder trifft es die normalen Leute."
+                "text": "Der Vorschlag soll nächste Woche abgestimmt werden."
               },
               {
                 "id": "s4",
-                "text": "Der Vorschlag wird nächste Woche beraten."
+                "text": "Schon wieder werden die normalen Leute im Stich gelassen."
               },
               {
                 "id": "s5",
-                "text": "So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander."
+                "text": "Wenn das so weitergeht, ist bald nichts Alltägliches mehr sicher."
               }
             ],
             "correctSentenceIds": [
               "s2",
-              "s3",
+              "s4",
               "s5"
             ],
             "success": {
               "id": "rightA",
-              "nextStep": 4
+              "nextStep": 32
             },
             "failure": {
               "id": "wrongA",
               "branchIds": [
-                "wrongPartial",
-                "wrongMixed"
+                "wrongOnlyEscalation",
+                "wrongOnlyIncident",
+                "wrongOnlyOutrage",
+                "wrongTwoCorrect",
+                "wrongOvermarked",
+                "wrongOnlyFalse"
               ],
               "nextStep": 31
             }
@@ -532,8 +536,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sehr gut! Ein Einzelfall wird zum Beweis erklärt, daraus wird Empörung, und am Ende steht die große Warnung: Das ist Emma in Reinform!",
-              "showOnOptionId": "rightA"
+              "text": "Dann legen wir jetzt noch eine Schippe drauf."
             },
             {
               "hostId": "selected",
@@ -546,7 +549,12 @@
             {
               "hostId": "selected",
               "text": "Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.",
-              "showOnOptionId": "retry"
+              "showOnOptionId": "retry_medium"
+            },
+            {
+              "hostId": "selected",
+              "text": "Guter Retry. Prüfe erneut, welche Variante am stärksten emotional aufgeladen ist.",
+              "showOnOptionId": "retry_low"
             }
           ],
           "options": [
@@ -562,32 +570,32 @@
           "activityConfig": {
             "mode": "intensity-choice",
             "title": "Aktivität 2: Intensitätswahl",
-            "topic": "Thema: Einführung einer offiziellen Mittagsglocke",
+            "topic": "Thema: Farbverlauf in den Wartebereichen des Hauptbahnhofs",
             "randomizeChoices": true,
             "choices": [
               {
                 "id": "a",
-                "text": "„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“"
+                "text": "„Die Stadt plant einen einheitlichen Farbverlauf für Wartebereiche im Hauptbahnhof.“"
               },
               {
                 "id": "b",
-                "text": "„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“"
+                "text": "„Der geplante Farbverlauf im Wartebereich sorgt für Diskussionen. Manche halten ihn für eine überflüssige Dramatisierung des Bahnalltags.“"
               },
               {
                 "id": "c",
-                "text": "„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“"
+                "text": "„Jetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fühlen. Was kommt als Nächstes – eine Pflichtstimmung im Abteil?“"
               }
             ],
             "correctChoiceId": "c",
             "success": {
               "id": "rightB",
-              "nextStep": 5
+              "nextStep": 42
             },
             "failure": {
               "id": "wrongB",
               "branchIds": [
-                "wrongBPartial",
-                "wrongBMixed"
+                "wrongBMedium",
+                "wrongBLow"
               ],
               "nextStep": 41
             }
@@ -743,24 +751,58 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Knapp daneben: Das war eher neutral. Suche nach Übertreibung und Generalisierung."
+              "text": "Die Übertreibung hast du erkannt. Aber schau nochmal genauer hin: Wo beginnt die emotionale Aufladung eigentlich?",
+              "showOnOptionId": "wrongOnlyEscalation"
             },
             {
               "hostId": "selected",
-              "text": "Du hast schon einen relevanten Teil markiert, aber noch nicht alles erwischt. Schau auf weitere Zuspitzungen.",
-              "showOnOptionId": "wrongPartial"
+              "text": "Guter Blick für Einzelfälle. Aber Emma belässt es selten bei einer Geschichte. Was macht sie danach daraus?",
+              "showOnOptionId": "wrongOnlyIncident"
             },
             {
               "hostId": "selected",
-              "text": "Teilweise richtig, aber du hast auch neutrale Teile markiert und nicht alles erwischt. Konzentriere dich auf klare Übertreibung und Generalisierung.",
-              "showOnOptionId": "wrongMixed"
+              "text": "Die Empörung hast du entdeckt. Aber was hat sie als Auslöser benutzt?",
+              "showOnOptionId": "wrongOnlyOutrage"
+            },
+            {
+              "hostId": "selected",
+              "text": "Fast richtig! Eine Kleinigkeit hast du übersehen.",
+              "showOnOptionId": "wrongTwoCorrect"
+            },
+            {
+              "hostId": "selected",
+              "text": "Hier bist du etwas voreilig mit dem Marker. Nicht jede Information ist schon Zuspitzung. Emma braucht erst eine emotionale Wendung.",
+              "showOnOptionId": "wrongOvermarked"
+            },
+            {
+              "hostId": "selected",
+              "text": "Das wirkt erstaunlich ruhig - fast zu ruhig. Emma arbeitet selten ohne Empörung. Lies nochmal mit diesem Gedanken.",
+              "showOnOptionId": "wrongOnlyFalse"
             }
           ],
           "options": [
             {
               "id": "retry",
-              "label": "Ich versuche es nochmal.",
+              "label": "Markierungen anpassen.",
               "nextStep": 3
+            }
+          ]
+        },
+        {
+          "stepIndex": 32,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sehr gut! Ein Einzelfall wird zum Beweis erklärt, daraus wird Empörung, und am Ende steht die große Warnung: Das ist Emma in Reinform!",
+              "showOnOptionId": "rightA"
+            }
+          ],
+          "options": [
+            {
+              "id": "continue_to_activity2",
+              "label": "Ich wusste es.",
+              "nextStep": 4
             }
           ]
         },
@@ -770,13 +812,48 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Hier fehlte die emotionale Intensität. Nimm die maximal aufgeladene Version."
+              "text": "Das ist kritisch, ja. Aber noch bleibt es bei der Maßnahme selbst. Emma würde daraus eine größere Bedrohung für den Alltag machen."
             }
           ],
           "options": [
             {
-              "id": "retry",
-              "label": "Nochmal wählen.",
+              "id": "retry_medium",
+              "label": "Noch dramatischer denken",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 42,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Genau. Hier wird aus einem Farbverlauf plötzlich ein Eingriff in Gefühle. Das ist klassische Emma: vom Design zur Empörung in einem Satz.",
+              "showOnOptionId": "rightB"
+            }
+          ],
+          "options": [
+            {
+              "id": "continue_to_summary",
+              "label": "Crushing it!",
+              "nextStep": 5
+            }
+          ]
+        },
+        {
+          "stepIndex": 43,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sehr sachlich. Fast schon beneidenswert. Aber Emma dreht normalerweise noch etwas am Lautstärkeregler."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry_low",
+              "label": "Mehr Emotionen suchen",
               "nextStep": 4
             }
           ]

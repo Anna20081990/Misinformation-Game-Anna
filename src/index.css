@@ -652,6 +652,10 @@ html, body {
   border: none;
 }
 
+.monitor-scene--einzelbuero-tablet-select .monitor-scene__screen {
+  overflow: visible;
+}
+
 .monitor-scene--keller-monitor-select .monitor-scene__screen {
   position: relative;
 }
@@ -1508,7 +1512,7 @@ html, body {
 .monitor-scene--einzelbuero-tablet-select .monitor-scene__options {
   transform: none !important;
   position: relative;
-  top: -3vh !important;
+  top: 5vh !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;

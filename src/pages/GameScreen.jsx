@@ -109,43 +109,50 @@ const PART2_ACTIVITY1_FALLBACK_CONFIG = {
   sentences: [
     {
       id: 's1',
-      text: 'Die Stadt plant, die Parkzeiten im Zentrum anzupassen.',
+      text: 'Die Stadt plant, fuer oeffentliche Veranstaltungen eine einheitliche Regenschirmfarbe vorzuschlagen.',
     },
     {
       id: 's2',
-      text: 'Mein Nachbar hat gestern schon keinen Parkplatz mehr gefunden.',
+      text: 'Gestern stand eine aeltere Dame im Regen, weil ihr alter Schirm nicht mehr erlaubt war.',
     },
-    { id: 's3', text: 'Schon wieder trifft es die normalen Leute.' },
-    { id: 's4', text: 'Der Vorschlag wird nächste Woche beraten.' },
+    {
+      id: 's3',
+      text: 'Der Vorschlag soll naechste Woche abgestimmt werden.',
+    },
+    {
+      id: 's4',
+      text: 'Schon wieder werden die normalen Leute im Stich gelassen.',
+    },
     {
       id: 's5',
-      text: 'So fängt es immer an - erst eine kleine Änderung, dann ist alles durcheinander.',
+      text: 'Wenn das so weitergeht, ist bald nichts Alltaegliches mehr sicher.',
     },
   ],
-  correctSentenceIds: ['s2', 's3', 's5'],
-  success: { id: 'rightA', nextStep: 4 },
+  correctSentenceIds: ['s2', 's4', 's5'],
+  success: { id: 'rightA', nextStep: 32 },
   failure: { id: 'wrongA', nextStep: 31 },
 }
 const PART2_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
   title: 'Aktivität 2: Intensitätswahl',
-  topic: 'Thema: Einführung einer offiziellen Mittagsglocke',
+  topic:
+    'Thema: Farbverlauf in den Wartebereichen des Hauptbahnhofs',
   choices: [
     {
       id: 'a',
-      text: '„Die Stadt prüft die Einführung einer täglichen Mittagsglocke. Ziel ist eine bessere Zeitstruktur im Zentrum.“',
+      text: '„Die Stadt plant einen einheitlichen Farbverlauf fuer Wartebereiche im Hauptbahnhof.“',
     },
     {
       id: 'b',
-      text: '„Die geplante Mittagsglocke sorgt für Diskussionen unter Anwohnern.“',
+      text: '„Der geplante Farbverlauf im Wartebereich sorgt fuer Diskussionen. Manche halten ihn fuer eine ueberfluessige Dramatisierung des Bahnalltags.“',
     },
     {
       id: 'c',
-      text: '„Jetzt soll uns sogar eine Glocke vorschreiben, wann Mittag ist. Wie lange lassen wir uns noch durchtakten?“',
+      text: '„Jetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fuehlen. Was kommt als Naechstes - eine Pflichtstimmung im Abteil?“',
     },
   ],
   correctChoiceId: 'c',
-  success: { id: 'rightB', nextStep: 5 },
+  success: { id: 'rightB', nextStep: 42 },
   failure: { id: 'wrongB', nextStep: 41 },
 }
 const PART3_ACTIVITY1_FALLBACK_CONFIG = {
@@ -444,7 +451,6 @@ function createTransitionFlags(overrides = {}) {
     resetOnPart3Activity2: false,
     resetOnPart3Summary: false,
     resetOnPart4Activity2: false,
-    resetOnPart4WrongFeedback: false,
     resetOnPart4Summary: false,
     ...overrides,
   }
@@ -506,14 +512,26 @@ function resolveSentenceMarkingSubmission(config, selectedSentenceIndexes) {
     correctSentenceIds.every((item) => selectedSentenceIndexes.includes(item))
 
   const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongA', 31)
-  const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 4)
+  const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 32)
+  const selectedIds = [...selectedSentenceIndexes].sort()
+  const selectedOnly = (...ids) =>
+    selectedIds.length === ids.length &&
+    ids.every((id) => selectedIds.includes(id))
   const mappedOption = isCorrect
     ? successTarget
-    : selectedCorrectCount === 0
-      ? failureTarget
-      : selectedWrongCount === 0
-        ? { ...failureTarget, id: 'wrongPartial' }
-        : { ...failureTarget, id: 'wrongMixed' }
+    : selectedOnly('s5')
+      ? { ...failureTarget, id: 'wrongOnlyEscalation' }
+      : selectedOnly('s2')
+        ? { ...failureTarget, id: 'wrongOnlyIncident' }
+        : selectedOnly('s4')
+          ? { ...failureTarget, id: 'wrongOnlyOutrage' }
+          : selectedWrongCount === 0 && selectedCorrectCount === 2
+            ? { ...failureTarget, id: 'wrongTwoCorrect' }
+            : selectedCorrectCount === 0
+              ? { ...failureTarget, id: 'wrongOnlyFalse' }
+              : selectedWrongCount > 0
+                ? { ...failureTarget, id: 'wrongOvermarked' }
+                : failureTarget
 
   return {
     isCorrect,
@@ -826,7 +844,7 @@ export function GameScreen({
   const isPart2Activity1InputStep =
     currentPart === 2 && Number(stepData.stepIndex) === 3
   const isPart2Activity1Context =
-    currentPart === 2 && [3, 31].includes(Number(stepData.stepIndex))
+    currentPart === 2 && [3, 31, 32].includes(Number(stepData.stepIndex))
   const part2Activity1Config = isPart2Activity1Context
     ? resolveSentenceMarkingConfig(
         stepData.activityConfig,
@@ -836,7 +854,7 @@ export function GameScreen({
   const isPart2Activity2InputStep =
     currentPart === 2 && Number(stepData.stepIndex) === 4
   const isPart2Activity2Context =
-    currentPart === 2 && [4, 41].includes(Number(stepData.stepIndex))
+    currentPart === 2 && [4, 41, 42, 43].includes(Number(stepData.stepIndex))
   const part2Activity2Config = isPart2Activity2Context
     ? resolveIntensityChoiceConfig(
         stepData.activityConfig,
@@ -1421,14 +1439,31 @@ export function GameScreen({
         {
           correctChoiceId: 'c',
           successId: 'rightB',
-          successNextStep: 5,
+          successNextStep: 42,
           failureId: 'wrongB',
           failureNextStep: 41,
         }
       )
       setLastSubmittedIntensityChoiceId(selectedIntensityChoiceId)
       setLastSubmittedIntensityChoiceOrder(intensityChoiceOrder)
-      option = { ...submission.mappedOption, label: option.label }
+      option = submission.isCorrect
+        ? { ...submission.mappedOption, label: option.label }
+        : {
+            ...submission.mappedOption,
+            id:
+              selectedIntensityChoiceId === 'b'
+                ? 'wrongBMedium'
+                : selectedIntensityChoiceId === 'a'
+                  ? 'wrongBLow'
+                  : submission.mappedOption.id,
+            nextStep:
+              selectedIntensityChoiceId === 'b'
+                ? 41
+                : selectedIntensityChoiceId === 'a'
+                  ? 43
+                  : submission.mappedOption.nextStep,
+            label: option.label,
+          }
     }
 
     if (isPart3Activity1InputStep && option?.kind === 'choice') {
@@ -1501,7 +1536,6 @@ export function GameScreen({
       )
       transitionFlags = createTransitionFlags({
         resetOnPart4Activity2: submission.isCorrect,
-        resetOnPart4WrongFeedback: !submission.isCorrect,
       })
       setLastSubmittedBucketAssignments(
         submission.lastSubmittedBucketAssignments
@@ -1578,6 +1612,14 @@ export function GameScreen({
         }
 
         if (
+          currentPart === 2 &&
+          Number(stepData.stepIndex) === 32 &&
+          Number(option.nextStep) === 4
+        ) {
+          resetFlowState({ clearMessages: true, resetSentence: true })
+        }
+
+        if (
           transitionFlags.resetOnPart3Activity2 &&
           currentPart === 3 &&
           Number(option.nextStep) === 4
@@ -1607,14 +1649,6 @@ export function GameScreen({
             resetBucket: true,
             resetPart4Choice: true,
           })
-        }
-
-        if (
-          transitionFlags.resetOnPart4WrongFeedback &&
-          currentPart === 4 &&
-          Number(option.nextStep) === 31
-        ) {
-          resetFlowState({ clearMessages: true })
         }
 
         if (

@@ -53,23 +53,19 @@ export function MonitorActivityScene({
   const isChoiceMode = !!choiceOptions.length
   const isBoosterMode = !!boosterOptions.length
   const isBucketMode = !!bucketOptions.length
-  const isRetryOnly =
+  const firstPlayerIndex = messages.findIndex(
+    (message) => message.speakerType === 'player'
+  )
+  const shouldSplitActivityThread =
     actionOptions.length > 0 &&
-    actionOptions.every((option) => option.id === 'retry')
+    (isSentenceMode || isChoiceMode || isBoosterMode || isBucketMode) &&
+    firstPlayerIndex > 0
   let leadMessages = []
   let trailingMessages = messages
 
-  if (
-    isRetryOnly &&
-    (isSentenceMode || isChoiceMode || isBoosterMode || isBucketMode)
-  ) {
-    const firstPlayerIndex = messages.findIndex(
-      (message) => message.speakerType === 'player'
-    )
-    if (firstPlayerIndex > 0) {
-      leadMessages = messages.slice(0, firstPlayerIndex)
-      trailingMessages = messages.slice(firstPlayerIndex)
-    }
+  if (shouldSplitActivityThread) {
+    leadMessages = messages.slice(0, firstPlayerIndex)
+    trailingMessages = messages.slice(firstPlayerIndex)
   } else {
     const leadCount = messages.length
     leadMessages = messages.slice(0, Math.min(leadCount, messages.length))
