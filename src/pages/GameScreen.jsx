@@ -12,7 +12,7 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Willkommen in Regelreich!\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen - sie entstehen im Gespräch.',
+        text: 'Willkommen in Regelreich.\n\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen – sie entstehen im Gespräch.',
       },
       {
         hostId: 'ambassador',
@@ -20,12 +20,12 @@ const PART0_FALLBACK_STEPS = [
       },
       {
         hostId: 'ambassador',
-        text: 'Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen.',
+        text: 'Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden – und aus Trends mitunter offizielle Entscheidungen.',
       },
     ],
     options: [
       { id: 'plausible', label: 'Klingt vernünftig.', nextStep: 1 },
-      { id: 'tiktalk_ernst', label: 'TikTalk - dein Ernst?', nextStep: 1 },
+      { id: 'tiktalk_ernst', label: 'TikTalk – dein Ernst?', nextStep: 1 },
     ],
   },
   {
@@ -34,11 +34,11 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Lange Zeit galt TikTalk als lebhaft, aber berechenbar. Man wusste: Es wird diskutiert, es wird kommentiert - und irgendwann kehrt wieder Ordnung ein.',
+        text: 'Lange Zeit galt TikTalk als lebhaft, aber berechenbar.\n\nMan wusste: Es wird diskutiert, es wird kommentiert – und irgendwann kehrt wieder Ordnung ein.',
       },
       {
         hostId: 'ambassador',
-        text: 'Doch in den letzten Monaten hat sich etwas verschoben. Bestimmte Diskussionen eskalieren schneller. Einige Beiträge verbreiten sich ungewöhnlich stark. Und manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht.',
+        text: 'Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beiträge verbreiten sich ungewöhnlich stark.\n\nUnd manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht.',
       },
     ],
     options: [
@@ -51,7 +51,7 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\nSie treten unter Pseudonymen auf.\nSie behaupten, sie würden Debatten nur beschleunigen.\nIntern werden sie "Die notorischen Drei" genannt.',
+        text: 'Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚beschleunigen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt.',
       },
     ],
     options: [
@@ -64,7 +64,7 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Emma Pör. Konrad Sens. Didi Fam. Sie arbeiten verdeckt - und sie haben ein bemerkenswertes Talent.',
+        text: 'Emma Pör. Konrad Sens. Didi Fam.\n\nSie arbeiten verdeckt – und sie haben ein bemerkenswertes Talent.',
       },
     ],
     options: [
@@ -77,11 +77,11 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Diskussionen in eine Richtung zu lenken. Mal lauter, mal leiser - aber selten zufällig.',
+        text: 'Diskussionen in eine Richtung zu lenken.\n\nMal lauter, mal leiser – aber selten zufällig.',
       },
       {
         hostId: 'ambassador',
-        text: 'Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\nDeine Aufgabe: Herausfinden, wie sie das tun.',
+        text: 'Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\n\nDeine Aufgabe: Herausfinden, wie sie das tun.',
       },
     ],
     options: [
@@ -95,12 +95,12 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Stark. Neugier ist hier ein Vorteil. Dann legen wir direkt los.',
+        text: 'Stark. Neugier ist hier ein Vorteil.\n\nDann legen wir direkt los.',
         showOnOptionId: 'spannend',
       },
       {
         hostId: 'ambassador',
-        text: 'Keine Sorge.\nSie wissen nur, dass jemand kommt - nicht, wer.',
+        text: 'Keine Sorge.\n\nSie wissen nur, dass jemand kommt – nicht, wer.',
         showOnOptionId: 'hoffe_unbekannt',
       },
     ],
@@ -329,6 +329,7 @@ function getFallbackStep(scene, currentPart, stepIndex) {
       speechBubbles: (step.speechBubbles || []).map((bubble) => ({
         hostId: bubble.characterId === 'uwe' ? 'uwe' : 'clara',
         text: bubble.text,
+        showOnOptionId: bubble.showOnOptionId,
       })),
       options: step.options || [],
     }
@@ -1096,7 +1097,7 @@ export function GameScreen({
       onSelectAvatar?.(String(option.id).toLowerCase())
     }
 
-    const selectedFromPart1 = currentPart === 1 && stepData.stepIndex === 0 && (option?.id === 'clara' || option?.id === 'uwe')
+    const selectedFromPart1 = currentPart === 1 && (option?.id === 'clara' || option?.id === 'uwe')
     if (selectedFromPart1) {
       onSelectHost?.(option.id)
     }
@@ -1273,14 +1274,14 @@ export function GameScreen({
         : '/backgrounds/keller-uwe.png'
     }
     if (currentPart === 3) {
-      if ([0, 1, 2, 5].includes(currentStepIndex)) return hostGenderBackground
+      if ([0, 1, 2, 5, 10, 11, 12, 13, 51].includes(currentStepIndex)) return hostGenderBackground
       return '/backgrounds/grossraum_monitor.png'
     }
     if (currentPart === 4) {
       const part4HostBackground = selectedHostId === 'uwe'
         ? '/backgrounds/einzelbuero_mann.png'
         : '/backgrounds/einzelbuero_frau.png'
-      if ([0, 1, 2, 5].includes(currentStepIndex)) return part4HostBackground
+      if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex)) return part4HostBackground
       return '/backgrounds/einzelbuero_tablet.png'
     }
     if (currentPart === 5) {

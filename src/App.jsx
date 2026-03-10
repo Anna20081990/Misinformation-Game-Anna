@@ -8,7 +8,9 @@ import { getSceneDialogs } from './api/dialogApi.js'
 const FALLBACK_NAV_STEPS_BY_PART = {
   1: [
     { stepIndex: 0, type: 'intro' },
-    { stepIndex: 3, type: 'transition' },
+    { stepIndex: 2, type: 'intro' },
+    { stepIndex: 5, type: 'intro' },
+    { stepIndex: 7, type: 'transition' },
   ],
   2: [
     { stepIndex: 0, type: 'intro' },
@@ -41,7 +43,25 @@ const FALLBACK_NAV_STEPS_BY_PART = {
   ],
 }
 
-function buildSubchapters(steps = []) {
+const PART1_SUBCHAPTERS = [
+  { stepIndex: 0, label: 'Intro' },
+  { stepIndex: 2, label: 'Fallakten' },
+  { stepIndex: 5, label: 'Aufstieg' },
+  { stepIndex: 7, label: 'Host-Auswahl' },
+]
+
+function buildSubchapters(steps = [], part = null) {
+  if (Number(part) === 1) {
+    const availableStepIndexes = new Set(
+      (steps || [])
+        .filter((step) => Number.isFinite(step?.stepIndex))
+        .map((step) => step.stepIndex)
+    )
+
+    const entries = PART1_SUBCHAPTERS.filter((entry) => availableStepIndexes.has(entry.stepIndex))
+    return entries.map((entry, index) => ({ ...entry, chapterIndex: index }))
+  }
+
   const sortedSteps = [...steps]
     .filter((step) => Number.isFinite(step?.stepIndex))
     .sort((a, b) => a.stepIndex - b.stepIndex)
@@ -87,7 +107,7 @@ function buildSubchapters(steps = []) {
     if (type === 'transition') {
       if (hasSummary) {
         const summaryEntry = entries.find((entry) => entry.label === 'Summary')
-        if (summaryEntry) summaryEntry.label = 'Summary / Transition'
+        if (summaryEntry) summaryEntry.label = 'Outro'
       } else {
         entries.push({ stepIndex: step.stepIndex, label: 'Transition' })
       }
@@ -107,6 +127,25 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
   if (chapterByStep.has(currentStepIndex)) return currentStepIndex
 
   const step = steps.find((item) => item.stepIndex === currentStepIndex)
+  if (step && Number(currentStepIndex) >= 10) {
+    const type = String(step.type || 'dialog').toLowerCase()
+    if (type === 'intro') {
+      const introEntry = subchapters.find((chapter) => chapter.label === 'Intro')
+      if (introEntry) return introEntry.stepIndex
+    }
+    if (type === 'example') {
+      const exampleEntries = subchapters
+        .filter((chapter) => String(chapter.label || '').startsWith('Beispiel'))
+        .sort((a, b) => a.stepIndex - b.stepIndex)
+      const lastExampleEntry = exampleEntries[exampleEntries.length - 1]
+      if (lastExampleEntry) return lastExampleEntry.stepIndex
+    }
+    if (type === 'transition') {
+      const outroEntry = subchapters.find((chapter) => chapter.label === 'Outro' || chapter.label === 'Summary')
+      if (outroEntry) return outroEntry.stepIndex
+    }
+  }
+
   if (step?.options?.length) {
     const candidateChapterSteps = step.options
       .map((option) => option?.nextStep)
@@ -147,7 +186,7 @@ export function App() {
   const activeSteps = (dialogsByPart[currentPart]?.steps?.length
     ? dialogsByPart[currentPart].steps
     : (FALLBACK_NAV_STEPS_BY_PART[currentPart] || []))
-  const activeSubchapters = buildSubchapters(activeSteps)
+  const activeSubchapters = buildSubchapters(activeSteps, currentPart)
   const activeChapterStepIndex = resolveActiveChapterStep(
     activeStepByPart[currentPart] ?? 0,
     activeSubchapters,

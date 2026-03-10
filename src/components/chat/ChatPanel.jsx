@@ -31,10 +31,14 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
 
 function renderMessageText(text) {
   const normalized = String(text ?? '').replace(/\r\n?/g, '\n')
-  const paragraphs = normalized.split(/\n{2,}/)
+  const paragraphs = normalized.split(/\n\s*\n+/)
 
   return paragraphs.map((paragraph, index) => (
-    <p key={`p-${index}`} className="chat-message__paragraph" style={{ whiteSpace: 'pre-wrap' }}>
+    <p
+      key={`p-${index}`}
+      className="chat-message__paragraph"
+      style={{ whiteSpace: 'pre-wrap', margin: index === 0 ? 0 : '0.8em 0 0 0' }}
+    >
       {paragraph}
     </p>
   ))
