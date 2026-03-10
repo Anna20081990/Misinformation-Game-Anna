@@ -47,7 +47,7 @@ export function MonitorActivityScene({
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [messages, options])
+  }, [messages])
 
   const isSentenceMode = !!sentenceOptions.length
   const isChoiceMode = !!choiceOptions.length
@@ -92,6 +92,15 @@ export function MonitorActivityScene({
   const boosterPostAuthorAvatar = boosterOptions[0]?.postAuthorAvatar || ''
   const boosterHideTitle = Boolean(boosterOptions[0]?.hideTitle)
   const boosterHideTopic = Boolean(boosterOptions[0]?.hideTopic)
+  const boosterPromptAfterNeutralPost = Boolean(
+    boosterOptions[0]?.promptAfterNeutralPost
+  )
+  const boosterPromptHostId = boosterOptions[0]?.promptHostId || ''
+  const boosterPromptSpeakerName = boosterOptions[0]?.promptSpeakerName || ''
+  const boosterRenderNeutralPostAsMessage = Boolean(
+    boosterOptions[0]?.renderNeutralPostAsMessage
+  )
+  const boosterNeutralPostHostId = boosterOptions[0]?.neutralPostHostId || ''
 
   const isSelectVariant = String(variant).includes('select')
 
@@ -234,7 +243,8 @@ export function MonitorActivityScene({
                     <div
                       className={`monitor-choice ${boosterPostAuthorName ? 'monitor-choice--post' : ''}`}
                     >
-                      {!!boosterPostAuthorName && (
+                      {!!boosterPostAuthorName &&
+                        !boosterRenderNeutralPostAsMessage && (
                         <div className="monitor-post-author">
                           {!!boosterPostAuthorAvatar && (
                             <img
@@ -247,7 +257,7 @@ export function MonitorActivityScene({
                             {boosterPostAuthorName}
                           </strong>
                         </div>
-                      )}
+                        )}
                       {!boosterHideTitle && (
                         <h3 className="monitor-select__title">
                           {boosterOptions[0]?.topic ||
@@ -255,21 +265,63 @@ export function MonitorActivityScene({
                             'Aktivität 2'}
                         </h3>
                       )}
-                      {!boosterHideTopic && !!boosterOptions[0]?.prompt && (
+                      {!boosterHideTopic &&
+                        !!boosterOptions[0]?.prompt &&
+                        !boosterPromptAfterNeutralPost && (
                         <p className="monitor-choice__topic">
                           {boosterOptions[0]?.prompt}
                         </p>
                       )}
-                      {!!boosterOptions[0]?.neutralPost && (
-                        <div
-                          className="monitor-choice__item monitor-choice__item--neutral"
-                          aria-label="Ausgangspost"
-                        >
-                          <p className="monitor-choice__text">
-                            {boosterOptions[0]?.neutralPost}
-                          </p>
-                        </div>
-                      )}
+                      {!!boosterOptions[0]?.neutralPost &&
+                        (boosterRenderNeutralPostAsMessage ? (
+                          <article className="monitor-message monitor-message--host">
+                            <HostAvatar
+                              characterId={boosterNeutralPostHostId}
+                              speakerName={boosterPostAuthorName}
+                            />
+                            <div className="monitor-message__bubble">
+                              <strong className="monitor-message__speaker">
+                                {boosterPostAuthorName || 'Host'}
+                              </strong>
+                              {renderMessageParagraphs(
+                                boosterOptions[0]?.neutralPost,
+                                {
+                                  className: 'monitor-message__paragraph',
+                                }
+                              )}
+                            </div>
+                          </article>
+                        ) : (
+                          <div
+                            className="monitor-choice__item monitor-choice__item--neutral"
+                            aria-label="Ausgangspost"
+                          >
+                            <p className="monitor-choice__text">
+                              {boosterOptions[0]?.neutralPost}
+                            </p>
+                          </div>
+                        ))}
+                      {!boosterHideTopic &&
+                        !!boosterOptions[0]?.prompt &&
+                        boosterPromptAfterNeutralPost && (
+                          <article className="monitor-message monitor-message--host">
+                            <HostAvatar
+                              characterId={boosterPromptHostId}
+                              speakerName={boosterPromptSpeakerName}
+                            />
+                            <div className="monitor-message__bubble">
+                              <strong className="monitor-message__speaker">
+                                {boosterPromptSpeakerName || 'Host'}
+                              </strong>
+                              {renderMessageParagraphs(
+                                boosterOptions[0]?.prompt,
+                                {
+                                  className: 'monitor-message__paragraph',
+                                }
+                              )}
+                            </div>
+                          </article>
+                        )}
                       <div className="monitor-choice__list">
                         {boosterOptions.map((choice, index) => (
                           <button

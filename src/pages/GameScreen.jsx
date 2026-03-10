@@ -140,15 +140,15 @@ const PART2_ACTIVITY2_FALLBACK_CONFIG = {
   choices: [
     {
       id: 'a',
-      text: '„Die Stadt plant einen einheitlichen Farbverlauf fuer Wartebereiche im Hauptbahnhof.“',
+      text: '„Die Stadt plant einen einheitlichen Farbverlauf für Wartebereiche im Hauptbahnhof.“',
     },
     {
       id: 'b',
-      text: '„Der geplante Farbverlauf im Wartebereich sorgt fuer Diskussionen. Manche halten ihn fuer eine ueberfluessige Dramatisierung des Bahnalltags.“',
+      text: '„Der geplante Farbverlauf im Wartebereich sorgt für Diskussionen. Manche halten ihn für eine überflüssige Dramatisierung des Bahnalltags.“',
     },
     {
       id: 'c',
-      text: '„Jetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fuehlen. Was kommt als Naechstes - eine Pflichtstimmung im Abteil?“',
+      text: '„Jetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fühlen. Was kommt als Nächstes – eine Pflichtstimmung im Abteil?“',
     },
   ],
   correctChoiceId: 'c',
@@ -175,7 +175,7 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
     },
   ],
   correctChoiceId: 'p3',
-  success: { id: 'rightA', nextStep: 4 },
+  success: { id: 'rightA', nextStep: 32 },
   failure: { id: 'wrongA', nextStep: 31 },
 }
 const PART3_ACTIVITY2_FALLBACK_CONFIG = {
@@ -486,6 +486,7 @@ function buildStepHostMessages({
       hostId: resolvedHostId,
       speakerName: getHostFullName(resolvedHostId),
       text: bubble.text,
+      placement: bubble.placement,
     }
   })
 }
@@ -864,7 +865,7 @@ export function GameScreen({
   const isPart3Activity1InputStep =
     currentPart === 3 && Number(stepData.stepIndex) === 3
   const isPart3Activity1Context =
-    currentPart === 3 && [3, 31].includes(Number(stepData.stepIndex))
+    currentPart === 3 && [3, 31, 32, 33].includes(Number(stepData.stepIndex))
   const part3Activity1Config = isPart3Activity1Context
     ? resolveIntensityChoiceConfig(
         stepData.activityConfig,
@@ -1010,6 +1011,11 @@ export function GameScreen({
         postAuthorAvatar: '/backgrounds/konrad_sens.png',
         hideTitle: true,
         hideTopic: true,
+        promptAfterNeutralPost: true,
+        promptHostId: selectedHostId || 'selected',
+        promptSpeakerName: getHostFullName(selectedHostId || 'selected'),
+        renderNeutralPostAsMessage: true,
+        neutralPostHostId: 'konrad',
       }))
     : []
   const effectiveBucketAssignments = isPart4Activity1InputStep
@@ -1478,17 +1484,31 @@ export function GameScreen({
         {
           correctChoiceId: 'p3',
           successId: 'rightA',
-          successNextStep: 4,
+          successNextStep: 32,
           failureId: 'wrongA',
           failureNextStep: 31,
         }
       )
-      transitionFlags = createTransitionFlags({
-        resetOnPart3Activity2: submission.isCorrect,
-      })
       setLastSubmittedTrendChoiceId(selectedTrendChoiceId)
       setLastSubmittedTrendChoiceOrder(trendChoiceOrder)
-      option = { ...submission.mappedOption, label: option.label }
+      option = submission.isCorrect
+        ? { ...submission.mappedOption, label: option.label }
+        : {
+            ...submission.mappedOption,
+            id:
+              selectedTrendChoiceId === 'p2'
+                ? 'wrongAMedium'
+                : selectedTrendChoiceId === 'p1'
+                  ? 'wrongALow'
+                  : submission.mappedOption.id,
+            nextStep:
+              selectedTrendChoiceId === 'p2'
+                ? 31
+                : selectedTrendChoiceId === 'p1'
+                  ? 33
+                  : submission.mappedOption.nextStep,
+            label: option.label,
+          }
     }
 
     if (isPart3Activity2InputStep && option?.kind === 'booster') {
@@ -1591,8 +1611,10 @@ export function GameScreen({
     const shouldNavigate = option?.nextPart != null || option?.nextStep != null
     if (!shouldNavigate) return
 
-    const resetOnRetryPart2 = currentPart === 2 && option?.id === 'retry'
-    const resetOnRetryPart3 = currentPart === 3 && option?.id === 'retry'
+    const resetOnRetryPart2 =
+      currentPart === 2 && String(option?.id || '').startsWith('retry')
+    const resetOnRetryPart3 =
+      currentPart === 3 && String(option?.id || '').startsWith('retry')
     const resetOnRetryPart4 = currentPart === 4 && option?.id === 'retry'
 
     transitionTimerRef.current = setTimeout(() => {
@@ -1637,6 +1659,14 @@ export function GameScreen({
           Number(option.nextStep) === 5
         ) {
           resetFlowState({ clearMessages: true, resetBooster: true })
+        }
+
+        if (
+          currentPart === 3 &&
+          Number(stepData.stepIndex) === 32 &&
+          Number(option.nextStep) === 4
+        ) {
+          resetFlowState({ clearMessages: true, resetTrend: true })
         }
 
         if (
