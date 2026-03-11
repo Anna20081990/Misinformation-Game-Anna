@@ -180,6 +180,60 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
   return fallback ?? subchapters[0].stepIndex
 }
 
+function getInternshipProgress({
+  currentPart,
+  dialogsByPart,
+  activeStepByPart,
+}) {
+  const progressParts = [2, 3, 4, 5]
+  if (!progressParts.includes(Number(currentPart))) return null
+
+  const milestones = progressParts.flatMap((part) => {
+    const steps = dialogsByPart[part]?.steps?.length
+      ? dialogsByPart[part].steps
+      : FALLBACK_NAV_STEPS_BY_PART[part] || []
+    const subchapters = buildSubchapters(steps, part)
+    return subchapters.map((chapter) => ({
+      part,
+      stepIndex: chapter.stepIndex,
+    }))
+  })
+
+  if (milestones.length <= 1) {
+    return {
+      label: 'Praktikums-Fortschritt',
+      percent: 0,
+    }
+  }
+
+  const currentSteps = dialogsByPart[currentPart]?.steps?.length
+    ? dialogsByPart[currentPart].steps
+    : FALLBACK_NAV_STEPS_BY_PART[currentPart] || []
+  const currentSubchapters = buildSubchapters(currentSteps, currentPart)
+  const currentChapterStepIndex = resolveActiveChapterStep(
+    activeStepByPart[currentPart] ?? 0,
+    currentSubchapters,
+    currentSteps
+  )
+
+  const currentMilestoneIndex = milestones.findIndex(
+    (entry) =>
+      entry.part === Number(currentPart) &&
+      entry.stepIndex === Number(currentChapterStepIndex)
+  )
+
+  const normalizedIndex =
+    currentMilestoneIndex >= 0 ? currentMilestoneIndex : 0
+  const percent = Math.round(
+    (normalizedIndex / (milestones.length - 1)) * 100
+  )
+
+  return {
+    label: 'Praktikums-Fortschritt',
+    percent,
+  }
+}
+
 export function App() {
   const { currentPart, setCurrentPart } = useScene(-1)
   const [selectedAvatarId, setSelectedAvatarId] = useState(null)
@@ -227,6 +281,11 @@ export function App() {
     activeSubchapters,
     activeSteps
   )
+  const internshipProgress = getInternshipProgress({
+    currentPart,
+    dialogsByPart,
+    activeStepByPart,
+  })
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -304,33 +363,56 @@ export function App() {
           </div>
         )}
         <nav className="app__nav">
-          <button
-            type="button"
-            className={`app__mode-btn ${viewMode === 'game' ? 'app__mode-btn--active' : ''}`}
-            onClick={() => setViewMode('game')}
-          >
-            Spiel
-          </button>
-          <button
-            type="button"
-            className={`app__mode-btn ${viewMode === 'admin' ? 'app__mode-btn--active' : ''}`}
-            onClick={() => setViewMode('admin')}
-          >
-            Admin
-          </button>
-          {viewMode === 'game' &&
-            gameNavItems.map(({ id, label }) => (
-              <button
-                key={id}
-                type="button"
-                className={`app__nav-btn ${label === 'Start' ? 'app__nav-btn--label' : ''} ${currentPart === id ? 'app__nav-btn--active' : ''}`}
-                onClick={() => handlePartChange(id)}
-                aria-pressed={currentPart === id}
-                aria-label={label === 'Start' ? 'Start' : `Teil ${id}`}
-              >
-                {label}
-              </button>
-            ))}
+          {viewMode === 'game' && internshipProgress && (
+            <div
+              className="app__progress"
+              aria-label={`${internshipProgress.label}: ${internshipProgress.percent} Prozent`}
+            >
+              <div className="app__progress-meta">
+                <span className="app__progress-label">
+                  {internshipProgress.label}
+                </span>
+                <strong className="app__progress-value">
+                  {internshipProgress.percent}%
+                </strong>
+              </div>
+              <div className="app__progress-track" aria-hidden="true">
+                <div
+                  className="app__progress-fill"
+                  style={{ width: `${internshipProgress.percent}%` }}
+                />
+              </div>
+            </div>
+          )}
+          <div className="app__nav-controls">
+            <button
+              type="button"
+              className={`app__mode-btn ${viewMode === 'game' ? 'app__mode-btn--active' : ''}`}
+              onClick={() => setViewMode('game')}
+            >
+              Spiel
+            </button>
+            <button
+              type="button"
+              className={`app__mode-btn ${viewMode === 'admin' ? 'app__mode-btn--active' : ''}`}
+              onClick={() => setViewMode('admin')}
+            >
+              Admin
+            </button>
+            {viewMode === 'game' &&
+              gameNavItems.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={`app__nav-btn ${label === 'Start' ? 'app__nav-btn--label' : ''} ${currentPart === id ? 'app__nav-btn--active' : ''}`}
+                  onClick={() => handlePartChange(id)}
+                  aria-pressed={currentPart === id}
+                  aria-label={label === 'Start' ? 'Start' : `Teil ${id}`}
+                >
+                  {label}
+                </button>
+              ))}
+          </div>
         </nav>
         {viewMode === 'game' &&
           currentPart > 0 &&

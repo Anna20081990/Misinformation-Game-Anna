@@ -56,10 +56,67 @@ html, body {
 }
 
 .app__nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.6rem;
+  flex-wrap: wrap;
+}
+
+.app__progress {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(18rem, calc(100% - 2rem));
+  min-width: min(18rem, 100%);
+  padding: 0.15rem 0;
+}
+
+.app__nav-controls {
   display: flex;
   gap: 0.5rem;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+}
+
+.app__progress-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.app__progress-label {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.app__progress-value {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.app__progress-track {
+  height: 0.58rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.28);
+}
+
+.app__progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8cf0ff 0%, #ffffff 100%);
+  box-shadow: 0 0 14px rgba(140, 240, 255, 0.3);
+  transition: width 0.25s ease;
 }
 
 .app__mode-btn {
@@ -1053,6 +1110,21 @@ html, body {
 }
 
 @media (max-width: 980px) {
+  .app__nav {
+    position: static;
+    min-height: 0;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .app__progress {
+    position: static;
+    transform: none;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 0.35rem;
+  }
+
   .scene__chat-wrap {
     width: calc(100vw - 1rem);
     min-width: auto;
