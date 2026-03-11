@@ -504,6 +504,51 @@ function buildStepHostMessages({
   })
 }
 
+function getStepTypeForIndex(steps = [], stepIndex) {
+  const step = steps.find(
+    (entry) => Number(entry?.stepIndex) === Number(stepIndex)
+  )
+  return String(step?.type || '').toLowerCase()
+}
+
+function shouldSuppressTransitionPlayerMessage({
+  option,
+  currentType,
+  sortedSteps,
+  options,
+}) {
+  if (!option || option.kind || isAvatarOption(option)) {
+    return false
+  }
+
+  const normalizedOptions = (options || []).filter(
+    (entry) => entry && !entry.kind && !isAvatarOption(entry)
+  )
+  if (!normalizedOptions.length) return false
+
+  const selectedTarget =
+    option.nextPart != null ? `part:${option.nextPart}` : `step:${option.nextStep}`
+  if (!selectedTarget || selectedTarget.endsWith('undefined')) return false
+
+  const allOptionsLeadToSameTarget = normalizedOptions.every((entry) => {
+    const target =
+      entry.nextPart != null ? `part:${entry.nextPart}` : `step:${entry.nextStep}`
+    return target === selectedTarget
+  })
+  if (!allOptionsLeadToSameTarget) return false
+
+  if (option.nextPart != null) return true
+  if (option.nextStep == null) return false
+
+  const targetType = getStepTypeForIndex(sortedSteps, option.nextStep)
+  if (!targetType) return false
+  if (targetType === 'activity' && currentType !== 'activity') return true
+  if (currentType === 'activity' && targetType === 'summary') return true
+  if (currentType === 'summary' && targetType === 'activity') return true
+
+  return false
+}
+
 function buildPlayerMessage(currentPart, index, option) {
   if (!option?.label || isAvatarOption(option)) return null
 
@@ -919,6 +964,7 @@ export function GameScreen({
     [2, 3, 4].includes(currentPart) &&
     String(stepData.type || '').toLowerCase() === 'activity'
   const activityVariantByPart = { 2: 'monitor', 3: 'tablet', 4: 'hologram' }
+  const currentStepType = String(stepData.type || '').toLowerCase()
   const hasAvatarOptionInCurrentStep = options.some((option) =>
     isAvatarOption(option)
   )
@@ -1614,7 +1660,15 @@ export function GameScreen({
       onSelectHost?.(option.id)
     }
 
-    const playerMessage = buildPlayerMessage(currentPart, index, option)
+    const suppressPlayerMessage = shouldSuppressTransitionPlayerMessage({
+      option,
+      currentType: currentStepType,
+      sortedSteps: sortedBackendSteps,
+      options,
+    })
+    const playerMessage = suppressPlayerMessage
+      ? null
+      : buildPlayerMessage(currentPart, index, option)
     if (playerMessage) {
       setChatMessages((prev) => [...prev, playerMessage])
     }
