@@ -528,6 +528,18 @@ function shouldSuppressTransitionPlayerMessage({
     return true
   }
 
+  if ([2, 3, 4].includes(Number(currentPart))) {
+    const optionId = String(option?.id || '')
+    if (
+      optionId.startsWith('retry') ||
+      optionId === 'continue_to_activity2' ||
+      optionId === 'continue_to_summary' ||
+      optionId === 'career_unlock'
+    ) {
+      return true
+    }
+  }
+
   const normalizedOptions = (options || []).filter(
     (entry) => entry && !entry.kind && !isAvatarOption(entry)
   )
