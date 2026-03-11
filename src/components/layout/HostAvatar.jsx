@@ -4,7 +4,9 @@ function resolveHostId(characterId, speakerName) {
     id === 'clara' ||
     id === 'uwe' ||
     id === 'ambassador' ||
-    id === 'konrad'
+    id === 'emma' ||
+    id === 'konrad' ||
+    id === 'didi'
   ) {
     return id
   }
@@ -13,7 +15,9 @@ function resolveHostId(characterId, speakerName) {
   if (name.includes('clara')) return 'clara'
   if (name.includes('uwe')) return 'uwe'
   if (name.includes('botschafterin')) return 'ambassador'
+  if (name.includes('emma')) return 'emma'
   if (name.includes('konrad')) return 'konrad'
+  if (name.includes('didi')) return 'didi'
   return 'host'
 }
 
@@ -31,6 +35,14 @@ function AmbassadorAvatar() {
 
 function KonradAvatar() {
   return <img src="/backgrounds/konrad_sens.png" className="host-avatar__img" alt="Konrad Sens" />
+}
+
+function EmmaAvatar() {
+  return <img src="/backgrounds/emma-poer.png" className="host-avatar__img" alt="Emma Pör" />
+}
+
+function DidiAvatar() {
+  return <img src="/backgrounds/didi-fam.png" className="host-avatar__img" alt="Didi Fam" />
 }
 
 function GenericHostAvatar() {
@@ -55,7 +67,9 @@ export function HostAvatar({ characterId, speakerName }) {
       {hostId === 'clara' && <ClaraAvatar />}
       {hostId === 'uwe' && <UweAvatar />}
       {hostId === 'ambassador' && <AmbassadorAvatar />}
+      {hostId === 'emma' && <EmmaAvatar />}
       {hostId === 'konrad' && <KonradAvatar />}
+      {hostId === 'didi' && <DidiAvatar />}
       {hostId === 'host' && <GenericHostAvatar />}
     </div>
   )

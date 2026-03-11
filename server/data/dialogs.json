@@ -423,7 +423,7 @@
               "showOnOptionId": "ready"
             },
             {
-              "hostId": "selected",
+              "hostId": "emma",
               "text": "Die Stadt hat heute eine neue Taubenstatistik veröffentlicht.\n\nMein Onkel meinte gestern schon, dass vor seinem Balkon plötzlich drei Tauben saßen.\n\nSchon wieder wird uns etwas verschwiegen.\n\nWenn selbst Tauben hier strategisch verteilt werden, läuft etwas gewaltig schief."
             },
             {
@@ -444,7 +444,7 @@
           "type": "example",
           "speechBubbles": [
             {
-              "hostId": "selected",
+              "hostId": "emma",
               "text": "Die Stadt testet eine neue Anzeige für öffentliche Uhren.\n\nEin Freund meinte, die Uhr am Bahnhof sei gestern für einen Moment stehen geblieben.\n\nWenn selbst die Zeit hier nicht mehr zuverlässig läuft, was gerät dann noch ins Stocken?\n\nIrgendetwas fühlt sich hier nicht mehr stabil an."
             },
             {

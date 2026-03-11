@@ -13,6 +13,9 @@ const HOST_CHOICES = [
   { id: 'selected', label: 'Gewählter Host (aus Teil 1)' },
   { id: 'clara', label: 'Klara Blick' },
   { id: 'uwe', label: 'Uwe R. Blick' },
+  { id: 'emma', label: 'Emma Pör' },
+  { id: 'konrad', label: 'Konrad Sens' },
+  { id: 'didi', label: 'Didi Fam' },
 ]
 
 const STEP_TYPES = [
@@ -409,7 +412,7 @@ export function AdminDialogScreen() {
           {(formData.speechBubbles || []).map((bubble, index) => (
             <div key={`bubble-${index}`} className="admin__block">
               <label className="admin__field">
-                <span>Host-Name</span>
+                <span>Sprecher</span>
                 <select
                   value={bubble.hostId}
                   onChange={(event) =>

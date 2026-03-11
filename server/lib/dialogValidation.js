@@ -4,6 +4,7 @@ const HOST_IDS = new Set([
   'clara',
   'uwe',
   'ambassador',
+  'emma',
   'konrad',
   'didi',
 ])
@@ -146,7 +147,7 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
     ).toLowerCase()
     assert(
       HOST_IDS.has(hostId),
-      `speechBubbles[${index}].hostId muss einer der Werte selected, clara, uwe oder ambassador sein.`
+      `speechBubbles[${index}].hostId muss einer der bekannten Sprecherwerte sein.`
     )
     const showOnOptionId =
       bubble.showOnOptionId == null

@@ -384,13 +384,24 @@ function getHostFullName(hostId) {
   if (hostId === 'ambassador') return 'Botschafterin Regelreich'
   if (hostId === 'clara') return 'Klara Blick'
   if (hostId === 'uwe') return 'Uwe R. Blick'
+  if (hostId === 'emma') return 'Emma Pör'
+  if (hostId === 'konrad') return 'Konrad Sens'
+  if (hostId === 'didi') return 'Didi Fam'
   return 'Host'
 }
 
 function normalizeHostId(raw, selectedHostId) {
   const id = String(raw || 'selected').toLowerCase()
   if (id === 'ambassador') return 'ambassador'
-  if (id === 'clara' || id === 'uwe') return id
+  if (
+    id === 'clara' ||
+    id === 'uwe' ||
+    id === 'emma' ||
+    id === 'konrad' ||
+    id === 'didi'
+  ) {
+    return id
+  }
   if (id === 'selected') return selectedHostId || 'selected'
   return selectedHostId || 'selected'
 }
