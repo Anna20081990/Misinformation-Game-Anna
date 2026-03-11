@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { renderMessageParagraphs } from '../chat/ChatPanel.jsx'
@@ -12,6 +12,11 @@ export function MonitorActivityScene({
   backgroundPlaceholder = null,
 }) {
   const scrollRef = useRef(null)
+  const previousSnapshotRef = useRef({
+    firstMessageId: null,
+    lastMessageId: null,
+    length: 0,
+  })
   const dragItemIdRef = useRef('')
   const [dragOverBucketId, setDragOverBucketId] = useState('')
   const sentenceOptions = options.filter((opt) => opt.kind === 'sentence')
@@ -97,6 +102,38 @@ export function MonitorActivityScene({
   const boosterNeutralPostHostId = boosterOptions[0]?.neutralPostHostId || ''
 
   const isSelectVariant = String(variant).includes('select')
+
+  useLayoutEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+
+    const previous = previousSnapshotRef.current
+    const firstMessageId = messages[0]?.id ?? null
+    const lastMessageId = messages[messages.length - 1]?.id ?? null
+    const hasOverflow = container.scrollHeight > container.clientHeight
+    const startsNewThread =
+      messages.length === 0 ||
+      previous.length === 0 ||
+      messages.length < previous.length ||
+      firstMessageId !== previous.firstMessageId
+
+    if (startsNewThread) {
+      container.scrollTop = 0
+    } else {
+      const appendedMessage =
+        messages.length > previous.length && lastMessageId !== previous.lastMessageId
+
+      if (appendedMessage && hasOverflow) {
+        container.scrollTop = container.scrollHeight
+      }
+    }
+
+    previousSnapshotRef.current = {
+      firstMessageId,
+      lastMessageId,
+      length: messages.length,
+    }
+  }, [messages])
 
   return (
     <div className="scene">

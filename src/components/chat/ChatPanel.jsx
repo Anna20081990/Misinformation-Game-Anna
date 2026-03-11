@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
@@ -70,12 +70,43 @@ export function ChatPanel({
   title = 'Media Lab Luminara',
 }) {
   const scrollRef = useRef(null)
+  const previousSnapshotRef = useRef({
+    firstMessageId: null,
+    lastMessageId: null,
+    length: 0,
+  })
   const avatarOptions = options.filter((option) => isAvatarOption(option))
   const textOptions = options.filter((option) => !isAvatarOption(option))
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+  useLayoutEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+
+    const previous = previousSnapshotRef.current
+    const firstMessageId = messages[0]?.id ?? null
+    const lastMessageId = messages[messages.length - 1]?.id ?? null
+    const hasOverflow = container.scrollHeight > container.clientHeight
+    const startsNewThread =
+      messages.length === 0 ||
+      previous.length === 0 ||
+      messages.length < previous.length ||
+      firstMessageId !== previous.firstMessageId
+
+    if (startsNewThread) {
+      container.scrollTop = 0
+    } else {
+      const appendedMessage =
+        messages.length > previous.length && lastMessageId !== previous.lastMessageId
+
+      if (appendedMessage && hasOverflow) {
+        container.scrollTop = container.scrollHeight
+      }
+    }
+
+    previousSnapshotRef.current = {
+      firstMessageId,
+      lastMessageId,
+      length: messages.length,
     }
   }, [messages, options])
 
