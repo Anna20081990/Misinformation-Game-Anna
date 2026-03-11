@@ -646,6 +646,11 @@
             },
             {
               "hostId": "selected",
+              "imageSrc": "/backgrounds/fallakte_emma_poer.png",
+              "imageAlt": "Fallakte Emma Pör"
+            },
+            {
+              "hostId": "selected",
               "text": "Wenn eine Diskussion plötzlich sehr laut wird, und alle das Gefühl haben, dass gerade etwas Grundsätzliches passiert, ist Emma meist nicht weit."
             }
           ],
@@ -1139,6 +1144,11 @@
             },
             {
               "hostId": "selected",
+              "imageSrc": "/backgrounds/fallakte_konrad_sens.png",
+              "imageAlt": "Fallakte Konrad Sens"
+            },
+            {
+              "hostId": "selected",
               "text": "Er braucht keine Empörung. \nEr braucht nur den Eindruck, dass alle schon überzeugt sind."
             }
           ],
@@ -1621,6 +1631,11 @@
             {
               "hostId": "selected",
               "text": "Fallakte 3: Didi Fam."
+            },
+            {
+              "hostId": "selected",
+              "imageSrc": "/backgrounds/fallakte_didi_fam.png",
+              "imageAlt": "Fallakte Didi Fam"
             },
             {
               "hostId": "selected",

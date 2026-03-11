@@ -497,6 +497,8 @@ function buildStepHostMessages({
       hostId: resolvedHostId,
       speakerName: getHostFullName(resolvedHostId),
       text: bubble.text,
+      imageSrc: bubble.imageSrc,
+      imageAlt: bubble.imageAlt,
       placement: bubble.placement,
     }
   })

@@ -139,12 +139,21 @@ export function ChatPanel({
                 />
               )}
               <div className="chat-message__bubble">
-                {message.speakerName && message.speakerType !== 'player' && (
+                {message.speakerName &&
+                  message.speakerType !== 'player' &&
+                  !message.imageSrc && (
                   <strong className="chat-message__speaker">
                     {hostDisplayName}
                   </strong>
                 )}
-                {renderMessageParagraphs(message.text)}
+                {!!message.imageSrc && (
+                  <img
+                    src={message.imageSrc}
+                    alt={message.imageAlt || ''}
+                    style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+                  />
+                )}
+                {message.text ? renderMessageParagraphs(message.text) : null}
               </div>
             </article>
           )
