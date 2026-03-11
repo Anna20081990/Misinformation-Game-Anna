@@ -377,11 +377,33 @@
             {
               "id": "clara",
               "label": "Clara Blick",
-              "nextPart": 2
+              "nextStep": 8
             },
             {
               "id": "uwe",
               "label": "Uwe-R. Blick",
+              "nextStep": 8
+            }
+          ]
+        },
+        {
+          "stepIndex": 8,
+          "type": "transition",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Super! Dann kann es jetzt ja los gehen."
+            }
+          ],
+          "options": [
+            {
+              "id": "finally",
+              "label": "Na endlich!",
+              "nextPart": 2
+            },
+            {
+              "id": "what_awaits_me",
+              "label": "Was mich wohl erwartet…",
               "nextPart": 2
             }
           ]

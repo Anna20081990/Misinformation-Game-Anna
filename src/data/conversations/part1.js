@@ -244,8 +244,23 @@ export const PART1_CONVERSATION = [
       },
     ],
     options: [
-      { id: 'clara', label: 'Clara Blick', nextPart: 2 },
-      { id: 'uwe', label: 'Uwe-R. Blick', nextPart: 2 },
+      { id: 'clara', label: 'Clara Blick', nextStep: 8 },
+      { id: 'uwe', label: 'Uwe-R. Blick', nextStep: 8 },
+    ],
+  },
+  {
+    stepIndex: 8,
+    speechBubbles: [
+      {
+        characterId: 'host',
+        speakerName: 'Host',
+        text: 'Super! Dann kann es jetzt ja los gehen.',
+        anchor: 'left',
+      },
+    ],
+    options: [
+      { id: 'finally', label: 'Na endlich!', nextPart: 2 },
+      { id: 'what_awaits_me', label: 'Was mich wohl erwartet…', nextPart: 2 },
     ],
   },
 ]

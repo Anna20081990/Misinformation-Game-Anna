@@ -517,9 +517,15 @@ function shouldSuppressTransitionPlayerMessage({
   currentType,
   sortedSteps,
   options,
+  currentPart,
+  currentStepIndex,
 }) {
   if (!option || option.kind || isAvatarOption(option)) {
     return false
+  }
+
+  if (Number(currentPart) === 1 && Number(currentStepIndex) === 8) {
+    return true
   }
 
   const normalizedOptions = (options || []).filter(
@@ -1677,6 +1683,8 @@ export function GameScreen({
       currentType: currentStepType,
       sortedSteps: sortedBackendSteps,
       options,
+      currentPart,
+      currentStepIndex: stepData.stepIndex,
     })
     const playerMessage = suppressPlayerMessage
       ? null
