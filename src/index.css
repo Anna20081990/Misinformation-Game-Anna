@@ -986,6 +986,12 @@ html, body {
   color: #123119;
 }
 
+.chat-message__bubble--image-only {
+  background: transparent !important;
+  box-shadow: none;
+  padding: 0;
+}
+
 .chat-message__speaker {
   display: block;
   margin-bottom: 0.18rem;

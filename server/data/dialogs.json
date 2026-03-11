@@ -907,6 +907,11 @@
             },
             {
               "hostId": "selected",
+              "imageSrc": "/backgrounds/badge-junior-analyst-v2.png",
+              "imageAlt": "Abzeichen Junior-Analyst für kommunikative Phänomene"
+            },
+            {
+              "hostId": "selected",
               "text": "Damit steigst du eine Etage höher.\n\nIm Keller sammelt sich Staub.\nWeiter oben sammeln sich Meinungen."
             }
           ],
@@ -1385,6 +1390,11 @@
             {
               "hostId": "selected",
               "text": "Gratulation zur nächsten Beförderung: Spezialist für rhetorische Dynamiken."
+            },
+            {
+              "hostId": "selected",
+              "imageSrc": "/backgrounds/badge-specialist-v1.png",
+              "imageAlt": "Abzeichen Spezialist für rhetorische Dynamiken"
             },
             {
               "hostId": "selected",
@@ -1884,6 +1894,11 @@
             {
               "hostId": "selected",
               "text": "Du hast Reputationsangriffe durchschaut. Damit erreichst du die höchste Karrierestufe im Praktikum: Zertifizierter Debattenarchitekt."
+            },
+            {
+              "hostId": "selected",
+              "imageSrc": "/backgrounds/badge-debate-architect-v1.png",
+              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt"
             }
           ],
           "options": [

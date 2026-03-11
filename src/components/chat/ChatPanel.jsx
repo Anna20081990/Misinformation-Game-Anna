@@ -118,6 +118,9 @@ export function ChatPanel({
 
       <div className="chat-panel__messages" ref={scrollRef}>
         {messages.map((message) => {
+          const isImageOnlyMessage = Boolean(
+            message.imageSrc && !message.text && !message.speakerName
+          )
           const hostDisplayName =
             message.speakerType === 'player'
               ? message.speakerName
@@ -138,7 +141,9 @@ export function ChatPanel({
                   speakerName={hostDisplayName}
                 />
               )}
-              <div className="chat-message__bubble">
+              <div
+                className={`chat-message__bubble ${isImageOnlyMessage ? 'chat-message__bubble--image-only' : ''}`}
+              >
                 {message.speakerName &&
                   message.speakerType !== 'player' &&
                   !message.imageSrc && (
