@@ -659,32 +659,37 @@ function resolveBucketSortSubmission(config, bucketAssignments) {
   const items = config?.items || []
   const correctAssignments = config?.correctAssignments || {}
   const selectedAssignments = bucketAssignments || {}
-  const totalCount = items.length
-  const assignedCount = items.filter((item) =>
-    Boolean(selectedAssignments[item.id])
-  ).length
-  const correctCount = items.filter(
-    (item) => selectedAssignments[item.id] === correctAssignments[item.id]
-  ).length
-  const wrongCount = assignedCount - correctCount
-  const assignedPersonCount = items.filter(
-    (item) => selectedAssignments[item.id] === 'person'
-  ).length
-  const isCorrect = totalCount > 0 && correctCount === totalCount
+  const contentIds = items
+    .filter((item) => selectedAssignments[item.id] === 'content')
+    .map((item) => item.id)
+    .sort()
+  const personIds = items
+    .filter((item) => selectedAssignments[item.id] === 'person')
+    .map((item) => item.id)
+    .sort()
+  const sameIds = (actual, expected) =>
+    actual.length === expected.length &&
+    expected.every((id) => actual.includes(id))
+
+  const s1 = 'a1'
+  const a1 = 'a2'
+  const s2 = 'a3'
+  const a2 = 'a4'
+  const isTwoByTwo = contentIds.length === 2 && personIds.length === 2
+  const isCorrect =
+    sameIds(contentIds, [s1, s2]) && sameIds(personIds, [a1, a2])
 
   const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongA', 31)
-  const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 4)
+  const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 32)
   const mappedOption = isCorrect
     ? successTarget
-    : assignedCount < totalCount
-      ? { ...failureTarget, id: 'wrongAIncomplete' }
-      : assignedPersonCount === 0
+    : sameIds(contentIds, [a1, a2]) && sameIds(personIds, [s1, s2])
+      ? { ...failureTarget, id: 'wrongAAllWrong' }
+      : contentIds.includes(a1) && contentIds.includes(a2) && !isTwoByTwo
         ? { ...failureTarget, id: 'wrongAOnlyContent' }
-        : correctCount === 0
-          ? { ...failureTarget, id: 'wrongAAllWrong' }
-          : wrongCount > 0
-            ? { ...failureTarget, id: 'wrongAMixed' }
-            : failureTarget
+        : personIds.includes(s1) && personIds.includes(s2) && !isTwoByTwo
+          ? { ...failureTarget, id: 'wrongAIncomplete' }
+          : { ...failureTarget, id: 'wrongAMixed' }
 
   return {
     isCorrect,
@@ -961,7 +966,7 @@ export function GameScreen({
   const isPart4Activity1InputStep =
     currentPart === 4 && Number(stepData.stepIndex) === 3
   const isPart4Activity1Context =
-    currentPart === 4 && [3, 31].includes(Number(stepData.stepIndex))
+    currentPart === 4 && [3, 31, 32].includes(Number(stepData.stepIndex))
   const part4Activity1Config = isPart4Activity1Context
     ? resolveBucketSortConfig(
         stepData.activityConfig,
@@ -1787,6 +1792,18 @@ export function GameScreen({
         if (
           transitionFlags.resetOnPart4Activity2 &&
           currentPart === 4 &&
+          Number(option.nextStep) === 4
+        ) {
+          resetFlowState({
+            clearMessages: true,
+            resetBucket: true,
+            resetPart4Choice: true,
+          })
+        }
+
+        if (
+          currentPart === 4 &&
+          Number(stepData.stepIndex) === 32 &&
           Number(option.nextStep) === 4
         ) {
           resetFlowState({

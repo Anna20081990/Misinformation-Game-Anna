@@ -1463,7 +1463,7 @@
           "options": [
             {
               "id": "unpleasant",
-              "label": "Klingt unerquicklich.",
+              "label": "Klingt unsympathisch.",
               "nextStep": 20
             },
             {
@@ -1538,7 +1538,7 @@
             },
             "success": {
               "id": "rightA",
-              "nextStep": 4
+              "nextStep": 32
             },
             "failure": {
               "id": "wrongA",
@@ -1556,11 +1556,6 @@
           "stepIndex": 4,
           "type": "activity",
           "speechBubbles": [
-            {
-              "hostId": "selected",
-              "text": "Nicht so schnell! Eine Kleinigkeit gilt es noch zu lösen.",
-              "showOnOptionId": "rightA"
-            },
             {
               "hostId": "selected",
               "text": "Der Stadtrat plant eine offizielle Stadtfarbe. Ziel ist ein ‘klarer Wiedererkennungswert – auch für zukünftigen Tourismus aus dem Orbit’."
@@ -1754,35 +1749,67 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Noch nicht vollständig: Ordne bitte alle Aussagen ein, bevor du bestätigst.",
+              "text": "Didi wäre beeindruckt – aber hier wurde etwas zu viel als Angriff gesehen. Manche Aussagen sind Kritik am Inhalt, nicht an Menschen.",
               "showOnOptionId": "wrongAIncomplete"
             },
             {
               "hostId": "selected",
-              "text": "Du hast nur sachliche Kritik markiert. Prüfe, welche Aussagen Personen angreifen.",
+              "text": "Schön sachlich gedacht – aber Didi hätte jetzt gelächelt. Gewisse Aussagen zielen klar auf Personen.",
               "showOnOptionId": "wrongAOnlyContent"
             },
             {
               "hostId": "selected",
-              "text": "Das passt noch nicht. Du hast die Aussagen größtenteils in die falschen Buckets eingeordnet.",
+              "text": "Konsequent – nur leider genau falsch herum. Dreh die Kategorien einmal um, dann bist du sehr nah dran.",
               "showOnOptionId": "wrongAAllWrong"
             },
             {
               "hostId": "selected",
-              "text": "Teilweise richtig. Einige Aussagen sind noch im falschen Bucket.",
+              "text": "Fast – aber hier sind Inhalt und Person noch vermischt.",
               "showOnOptionId": "wrongAMixed"
-            },
-            {
-              "hostId": "selected",
-              "text": "Noch nicht ganz. Ordne klar zwischen Sachebene und persönlichem Angriff.",
-              "showOnOptionId": "wrongA"
             }
           ],
           "options": [
             {
-              "id": "retry",
-              "label": "Nochmal.",
-              "nextStep": 3
+              "id": "retry_content",
+              "label": "Zurück zur Sache",
+              "nextStep": 3,
+              "showOnOptionId": "wrongAIncomplete"
+            },
+            {
+              "id": "retry_person",
+              "label": "Didi enttarnen",
+              "nextStep": 3,
+              "showOnOptionId": "wrongAOnlyContent"
+            },
+            {
+              "id": "retry_swap",
+              "label": "Kategorien tauschen",
+              "nextStep": 3,
+              "showOnOptionId": "wrongAAllWrong"
+            },
+            {
+              "id": "retry_mixed",
+              "label": "Klarer trennen",
+              "nextStep": 3,
+              "showOnOptionId": "wrongAMixed"
+            }
+          ]
+        },
+        {
+          "stepIndex": 32,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Sauber getrennt. Zwei bleiben bei der Sache, zwei gehen auf Personen. Genau hier beginnt Didi Fams Spielfeld.",
+              "showOnOptionId": "rightA"
+            }
+          ],
+          "options": [
+            {
+              "id": "continue_to_activity2",
+              "label": "Game over!",
+              "nextStep": 4
             }
           ]
         },
