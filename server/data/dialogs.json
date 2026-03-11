@@ -1,6 +1,10 @@
 {
   "scenes": [
     {
+      "sceneId": -1,
+      "steps": []
+    },
+    {
       "sceneId": 0,
       "steps": [
         {
@@ -1554,7 +1558,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Stark sortiert. Weiter mit Aktivität 2.",
+              "text": "Nicht so schnell! Eine Kleinigkeit gilt es noch zu lösen.",
               "showOnOptionId": "rightA"
             },
             {
@@ -1603,10 +1607,13 @@
             "correctChoiceId": "c",
             "success": {
               "id": "rightB",
-              "nextStep": 5
+              "nextStep": 43
             },
             "failure": {
               "id": "wrongB",
+              "branchIds": [
+                "wrongBLow"
+              ],
               "nextStep": 41
             }
           }
@@ -1785,14 +1792,44 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Noch nicht ganz. Gesucht ist die Aussage, die klar die Person statt die Idee angreift."
+              "text": "Das bleibt auf der Sachebene. Hier wird über Gebäude gesprochen, nicht über Menschen. Für Didi wäre das zu harmlos.",
+              "showOnOptionId": "wrongBLow"
+            },
+            {
+              "hostId": "selected",
+              "text": "Das ist spöttisch, ja. Aber noch wird die Idee kommentiert – nicht die Person dahinter. Didi würde es noch direkter machen.",
+              "showOnOptionId": "wrongB"
             }
           ],
           "options": [
             {
+              "id": "retry_low",
+              "label": "Okay, noch mal – mit mehr Biss.",
+              "nextStep": 4,
+              "showOnOptionId": "wrongBLow"
+            },
+            {
               "id": "retry",
-              "label": "Nochmal prüfen.",
-              "nextStep": 4
+              "label": "Ich leg noch eine Schippe drauf.",
+              "nextStep": 4,
+              "showOnOptionId": "wrongB"
+            }
+          ]
+        },
+        {
+          "stepIndex": 43,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Genau. Ab hier geht es nicht mehr um Farbpaletten, sondern um Charakterfragen. Und da fühlt sich Didi wohl."
+            }
+          ],
+          "options": [
+            {
+              "id": "career_unlock",
+              "label": "Didi entschlüsselt",
+              "nextStep": 5
             }
           ]
         },

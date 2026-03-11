@@ -971,7 +971,7 @@ export function GameScreen({
   const isPart4Activity2InputStep =
     currentPart === 4 && Number(stepData.stepIndex) === 4
   const isPart4Activity2Context =
-    currentPart === 4 && [4, 41].includes(Number(stepData.stepIndex))
+    currentPart === 4 && [4, 41, 43].includes(Number(stepData.stepIndex))
   const part4Activity2Config = isPart4Activity2Context
     ? resolveIntensityChoiceConfig(
         stepData.activityConfig,
@@ -986,7 +986,14 @@ export function GameScreen({
   const hasAvatarOptionInCurrentStep = options.some((option) =>
     isAvatarOption(option)
   )
-  const displayOptions = options.map((option) => {
+  const visibleOptions = options.some((option) => option?.showOnOptionId)
+    ? options.filter(
+        (option) =>
+          !option?.showOnOptionId ||
+          option.showOnOptionId === lastSelectedOptionId
+      )
+    : options
+  const displayOptions = visibleOptions.map((option) => {
     if (
       currentPart === 0 &&
       String(option?.id || '').toLowerCase() === 'continue' &&
@@ -1652,7 +1659,7 @@ export function GameScreen({
         {
           correctChoiceId: 'c',
           successId: 'rightB',
-          successNextStep: 5,
+          successNextStep: 43,
           failureId: 'wrongB',
           failureNextStep: 41,
         }
@@ -1662,7 +1669,19 @@ export function GameScreen({
       })
       setLastSubmittedPart4ChoiceId(selectedPart4ChoiceId)
       setLastSubmittedPart4ChoiceOrder(part4ChoiceOrder)
-      option = { ...submission.mappedOption, label: option.label }
+      option = submission.isCorrect
+        ? { ...submission.mappedOption, label: option.label }
+        : {
+            ...submission.mappedOption,
+            id:
+              selectedPart4ChoiceId === 'a'
+                ? 'wrongBLow'
+                : selectedPart4ChoiceId === 'b'
+                  ? 'wrongB'
+                  : submission.mappedOption.id,
+            nextStep: 41,
+            label: option.label,
+          }
     }
 
     onSelectOption?.(index, option, currentPart)
@@ -1702,7 +1721,8 @@ export function GameScreen({
       currentPart === 2 && String(option?.id || '').startsWith('retry')
     const resetOnRetryPart3 =
       currentPart === 3 && String(option?.id || '').startsWith('retry')
-    const resetOnRetryPart4 = currentPart === 4 && option?.id === 'retry'
+    const resetOnRetryPart4 =
+      currentPart === 4 && String(option?.id || '').startsWith('retry')
 
     transitionTimerRef.current = setTimeout(() => {
       if (option?.nextPart != null && onPartChange) {
@@ -1779,6 +1799,17 @@ export function GameScreen({
         if (
           transitionFlags.resetOnPart4Summary &&
           currentPart === 4 &&
+          Number(option.nextStep) === 5
+        ) {
+          resetFlowState({
+            clearMessages: true,
+            resetPart4Choice: true,
+          })
+        }
+
+        if (
+          currentPart === 4 &&
+          Number(stepData.stepIndex) === 43 &&
           Number(option.nextStep) === 5
         ) {
           resetFlowState({
