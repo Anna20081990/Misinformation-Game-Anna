@@ -2,7 +2,20 @@
   "scenes": [
     {
       "sceneId": -1,
-      "steps": []
+      "steps": [
+        {
+          "stepIndex": 0,
+          "type": "intro",
+          "speechBubbles": [],
+          "options": [
+            {
+              "id": "start",
+              "label": "Start",
+              "nextPart": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "sceneId": 0,
@@ -743,7 +756,7 @@
         },
         {
           "stepIndex": 20,
-          "type": "intro",
+          "type": "example",
           "speechBubbles": [
             {
               "hostId": "selected",
