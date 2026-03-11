@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Scene } from '../components/scene/Scene.jsx'
 import { MonitorActivityScene } from '../components/scene/MonitorActivityScene.jsx'
+import { SceneBackground } from '../components/scene/SceneBackground.jsx'
 import { getSceneById } from '../data/scenes.js'
 import { getPart1Step } from '../data/conversations/part1.js'
 import { getSceneDialogs } from '../api/dialogApi.js'
@@ -698,6 +699,7 @@ export function GameScreen({
   onSelectHost,
 }) {
   const scene = getSceneById(currentPart)
+  const isStartScreen = Number(currentPart) === -1
   const [stepIndex, setStepIndex] = useState(0)
   const [lastSelectedOptionId, setLastSelectedOptionId] = useState(null)
   const [chatMessages, setChatMessages] = useState([])
@@ -822,6 +824,16 @@ export function GameScreen({
   useEffect(() => {
     let active = true
 
+    if (isStartScreen) {
+      setSceneDialogs(null)
+      setChatMessages([])
+      appendedStepKeysRef.current = new Set()
+      setDialogLoadError('')
+      return () => {
+        active = false
+      }
+    }
+
     async function loadDialogs() {
       try {
         const data = await getSceneDialogs(currentPart)
@@ -865,7 +877,7 @@ export function GameScreen({
     return () => {
       active = false
     }
-  }, [currentPart])
+  }, [currentPart, isStartScreen])
 
   useEffect(() => {
     return () => {
@@ -1866,6 +1878,26 @@ export function GameScreen({
   const sceneForRender = [2, 3, 4, 5].includes(currentPart)
     ? { ...scene, backgroundImage: hostSpecificBackground }
     : scene
+
+  if (isStartScreen) {
+    return (
+      <div className="scene">
+        <SceneBackground
+          backgroundImage={scene.backgroundImage}
+          backgroundPlaceholder={scene.backgroundPlaceholder}
+        />
+        <div className="start-screen">
+          <button
+            type="button"
+            className="start-screen__button"
+            onClick={() => onPartChange?.(0)}
+          >
+            Start
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Scene

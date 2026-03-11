@@ -6,6 +6,15 @@ const DEFAULT_BACKGROUND = '/backgrounds/default-scene.png'
 
 export const SCENES = [
   {
+    id: -1,
+    name: 'Start',
+    backgroundImage: '/backgrounds/Willkommen.png',
+    backgroundPlaceholder: 'linear-gradient(180deg, #dff2ff 0%, #f7fcff 100%)',
+    characters: [],
+    speechBubbles: [],
+    interaction: null,
+  },
+  {
     id: 0,
     name: 'Avatar wählen',
     backgroundImage: '/backgrounds/Willkommen.png',

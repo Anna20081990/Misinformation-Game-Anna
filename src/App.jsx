@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { GameScreen } from './pages/GameScreen.jsx'
 import { AdminDialogScreen } from './pages/AdminDialogScreen.jsx'
 import { useScene } from './hooks/useScene.js'
-import { DEFAULT_PART } from './data/constants.js'
 import { getSceneDialogs } from './api/dialogApi.js'
 
 const FALLBACK_NAV_STEPS_BY_PART = {
@@ -182,7 +181,7 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
 }
 
 export function App() {
-  const { currentPart, setCurrentPart } = useScene(DEFAULT_PART)
+  const { currentPart, setCurrentPart } = useScene(-1)
   const [selectedAvatarId, setSelectedAvatarId] = useState(null)
   const [selectedHostId, setSelectedHostId] = useState(() => {
     if (typeof window === 'undefined') return null
@@ -197,7 +196,7 @@ export function App() {
   })
   const [activeStepByPart, setActiveStepByPart] = useState({})
   const [stepJumpRequest, setStepJumpRequest] = useState({
-    part: DEFAULT_PART,
+    part: -1,
     stepIndex: 0,
     nonce: 0,
   })
@@ -209,6 +208,15 @@ export function App() {
   const handleSelectOption = (index, option, part) => {
     console.log('Antwort gewählt:', option?.label, 'Teil:', part)
   }
+  const gameNavItems = [
+    { id: -1, label: 'Start' },
+    { id: 0, label: '0' },
+    { id: 1, label: '1' },
+    { id: 2, label: '2' },
+    { id: 3, label: '3' },
+    { id: 4, label: '4' },
+    { id: 5, label: '5' },
+  ]
 
   const activeSteps = dialogsByPart[currentPart]?.steps?.length
     ? dialogsByPart[currentPart].steps
@@ -311,16 +319,16 @@ export function App() {
             Admin
           </button>
           {viewMode === 'game' &&
-            [0, 1, 2, 3, 4, 5].map((id) => (
+            gameNavItems.map(({ id, label }) => (
               <button
                 key={id}
                 type="button"
-                className={`app__nav-btn ${currentPart === id ? 'app__nav-btn--active' : ''}`}
+                className={`app__nav-btn ${label === 'Start' ? 'app__nav-btn--label' : ''} ${currentPart === id ? 'app__nav-btn--active' : ''}`}
                 onClick={() => handlePartChange(id)}
                 aria-pressed={currentPart === id}
-                aria-label={`Teil ${id}`}
+                aria-label={label === 'Start' ? 'Start' : `Teil ${id}`}
               >
-                {id}
+                {label}
               </button>
             ))}
         </nav>
