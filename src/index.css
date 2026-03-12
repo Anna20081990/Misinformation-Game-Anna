@@ -55,6 +55,34 @@ html, body {
   backdrop-filter: blur(6px);
 }
 
+.app__settings-btn {
+  position: absolute;
+  top: 0.55rem;
+  right: 1rem;
+  z-index: 101;
+  min-width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: rgba(7, 21, 37, 0.55);
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.app__settings-btn:hover {
+  background: rgba(21, 52, 83, 0.74);
+}
+
+.app__settings-btn--active {
+  background: #eaf4fb;
+  color: #10253a;
+  border-color: #ffffff;
+}
+
 .app__nav {
   position: relative;
   display: flex;

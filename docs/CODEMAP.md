@@ -1,6 +1,6 @@
 # CODEMAP
 
-Stand: 2026-03-08
+Stand: 2026-03-12
 Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 
 ## Legend
@@ -13,6 +13,8 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 
 ```text
 .
+├── api/
+│   └── [...path].js [ENTRY]
 ├── docs/
 │   ├── AGENTS.md
 │   ├── ARCHITECTURE.md
@@ -29,6 +31,7 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 ├── package-lock.json [CONFIG]
 ├── vite.config.js [CONFIG]
 ├── public/
+│   ├── dialogs.json [CONFIG]
 │   └── backgrounds/ [ASSET]
 │       ├── Media Lab.png [ASSET]
 │       ├── Willkommen.png [ASSET]
@@ -89,6 +92,7 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
 ```
 
 ## Entry Points
+- `api/[...path].js`
 - `index.html`
 - `src/main.jsx`
 - `src/App.jsx`
@@ -120,6 +124,7 @@ Scope: Struktur-Übersicht (Dateinamen/Pfade), max depth 4, ohne Inhaltsanalyse.
   - `package.json`
   - `package-lock.json`
   - `vite.config.js`
+  - `public/dialogs.json`
   - `src/data/constants.js`
   - `src/data/scenes.js`
   - `src/data/conversations/part1.js`

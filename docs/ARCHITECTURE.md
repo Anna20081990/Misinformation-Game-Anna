@@ -1,10 +1,11 @@
 # Architecture
 
-Stand: 2026-03-08
+Stand: 2026-03-12
 
 ## Gesamtaufbau
 - Monorepo-artige Struktur mit Frontend (`src/`) und lokalem Backend (`server/`).
 - Frontend orchestriert Navigation/Rendering; Backend liefert persistente Dialogzustände und validiert Branch-Logik.
+- Deployment-Ergänzung: Vercel-Function-Entry unter `api/` und statische Dialogkopie unter `public/dialogs.json` für Read-Fallback ohne laufendes Express-Backend.
 
 ## Frontend-Schichten
 - Entry: `index.html`, `src/main.jsx`, `src/App.jsx`.
@@ -13,6 +14,9 @@ Stand: 2026-03-08
   - Teilnavigation + Unterkapitel
   - Host-/Avatar-Session-State
   - Vorladen von Dialogdaten für Navigationslogik
+- API-Zugriff (`src/api/dialogApi.js`):
+  - Liest primär über `/api/*`
+  - Fällt bei GET-Fehlern auf `public/dialogs.json` zurück
 - Spielruntime (`src/pages/GameScreen.jsx`):
   - Lädt Szenendialoge je Teil über API
   - Fallback auf statische Daten für Robustheit
@@ -29,6 +33,7 @@ Stand: 2026-03-08
 
 ## Backend-Schichten
 - Entry: `server/index.js` bootet Express-App aus `server/app.js`.
+- Serverless-Entry: `api/[...path].js` exponiert `server/app.js` für Vercel.
 - API-Layer (`server/app.js`):
   - Szenenübersicht, Dialog-CRUD, Flow-Endpunkt, Seed-Endpunkte
   - Fehlerbehandlung + CORS/JSON-Middleware

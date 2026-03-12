@@ -277,6 +277,7 @@ export function App() {
     lastError: '',
   })
   const [activeStepByPart, setActiveStepByPart] = useState({})
+  const [showNavigation, setShowNavigation] = useState(false)
   const [stepJumpRequest, setStepJumpRequest] = useState({
     part: -1,
     stepIndex: 0,
@@ -390,6 +391,16 @@ export function App() {
             {dialogApiStatus.lastError || 'unbekannt'}
           </div>
         )}
+        <button
+          type="button"
+          className={`app__settings-btn ${showNavigation ? 'app__settings-btn--active' : ''}`}
+          onClick={() => setShowNavigation((prev) => !prev)}
+          aria-pressed={showNavigation}
+          aria-label="Navigation ein- oder ausblenden"
+          title="Navigation ein- oder ausblenden"
+        >
+          ⚙
+        </button>
         <nav className="app__nav">
           {viewMode === 'game' && internshipProgress && (
             <div
@@ -412,37 +423,40 @@ export function App() {
               </div>
             </div>
           )}
-          <div className="app__nav-controls">
-            <button
-              type="button"
-              className={`app__mode-btn ${viewMode === 'game' ? 'app__mode-btn--active' : ''}`}
-              onClick={() => setViewMode('game')}
-            >
-              Spiel
-            </button>
-            <button
-              type="button"
-              className={`app__mode-btn ${viewMode === 'admin' ? 'app__mode-btn--active' : ''}`}
-              onClick={() => setViewMode('admin')}
-            >
-              Admin
-            </button>
-            {viewMode === 'game' &&
-              gameNavItems.map(({ id, label }) => (
-                <button
-                  key={id}
-                  type="button"
-                  className={`app__nav-btn ${label === 'Start' ? 'app__nav-btn--label' : ''} ${currentPart === id ? 'app__nav-btn--active' : ''}`}
-                  onClick={() => handlePartChange(id)}
-                  aria-pressed={currentPart === id}
-                  aria-label={label === 'Start' ? 'Start' : `Teil ${id}`}
-                >
-                  {label}
-                </button>
-              ))}
-          </div>
+          {showNavigation && (
+            <div className="app__nav-controls">
+              <button
+                type="button"
+                className={`app__mode-btn ${viewMode === 'game' ? 'app__mode-btn--active' : ''}`}
+                onClick={() => setViewMode('game')}
+              >
+                Spiel
+              </button>
+              <button
+                type="button"
+                className={`app__mode-btn ${viewMode === 'admin' ? 'app__mode-btn--active' : ''}`}
+                onClick={() => setViewMode('admin')}
+              >
+                Admin
+              </button>
+              {viewMode === 'game' &&
+                gameNavItems.map(({ id, label }) => (
+                  <button
+                    key={id}
+                    type="button"
+                    className={`app__nav-btn ${label === 'Start' ? 'app__nav-btn--label' : ''} ${currentPart === id ? 'app__nav-btn--active' : ''}`}
+                    onClick={() => handlePartChange(id)}
+                    aria-pressed={currentPart === id}
+                    aria-label={label === 'Start' ? 'Start' : `Teil ${id}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+            </div>
+          )}
         </nav>
-        {viewMode === 'game' &&
+        {showNavigation &&
+          viewMode === 'game' &&
           currentPart > 0 &&
           activeSubchapters.length > 0 && (
             <nav
