@@ -165,7 +165,14 @@ export function ChatPanel({
                   <img
                     src={message.imageSrc}
                     alt={message.imageAlt || ''}
-                    style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+                    style={{
+                      display: 'block',
+                      margin: '0 auto',
+                      maxWidth: message.imageScale
+                        ? `${Math.max(1, Math.min(100, message.imageScale * 100))}%`
+                        : '100%',
+                      height: 'auto',
+                    }}
                     onLoad={handleMessageImageLoad}
                   />
                 )}

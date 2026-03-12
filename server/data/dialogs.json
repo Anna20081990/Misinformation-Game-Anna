@@ -686,7 +686,8 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/fallakte_emma_poer.png",
-              "imageAlt": "Fallakte Emma Pör"
+              "imageAlt": "Fallakte Emma Pör",
+              "imageScale": 0.5
             },
             {
               "hostId": "selected",
@@ -908,7 +909,8 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/badge-junior-analyst-v2.png",
-              "imageAlt": "Abzeichen Junior-Analyst für kommunikative Phänomene"
+              "imageAlt": "Abzeichen Junior-Analyst für kommunikative Phänomene",
+              "imageScale": 0.5
             },
             {
               "hostId": "selected",
@@ -1201,7 +1203,8 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/fallakte_konrad_sens.png",
-              "imageAlt": "Fallakte Konrad Sens"
+              "imageAlt": "Fallakte Konrad Sens",
+              "imageScale": 0.5
             },
             {
               "hostId": "selected",
@@ -1406,7 +1409,8 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/badge-specialist-v1.png",
-              "imageAlt": "Abzeichen Spezialist für rhetorische Dynamiken"
+              "imageAlt": "Abzeichen Spezialist für rhetorische Dynamiken",
+              "imageScale": 0.5
             },
             {
               "hostId": "selected",
@@ -1706,7 +1710,8 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/fallakte_didi_fam.png",
-              "imageAlt": "Fallakte Didi Fam"
+              "imageAlt": "Fallakte Didi Fam",
+              "imageScale": 0.5
             },
             {
               "hostId": "selected",
@@ -1922,7 +1927,8 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/badge-debate-architect-v1.png",
-              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt"
+              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt",
+              "imageScale": 0.5
             }
           ],
           "options": [
