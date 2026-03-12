@@ -110,6 +110,16 @@ export function ChatPanel({
     }
   }, [messages, options])
 
+  function handleMessageImageLoad() {
+    const container = scrollRef.current
+    if (!container) return
+
+    const hasOverflow = container.scrollHeight > container.clientHeight
+    if (hasOverflow) {
+      container.scrollTop = container.scrollHeight
+    }
+  }
+
   return (
     <section className="chat-panel" aria-label="Konversationsfenster">
       <header className="chat-panel__header">
@@ -156,6 +166,7 @@ export function ChatPanel({
                     src={message.imageSrc}
                     alt={message.imageAlt || ''}
                     style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+                    onLoad={handleMessageImageLoad}
                   />
                 )}
                 {message.text ? renderMessageParagraphs(message.text) : null}
