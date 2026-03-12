@@ -537,6 +537,7 @@ function buildStepHostMessages({
       imageSrc: bubble.imageSrc,
       imageAlt: bubble.imageAlt,
       imageScale: bubble.imageScale,
+      presentation: bubble.presentation,
       placement: bubble.placement,
     }
   })

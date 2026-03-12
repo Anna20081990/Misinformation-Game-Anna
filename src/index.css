@@ -366,6 +366,17 @@ html, body {
   height: 100%;
 }
 
+.chat-message--badge-only {
+  justify-content: center;
+}
+
+.chat-message__bubble--badge-only {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
 .monitor-scene {
   position: absolute;
   inset: 0;

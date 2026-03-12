@@ -128,6 +128,7 @@ export function ChatPanel({
 
       <div className="chat-panel__messages" ref={scrollRef}>
         {messages.map((message) => {
+          const isBadgeImage = message.presentation === 'badge'
           const isImageOnlyMessage = Boolean(
             message.imageSrc && !message.text && !message.speakerName
           )
@@ -143,19 +144,20 @@ export function ChatPanel({
           return (
             <article
               key={message.id}
-              className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
+              className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'} ${isBadgeImage ? 'chat-message--badge-only' : ''}`}
             >
-              {message.speakerType !== 'player' && (
+              {message.speakerType !== 'player' && !isBadgeImage && (
                 <HostAvatar
                   characterId={message.hostId ?? message.characterId}
                   speakerName={hostDisplayName}
                 />
               )}
               <div
-                className={`chat-message__bubble ${isImageOnlyMessage ? 'chat-message__bubble--image-only' : ''}`}
+                className={`chat-message__bubble ${isImageOnlyMessage ? 'chat-message__bubble--image-only' : ''} ${isBadgeImage ? 'chat-message__bubble--badge-only' : ''}`}
               >
                 {message.speakerName &&
                   message.speakerType !== 'player' &&
+                  !isBadgeImage &&
                   !message.imageSrc && (
                   <strong className="chat-message__speaker">
                     {hostDisplayName}
