@@ -468,6 +468,42 @@ function createTransitionFlags(overrides = {}) {
   }
 }
 
+function isSingleButtonTransitionStep(currentPart, stepIndex) {
+  return (
+    (Number(currentPart) === 2 && Number(stepIndex) === 52) ||
+    (Number(currentPart) === 3 && Number(stepIndex) === 52) ||
+    (Number(currentPart) === 4 && Number(stepIndex) === 53)
+  )
+}
+
+function getSingleButtonTransitionConfig(currentPart, stepIndex) {
+  if (Number(currentPart) === 2 && Number(stepIndex) === 52) {
+    return {
+      backgroundImage: '/backgrounds/treppenhaus_keller.png',
+      label: 'Auf ins Tageslicht!',
+      nextPart: 3,
+    }
+  }
+
+  if (Number(currentPart) === 3 && Number(stepIndex) === 52) {
+    return {
+      backgroundImage: '/backgrounds/lift_aussen_grossraum.png',
+      label: 'Zum Glück gibt es einen Lift.',
+      nextPart: 4,
+    }
+  }
+
+  if (Number(currentPart) === 4 && Number(stepIndex) === 53) {
+    return {
+      backgroundImage: '/backgrounds/lift_innen.png',
+      label: 'Auf in die Chefetage',
+      nextPart: 5,
+    }
+  }
+
+  return null
+}
+
 function getResolvedFlowTarget(config, type, fallbackId, fallbackNextStep) {
   const target = config?.[type]
   return {
@@ -933,6 +969,18 @@ export function GameScreen({
     (backendUnavailableForPart
       ? backendErrorStep
       : getFallbackStep(scene, currentPart, stepIndex))
+  const isSingleButtonTransition = isSingleButtonTransitionStep(
+    currentPart,
+    stepData.stepIndex
+  )
+  const singleButtonTransitionConfig = getSingleButtonTransitionConfig(
+    currentPart,
+    stepData.stepIndex
+  )
+  const isFinalInternshipState =
+    Number(currentPart) === 5 &&
+    Number(stepData.stepIndex) === 5 &&
+    ['to_work', 'keep_overview'].includes(String(lastSelectedOptionId || ''))
 
   const options = stepData.options || []
   const isPart2Activity1InputStep =
@@ -1926,6 +1974,7 @@ export function GameScreen({
     if (currentPart === 3) {
       if ([0, 1, 2, 5, 10, 11, 12, 13, 51].includes(currentStepIndex))
         return hostGenderBackground
+      if (currentStepIndex === 52) return '/backgrounds/lift_aussen_grossraum.png'
       return '/backgrounds/grossraum_monitor.png'
     }
     if (currentPart === 4) {
@@ -1935,6 +1984,7 @@ export function GameScreen({
           : '/backgrounds/einzelbuero_frau.png'
       if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex))
         return part4HostBackground
+      if (currentStepIndex === 53) return '/backgrounds/lift_innen.png'
       return '/backgrounds/einzelbuero_tablet.png'
     }
     if (currentPart === 5) {
@@ -1943,8 +1993,39 @@ export function GameScreen({
     return scene.backgroundImage
   })()
 
+  if (isSingleButtonTransition && singleButtonTransitionConfig) {
+    return (
+      <div className="scene">
+        <SceneBackground
+          backgroundImage={singleButtonTransitionConfig.backgroundImage}
+          backgroundPlaceholder={scene.backgroundPlaceholder}
+        />
+        <div
+          className="start-screen"
+          style={{
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingBottom: '3rem',
+          }}
+        >
+          <button
+            type="button"
+            className="start-screen__button"
+            onClick={() => onPartChange?.(singleButtonTransitionConfig.nextPart)}
+          >
+            {singleButtonTransitionConfig.label}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   const sceneForRender = [2, 3, 4, 5].includes(currentPart)
-    ? { ...scene, backgroundImage: hostSpecificBackground }
+    ? {
+        ...scene,
+        backgroundImage: hostSpecificBackground,
+        hideChatPanel: isFinalInternshipState,
+      }
     : scene
 
   if (isStartScreen) {
@@ -1961,6 +2042,26 @@ export function GameScreen({
             onClick={() => onPartChange?.(0)}
           >
             Start
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (isFinalInternshipState) {
+    return (
+      <div className="scene">
+        <SceneBackground
+          backgroundImage={sceneForRender.backgroundImage}
+          backgroundPlaceholder={sceneForRender.backgroundPlaceholder}
+        />
+        <div className="start-screen">
+          <button
+            type="button"
+            className="start-screen__button"
+            disabled
+          >
+            Praktikum erfolgreich beendet
           </button>
         </div>
       </div>

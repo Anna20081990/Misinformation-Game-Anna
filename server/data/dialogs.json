@@ -919,11 +919,23 @@
             {
               "id": "stairs",
               "label": "Ich nehme die Treppe.",
-              "nextPart": 3
+              "nextStep": 52
             },
             {
               "id": "no_elevator_soundtrack",
               "label": "Bitte kein Aufzug mit Soundtrack.",
+              "nextStep": 52
+            }
+          ]
+        },
+        {
+          "stepIndex": 52,
+          "type": "transition",
+          "speechBubbles": [],
+          "options": [
+            {
+              "id": "to_part_3_transition",
+              "label": "Auf ins Tageslicht!",
               "nextPart": 3
             }
           ]
@@ -1405,11 +1417,23 @@
             {
               "id": "cozy_here",
               "label": "War doch gemütlich hier.",
-              "nextPart": 4
+              "nextStep": 52
             },
             {
               "id": "want_quiet",
               "label": "Ich will meine Ruhe.",
+              "nextStep": 52
+            }
+          ]
+        },
+        {
+          "stepIndex": 52,
+          "type": "transition",
+          "speechBubbles": [],
+          "options": [
+            {
+              "id": "to_part_4_transition",
+              "label": "Zum Glück gibt es einen Lift.",
               "nextPart": 4
             }
           ]
@@ -1893,12 +1917,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Du hast Reputationsangriffe durchschaut. Damit erreichst du die höchste Karrierestufe im Praktikum: Zertifizierter Debattenarchitekt."
-            },
-            {
-              "hostId": "selected",
-              "imageSrc": "/backgrounds/badge-debate-architect-v1.png",
-              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt"
+              "text": "Du hast Reputationsangriffe durchschaut. \n\nDamit erreichst du die höchste Karrierestufe im Praktikum: Zertifizierter Debattenarchitekt."
             }
           ],
           "options": [
@@ -1926,11 +1945,23 @@
             {
               "id": "no_fear_heights",
               "label": "Gut, dass ich keine Höhenangst habe.",
-              "nextPart": 5
+              "nextStep": 53
             },
             {
               "id": "higher_faster",
               "label": "Höher, schneller, weiter.",
+              "nextStep": 53
+            }
+          ]
+        },
+        {
+          "stepIndex": 53,
+          "type": "transition",
+          "speechBubbles": [],
+          "options": [
+            {
+              "id": "to_part_5_transition",
+              "label": "Auf in die Chefetage",
               "nextPart": 5
             }
           ]

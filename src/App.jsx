@@ -18,6 +18,7 @@ const FALLBACK_NAV_STEPS_BY_PART = {
     { stepIndex: 3, type: 'activity' },
     { stepIndex: 4, type: 'activity' },
     { stepIndex: 5, type: 'summary' },
+    { stepIndex: 52, type: 'transition' },
   ],
   3: [
     { stepIndex: 0, type: 'intro' },
@@ -26,6 +27,7 @@ const FALLBACK_NAV_STEPS_BY_PART = {
     { stepIndex: 3, type: 'activity' },
     { stepIndex: 4, type: 'activity' },
     { stepIndex: 5, type: 'summary' },
+    { stepIndex: 52, type: 'transition' },
   ],
   4: [
     { stepIndex: 0, type: 'intro' },
@@ -34,6 +36,7 @@ const FALLBACK_NAV_STEPS_BY_PART = {
     { stepIndex: 3, type: 'activity' },
     { stepIndex: 4, type: 'activity' },
     { stepIndex: 5, type: 'summary' },
+    { stepIndex: 53, type: 'transition' },
   ],
   5: [
     { stepIndex: 0, type: 'intro' },
@@ -67,12 +70,19 @@ function buildSubchapters(steps = [], part = null) {
     .filter((step) => Number.isFinite(step?.stepIndex))
     .sort((a, b) => a.stepIndex - b.stepIndex)
 
-  const primarySteps = sortedSteps.filter((step) => step.stepIndex < 10)
+  const primarySteps = sortedSteps.filter((step) => {
+    const type = String(step.type || 'dialog').toLowerCase()
+    return (
+      step.stepIndex < 10 ||
+      (type === 'transition' && Number(step.stepIndex) >= 50)
+    )
+  })
   const entries = []
   let introAdded = false
   let exampleCount = 0
   let activityCount = 0
   let hasSummary = false
+  let transitionAdded = false
 
   for (const step of primarySteps) {
     const type = String(step.type || 'dialog').toLowerCase()
@@ -112,11 +122,12 @@ function buildSubchapters(steps = [], part = null) {
     }
 
     if (type === 'transition') {
-      if (hasSummary) {
-        const summaryEntry = entries.find((entry) => entry.label === 'Summary')
-        if (summaryEntry) summaryEntry.label = 'Outro'
-      } else {
+      if (!hasSummary) {
         entries.push({ stepIndex: step.stepIndex, label: 'Transition' })
+        transitionAdded = true
+      } else if (!transitionAdded) {
+        entries.push({ stepIndex: step.stepIndex, label: 'Transition' })
+        transitionAdded = true
       }
       continue
     }
@@ -155,10 +166,15 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
       if (lastExampleEntry) return lastExampleEntry.stepIndex
     }
     if (type === 'transition') {
-      const outroEntry = subchapters.find(
-        (chapter) => chapter.label === 'Outro' || chapter.label === 'Summary'
+      const transitionEntries = subchapters
+        .filter((chapter) => chapter.label === 'Transition')
+        .sort((a, b) => a.stepIndex - b.stepIndex)
+      const lastTransitionEntry = transitionEntries[transitionEntries.length - 1]
+      if (lastTransitionEntry) return lastTransitionEntry.stepIndex
+      const summaryEntry = subchapters.find(
+        (chapter) => chapter.label === 'Summary'
       )
-      if (outroEntry) return outroEntry.stepIndex
+      if (summaryEntry) return summaryEntry.stepIndex
     }
   }
 

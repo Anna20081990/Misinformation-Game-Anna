@@ -10,6 +10,7 @@ export function Scene({ scene, messages = [], options = [], onSelectOption, sele
 
   const { backgroundImage, backgroundPlaceholder } = scene
   const AvatarComponent = getPlayerAvatarComponent(selectedAvatarId)
+  const hideChatPanel = scene?.hideChatPanel === true
 
   return (
     <div className="scene">
@@ -18,16 +19,18 @@ export function Scene({ scene, messages = [], options = [], onSelectOption, sele
         backgroundPlaceholder={backgroundPlaceholder}
       />
 
-      <div className="scene__chat-wrap">
-        <ChatPanel
-          messages={messages}
-          options={options}
-          onSelectOption={onSelectOption}
-          selectedHostId={selectedHostId}
-          selectedAvatarId={selectedAvatarId}
-          title={scene?.id === 0 ? 'Regelreich' : 'Media Lab Luminara'}
-        />
-      </div>
+      {!hideChatPanel && (
+        <div className="scene__chat-wrap">
+          <ChatPanel
+            messages={messages}
+            options={options}
+            onSelectOption={onSelectOption}
+            selectedHostId={selectedHostId}
+            selectedAvatarId={selectedAvatarId}
+            title={scene?.id === 0 ? 'Regelreich' : 'Media Lab Luminara'}
+          />
+        </div>
+      )}
 
       {scene?.id !== 0 && (
         <div className="scene__player-dock" aria-hidden="true">
