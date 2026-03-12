@@ -257,7 +257,7 @@ function getInternshipProgress({
   )
 
   return {
-    label: 'Praktikums-Fortschritt',
+    label: 'Praktikums-Fortschritt:',
     percent,
   }
 }
@@ -465,6 +465,9 @@ export function App() {
           )}
           {!!visibleAwardBadges.length && (
             <div className="app__award-strip" aria-label="Erreichte Abzeichen">
+              <span className="app__award-label">
+                Gesammelte Karriere-Abzeichen:
+              </span>
               {visibleAwardBadges.map((src, index) => (
                 <img
                   key={src}

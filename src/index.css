@@ -93,18 +93,32 @@ html, body {
 }
 
 .app__award-strip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.55rem;
   min-height: 2.6rem;
-  padding: 0 7rem 0 20rem;
+  width: max-content;
+  max-width: calc(100% - 28rem);
+}
+
+.app__award-label {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .app__award-badge {
   display: block;
-  width: 2.3rem;
-  height: 2.3rem;
+  width: 2.9rem;
+  height: 2.9rem;
   object-fit: contain;
 }
 
@@ -113,8 +127,8 @@ html, body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: min(18rem, calc(100% - 2rem));
-  min-width: min(18rem, 100%);
+  width: min(22rem, calc(100% - 2rem));
+  min-width: min(22rem, 100%);
   padding: 0.15rem 0;
 }
 
@@ -130,13 +144,13 @@ html, body {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 1.25rem;
   margin-bottom: 0.35rem;
 }
 
 .app__progress-label {
   color: rgba(255, 255, 255, 0.92);
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
