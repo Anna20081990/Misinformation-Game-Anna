@@ -487,7 +487,7 @@ export function App() {
             </nav>
           )}
       </header>
-      <main className="app__main">
+      <main className={`app__main ${showNavigation ? '' : 'app__main--compact'}`}>
         {viewMode === 'game' ? (
           <GameScreen
             currentPart={currentPart}

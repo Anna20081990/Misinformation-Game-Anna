@@ -199,6 +199,10 @@ html, body {
   padding-top: 6.3rem;
 }
 
+.app__main--compact {
+  padding-top: 3.8rem;
+}
+
 .app__subnav {
   margin-top: 0.45rem;
   display: flex;
