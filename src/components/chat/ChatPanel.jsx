@@ -38,6 +38,12 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   return speakerName || 'Host'
 }
 
+function getImageMaxWidth(message) {
+  return message.imageScale
+    ? `${Math.max(1, Math.min(100, message.imageScale * 100))}%`
+    : '100%'
+}
+
 export function renderMessageParagraphs(
   text,
   { className = 'chat-message__paragraph', style } = {}
@@ -129,6 +135,9 @@ export function ChatPanel({
       <div className="chat-panel__messages" ref={scrollRef}>
         {messages.map((message) => {
           const isBadgeImage = message.presentation === 'badge'
+          const isJuniorBadge = String(message.imageSrc || '').includes(
+            'badge-junior-analyst-v2.png'
+          )
           const isImageOnlyMessage = Boolean(
             message.imageSrc && !message.text && !message.speakerName
           )
@@ -164,19 +173,54 @@ export function ChatPanel({
                   </strong>
                 )}
                 {!!message.imageSrc && (
-                  <img
-                    src={message.imageSrc}
-                    alt={message.imageAlt || ''}
-                    style={{
-                      display: 'block',
-                      margin: '0 auto',
-                      maxWidth: message.imageScale
-                        ? `${Math.max(1, Math.min(100, message.imageScale * 100))}%`
-                        : '100%',
-                      height: 'auto',
-                    }}
-                    onLoad={handleMessageImageLoad}
-                  />
+                  isJuniorBadge ? (
+                    <span
+                      style={{
+                        position: 'relative',
+                        display: 'block',
+                        width: getImageMaxWidth(message),
+                        margin: '0 auto',
+                      }}
+                    >
+                      <span
+                        aria-hidden="true"
+                        style={{
+                          position: 'absolute',
+                          left: '17%',
+                          top: '9%',
+                          width: '66%',
+                          height: '52%',
+                          background: '#ffffff',
+                          borderRadius: '45% 45% 34% 34%',
+                          zIndex: 0,
+                        }}
+                      />
+                      <img
+                        src={message.imageSrc}
+                        alt={message.imageAlt || ''}
+                        style={{
+                          position: 'relative',
+                          zIndex: 1,
+                          display: 'block',
+                          width: '100%',
+                          height: 'auto',
+                        }}
+                        onLoad={handleMessageImageLoad}
+                      />
+                    </span>
+                  ) : (
+                    <img
+                      src={message.imageSrc}
+                      alt={message.imageAlt || ''}
+                      style={{
+                        display: 'block',
+                        margin: '0 auto',
+                        maxWidth: getImageMaxWidth(message),
+                        height: 'auto',
+                      }}
+                      onLoad={handleMessageImageLoad}
+                    />
+                  )
                 )}
                 {message.text ? renderMessageParagraphs(message.text) : null}
               </div>
