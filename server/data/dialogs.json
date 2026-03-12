@@ -1918,6 +1918,11 @@
             {
               "hostId": "selected",
               "text": "Du hast Reputationsangriffe durchschaut. \n\nDamit erreichst du die höchste Karrierestufe im Praktikum: Zertifizierter Debattenarchitekt."
+            },
+            {
+              "hostId": "selected",
+              "imageSrc": "/backgrounds/badge-debate-architect-v1.png",
+              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt"
             }
           ],
           "options": [
@@ -2119,13 +2124,21 @@
           "options": [
             {
               "id": "to_work",
-              "label": "Dann mal an die Arbeit."
+              "label": "Dann mal an die Arbeit.",
+              "nextStep": 6
             },
             {
               "id": "keep_overview",
-              "label": "Ich behalte den Überblick."
+              "label": "Ich behalte den Überblick.",
+              "nextStep": 6
             }
           ]
+        },
+        {
+          "stepIndex": 6,
+          "type": "transition",
+          "speechBubbles": [],
+          "options": []
         }
       ]
     }

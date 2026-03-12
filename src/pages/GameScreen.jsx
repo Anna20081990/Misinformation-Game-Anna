@@ -979,8 +979,7 @@ export function GameScreen({
   )
   const isFinalInternshipState =
     Number(currentPart) === 5 &&
-    Number(stepData.stepIndex) === 5 &&
-    ['to_work', 'keep_overview'].includes(String(lastSelectedOptionId || ''))
+    Number(stepData.stepIndex) === 6
 
   const options = stepData.options || []
   const isPart2Activity1InputStep =
@@ -2000,14 +1999,7 @@ export function GameScreen({
           backgroundImage={singleButtonTransitionConfig.backgroundImage}
           backgroundPlaceholder={scene.backgroundPlaceholder}
         />
-        <div
-          className="start-screen"
-          style={{
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            paddingBottom: '3rem',
-          }}
-        >
+        <div className="start-screen">
           <button
             type="button"
             className="start-screen__button"
@@ -2058,7 +2050,7 @@ export function GameScreen({
         <div className="start-screen">
           <button
             type="button"
-            className="start-screen__button"
+            className="start-screen__button start-screen__button--static"
             disabled
           >
             Praktikum erfolgreich beendet

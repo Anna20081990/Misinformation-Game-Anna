@@ -230,9 +230,9 @@ html, body {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding: 0 1.5rem 3rem;
+  padding: 1.5rem;
   z-index: 10;
 }
 
@@ -254,6 +254,18 @@ html, body {
 .start-screen__button:hover {
   transform: translateY(-1px);
   filter: brightness(1.04);
+}
+
+.start-screen__button--static {
+  cursor: default;
+  opacity: 1;
+  pointer-events: none;
+  transition: none;
+}
+
+.start-screen__button--static:hover {
+  transform: none;
+  filter: none;
 }
 
 .scene__chat-wrap {

@@ -41,7 +41,8 @@ const FALLBACK_NAV_STEPS_BY_PART = {
   5: [
     { stepIndex: 0, type: 'intro' },
     { stepIndex: 1, type: 'summary' },
-    { stepIndex: 3, type: 'transition' },
+    { stepIndex: 5, type: 'transition' },
+    { stepIndex: 6, type: 'transition' },
   ],
 }
 
@@ -122,12 +123,18 @@ function buildSubchapters(steps = [], part = null) {
     }
 
     if (type === 'transition') {
+      const transitionLabel =
+        Number(part) === 5 && Number(step.stepIndex) === 6
+          ? 'Ende'
+          : 'Transition'
       if (!hasSummary) {
-        entries.push({ stepIndex: step.stepIndex, label: 'Transition' })
+        entries.push({ stepIndex: step.stepIndex, label: transitionLabel })
         transitionAdded = true
       } else if (!transitionAdded) {
-        entries.push({ stepIndex: step.stepIndex, label: 'Transition' })
+        entries.push({ stepIndex: step.stepIndex, label: transitionLabel })
         transitionAdded = true
+      } else if (Number(part) === 5 && Number(step.stepIndex) === 6) {
+        entries.push({ stepIndex: step.stepIndex, label: 'Ende' })
       }
       continue
     }
@@ -167,10 +174,15 @@ function resolveActiveChapterStep(currentStepIndex, subchapters, steps = []) {
     }
     if (type === 'transition') {
       const transitionEntries = subchapters
-        .filter((chapter) => chapter.label === 'Transition')
+        .filter(
+          (chapter) =>
+            chapter.label === 'Transition' || chapter.label === 'Ende'
+        )
         .sort((a, b) => a.stepIndex - b.stepIndex)
-      const lastTransitionEntry = transitionEntries[transitionEntries.length - 1]
-      if (lastTransitionEntry) return lastTransitionEntry.stepIndex
+      const matchingTransitionEntry = transitionEntries
+        .filter((chapter) => chapter.stepIndex <= Number(currentStepIndex))
+        .sort((a, b) => b.stepIndex - a.stepIndex)[0]
+      if (matchingTransitionEntry) return matchingTransitionEntry.stepIndex
       const summaryEntry = subchapters.find(
         (chapter) => chapter.label === 'Summary'
       )
