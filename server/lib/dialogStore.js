@@ -1,10 +1,11 @@
 import { readFile, stat, writeFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { buildSeedDialogs } from './dialogSeed.js'
 import { validateDialogsData } from './dialogValidation.js'
 import { SCENES } from '../../src/data/scenes.js'
 
-const DATA_FILE = path.resolve(process.cwd(), 'server/data/dialogs.json')
+const DATA_FILE = fileURLToPath(new URL('../data/dialogs.json', import.meta.url))
 let writeQueue = Promise.resolve()
 
 function clone(obj) {
