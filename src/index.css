@@ -92,6 +92,22 @@ html, body {
   flex-wrap: wrap;
 }
 
+.app__award-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.6rem;
+  padding: 0 7rem 0 20rem;
+}
+
+.app__award-badge {
+  display: block;
+  width: 2.3rem;
+  height: 2.3rem;
+  object-fit: contain;
+}
+
 .app__progress {
   position: absolute;
   left: 0;

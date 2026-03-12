@@ -262,6 +262,42 @@ function getInternshipProgress({
   }
 }
 
+function getVisibleAwardBadges(currentPart, activeChapterStepIndex) {
+  const part = Number(currentPart)
+  const step = Number(activeChapterStepIndex ?? 0)
+  const badges = []
+
+  if (part < 2) return badges
+
+  if (part === 2) {
+    if (step >= 52) {
+      badges.push('/backgrounds/badge-junior-analyst-v2.png')
+    }
+    return badges
+  }
+
+  badges.push('/backgrounds/badge-junior-analyst-v2.png')
+
+  if (part === 3) {
+    if (step >= 52) {
+      badges.push('/backgrounds/badge-specialist-v1.png')
+    }
+    return badges
+  }
+
+  badges.push('/backgrounds/badge-specialist-v1.png')
+
+  if (part === 4) {
+    if (step >= 53) {
+      badges.push('/backgrounds/badge-debate-architect-v1.png')
+    }
+    return badges
+  }
+
+  badges.push('/backgrounds/badge-debate-architect-v1.png')
+  return badges
+}
+
 export function App() {
   const { currentPart, setCurrentPart } = useScene(-1)
   const [selectedAvatarId, setSelectedAvatarId] = useState(null)
@@ -315,6 +351,10 @@ export function App() {
     dialogsByPart,
     activeStepByPart,
   })
+  const visibleAwardBadges =
+    viewMode === 'game' && !showNavigation
+      ? getVisibleAwardBadges(currentPart, activeChapterStepIndex)
+      : []
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -421,6 +461,18 @@ export function App() {
                   style={{ width: `${internshipProgress.percent}%` }}
                 />
               </div>
+            </div>
+          )}
+          {!!visibleAwardBadges.length && (
+            <div className="app__award-strip" aria-label="Erreichte Abzeichen">
+              {visibleAwardBadges.map((src, index) => (
+                <img
+                  key={src}
+                  className="app__award-badge"
+                  src={src}
+                  alt={`Abzeichen ${index + 1}`}
+                />
+              ))}
             </div>
           )}
           {showNavigation && (
