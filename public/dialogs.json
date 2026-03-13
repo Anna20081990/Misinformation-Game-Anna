@@ -324,7 +324,7 @@
             },
             {
               "hostId": "uwe",
-              "text": "Vom Praktikum zur Analyse."
+              "text": "Vom Praktikum zum Profi."
             },
             {
               "hostId": "clara",
@@ -339,7 +339,7 @@
             },
             {
               "id": "to_corner_office",
-              "label": "Vom Keller ins Corner Office?",
+              "label": "Vom Keller in die Chefetage?",
               "nextStep": 6
             }
           ]
@@ -360,12 +360,12 @@
             },
             {
               "hostId": "uwe",
-              "text": "Exakt.",
+              "text": "So ist der Plan.",
               "showOnOptionId": "to_corner_office"
             },
             {
               "hostId": "clara",
-              "text": "Wer Muster erkennt, kommt nach oben.",
+              "text": "Kompetenz hat hier eine eigene Etagenstruktur.",
               "showOnOptionId": "to_corner_office"
             }
           ],
@@ -494,7 +494,7 @@
           "options": [
             {
               "id": "next",
-              "label": "Weiter.",
+              "label": "Wie übertrieben.",
               "nextStep": 20
             }
           ]
@@ -686,7 +686,9 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/fallakte_emma_poer.png",
-              "imageAlt": "Fallakte Emma Pör"
+              "imageAlt": "Fallakte Emma Pör",
+              "imageScale": 0.5,
+              "presentation": "badge"
             },
             {
               "hostId": "selected",
@@ -760,7 +762,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Emma arbeitet immer ähnlich. Ein Einzelfall. Ein Gefühl. Und am Ende wirkt es, als wäre die ganze Stadt betroffen."
+              "text": "Emma arbeitet immer ähnlich.\n \nEin Einzelfall. Ein Gefühl. \nUnd am Ende wirkt es, als wäre die ganze Stadt betroffen."
             },
             {
               "hostId": "selected",
@@ -908,7 +910,9 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/badge-junior-analyst-v2.png",
-              "imageAlt": "Abzeichen Junior-Analyst für kommunikative Phänomene"
+              "imageAlt": "Abzeichen Junior-Analyst für kommunikative Phänomene",
+              "imageScale": 0.5,
+              "presentation": "badge"
             },
             {
               "hostId": "selected",
@@ -1201,7 +1205,9 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/fallakte_konrad_sens.png",
-              "imageAlt": "Fallakte Konrad Sens"
+              "imageAlt": "Fallakte Konrad Sens",
+              "imageScale": 0.5,
+              "presentation": "badge"
             },
             {
               "hostId": "selected",
@@ -1406,7 +1412,9 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/badge-specialist-v1.png",
-              "imageAlt": "Abzeichen Spezialist für rhetorische Dynamiken"
+              "imageAlt": "Abzeichen Spezialist für rhetorische Dynamiken",
+              "imageScale": 0.5,
+              "presentation": "badge"
             },
             {
               "hostId": "selected",
@@ -1475,7 +1483,7 @@
           "speechBubbles": [
             {
               "hostId": "didi",
-              "text": "Die Stadt testet neue, leisere Müllwagen. Wer so etwas priorisiert, hat offenbar noch nie echte Probleme gesehen."
+              "text": "Die Stadt testet neue, leisere Müllwagen. \n\nWer so etwas priorisiert, hat offenbar noch nie echte Probleme gesehen."
             },
             {
               "hostId": "selected",
@@ -1496,7 +1504,7 @@
           "speechBubbles": [
             {
               "hostId": "didi",
-              "text": "Die Verwaltung schlägt vor, Parkbänke ergonomisch anzupassen. Typisch für Leute, die vermutlich noch nie länger als fünf Minuten draußen waren."
+              "text": "Die Verwaltung schlägt vor, Parkbänke ergonomisch anzupassen. \n\nTypisch für Leute, die vermutlich noch nie länger als fünf Minuten draußen waren."
             },
             {
               "hostId": "selected",
@@ -1691,22 +1699,20 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Exakt. Das Thema rückt in den Hintergrund. Im Vordergrund steht plötzlich jemand, der ‘schuld’ sein soll.",
+              "text": "Exakt! \n\nHier widmen wir uns Fallakte 3: Didi Fam.",
               "showOnOptionId": "less_discussion"
             },
             {
               "hostId": "selected",
-              "text": "Sehr treffend. Die Idee wird nebensächlich. Entscheidend ist, wer sie angeblich verbrochen hat.",
+              "text": "Exakt! Hier widmen wir uns Fallakte 3: Didi Fam.",
               "showOnOptionId": "single_office_attacks"
             },
             {
               "hostId": "selected",
-              "text": "Fallakte 3: Didi Fam."
-            },
-            {
-              "hostId": "selected",
               "imageSrc": "/backgrounds/fallakte_didi_fam.png",
-              "imageAlt": "Fallakte Didi Fam"
+              "imageAlt": "Fallakte Didi Fam",
+              "imageScale": 0.5,
+              "presentation": "badge"
             },
             {
               "hostId": "selected",
@@ -1727,7 +1733,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Er verschiebt den Fokus.\n\nWeg von der Frage: Ist das sinnvoll? Hin zur Frage: Was stimmt mit dieser Person nicht?"
+              "text": "Er verschiebt den Fokus.\n\nWeg von der Frage: Ist das sinnvoll? \nHin zur Frage: Was stimmt mit dieser Person nicht?"
             },
             {
               "hostId": "selected",
@@ -1922,13 +1928,15 @@
             {
               "hostId": "selected",
               "imageSrc": "/backgrounds/badge-debate-architect-v1.png",
-              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt"
+              "imageAlt": "Abzeichen Zertifizierter Debattenarchitekt",
+              "imageScale": 0.5,
+              "presentation": "badge"
             }
           ],
           "options": [
             {
               "id": "what_now",
-              "label": "Was kommt jetzt?",
+              "label": "Darf das gefeiert werden?",
               "nextStep": 52
             }
           ]
@@ -1939,7 +1947,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Ganz oben wartet ein besonderer Ausblick. Und ein Gespräch, das man nicht jedem Praktikanten anbietet."
+              "text": "Und ob!\n\nGanz oben wartet ein besonderer Ausblick. Und ein Gespräch, das man nicht jedem Praktikanten anbietet."
             },
             {
               "hostId": "selected",
@@ -2011,7 +2019,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Aber du weißt inzwischen: Unter der Oberfläche arbeiten Dynamiken."
+              "text": "Aber du weißt inzwischen: Unter der Oberfläche rumort es."
             },
             {
               "hostId": "uwe",
@@ -2118,7 +2126,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Willkommen im Media Lab. Diesmal nicht als Praktikant. Sondern als Mitgestalter der Diskussionskultur in Regelreich."
+              "text": "Willkommen im Media Lab! \n\nDiesmal nicht als Praktikant. Sondern als Mitgestalter der Diskussionskultur in Regelreich."
             }
           ],
           "options": [
