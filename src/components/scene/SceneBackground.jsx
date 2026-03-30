@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 /**
  * Vollflächiges Hintergrundbild der Szene.
  * Nutzt backgroundImage-URL oder Fallback-Gradient (backgroundPlaceholder).
@@ -16,7 +18,31 @@ export function SceneBackground({
     'scene-background',
     isEinzelbueroTablet ? 'scene-background--einzelbuero-tablet' : '',
   ].filter(Boolean).join(' ')
-  
+
+  useEffect(() => {
+    const urls = [backgroundImage, backgroundImageMobile].filter(Boolean)
+    const links = []
+
+    urls.forEach((url) => {
+      const link = document.createElement('link')
+      link.rel = 'preload'
+      link.as = 'image'
+      link.href = url
+      document.head.appendChild(link)
+      links.push(link)
+
+      const img = new Image()
+      img.decoding = 'async'
+      img.src = url
+    })
+
+    return () => {
+      links.forEach((link) => {
+        if (link.parentNode) link.parentNode.removeChild(link)
+      })
+    }
+  }, [backgroundImage, backgroundImageMobile])
+
   const desktopStyle = {
     position: 'absolute',
     inset: 0,
