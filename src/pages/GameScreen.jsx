@@ -1968,7 +1968,7 @@ export function GameScreen({
             : part3SelectMode
               ? '/backgrounds/grossraum_monitor.png'
               : part4SelectMode
-                ? '/backgrounds/einzelbuero_tablet.png'
+                ? '/backgrounds/Einzelbüro_tablet_new.jpg'
                 : null
         }
       />
@@ -2002,7 +2002,7 @@ export function GameScreen({
       if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex))
         return part4HostBackground
       if (currentStepIndex === 53) return '/backgrounds/lift_innen.png'
-      return '/backgrounds/einzelbuero_tablet.png'
+      return '/backgrounds/Einzelbüro_tablet_new.jpg'
     }
     if (currentPart === 5) {
       return '/backgrounds/Kuppelsaal_new.jpg'
