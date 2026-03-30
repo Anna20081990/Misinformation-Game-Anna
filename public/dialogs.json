@@ -165,11 +165,11 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Blick. Ich beobachte, was zwischen den Zeilen passiert."
+              "text": "Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Sicht. Ich beobachte, was zwischen den Zeilen passiert."
             },
             {
               "hostId": "clara",
-              "text": "Und ich bin Clara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist."
+              "text": "Und ich bin Klara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist."
             },
             {
               "hostId": "clara",
@@ -393,12 +393,12 @@
           "options": [
             {
               "id": "clara",
-              "label": "Clara Blick",
+              "label": "Klara Blick",
               "nextStep": 8
             },
             {
               "id": "uwe",
-              "label": "Uwe-R. Blick",
+              "label": "Uwe-R. Sicht",
               "nextStep": 8
             }
           ]
@@ -1995,10 +1995,6 @@
             {
               "hostId": "uwe",
               "text": "Keine eskalierenden Kommentarspalten. Keine angeblichen Mehrheiten. Keine persönlichen Angriffe."
-            },
-            {
-              "hostId": "uwe",
-              "text": "Nur Muster."
             }
           ],
           "options": [

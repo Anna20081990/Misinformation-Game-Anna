@@ -33,7 +33,7 @@ export const SCENES = [
     backgroundPlaceholder: 'linear-gradient(160deg, #87CEEB 0%, #B0E0E6 50%, #E0F4FF 100%)',
     characters: [
       { id: 'clara', name: 'Klara Blick', avatarUrl: null, position: { x: '18%', y: '62%' }, align: 'left' },
-      { id: 'uwe', name: 'Uwe-R. Blick', avatarUrl: null, position: { x: '72%', y: '62%' }, align: 'right' },
+      { id: 'uwe', name: 'Uwe-R. Sicht', avatarUrl: null, position: { x: '72%', y: '62%' }, align: 'right' },
     ],
     speechBubbles: [
       { characterId: 'clara', speakerName: 'Clara', text: 'Willkommen vor dem Media Lab! Schön, dass ihr da seid. Hier startet euer Sommerpraktikum.', anchor: 'left' },
@@ -103,11 +103,11 @@ export const SCENES = [
   {
     id: 5,
     name: 'Corner Office – Abschluss',
-    backgroundImage: '/backgrounds/kuppelsaal.png',
+    backgroundImage: '/backgrounds/Kuppelsaal_new.jpg',
     backgroundPlaceholder: 'linear-gradient(150deg, #1a2a4a 0%, #2d4a6e 35%, #4a6fa5 70%, #87CEEB 100%)',
     characters: [
       { id: 'clara', name: 'Klara Blick', avatarUrl: null, position: { x: '25%', y: '62%' }, align: 'left' },
-      { id: 'uwe', name: 'Uwe-R. Blick', avatarUrl: null, position: { x: '75%', y: '62%' }, align: 'right' },
+      { id: 'uwe', name: 'Uwe-R. Sicht', avatarUrl: null, position: { x: '75%', y: '62%' }, align: 'right' },
     ],
     speechBubbles: [
       { characterId: 'clara', speakerName: 'Clara', text: 'Ihr habt alle drei Fallakten durchgearbeitet. Das Praktikum ist offiziell abgeschlossen.', anchor: 'left' },

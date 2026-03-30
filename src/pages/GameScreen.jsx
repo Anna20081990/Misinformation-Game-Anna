@@ -184,7 +184,7 @@ const PART3_ACTIVITY2_FALLBACK_CONFIG = {
   title: 'Aktivität 2: Konsens-Verstärker',
   topic: 'Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen',
   prompt:
-    'Aktivität 2: Welche Ergänzungen lassen den Beitrag so wirken, als gäbe es bereits breiten Konsens?',
+    'Welche Ergänzungen würden einen Beitrag so aussehen lassen, als gäbe es bereits breiten Konsens? \n\n Wenn mehrere passen: nimm sie! Konrad würde es genauso machen.',
   neutralPost:
     '„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“',
   choices: [
@@ -195,7 +195,7 @@ const PART3_ACTIVITY2_FALLBACK_CONFIG = {
       text: '„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“',
     },
     { id: 'd', text: '„#EndlichOrdnung“' },
-    { id: 'e', text: '„Dieser Beitrag hat bereits mehr als 4.200 Likes.“' },
+    { id: 'e', text: '„Es gibt niemanden in meinem Umfeld, der diese Initiative nicht unterstützt.”' },
     { id: 'f', text: '„Mal sehen, was daraus wird.“' },
   ],
   correctChoiceIds: ['c', 'e'],
@@ -384,7 +384,7 @@ function isAvatarOption(option) {
 function getHostFullName(hostId) {
   if (hostId === 'ambassador') return 'Botschafterin Regelreich'
   if (hostId === 'clara') return 'Klara Blick'
-  if (hostId === 'uwe') return 'Uwe R. Blick'
+  if (hostId === 'uwe') return 'Uwe-R. Sicht'
   if (hostId === 'emma') return 'Emma Pör'
   if (hostId === 'konrad') return 'Konrad Sens'
   if (hostId === 'didi') return 'Didi Fam'
@@ -1980,13 +1980,13 @@ export function GameScreen({
       return scene.backgroundImage
     const hostGenderBackground =
       selectedHostId === 'uwe'
-        ? '/backgrounds/grossraum_mann.png'
-        : '/backgrounds/grossraum_frau.png'
+        ? '/backgrounds/Großraum_Mann_new.jpg'
+        : '/backgrounds/Großraum_Frau_new.jpg'
     const currentStepIndex = Number(stepData?.stepIndex ?? stepIndex ?? 0)
     if (currentPart === 2) {
       return selectedHostId === 'clara'
-        ? '/backgrounds/keller-klara.png'
-        : '/backgrounds/keller-uwe.png'
+        ? '/backgrounds/Keller_Frau_new.jpg'
+        : '/backgrounds/Keller_Mann_new.jpg'
     }
     if (currentPart === 3) {
       if ([0, 1, 2, 5, 10, 11, 12, 13, 51].includes(currentStepIndex))
@@ -1997,15 +1997,15 @@ export function GameScreen({
     if (currentPart === 4) {
       const part4HostBackground =
         selectedHostId === 'uwe'
-          ? '/backgrounds/einzelbuero_mann.png'
-          : '/backgrounds/einzelbuero_frau.png'
+          ? '/backgrounds/Einzelbüro_Mann_new.jpg'
+          : '/backgrounds/Einzelbüro_Frau_new.jpg'
       if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex))
         return part4HostBackground
       if (currentStepIndex === 53) return '/backgrounds/lift_innen.png'
       return '/backgrounds/einzelbuero_tablet.png'
     }
     if (currentPart === 5) {
-      return '/backgrounds/kuppelsaal.png'
+      return '/backgrounds/Kuppelsaal_new.jpg'
     }
     return scene.backgroundImage
   })()
@@ -2061,15 +2061,29 @@ export function GameScreen({
 
   if (isFinalInternshipState) {
     return (
-      <div className="scene">
+      <div className="scene scene--finale">
         <SceneBackground
           backgroundImage={sceneForRender.backgroundImage}
           backgroundPlaceholder={sceneForRender.backgroundPlaceholder}
         />
-        <div className="start-screen">
+        <div className="finale-confetti" aria-hidden="true">
+          {Array.from({ length: 18 }, (_, index) => (
+            <span
+              key={`confetti-${index}`}
+              className="finale-confetti__piece"
+              style={{
+                left: `${((index + 0.5) / 18) * 100}%`,
+                '--confetti-drift': `${index % 2 === 0 ? '-' : ''}${16 + (index % 5) * 5}px`,
+                animationDelay: `${(index % 6) * 0.45}s`,
+                animationDuration: `${5.2 + (index % 5) * 0.55}s`,
+              }}
+            />
+          ))}
+        </div>
+        <div className="start-screen start-screen--comic start-screen--final">
           <button
             type="button"
-            className="start-screen__button start-screen__button--static"
+            className="btn-start-pulsing start-screen__button--static"
             disabled
           >
             Praktikum erfolgreich beendet

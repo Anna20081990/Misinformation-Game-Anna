@@ -9,19 +9,19 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
-        text: 'Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Blick. Ich beobachte, was zwischen den Zeilen passiert.',
+        speakerName: 'Uwe-R. Sicht',
+        text: 'Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Sicht. Ich beobachte, was zwischen den Zeilen passiert.',
         anchor: 'right',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
-        text: 'Und ich bin Clara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist.',
+        speakerName: 'Klara Blick',
+        text: 'Und ich bin Klara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist.',
         anchor: 'left',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Wir haben schon auf Verstärkung gehofft – TikTalk produziert schneller Debatten, als wir Kaffee kochen können.',
         anchor: 'left',
       },
@@ -36,28 +36,28 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Arbeit ja. Panik nein.',
         anchor: 'right',
         showOnOptionId: 'workload',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Wir analysieren Muster. Und Muster lassen sich sortieren.',
         anchor: 'left',
         showOnOptionId: 'workload',
       },
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Der Kaffee ist solide.',
         anchor: 'right',
         showOnOptionId: 'coffee',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Aber spannender sind die Debatten.',
         anchor: 'left',
         showOnOptionId: 'coffee',
@@ -72,27 +72,27 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Wir beobachten TikTalk nicht wegen der Themen.',
         anchor: 'right',
         showOnOptionId: 'what_media_lab',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Sondern wegen der Dynamiken.',
         anchor: 'left',
         showOnOptionId: 'what_media_lab',
       },
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'In den letzten Monaten sind uns drei Profile besonders aufgefallen: Emma Pör. Konrad Sens. Didi Fam.',
         anchor: 'right',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Intern nennen wir sie die notorischen Drei.',
         anchor: 'left',
       },
@@ -106,13 +106,13 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Sie haben eines gemeinsam: Sie wissen genau, wie man Debatten verschiebt.',
         anchor: 'right',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Und genau deshalb gibt es zu jedem von ihnen eine eigene Fallakte.',
         anchor: 'left',
       },
@@ -127,28 +127,28 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Ganz so dramatisch ist es nicht.',
         anchor: 'right',
         showOnOptionId: 'solve_cases',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Aber ja. Du wirst ihre Strategien analysieren.',
         anchor: 'left',
         showOnOptionId: 'solve_cases',
       },
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Mit weniger Trenchcoat.',
         anchor: 'right',
         showOnOptionId: 'detective_work',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Aber mit ähnlich viel Beobachtung.',
         anchor: 'left',
         showOnOptionId: 'detective_work',
@@ -163,25 +163,25 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Du startest im Keller.',
         anchor: 'right',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Mit jeder abgeschlossenen Fallakte steigst du ein Stockwerk höher.',
         anchor: 'left',
       },
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Vom Praktikum zur Analyse.',
         anchor: 'right',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Und am Ende ganz nach oben.',
         anchor: 'left',
       },
@@ -196,28 +196,28 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'So ist der Plan.',
         anchor: 'right',
         showOnOptionId: 'real_progress',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Kompetenz hat hier eine eigene Etagenstruktur.',
         anchor: 'left',
         showOnOptionId: 'real_progress',
       },
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Exakt.',
         anchor: 'right',
         showOnOptionId: 'to_corner_office',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Wer Muster erkennt, kommt nach oben.',
         anchor: 'left',
         showOnOptionId: 'to_corner_office',
@@ -232,20 +232,20 @@ export const PART1_CONVERSATION = [
     speechBubbles: [
       {
         characterId: 'uwe',
-        speakerName: 'Uwe-R. Blick',
+        speakerName: 'Uwe-R. Sicht',
         text: 'Du entscheidest.',
         anchor: 'right',
       },
       {
         characterId: 'clara',
-        speakerName: 'Clara Blick',
+        speakerName: 'Klara Blick',
         text: 'Wir arbeiten beide im Media Lab. Unterschiedlicher Stil. Gleicher Anspruch.',
         anchor: 'left',
       },
     ],
     options: [
-      { id: 'clara', label: 'Clara Blick', nextStep: 8 },
-      { id: 'uwe', label: 'Uwe-R. Blick', nextStep: 8 },
+      { id: 'clara', label: 'Klara Blick', nextStep: 8 },
+      { id: 'uwe', label: 'Uwe-R. Sicht', nextStep: 8 },
     ],
   },
   {

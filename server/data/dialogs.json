@@ -34,7 +34,7 @@
             },
             {
               "hostId": "ambassador",
-              "text": "Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden – und aus Trends mitunter offizielle Entscheidungen."
+              "text": "Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Vorschlägen Trends werden können – und aus Trends mitunter offizielle Entscheidungen."
             }
           ],
           "options": [
@@ -56,11 +56,11 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Lange Zeit galt TikTalk als lebhaft, aber berechenbar.\n\nMan wusste: Es wird diskutiert, es wird kommentiert – und irgendwann kehrt wieder Ordnung ein."
+              "text": "Lange Zeit galt TikTalk als durchaus lebhaft, aber produktiv.\n\nMan wusste: Es wird diskutiert, es wird kommentiert – und irgendwann kehrt wieder Ordnung ein."
             },
             {
               "hostId": "ambassador",
-              "text": "Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beiträge verbreiten sich ungewöhnlich stark.\n\nUnd manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht."
+              "text": "Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beiträge verbreiten sich ungewöhnlich stark.\n\nUnd manchmal kippt eine Diskussion plötzlich – und statt um das Thema geht es nur noch um die Leute darin."
             }
           ],
           "options": [
@@ -77,7 +77,7 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚beschleunigen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt."
+              "text": "Im Media Lab von Regelreich spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚beschleunigen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt."
             }
           ],
           "options": [
@@ -111,11 +111,11 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Diskussionen in eine Richtung zu lenken.\n\nMal lauter, mal leiser – aber selten zufällig."
+              "text": "Diskussionen in eine bestimmte Richtung zu lenken.\n\nMal laut, mal um 180 Grad – und selten hilfreich."
             },
             {
               "hostId": "ambassador",
-              "text": "Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\n\nDeine Aufgabe: Herausfinden, wie sie das tun."
+              "text": "Du bist hier, um bei einem Sommerpraktikum im Media Lab bei der Aufklärung zu helfen.\n\nDeine Aufgabe: Herausfinden, wie sie das tun.\n\nDamit Diskussionen hier nicht jedes Mal in Chaos enden."
             }
           ],
           "options": [
@@ -165,11 +165,11 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Blick. Ich beobachte, was zwischen den Zeilen passiert."
+              "text": "Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Sicht. Ich beobachte, was zwischen den Zeilen passiert."
             },
             {
               "hostId": "clara",
-              "text": "Und ich bin Clara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist."
+              "text": "Und ich bin Klara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist."
             },
             {
               "hostId": "clara",
@@ -200,7 +200,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Wir analysieren Muster. Und Muster lassen sich sortieren.",
+              "text": "Wir analysieren Debatten. Und Debatten lassen sich sortieren.",
               "showOnOptionId": "workload"
             },
             {
@@ -232,7 +232,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Sondern wegen der Dynamiken."
+              "text": "Uns interessiert weniger das WAS – sondern das WIE."
             },
             {
               "hostId": "uwe",
@@ -257,7 +257,7 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Sie haben eines gemeinsam: Sie wissen genau, wie man Debatten verschiebt."
+              "text": "Fanclub eher nicht.\n\nAber sie haben eines gemeinsam: Sie wissen genau, wie man Debatten verschiebt."
             },
             {
               "hostId": "clara",
@@ -288,17 +288,17 @@
             },
             {
               "hostId": "clara",
-              "text": "Aber ja. Du wirst ihre Strategien analysieren.",
+              "text": "Aber ja. Du wirst ihre Muster analysierengenauer unter die Lupe nehmen.",
               "showOnOptionId": "solve_cases"
             },
             {
               "hostId": "uwe",
-              "text": "Mit weniger Trenchcoat.",
+              "text": "Ja – du wirst ihre Muster genauer unter die Lupe nehmen.",
               "showOnOptionId": "detective_work"
             },
             {
               "hostId": "clara",
-              "text": "Aber mit ähnlich viel Beobachtung.",
+              "text": "Mit weniger Trenchcoat. Aber mit genauso viel Blick fürs Detail.",
               "showOnOptionId": "detective_work"
             }
           ],
@@ -393,12 +393,12 @@
           "options": [
             {
               "id": "clara",
-              "label": "Clara Blick",
+              "label": "Klara Blick",
               "nextStep": 8
             },
             {
               "id": "uwe",
-              "label": "Uwe-R. Blick",
+              "label": "Uwe-R. Sicht",
               "nextStep": 8
             }
           ]
@@ -494,7 +494,7 @@
           "options": [
             {
               "id": "next",
-              "label": "Wie übertrieben.",
+              "label": "Wie übertrieben!",
               "nextStep": 20
             }
           ]
@@ -658,7 +658,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Gemütlich trifft es.\n\nDie wirklich lauten Diskussionen entstehen meist weiter oben.",
+              "text": "Gemütlich trifft es.\n\nDie wirklich chaotischen Diskussionen entstehen meist weiter oben.",
               "showOnOptionId": "cozy"
             },
             {
@@ -724,7 +724,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Emma braucht nur einen kleinen Funken – den Rest erledigt die Debatte selbst."
+              "text": "Emma braucht nur einen kleinen Funken – den Rest erledigt die Diskussion meist von selbst."
             }
           ],
           "options": [
@@ -813,7 +813,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Das wirkt erstaunlich ruhig - fast zu ruhig. Emma arbeitet selten ohne Empörung. Lies nochmal mit diesem Gedanken.",
+              "text": "Das wirkt erstaunlich ruhig - zu ruhig! Emma arbeitet selten ohne Empörung. Lies nochmal mit diesem Gedanken.",
               "showOnOptionId": "wrongOnlyFalse"
             }
           ],
@@ -1094,8 +1094,8 @@
             "mode": "consensus-boosters",
             "title": "Aktivität 2: Konsens-Verstärker",
             "topic": "Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen",
-            "prompt": "Welche Ergänzungen würden einen Beitrag so aussehen lassen, als gäbe es bereits breiten Konsens?",
-            "neutralPost": "„Die Stadt testet eine empfohlene Geh-Richtung in Fußgängerzonen, um spontane Begegnungsstaus zu reduzieren.”",
+            "prompt": "Welche Ergänzungen würden den Beitrag so aussehen lassen, als gäbe es bereits breiten Konsens? \n\n Wenn mehrere passen: nimm sie! Konrad würde es genauso machen.",
+            "neutralPost": "„Die Stadt testet eine empfohlene Geh-Richtung in Fußgängerzonen, um spontane Begegnungsstaus zu reduzieren. Dabei sollen Fußgänger rechts gehen und links überholen.”",
             "choices": [
               {
                 "id": "a",
@@ -1316,7 +1316,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das ist fast schon seriöser Journalismus. Konrad würde hier mindestens eine Mehrheit hineinformulieren – sonst läuft niemand mit."
+              "text": "Das ist fast schon seriöser Journalismus. Konrad würde hier mindestens eine Mehrheit einbauen – sonst läuft niemand mit."
             }
           ],
           "options": [
@@ -1386,7 +1386,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Schon nicht schlecht. Aber der soziale Rückenwind könnte noch stärker wehen."
+              "text": "Schon nicht schlecht. Aber der soziale Rückenwind könnte noch etwas stärker wehen."
             }
           ],
           "options": [
@@ -1518,7 +1518,7 @@
           "options": [
             {
               "id": "unpleasant",
-              "label": "Klingt unsympathisch.",
+              "label": "Klingt unangenehm.",
               "nextStep": 20
             },
             {
@@ -1617,7 +1617,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Wo kippt die Debatte von der Idee zur Person?"
+              "text": "Wo kippt die Debatte am stärksten von der Idee zur Person?"
             },
             {
               "hostId": "selected",
@@ -1854,7 +1854,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sauber getrennt. Zwei bleiben bei der Sache, zwei gehen auf Personen. Genau hier beginnt Didi Fams Spielfeld.",
+              "text": "Sauber getrennt. Zwei bleiben bei der Sache, zwei gehen auf Personen. Genau hier beginnt Didis Spielfeld.",
               "showOnOptionId": "rightA"
             }
           ],
@@ -1877,7 +1877,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Das ist spöttisch, ja. Aber noch wird die Idee kommentiert – nicht die Person dahinter. Didi würde es noch direkter machen.",
+              "text": "Das ist schon spöttisch, ja. Aber noch wird die Idee kommentiert – nicht die Person dahinter. Didi würde es noch direkter machen.",
               "showOnOptionId": "wrongB"
             }
           ],
@@ -1885,14 +1885,12 @@
             {
               "id": "retry_low",
               "label": "Okay, noch mal – mit mehr Biss.",
-              "nextStep": 4,
-              "showOnOptionId": "wrongBLow"
+              "nextStep": 4
             },
             {
               "id": "retry",
               "label": "Ich leg noch eine Schippe drauf.",
-              "nextStep": 4,
-              "showOnOptionId": "wrongB"
+              "nextStep": 4
             }
           ]
         },
@@ -1995,10 +1993,6 @@
             {
               "hostId": "uwe",
               "text": "Keine eskalierenden Kommentarspalten. Keine angeblichen Mehrheiten. Keine persönlichen Angriffe."
-            },
-            {
-              "hostId": "uwe",
-              "text": "Nur Muster."
             }
           ],
           "options": [
@@ -2029,7 +2023,7 @@
           "options": [
             {
               "id": "three_strategies",
-              "label": "Drei Strategien. Drei Stockwerke.",
+              "label": "Drei Muster. Drei Stockwerke.",
               "nextStep": 2
             },
             {
@@ -2045,7 +2039,7 @@
           "speechBubbles": [
             {
               "hostId": "clara",
-              "text": "Sehr architektonisch gedacht. Struktur hilft beim Durchblick.",
+              "text": "Sehr architektonisch gedacht. Struktur hilft beim Durchblick, um verschobene Debatten wieder gerade zu rücken.",
               "showOnOptionId": "three_strategies"
             },
             {
@@ -2101,7 +2095,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Die Frage ist nicht, ob diskutiert wird.\n\nSondern wie."
+              "text": "Die Frage ist nicht, OB diskutiert wird.\n\nSondern WIE."
             }
           ],
           "options": [
@@ -2126,7 +2120,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Willkommen im Media Lab! \n\nDiesmal nicht als Praktikant. Sondern als Mitgestalter der Diskussionskultur in Regelreich."
+              "text": "Willkommen als fester Bestandteil des Media Labs! \n\nDiesmal nicht als Praktikant. Sondern als Mitgestalter der Diskussionskultur in Regelreich."
             }
           ],
           "options": [

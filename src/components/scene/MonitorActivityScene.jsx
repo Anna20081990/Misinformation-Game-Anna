@@ -34,7 +34,7 @@ export function MonitorActivityScene({
       option.kind !== 'bucket-assignment'
   )
   const titleByVariant = {
-    monitor: 'Stand-PC Monitor',
+    monitor: 'Media Lab Luminara',
     tablet: 'Tablet Interface',
     hologram: 'Hologramm Interface',
   }

@@ -30,11 +30,11 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
 
   if (id === 'ambassador') return 'Botschafter Regelreich'
   if (id === 'host' && selectedHostId === 'clara') return 'Klara Blick'
-  if (id === 'host' && selectedHostId === 'uwe') return 'Uwe R. Blick'
+  if (id === 'host' && selectedHostId === 'uwe') return 'Uwe-R. Sicht'
   if (id === 'selected' && selectedHostId === 'clara') return 'Klara Blick'
-  if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe R. Blick'
+  if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe-R. Sicht'
   if (id === 'clara' || name.includes('clara')) return 'Klara Blick'
-  if (id === 'uwe' || name.includes('uwe')) return 'Uwe R. Blick'
+  if (id === 'uwe' || name.includes('uwe')) return 'Uwe-R. Sicht'
   return speakerName || 'Host'
 }
 
