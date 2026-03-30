@@ -1968,7 +1968,7 @@ export function GameScreen({
             : part3SelectMode
               ? '/backgrounds/grossraum_monitor.png'
               : part4SelectMode
-                ? '/backgrounds/Einzelbüro_tablet_new.jpg'
+                ? '/backgrounds/Einzelbuero_tablet_new.jpg'
                 : null
         }
       />
@@ -1997,12 +1997,12 @@ export function GameScreen({
     if (currentPart === 4) {
       const part4HostBackground =
         selectedHostId === 'uwe'
-          ? '/backgrounds/Einzelbüro_Mann_new.jpg'
-          : '/backgrounds/Einzelbüro_Frau_new.jpg'
+          ? '/backgrounds/Einzelbuero_Mann_new.jpg'
+          : '/backgrounds/Einzelbuero_Frau_new.jpg'
       if ([0, 1, 2, 5, 10, 11, 12, 20, 51, 52].includes(currentStepIndex))
         return part4HostBackground
       if (currentStepIndex === 53) return '/backgrounds/lift_innen.png'
-      return '/backgrounds/Einzelbüro_tablet_new.jpg'
+      return '/backgrounds/Einzelbuero_tablet_new.jpg'
     }
     if (currentPart === 5) {
       return '/backgrounds/Kuppelsaal_new.jpg'
