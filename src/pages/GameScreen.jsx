@@ -391,6 +391,25 @@ function getHostFullName(hostId) {
   return 'Host'
 }
 
+function getMobileBackgroundVariant(backgroundImage) {
+  const image = String(backgroundImage || '')
+  if (!image.endsWith('.jpg')) return undefined
+
+  const knownLargeBackgrounds = new Set([
+    '/backgrounds/Keller_Frau_new.jpg',
+    '/backgrounds/Keller_Mann_new.jpg',
+    '/backgrounds/Großraum_Frau_new.jpg',
+    '/backgrounds/Großraum_Mann_new.jpg',
+    '/backgrounds/Einzelbuero_Frau_new.jpg',
+    '/backgrounds/Einzelbuero_Mann_new.jpg',
+    '/backgrounds/Einzelbuero_tablet_new.jpg',
+    '/backgrounds/Kuppelsaal_new.jpg',
+  ])
+
+  if (!knownLargeBackgrounds.has(image)) return undefined
+  return image.replace('.jpg', '_mobile.jpg')
+}
+
 function normalizeHostId(raw, selectedHostId) {
   const id = String(raw || 'selected').toLowerCase()
   if (id === 'ambassador') return 'ambassador'
@@ -2017,10 +2036,10 @@ export function GameScreen({
           backgroundImage={singleButtonTransitionConfig.backgroundImage}
           backgroundPlaceholder={scene.backgroundPlaceholder}
         />
-        <div className="start-screen start-screen--comic">
+        <div className="start-screen start-screen--comic start-screen--transition">
           <button
             type="button"
-            className="btn-dialog-option blue"
+            className="btn-start-pulsing"
             onClick={() => onPartChange?.(singleButtonTransitionConfig.nextPart)}
           >
             {singleButtonTransitionConfig.label}
@@ -2034,6 +2053,7 @@ export function GameScreen({
     ? {
         ...scene,
         backgroundImage: hostSpecificBackground,
+        backgroundImageMobile: getMobileBackgroundVariant(hostSpecificBackground),
         hideChatPanel: isFinalInternshipState,
       }
     : scene
@@ -2064,6 +2084,7 @@ export function GameScreen({
       <div className="scene scene--finale">
         <SceneBackground
           backgroundImage={sceneForRender.backgroundImage}
+          backgroundImageMobile={sceneForRender.backgroundImageMobile}
           backgroundPlaceholder={sceneForRender.backgroundPlaceholder}
         />
         <div className="finale-confetti" aria-hidden="true">

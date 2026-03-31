@@ -2166,6 +2166,14 @@ html, body {
   top: 60%;
 }
 
+.start-screen--transition {
+  max-width: 42rem;
+}
+
+.start-screen--transition .btn-start-pulsing {
+  width: min(100%, 42rem);
+}
+
 .scene--finale {
   min-height: 100vh;
   min-height: 100dvh;
@@ -2254,6 +2262,14 @@ html, body {
 
   .start-screen--final {
     bottom: 10svh;
+  }
+
+  .start-screen--transition {
+    max-width: none;
+  }
+
+  .start-screen--transition .btn-start-pulsing {
+    width: 100%;
   }
 
   .scene--finale .scene-background {
