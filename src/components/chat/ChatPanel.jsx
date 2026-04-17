@@ -81,8 +81,19 @@ export function ChatPanel({
     lastMessageId: null,
     length: 0,
   })
+  const activeScrollAnchorIdRef = useRef(null)
   const avatarOptions = options.filter((option) => isAvatarOption(option))
   const textOptions = options.filter((option) => !isAvatarOption(option))
+
+  function scrollToMessageTop(container, messageId) {
+    if (!container || messageId == null) return
+    const targetId = String(messageId)
+    const firstNewMessage = Array.from(container.children).find(
+      (element) => element?.dataset?.messageId === targetId
+    )
+    if (!firstNewMessage) return
+    container.scrollTop = firstNewMessage.offsetTop
+  }
 
   useLayoutEffect(() => {
     const container = scrollRef.current
@@ -103,9 +114,17 @@ export function ChatPanel({
     } else {
       const appendedMessage =
         messages.length > previous.length && lastMessageId !== previous.lastMessageId
+      const firstAppendedMessage = messages[previous.length]
+      const previousLastMessage = messages[previous.length - 1]
+      const firstAppendedMessageId =
+        firstAppendedMessage?.speakerType !== 'player' &&
+        previousLastMessage?.speakerType === 'player'
+          ? previousLastMessage?.id ?? null
+          : firstAppendedMessage?.id ?? null
 
       if (appendedMessage && hasOverflow) {
-        container.scrollTop = container.scrollHeight
+        activeScrollAnchorIdRef.current = firstAppendedMessageId
+        scrollToMessageTop(container, firstAppendedMessageId)
       }
     }
 
@@ -118,12 +137,9 @@ export function ChatPanel({
 
   function handleMessageImageLoad() {
     const container = scrollRef.current
-    if (!container) return
-
-    const hasOverflow = container.scrollHeight > container.clientHeight
-    if (hasOverflow) {
-      container.scrollTop = container.scrollHeight
-    }
+    const activeAnchorId = activeScrollAnchorIdRef.current
+    if (!container || activeAnchorId == null) return
+    scrollToMessageTop(container, activeAnchorId)
   }
 
   return (
@@ -155,6 +171,7 @@ export function ChatPanel({
           return (
             <article
               key={message.id}
+              data-message-id={message.id}
               className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'} ${isBadgeImage ? 'chat-message--badge-only' : ''}`}
             >
               {message.speakerType !== 'player' && !isBadgeImage && (

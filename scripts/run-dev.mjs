@@ -27,11 +27,15 @@ api.on('exit', (code) => {
   if (code != null && code !== 0) process.exit(code)
 })
 
-const web = spawn('npm', ['run', 'dev'], {
+const isWindows = process.platform === 'win32'
+const webCommand = isWindows ? 'cmd.exe' : 'npm'
+const webArgs = isWindows ? ['/d', '/s', '/c', 'npm run dev'] : ['run', 'dev']
+
+const web = spawn(webCommand, webArgs, {
   cwd: root,
   stdio: ['ignore', 'pipe', 'pipe'],
   env: { ...process.env, FORCE_COLOR: '1' },
-  shell: true,
+  windowsHide: true,
 })
 web.stdout.setEncoding('utf8')
 web.stderr.setEncoding('utf8')

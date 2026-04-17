@@ -988,7 +988,7 @@ export function GameScreen({
   )
   const requiresBackendDialogs = currentPart >= 0 && currentPart <= 5
   const backendUnavailableForPart =
-    requiresBackendDialogs && !sortedBackendSteps.length
+    requiresBackendDialogs && !sortedBackendSteps.length && Boolean(dialogLoadError)
   const backendErrorStep = {
     stepIndex: 0,
     type: 'error',
