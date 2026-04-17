@@ -9,6 +9,26 @@ function normalizeSpeakerName(name) {
     .replace(/P�r/g, 'P\u00f6r')
 }
 
+function resolveKnownHostId(name) {
+  const normalized = normalizeSpeakerName(name).toLowerCase()
+  if (normalized.includes('emma')) return 'emma'
+  if (normalized.includes('konrad')) return 'konrad'
+  if (normalized.includes('didi')) return 'didi'
+  if (normalized.includes('clara') || normalized.includes('klara')) return 'clara'
+  if (normalized.includes('uwe')) return 'uwe'
+  if (normalized.includes('botschafter')) return 'ambassador'
+  return ''
+}
+
+function PostAuthorAvatar({ name, imageSrc }) {
+  const hostId = resolveKnownHostId(name)
+  if (hostId) {
+    return <HostAvatar characterId={hostId} speakerName={name} />
+  }
+  if (!imageSrc) return null
+  return <img className="monitor-post-author__avatar" src={imageSrc} alt={name} />
+}
+
 export function MonitorActivityScene({
   messages = [],
   options = [],
@@ -198,13 +218,10 @@ export function MonitorActivityScene({
                     <>
                       {!!sentencePostAuthorName && (
                         <div className="monitor-post-author">
-                          {!!sentencePostAuthorAvatar && (
-                            <img
-                              className="monitor-post-author__avatar"
-                              src={sentencePostAuthorAvatar}
-                              alt={sentencePostAuthorName}
-                            />
-                          )}
+                          <PostAuthorAvatar
+                            name={sentencePostAuthorName}
+                            imageSrc={sentencePostAuthorAvatar}
+                          />
                           <strong className="monitor-post-author__name">
                             {sentencePostAuthorName}
                           </strong>
@@ -239,13 +256,10 @@ export function MonitorActivityScene({
                     >
                       {!!choicePostAuthorName && (
                         <div className="monitor-post-author">
-                          {!!choicePostAuthorAvatar && (
-                            <img
-                              className="monitor-post-author__avatar"
-                              src={choicePostAuthorAvatar}
-                              alt={choicePostAuthorName}
-                            />
-                          )}
+                          <PostAuthorAvatar
+                            name={choicePostAuthorName}
+                            imageSrc={choicePostAuthorAvatar}
+                          />
                           <strong className="monitor-post-author__name">
                             {choicePostAuthorName}
                           </strong>
@@ -286,13 +300,10 @@ export function MonitorActivityScene({
                       {!!boosterPostAuthorName &&
                         !boosterRenderNeutralPostAsMessage && (
                         <div className="monitor-post-author">
-                          {!!boosterPostAuthorAvatar && (
-                            <img
-                              className="monitor-post-author__avatar"
-                              src={boosterPostAuthorAvatar}
-                              alt={boosterPostAuthorName}
-                            />
-                          )}
+                          <PostAuthorAvatar
+                            name={boosterPostAuthorName}
+                            imageSrc={boosterPostAuthorAvatar}
+                          />
                           <strong className="monitor-post-author__name">
                             {boosterPostAuthorName}
                           </strong>
@@ -386,13 +397,10 @@ export function MonitorActivityScene({
                     >
                       {!!bucketPostAuthorName && (
                         <div className="monitor-post-author">
-                          {!!bucketPostAuthorAvatar && (
-                            <img
-                              className="monitor-post-author__avatar"
-                              src={bucketPostAuthorAvatar}
-                              alt={bucketPostAuthorName}
-                            />
-                          )}
+                          <PostAuthorAvatar
+                            name={bucketPostAuthorName}
+                            imageSrc={bucketPostAuthorAvatar}
+                          />
                           <strong className="monitor-post-author__name">
                             {bucketPostAuthorName}
                           </strong>

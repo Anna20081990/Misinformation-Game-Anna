@@ -506,7 +506,7 @@ html, body {
 }
 
 .monitor-message--host .monitor-message__bubble {
-  background: #e8f4ff;
+  background: #ffffff;
   color: #13283e;
 }
 
@@ -920,7 +920,7 @@ html, body {
 .monitor-scene--keller-monitor-select .monitor-message--host .monitor-message__bubble,
 .monitor-scene--grossraum-monitor-select .monitor-message--host .monitor-message__bubble,
 .monitor-scene--einzelbuero-tablet-select .monitor-message--host .monitor-message__bubble {
-  background: rgba(232, 244, 255, 0.92);
+  background: #ffffff;
   color: #15283f;
 }
 
@@ -1285,7 +1285,7 @@ html, body {
   height: 48px;
   border-radius: 50%;
   border: 2px solid #d2f0ff;
-  background: #f7feff;
+  background: #a9def8;
   display: flex;
   align-items: center;
   justify-content: center;

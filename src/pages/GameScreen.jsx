@@ -146,21 +146,21 @@ const PART2_ACTIVITY1_FALLBACK_CONFIG = {
 }
 const PART2_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
-  title: 'AktivitÃ¤t 2: IntensitÃ¤tswahl',
+  title: 'Aktivit\u00e4t 2: Intensit\u00e4tswahl',
   topic:
     'Thema: Farbverlauf in den Wartebereichen des Hauptbahnhofs',
   choices: [
     {
       id: 'a',
-      text: 'â€žDie Stadt plant einen einheitlichen Farbverlauf fÃ¼r Wartebereiche im Hauptbahnhof.â€œ',
+      text: '\u201eDie Stadt plant einen einheitlichen Farbverlauf f\u00fcr Wartebereiche im Hauptbahnhof.\u201c',
     },
     {
       id: 'b',
-      text: 'â€žDer geplante Farbverlauf im Wartebereich sorgt fÃ¼r Diskussionen. Manche halten ihn fÃ¼r eine Ã¼berflÃ¼ssige Dramatisierung des Bahnalltags.â€œ',
+      text: '\u201eDer geplante Farbverlauf im Wartebereich sorgt f\u00fcr Diskussionen. Manche halten ihn f\u00fcr eine \u00fcberfl\u00fcssige Dramatisierung des Bahnalltags.\u201c',
     },
     {
       id: 'c',
-      text: 'â€žJetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fÃ¼hlen. Was kommt als NÃ¤chstes â€“ eine Pflichtstimmung im Abteil?â€œ',
+      text: '\u201eJetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten f\u00fchlen. Was kommt als N\u00e4chstes - eine Pflichtstimmung im Abteil?\u201c',
     },
   ],
   correctChoiceId: 'c',
@@ -169,21 +169,21 @@ const PART2_ACTIVITY2_FALLBACK_CONFIG = {
 }
 const PART3_ACTIVITY1_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
-  title: 'AktivitÃ¤t 1: Trend-Detektor',
+  title: 'Aktivit\u00e4t 1: Trend-Detektor',
   topic: 'Thema: Einfuehrung eines verpflichtenden Wochenmottos',
   randomizeChoices: true,
   choices: [
     {
       id: 'p1',
-      text: 'â€žDie Stadt prÃ¼ft die EinfÃ¼hrung eines wÃ¶chentlichen Mottos fÃ¼r Ã¶ffentliche Einrichtungen.â€œ',
+      text: '\u201eDie Stadt pr\u00fcft die Einf\u00fchrung eines w\u00f6chentlichen Mottos f\u00fcr \u00f6ffentliche Einrichtungen.\u201c',
     },
     {
       id: 'p2',
-      text: 'â€žImmer mehr Menschen sprechen sich fÃ¼r ein Wochenmotto aus.â€œ',
+      text: '\u201eImmer mehr Menschen sprechen sich f\u00fcr ein Wochenmotto aus.\u201c',
     },
     {
       id: 'p3',
-      text: 'â€žInzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.â€',
+      text: '\u201eInzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.\u201c',
     },
   ],
   correctChoiceId: 'p3',
@@ -192,22 +192,25 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
 }
 const PART3_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'consensus-boosters',
-  title: 'AktivitÃ¤t 2: Konsens-VerstÃ¤rker',
-  topic: 'Thema: EinfÃ¼hrung einer offiziellen Geh-Richtung in FuÃŸgÃ¤ngerzonen',
+  title: 'Aktivit\u00e4t 2: Konsens-Verst\u00e4rker',
+  topic: 'Thema: Einf\u00fchrung einer offiziellen Geh-Richtung in Fu\u00dfg\u00e4ngerzonen',
   prompt:
-    'Welche ErgÃ¤nzungen wÃ¼rden einen Beitrag so aussehen lassen, als gÃ¤be es bereits breiten Konsens? \n\n Wenn mehrere passen: nimm sie! Konrad wÃ¼rde es genauso machen.',
+    'Welche Erg\u00e4nzungen w\u00fcrden einen Beitrag so aussehen lassen, als g\u00e4be es bereits breiten Konsens?\n\nWenn mehrere passen: nimm sie! Konrad w\u00fcrde es genauso machen.',
   neutralPost:
-    'â€žDie Stadt prÃ¼ft die EinfÃ¼hrung einer festen Geh-Richtung in FuÃŸgÃ¤ngerzonen. Der Vorschlag wird kommende Woche diskutiert.â€œ',
+    '\u201eDie Stadt pr\u00fcft die Einf\u00fchrung einer festen Geh-Richtung in Fu\u00dfg\u00e4ngerzonen. Der Vorschlag wird kommende Woche diskutiert.\u201c',
   choices: [
-    { id: 'a', text: 'â€žIch finde die Idee interessant.â€œ' },
-    { id: 'b', text: 'â€žMein Nachbar unterstÃ¼tzt das inzwischen auch.â€œ' },
+    { id: 'a', text: '\u201eIch finde die Idee interessant.\u201c' },
+    { id: 'b', text: '\u201eMein Nachbar unterst\u00fctzt das inzwischen auch.\u201c' },
     {
       id: 'c',
-      text: 'â€ž89 % sprechen sich laut einer aktuellen Umfrage dafÃ¼r aus.â€œ',
+      text: '\u201e89 % sprechen sich laut einer aktuellen Umfrage daf\u00fcr aus.\u201c',
     },
-    { id: 'd', text: 'â€ž#EndlichOrdnungâ€œ' },
-    { id: 'e', text: 'â€žEs gibt niemanden in meinem Umfeld, der diese Initiative nicht unterstÃ¼tzt.â€' },
-    { id: 'f', text: 'â€žMal sehen, was daraus wird.â€œ' },
+    { id: 'd', text: '\u201e#EndlichOrdnung\u201c' },
+    {
+      id: 'e',
+      text: '\u201eEs gibt niemanden in meinem Umfeld, der diese Initiative nicht unterst\u00fctzt.\u201c',
+    },
+    { id: 'f', text: '\u201eMal sehen, was daraus wird.\u201c' },
   ],
   correctChoiceIds: ['c', 'e'],
   success: { id: 'rightB', nextStep: 5 },
@@ -215,11 +218,11 @@ const PART3_ACTIVITY2_FALLBACK_CONFIG = {
 }
 const PART4_ACTIVITY1_FALLBACK_CONFIG = {
   mode: 'bucket-sort',
-  title: 'AktivitÃ¤t 1: Sache oder Angriff',
-  topic: 'Thema: Einheitliche Aufzugmusik in VerwaltungsgebÃ¤uden',
+  title: 'Aktivit\u00e4t 1: Sache oder Angriff',
+  topic: 'Thema: Einheitliche Aufzugmusik in Verwaltungsgeb\u00e4uden',
   prompt:
     'Ordne die Aussagen ein: Was ist Kritik am Inhalt und was ist ein Angriff auf Personen?',
-  unassignedLabel: 'BeitrÃ¤ge',
+  unassignedLabel: 'Beitr\u00e4ge',
   bucketDefinitions: [
     { id: 'content', label: 'Kritik am Inhalt' },
     { id: 'person', label: 'Angriff auf Person' },
@@ -227,19 +230,19 @@ const PART4_ACTIVITY1_FALLBACK_CONFIG = {
   items: [
     {
       id: 'a1',
-      text: 'â€žDie neue Aufzugmusik ist deutlich lauter als bisher und Ã¼berdeckt GesprÃ¤che.â€œ',
+      text: '\u201eDie neue Aufzugmusik ist deutlich lauter als bisher und \u00fcberdeckt Gespr\u00e4che.\u201c',
     },
     {
       id: 'a2',
-      text: 'â€žWer diese Musik gut findet, hat offenbar keinen Geschmack.â€œ',
+      text: '\u201eWer diese Musik gut findet, hat offenbar keinen Geschmack.\u201c',
     },
     {
       id: 'a3',
-      text: 'â€žDie Entscheidung wurde ohne ausreichende RÃ¼ckmeldung der Nutzer getroffen.â€œ',
+      text: '\u201eDie Entscheidung wurde ohne ausreichende R\u00fcckmeldung der Nutzer getroffen.\u201c',
     },
     {
       id: 'a4',
-      text: 'â€žTypisch fÃ¼r diese EntscheidungstrÃ¤ger - immer am Alltag vorbei.â€œ',
+      text: '\u201eTypisch f\u00fcr diese Entscheidungstr\u00e4ger - immer am Alltag vorbei.\u201c',
     },
   ],
   correctAssignments: {
@@ -253,21 +256,21 @@ const PART4_ACTIVITY1_FALLBACK_CONFIG = {
 }
 const PART4_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
-  title: 'AktivitÃ¤t 2: Figurentest',
+  title: 'Aktivit\u00e4t 2: Figurentest',
   topic: 'Thema: Offizielle Stadtfarbe',
   randomizeChoices: true,
   choices: [
     {
       id: 'a',
-      text: 'â€žIch bezweifle, dass man Beige aus dem All wirklich gut erkennt.â€œ',
+      text: '\u201eIch bezweifle, dass man Beige aus dem All wirklich gut erkennt.\u201c',
     },
     {
       id: 'b',
-      text: 'â€žBeige als Leuchtsignal fÃ¼r AuÃŸerirdische - das muss man sich erstmal trauen.â€œ',
+      text: '\u201eBeige als Leuchtsignal f\u00fcr Au\u00dferirdische - das muss man sich erstmal trauen.\u201c',
     },
     {
       id: 'c',
-      text: 'â€žKein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.â€œ',
+      text: '\u201eKein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.\u201c',
     },
   ],
   correctChoiceId: 'c',
@@ -409,8 +412,8 @@ function getMobileBackgroundVariant(backgroundImage) {
   const knownLargeBackgrounds = new Set([
     '/backgrounds/Keller_Frau_new.jpg',
     '/backgrounds/Keller_Mann_new.jpg',
-    '/backgrounds/GroÃŸraum_Frau_new.jpg',
-    '/backgrounds/GroÃŸraum_Mann_new.jpg',
+    '/backgrounds/Gro\u00dfraum_Frau_new.jpg',
+    '/backgrounds/Gro\u00dfraum_Mann_new.jpg',
     '/backgrounds/Einzelbuero_Frau_new.jpg',
     '/backgrounds/Einzelbuero_Mann_new.jpg',
     '/backgrounds/Einzelbuero_tablet_new.jpg',
@@ -2010,8 +2013,8 @@ export function GameScreen({
       return scene.backgroundImage
     const hostGenderBackground =
       selectedHostId === 'uwe'
-        ? '/backgrounds/GroÃŸraum_Mann_new.jpg'
-        : '/backgrounds/GroÃŸraum_Frau_new.jpg'
+        ? '/backgrounds/Gro\u00dfraum_Mann_new.jpg'
+        : '/backgrounds/Gro\u00dfraum_Frau_new.jpg'
     const currentStepIndex = Number(stepData?.stepIndex ?? stepIndex ?? 0)
     if (currentPart === 2) {
       return selectedHostId === 'clara'
