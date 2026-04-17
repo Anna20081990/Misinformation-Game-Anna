@@ -203,12 +203,12 @@ const PART3_ACTIVITY2_FALLBACK_CONFIG = {
     { id: 'b', text: '\u201eMein Nachbar unterst\u00fctzt das inzwischen auch.\u201c' },
     {
       id: 'c',
-      text: '\u201e89 % sprechen sich laut einer aktuellen Umfrage daf\u00fcr aus.\u201c',
+      text: '\u201e99% in meinem Umfeld sprechen sich daf\u00fcr aus.\u201c',
     },
     { id: 'd', text: '\u201e#EndlichOrdnung\u201c' },
     {
       id: 'e',
-      text: '\u201eEs gibt niemanden in meinem Umfeld, der diese Initiative nicht unterst\u00fctzt.\u201c',
+      text: '\u201eEs gibt niemanden auf TikTalk, der dieses Initiative nicht unterst\u00fctzt.\u201c',
     },
     { id: 'f', text: '\u201eMal sehen, was daraus wird.\u201c' },
   ],
