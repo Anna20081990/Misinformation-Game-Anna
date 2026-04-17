@@ -9,6 +9,7 @@ export function SceneBackground({
   backgroundImage,
   backgroundImageMobile,
   backgroundPlaceholder,
+  preloadImages = [],
   backgroundFit = 'cover',
 }) {
   const isEinzelbueroTablet = String(backgroundImage || '').includes('einzelbuero_tablet')
@@ -20,10 +21,15 @@ export function SceneBackground({
   ].filter(Boolean).join(' ')
 
   useEffect(() => {
-    const urls = [backgroundImage, backgroundImageMobile].filter(Boolean)
+    const urls = [
+      backgroundImage,
+      backgroundImageMobile,
+      ...preloadImages,
+    ].filter(Boolean)
+    const uniqueUrls = [...new Set(urls)]
     const links = []
 
-    urls.forEach((url) => {
+    uniqueUrls.forEach((url) => {
       const link = document.createElement('link')
       link.rel = 'preload'
       link.as = 'image'
@@ -41,7 +47,7 @@ export function SceneBackground({
         if (link.parentNode) link.parentNode.removeChild(link)
       })
     }
-  }, [backgroundImage, backgroundImageMobile])
+  }, [backgroundImage, backgroundImageMobile, preloadImages])
 
   const desktopStyle = {
     position: 'absolute',

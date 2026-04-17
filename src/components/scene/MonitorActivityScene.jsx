@@ -36,6 +36,7 @@ export function MonitorActivityScene({
   variant = 'monitor',
   backgroundImage = null,
   backgroundPlaceholder = null,
+  preloadImages = [],
 }) {
   const scrollRef = useRef(null)
   const previousSnapshotRef = useRef({
@@ -171,6 +172,7 @@ export function MonitorActivityScene({
           backgroundByVariant[variant] ||
           backgroundByVariant.monitor
         }
+        preloadImages={preloadImages}
       />
 
       <div className="scene__chat-wrap">

@@ -8,7 +8,12 @@ import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 export function Scene({ scene, messages = [], options = [], onSelectOption, selectedAvatarId, selectedHostId }) {
   if (!scene) return null
 
-  const { backgroundImage, backgroundImageMobile, backgroundPlaceholder } = scene
+  const {
+    backgroundImage,
+    backgroundImageMobile,
+    backgroundPlaceholder,
+    preloadImages,
+  } = scene
   const AvatarComponent = getPlayerAvatarComponent(selectedAvatarId)
   const hideChatPanel = scene?.hideChatPanel === true
 
@@ -20,6 +25,7 @@ export function Scene({ scene, messages = [], options = [], onSelectOption, sele
         backgroundImage={backgroundImage}
         backgroundImageMobile={backgroundImageMobile}
         backgroundPlaceholder={backgroundPlaceholder}
+        preloadImages={preloadImages}
         backgroundFit="cover"
       />
 

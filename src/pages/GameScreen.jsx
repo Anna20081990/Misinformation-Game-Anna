@@ -423,6 +423,71 @@ function getMobileBackgroundVariant(backgroundImage) {
   return image.replace('.jpg', '_mobile.jpg')
 }
 
+function getBackgroundSources(backgroundImage, backgroundImageMobile) {
+  return [backgroundImage, backgroundImageMobile].filter(Boolean)
+}
+
+function getPartEntryBackgrounds(partId) {
+  const partScene = getSceneById(partId)
+  if (!partScene) return []
+
+  return getBackgroundSources(
+    partScene.backgroundImage,
+    partScene.backgroundImageMobile
+  )
+}
+
+function getHostPartBackgrounds(partId, selectedHostId) {
+  if (partId === 2) {
+    const backgroundImage =
+      selectedHostId === 'clara'
+        ? '/backgrounds/Keller_Frau_new.jpg'
+        : selectedHostId === 'uwe'
+          ? '/backgrounds/Keller_Mann_new.jpg'
+          : getSceneById(2)?.backgroundImage
+    return getBackgroundSources(
+      backgroundImage,
+      getMobileBackgroundVariant(backgroundImage)
+    )
+  }
+
+  if (partId === 3) {
+    const backgroundImage =
+      selectedHostId === 'clara'
+        ? '/backgrounds/Gro\u00dfraum_Frau_new.jpg'
+        : selectedHostId === 'uwe'
+          ? '/backgrounds/Gro\u00dfraum_Mann_new.jpg'
+          : getSceneById(3)?.backgroundImage
+    return getBackgroundSources(
+      backgroundImage,
+      getMobileBackgroundVariant(backgroundImage)
+    )
+  }
+
+  if (partId === 4) {
+    const backgroundImage =
+      selectedHostId === 'clara'
+        ? '/backgrounds/Einzelbuero_Frau_new.jpg'
+        : selectedHostId === 'uwe'
+          ? '/backgrounds/Einzelbuero_Mann_new.jpg'
+          : getSceneById(4)?.backgroundImage
+    return getBackgroundSources(
+      backgroundImage,
+      getMobileBackgroundVariant(backgroundImage)
+    )
+  }
+
+  if (partId === 5) {
+    const backgroundImage = '/backgrounds/Kuppelsaal_new.jpg'
+    return getBackgroundSources(
+      backgroundImage,
+      getMobileBackgroundVariant(backgroundImage)
+    )
+  }
+
+  return getPartEntryBackgrounds(partId)
+}
+
 function normalizeHostId(raw, selectedHostId) {
   const id = String(raw || 'selected').toLowerCase()
   if (id === 'ambassador') return 'ambassador'
@@ -1976,6 +2041,23 @@ export function GameScreen({
     }, 220)
   }
 
+  const upcomingBackgrounds = (() => {
+    if (isSingleButtonTransition && singleButtonTransitionConfig) {
+      return getHostPartBackgrounds(
+        singleButtonTransitionConfig.nextPart,
+        selectedHostId
+      )
+    }
+
+    if (currentPart === -1) return getPartEntryBackgrounds(0)
+    if (currentPart === 0) return getPartEntryBackgrounds(1)
+    if (currentPart === 1) return getHostPartBackgrounds(2, selectedHostId)
+    if (currentPart === 2) return getHostPartBackgrounds(3, selectedHostId)
+    if (currentPart === 3) return getHostPartBackgrounds(4, selectedHostId)
+    if (currentPart === 4) return getHostPartBackgrounds(5, selectedHostId)
+    return []
+  })()
+
   if (isMonitorActivityMode) {
     const part2SelectMode = isPart2Activity1Context || isPart2Activity2Context
     const part3SelectMode = isPart3Activity1Context || isPart3Activity2Context
@@ -2003,6 +2085,7 @@ export function GameScreen({
                 ? '/backgrounds/Einzelbuero_tablet_new.jpg'
                 : null
         }
+        preloadImages={upcomingBackgrounds}
       />
     )
   }
@@ -2048,6 +2131,7 @@ export function GameScreen({
         <SceneBackground
           backgroundImage={singleButtonTransitionConfig.backgroundImage}
           backgroundPlaceholder={scene.backgroundPlaceholder}
+          preloadImages={upcomingBackgrounds}
         />
         <div className="start-screen start-screen--comic start-screen--transition">
           <button
@@ -2067,9 +2151,13 @@ export function GameScreen({
         ...scene,
         backgroundImage: hostSpecificBackground,
         backgroundImageMobile: getMobileBackgroundVariant(hostSpecificBackground),
+        preloadImages: upcomingBackgrounds,
         hideChatPanel: isFinalInternshipState,
       }
-    : scene
+    : {
+        ...scene,
+        preloadImages: upcomingBackgrounds,
+      }
 
   if (isStartScreen) {
     return (
@@ -2078,6 +2166,7 @@ export function GameScreen({
           backgroundImage={scene.backgroundImage}
           backgroundImageMobile={scene.backgroundImageMobile}
           backgroundPlaceholder={scene.backgroundPlaceholder}
+          preloadImages={upcomingBackgrounds}
         />
         <div className="start-screen start-screen--comic">
           <button
@@ -2099,6 +2188,7 @@ export function GameScreen({
           backgroundImage={sceneForRender.backgroundImage}
           backgroundImageMobile={sceneForRender.backgroundImageMobile}
           backgroundPlaceholder={sceneForRender.backgroundPlaceholder}
+          preloadImages={sceneForRender.preloadImages}
         />
         <div className="finale-confetti" aria-hidden="true">
           {Array.from({ length: 18 }, (_, index) => (
