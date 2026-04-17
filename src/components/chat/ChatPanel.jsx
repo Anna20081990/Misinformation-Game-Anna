@@ -13,18 +13,21 @@ function isAvatarOption(option) {
 }
 
 function getHostDisplayName(hostId, speakerName, selectedHostId) {
+  const normalizedSpeakerName = String(speakerName || '')
+    .replace(/PÃ¶r/g, 'P\u00f6r')
+    .replace(/P�r/g, 'P\u00f6r')
   const id = String(hostId || '').toLowerCase()
-  const name = String(speakerName || '').toLowerCase()
+  const name = normalizedSpeakerName.toLowerCase()
 
   // If a specific non-host speaker label is provided (e.g. "Botschafter Regelreich"),
   // prefer it over dynamic host resolution from selectedHostId.
-  if (speakerName && id !== 'selected') {
+  if (normalizedSpeakerName && id !== 'selected') {
     if (
       !name.includes('clara') &&
       !name.includes('uwe') &&
       !name.includes('host')
     ) {
-      return speakerName
+      return normalizedSpeakerName
     }
   }
 
@@ -35,7 +38,7 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe-R. Sicht'
   if (id === 'clara' || name.includes('clara')) return 'Klara Blick'
   if (id === 'uwe' || name.includes('uwe')) return 'Uwe-R. Sicht'
-  return speakerName || 'Host'
+  return normalizedSpeakerName || 'Host'
 }
 
 function getImageMaxWidth(message) {

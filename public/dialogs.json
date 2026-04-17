@@ -26,7 +26,24 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Willkommen in Regelreich.\n\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen – sie entstehen im Gespräch."
+              "text": "Willkommen in Regelreich!"
+            }
+          ],
+          "options": [
+            {
+              "id": "regelreich",
+              "label": "Regelreich?",
+              "nextStep": 1
+            }
+          ]
+        },
+        {
+          "stepIndex": 1,
+          "type": "intro",
+          "speechBubbles": [
+            {
+              "hostId": "ambassador",
+              "text": "In dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen – sie entstehen im Gespräch."
             },
             {
               "hostId": "ambassador",
@@ -41,17 +58,17 @@
             {
               "id": "plausible",
               "label": "Klingt vernünftig.",
-              "nextStep": 1
+              "nextStep": 2
             },
             {
               "id": "tiktalk_ernst",
               "label": "TikTalk – dein Ernst?",
-              "nextStep": 1
+              "nextStep": 2
             }
           ]
         },
         {
-          "stepIndex": 1,
+          "stepIndex": 2,
           "type": "intro",
           "speechBubbles": [
             {
@@ -67,12 +84,12 @@
             {
               "id": "zufall",
               "label": "Zufall?",
-              "nextStep": 2
+              "nextStep": 3
             }
           ]
         },
         {
-          "stepIndex": 2,
+          "stepIndex": 3,
           "type": "intro",
           "speechBubbles": [
             {
@@ -84,12 +101,12 @@
             {
               "id": "wer_sie",
               "label": "Wer sind sie?",
-              "nextStep": 3
+              "nextStep": 4
             }
           ]
         },
         {
-          "stepIndex": 3,
+          "stepIndex": 4,
           "type": "intro",
           "speechBubbles": [
             {
@@ -101,12 +118,12 @@
             {
               "id": "welches_talent",
               "label": "Welches Talent?",
-              "nextStep": 4
+              "nextStep": 5
             }
           ]
         },
         {
-          "stepIndex": 4,
+          "stepIndex": 5,
           "type": "intro",
           "speechBubbles": [
             {
@@ -122,17 +139,17 @@
             {
               "id": "spannend",
               "label": "Klingt spannend.",
-              "nextStep": 5
+              "nextStep": 6
             },
             {
               "id": "hoffe_unbekannt",
               "label": "Ich hoffe, sie wissen nicht, dass ich komme.",
-              "nextStep": 5
+              "nextStep": 6
             }
           ]
         },
         {
-          "stepIndex": 5,
+          "stepIndex": 6,
           "type": "transition",
           "speechBubbles": [
             {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { Scene } from '../components/scene/Scene.jsx'
 import { MonitorActivityScene } from '../components/scene/MonitorActivityScene.jsx'
 import { SceneBackground } from '../components/scene/SceneBackground.jsx'
@@ -13,21 +13,10 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Willkommen in Regelreich.\n\nIn dieser Stadt entstehen Regeln nicht hinter verschlossenen Türen – sie entstehen im Gespräch.',
-      },
-      {
-        hostId: 'ambassador',
-        text: 'Neue Vorschläge werden veröffentlicht. Bürger und Bürgerinnen kommentieren. Ideen werden diskutiert, verändert, manchmal verworfen.',
-      },
-      {
-        hostId: 'ambassador',
-        text: 'Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden – und aus Trends mitunter offizielle Entscheidungen.',
+        text: 'Willkommen in Regelreich!',
       },
     ],
-    options: [
-      { id: 'plausible', label: 'Klingt vernünftig.', nextStep: 1 },
-      { id: 'tiktalk_ernst', label: 'TikTalk – dein Ernst?', nextStep: 1 },
-    ],
+    options: [{ id: 'regelreich', label: 'Regelreich?', nextStep: 1 }],
   },
   {
     stepIndex: 1,
@@ -35,14 +24,21 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Lange Zeit galt TikTalk als lebhaft, aber berechenbar.\n\nMan wusste: Es wird diskutiert, es wird kommentiert – und irgendwann kehrt wieder Ordnung ein.',
+        text: 'In dieser Stadt entstehen Regeln nicht hinter verschlossenen Tueren - sie entstehen im Gespraech.',
       },
       {
         hostId: 'ambassador',
-        text: 'Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beiträge verbreiten sich ungewöhnlich stark.\n\nUnd manchmal wirkt es, als würde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es überhaupt eine Richtung braucht.',
+        text: 'Neue Vorschlaege werden veroeffentlicht. Buerger und Buergerinnen kommentieren. Ideen werden diskutiert, veraendert, manchmal verworfen.',
+      },
+      {
+        hostId: 'ambassador',
+        text: 'Der Mittelpunkt dieser Debatten ist TikTalk.\n\nEine Plattform, auf der aus Meinungen Trends werden - und aus Trends mitunter offizielle Entscheidungen.',
       },
     ],
-    options: [{ id: 'zufall', label: 'Zufall?', nextStep: 2 }],
+    options: [
+      { id: 'plausible', label: 'Klingt vernuenftig.', nextStep: 2 },
+      { id: 'tiktalk_ernst', label: 'TikTalk - dein Ernst?', nextStep: 2 },
+    ],
   },
   {
     stepIndex: 2,
@@ -50,10 +46,14 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚beschleunigen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt.',
+        text: 'Lange Zeit galt TikTalk als lebhaft, aber berechenbar.\n\nMan wusste: Es wird diskutiert, es wird kommentiert - und irgendwann kehrt wieder Ordnung ein.',
+      },
+      {
+        hostId: 'ambassador',
+        text: 'Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beitraege verbreiten sich ungewoehnlich stark.\n\nUnd manchmal wirkt es, als wuerde sich eine Richtung durchsetzen, noch bevor jemand gefragt hat, ob es ueberhaupt eine Richtung braucht.',
       },
     ],
-    options: [{ id: 'wer_sie', label: 'Wer sind sie?', nextStep: 3 }],
+    options: [{ id: 'zufall', label: 'Zufall?', nextStep: 3 }],
   },
   {
     stepIndex: 3,
@@ -61,10 +61,10 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Emma Pör. Konrad Sens. Didi Fam.\n\nSie arbeiten verdeckt – und sie haben ein bemerkenswertes Talent.',
+        text: "Im Media Lab spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie wuerden Debatten nur 'beschleunigen'.\n\nIntern werden sie 'Die notorischen Drei' genannt.",
       },
     ],
-    options: [{ id: 'welches_talent', label: 'Welches Talent?', nextStep: 4 }],
+    options: [{ id: 'wer_sie', label: 'Wer sind sie?', nextStep: 4 }],
   },
   {
     stepIndex: 4,
@@ -72,24 +72,35 @@ const PART0_FALLBACK_STEPS = [
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: 'Diskussionen in eine Richtung zu lenken.\n\nMal lauter, mal leiser – aber selten zufällig.',
+        text: 'Emma Poer. Konrad Sens. Didi Fam.\n\nSie arbeiten verdeckt - und sie haben ein bemerkenswertes Talent.',
+      },
+    ],
+    options: [{ id: 'welches_talent', label: 'Welches Talent?', nextStep: 5 }],
+  },
+  {
+    stepIndex: 5,
+    type: 'intro',
+    speechBubbles: [
+      {
+        hostId: 'ambassador',
+        text: 'Diskussionen in eine Richtung zu lenken.\n\nMal lauter, mal leiser - aber selten zufaellig.',
       },
       {
         hostId: 'ambassador',
-        text: 'Du bist hier, um bei einem Sommerpraktikum bei der Aufklärung zu helfen.\n\nDeine Aufgabe: Herausfinden, wie sie das tun.',
+        text: 'Du bist hier, um bei einem Sommerpraktikum bei der Aufklaerung zu helfen.\n\nDeine Aufgabe: Herausfinden, wie sie das tun.',
       },
     ],
     options: [
-      { id: 'spannend', label: 'Klingt spannend.', nextStep: 5 },
+      { id: 'spannend', label: 'Klingt spannend.', nextStep: 6 },
       {
         id: 'hoffe_unbekannt',
         label: 'Ich hoffe, sie wissen nicht, dass ich komme.',
-        nextStep: 5,
+        nextStep: 6,
       },
     ],
   },
   {
-    stepIndex: 5,
+    stepIndex: 6,
     type: 'transition',
     speechBubbles: [
       {
@@ -99,7 +110,7 @@ const PART0_FALLBACK_STEPS = [
       },
       {
         hostId: 'ambassador',
-        text: 'Keine Sorge.\n\nSie wissen nur, dass jemand kommt – nicht, wer.',
+        text: 'Keine Sorge.\n\nSie wissen nur, dass jemand kommt - nicht, wer.',
         showOnOptionId: 'hoffe_unbekannt',
       },
     ],
@@ -135,21 +146,21 @@ const PART2_ACTIVITY1_FALLBACK_CONFIG = {
 }
 const PART2_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
-  title: 'Aktivität 2: Intensitätswahl',
+  title: 'AktivitÃ¤t 2: IntensitÃ¤tswahl',
   topic:
     'Thema: Farbverlauf in den Wartebereichen des Hauptbahnhofs',
   choices: [
     {
       id: 'a',
-      text: '„Die Stadt plant einen einheitlichen Farbverlauf für Wartebereiche im Hauptbahnhof.“',
+      text: 'â€žDie Stadt plant einen einheitlichen Farbverlauf fÃ¼r Wartebereiche im Hauptbahnhof.â€œ',
     },
     {
       id: 'b',
-      text: '„Der geplante Farbverlauf im Wartebereich sorgt für Diskussionen. Manche halten ihn für eine überflüssige Dramatisierung des Bahnalltags.“',
+      text: 'â€žDer geplante Farbverlauf im Wartebereich sorgt fÃ¼r Diskussionen. Manche halten ihn fÃ¼r eine Ã¼berflÃ¼ssige Dramatisierung des Bahnalltags.â€œ',
     },
     {
       id: 'c',
-      text: '„Jetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fühlen. Was kommt als Nächstes – eine Pflichtstimmung im Abteil?“',
+      text: 'â€žJetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fÃ¼hlen. Was kommt als NÃ¤chstes â€“ eine Pflichtstimmung im Abteil?â€œ',
     },
   ],
   correctChoiceId: 'c',
@@ -158,21 +169,21 @@ const PART2_ACTIVITY2_FALLBACK_CONFIG = {
 }
 const PART3_ACTIVITY1_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
-  title: 'Aktivität 1: Trend-Detektor',
+  title: 'AktivitÃ¤t 1: Trend-Detektor',
   topic: 'Thema: Einfuehrung eines verpflichtenden Wochenmottos',
   randomizeChoices: true,
   choices: [
     {
       id: 'p1',
-      text: '„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“',
+      text: 'â€žDie Stadt prÃ¼ft die EinfÃ¼hrung eines wÃ¶chentlichen Mottos fÃ¼r Ã¶ffentliche Einrichtungen.â€œ',
     },
     {
       id: 'p2',
-      text: '„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“',
+      text: 'â€žImmer mehr Menschen sprechen sich fÃ¼r ein Wochenmotto aus.â€œ',
     },
     {
       id: 'p3',
-      text: '„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”',
+      text: 'â€žInzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.â€',
     },
   ],
   correctChoiceId: 'p3',
@@ -181,22 +192,22 @@ const PART3_ACTIVITY1_FALLBACK_CONFIG = {
 }
 const PART3_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'consensus-boosters',
-  title: 'Aktivität 2: Konsens-Verstärker',
-  topic: 'Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen',
+  title: 'AktivitÃ¤t 2: Konsens-VerstÃ¤rker',
+  topic: 'Thema: EinfÃ¼hrung einer offiziellen Geh-Richtung in FuÃŸgÃ¤ngerzonen',
   prompt:
-    'Welche Ergänzungen würden einen Beitrag so aussehen lassen, als gäbe es bereits breiten Konsens? \n\n Wenn mehrere passen: nimm sie! Konrad würde es genauso machen.',
+    'Welche ErgÃ¤nzungen wÃ¼rden einen Beitrag so aussehen lassen, als gÃ¤be es bereits breiten Konsens? \n\n Wenn mehrere passen: nimm sie! Konrad wÃ¼rde es genauso machen.',
   neutralPost:
-    '„Die Stadt prüft die Einführung einer festen Geh-Richtung in Fußgängerzonen. Der Vorschlag wird kommende Woche diskutiert.“',
+    'â€žDie Stadt prÃ¼ft die EinfÃ¼hrung einer festen Geh-Richtung in FuÃŸgÃ¤ngerzonen. Der Vorschlag wird kommende Woche diskutiert.â€œ',
   choices: [
-    { id: 'a', text: '„Ich finde die Idee interessant.“' },
-    { id: 'b', text: '„Mein Nachbar unterstützt das inzwischen auch.“' },
+    { id: 'a', text: 'â€žIch finde die Idee interessant.â€œ' },
+    { id: 'b', text: 'â€žMein Nachbar unterstÃ¼tzt das inzwischen auch.â€œ' },
     {
       id: 'c',
-      text: '„89 % sprechen sich laut einer aktuellen Umfrage dafür aus.“',
+      text: 'â€ž89 % sprechen sich laut einer aktuellen Umfrage dafÃ¼r aus.â€œ',
     },
-    { id: 'd', text: '„#EndlichOrdnung“' },
-    { id: 'e', text: '„Es gibt niemanden in meinem Umfeld, der diese Initiative nicht unterstützt.”' },
-    { id: 'f', text: '„Mal sehen, was daraus wird.“' },
+    { id: 'd', text: 'â€ž#EndlichOrdnungâ€œ' },
+    { id: 'e', text: 'â€žEs gibt niemanden in meinem Umfeld, der diese Initiative nicht unterstÃ¼tzt.â€' },
+    { id: 'f', text: 'â€žMal sehen, was daraus wird.â€œ' },
   ],
   correctChoiceIds: ['c', 'e'],
   success: { id: 'rightB', nextStep: 5 },
@@ -204,11 +215,11 @@ const PART3_ACTIVITY2_FALLBACK_CONFIG = {
 }
 const PART4_ACTIVITY1_FALLBACK_CONFIG = {
   mode: 'bucket-sort',
-  title: 'Aktivität 1: Sache oder Angriff',
-  topic: 'Thema: Einheitliche Aufzugmusik in Verwaltungsgebäuden',
+  title: 'AktivitÃ¤t 1: Sache oder Angriff',
+  topic: 'Thema: Einheitliche Aufzugmusik in VerwaltungsgebÃ¤uden',
   prompt:
     'Ordne die Aussagen ein: Was ist Kritik am Inhalt und was ist ein Angriff auf Personen?',
-  unassignedLabel: 'Beiträge',
+  unassignedLabel: 'BeitrÃ¤ge',
   bucketDefinitions: [
     { id: 'content', label: 'Kritik am Inhalt' },
     { id: 'person', label: 'Angriff auf Person' },
@@ -216,19 +227,19 @@ const PART4_ACTIVITY1_FALLBACK_CONFIG = {
   items: [
     {
       id: 'a1',
-      text: '„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche.“',
+      text: 'â€žDie neue Aufzugmusik ist deutlich lauter als bisher und Ã¼berdeckt GesprÃ¤che.â€œ',
     },
     {
       id: 'a2',
-      text: '„Wer diese Musik gut findet, hat offenbar keinen Geschmack.“',
+      text: 'â€žWer diese Musik gut findet, hat offenbar keinen Geschmack.â€œ',
     },
     {
       id: 'a3',
-      text: '„Die Entscheidung wurde ohne ausreichende Rückmeldung der Nutzer getroffen.“',
+      text: 'â€žDie Entscheidung wurde ohne ausreichende RÃ¼ckmeldung der Nutzer getroffen.â€œ',
     },
     {
       id: 'a4',
-      text: '„Typisch für diese Entscheidungsträger - immer am Alltag vorbei.“',
+      text: 'â€žTypisch fÃ¼r diese EntscheidungstrÃ¤ger - immer am Alltag vorbei.â€œ',
     },
   ],
   correctAssignments: {
@@ -242,21 +253,21 @@ const PART4_ACTIVITY1_FALLBACK_CONFIG = {
 }
 const PART4_ACTIVITY2_FALLBACK_CONFIG = {
   mode: 'intensity-choice',
-  title: 'Aktivität 2: Figurentest',
+  title: 'AktivitÃ¤t 2: Figurentest',
   topic: 'Thema: Offizielle Stadtfarbe',
   randomizeChoices: true,
   choices: [
     {
       id: 'a',
-      text: '„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt.“',
+      text: 'â€žIch bezweifle, dass man Beige aus dem All wirklich gut erkennt.â€œ',
     },
     {
       id: 'b',
-      text: '„Beige als Leuchtsignal für Außerirdische - das muss man sich erstmal trauen.“',
+      text: 'â€žBeige als Leuchtsignal fÃ¼r AuÃŸerirdische - das muss man sich erstmal trauen.â€œ',
     },
     {
       id: 'c',
-      text: '„Kein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.“',
+      text: 'â€žKein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.â€œ',
     },
   ],
   correctChoiceId: 'c',
@@ -385,7 +396,7 @@ function getHostFullName(hostId) {
   if (hostId === 'ambassador') return 'Botschafterin Regelreich'
   if (hostId === 'clara') return 'Klara Blick'
   if (hostId === 'uwe') return 'Uwe-R. Sicht'
-  if (hostId === 'emma') return 'Emma Pör'
+  if (hostId === 'emma') return 'Emma P\u00f6r'
   if (hostId === 'konrad') return 'Konrad Sens'
   if (hostId === 'didi') return 'Didi Fam'
   return 'Host'
@@ -398,8 +409,8 @@ function getMobileBackgroundVariant(backgroundImage) {
   const knownLargeBackgrounds = new Set([
     '/backgrounds/Keller_Frau_new.jpg',
     '/backgrounds/Keller_Mann_new.jpg',
-    '/backgrounds/Großraum_Frau_new.jpg',
-    '/backgrounds/Großraum_Mann_new.jpg',
+    '/backgrounds/GroÃŸraum_Frau_new.jpg',
+    '/backgrounds/GroÃŸraum_Mann_new.jpg',
     '/backgrounds/Einzelbuero_Frau_new.jpg',
     '/backgrounds/Einzelbuero_Mann_new.jpg',
     '/backgrounds/Einzelbuero_tablet_new.jpg',
@@ -507,7 +518,7 @@ function getSingleButtonTransitionConfig(currentPart, stepIndex) {
   if (Number(currentPart) === 3 && Number(stepIndex) === 52) {
     return {
       backgroundImage: '/backgrounds/lift_aussen_grossraum.png',
-      label: 'Zum Glück gibt es einen Lift.',
+      label: 'Zum GlÃ¼ck gibt es einen Lift.',
       nextPart: 4,
     }
   }
@@ -937,7 +948,7 @@ export function GameScreen({
         if (Number(data?.sceneId) !== Number(currentPart)) {
           setSceneDialogs(null)
           setDialogLoadError(
-            `Ungültige Dialogantwort für Teil ${currentPart} (sceneId mismatch).`
+            `UngÃ¼ltige Dialogantwort fÃ¼r Teil ${currentPart} (sceneId mismatch).`
           )
           console.warn(
             `[Dialogs] part=${currentPart} source=fallback reason=scene-id-mismatch`
@@ -995,7 +1006,7 @@ export function GameScreen({
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: `Backend-Dialoge für Teil ${currentPart} konnten nicht geladen werden.\n${dialogLoadError || 'Bitte Backend/API prüfen und neu laden.'}`,
+        text: `Backend-Dialoge fÃ¼r Teil ${currentPart} konnten nicht geladen werden.\n${dialogLoadError || 'Bitte Backend/API prÃ¼fen und neu laden.'}`,
       },
     ],
     options: [],
@@ -1116,7 +1127,7 @@ export function GameScreen({
         selected: effectiveSentenceSelection.includes(sentence.id),
         disabled: !isPart2Activity1InputStep,
         sentenceId: sentence.id,
-        postAuthorName: 'Emma Pör',
+        postAuthorName: 'Emma P\u00f6r',
         postAuthorAvatar: '/backgrounds/emma-poer.png',
         hideTitle: true,
       }))
@@ -1141,9 +1152,9 @@ export function GameScreen({
         selected: effectiveIntensityChoiceId === choice.id,
         disabled: !isPart2Activity2InputStep,
         choiceId: choice.id,
-        groupTitle: part2Activity2Config?.title || 'Aktivität 2',
+        groupTitle: part2Activity2Config?.title || 'AktivitÃ¤t 2',
         topic: part2Activity2Config?.topic || '',
-        postAuthorName: 'Emma Pör',
+        postAuthorName: 'Emma P\u00f6r',
         postAuthorAvatar: '/backgrounds/emma-poer.png',
         hideTitle: true,
         hideTopic: true,
@@ -1169,7 +1180,7 @@ export function GameScreen({
         selected: effectiveTrendChoiceId === choice.id,
         disabled: !isPart3Activity1InputStep,
         choiceId: choice.id,
-        groupTitle: part3Activity1Config?.title || 'Aktivität 1',
+        groupTitle: part3Activity1Config?.title || 'AktivitÃ¤t 1',
         topic: part3Activity1Config?.topic || '',
         postAuthorName: 'Konrad Sens',
         postAuthorAvatar: '/backgrounds/konrad_sens.png',
@@ -1188,7 +1199,7 @@ export function GameScreen({
         selected: effectiveBoosterChoiceIds.includes(choice.id),
         disabled: !isPart3Activity2InputStep,
         choiceId: choice.id,
-        groupTitle: part3Activity2Config?.title || 'Aktivität 2',
+        groupTitle: part3Activity2Config?.title || 'AktivitÃ¤t 2',
         topic: part3Activity2Config?.topic || '',
         prompt: part3Activity2Config?.prompt || '',
         neutralPost: part3Activity2Config?.neutralPost || '',
@@ -1214,10 +1225,10 @@ export function GameScreen({
         text: item.text,
         assignedBucketId: effectiveBucketAssignments[item.id] || '',
         disabled: !isPart4Activity1InputStep,
-        groupTitle: part4Activity1Config?.title || 'Aktivität 1',
+        groupTitle: part4Activity1Config?.title || 'AktivitÃ¤t 1',
         topic: part4Activity1Config?.topic || '',
         prompt: part4Activity1Config?.prompt || '',
-        unassignedLabel: part4Activity1Config?.unassignedLabel || 'Beiträge',
+        unassignedLabel: part4Activity1Config?.unassignedLabel || 'BeitrÃ¤ge',
         bucketDefinitions: part4Activity1Config?.bucketDefinitions || [],
         postAuthorName: 'Didi Fam',
         postAuthorAvatar: '/backgrounds/didi-fam.png',
@@ -1245,7 +1256,7 @@ export function GameScreen({
         selected: effectivePart4ChoiceId === choice.id,
         disabled: !isPart4Activity2InputStep,
         choiceId: choice.id,
-        groupTitle: part4Activity2Config?.title || 'Aktivität 2',
+        groupTitle: part4Activity2Config?.title || 'AktivitÃ¤t 2',
         topic: part4Activity2Config?.topic || '',
         postAuthorName: 'Didi Fam',
         postAuthorAvatar: '/backgrounds/didi-fam.png',
@@ -1398,7 +1409,7 @@ export function GameScreen({
                 : [
                     {
                       id: 'submit_ouch6',
-                      label: 'Autsch. Unter die Gürtellinie.',
+                      label: 'Autsch. Unter die GÃ¼rtellinie.',
                       kind: 'submit',
                       disabled: !selectedPart4ChoiceId,
                     },
@@ -1999,8 +2010,8 @@ export function GameScreen({
       return scene.backgroundImage
     const hostGenderBackground =
       selectedHostId === 'uwe'
-        ? '/backgrounds/Großraum_Mann_new.jpg'
-        : '/backgrounds/Großraum_Frau_new.jpg'
+        ? '/backgrounds/GroÃŸraum_Mann_new.jpg'
+        : '/backgrounds/GroÃŸraum_Frau_new.jpg'
     const currentStepIndex = Number(stepData?.stepIndex ?? stepIndex ?? 0)
     if (currentPart === 2) {
       return selectedHostId === 'clara'
@@ -2125,3 +2136,4 @@ export function GameScreen({
     />
   )
 }
+

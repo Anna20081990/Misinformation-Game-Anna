@@ -3,6 +3,12 @@ import { SceneBackground } from './SceneBackground.jsx'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { renderMessageParagraphs } from '../chat/ChatPanel.jsx'
 
+function normalizeSpeakerName(name) {
+  return String(name || '')
+    .replace(/PÃ¶r/g, 'P\u00f6r')
+    .replace(/P�r/g, 'P\u00f6r')
+}
+
 export function MonitorActivityScene({
   messages = [],
   options = [],
@@ -171,7 +177,7 @@ export function MonitorActivityScene({
                   <div className="speech-bubble-wrapper">
                     {message.speakerType !== 'player' && (
                       <strong className="chat-message__speaker">
-                        {message.speakerName || 'Host'}
+                        {normalizeSpeakerName(message.speakerName) || 'Host'}
                       </strong>
                     )}
                     <div className={`speech-bubble ${message.speakerType === 'player' ? 'green' : ''}`}>
@@ -315,7 +321,7 @@ export function MonitorActivityScene({
                             />
                             <div className="monitor-message__bubble">
                               <strong className="monitor-message__speaker">
-                                {boosterPostAuthorName || 'Host'}
+                                {normalizeSpeakerName(boosterPostAuthorName) || 'Host'}
                               </strong>
                               {renderMessageParagraphs(
                                 boosterOptions[0]?.neutralPost,
@@ -345,7 +351,7 @@ export function MonitorActivityScene({
                             />
                             <div className="monitor-message__bubble">
                               <strong className="monitor-message__speaker">
-                                {boosterPromptSpeakerName || 'Host'}
+                                {normalizeSpeakerName(boosterPromptSpeakerName) || 'Host'}
                               </strong>
                               {renderMessageParagraphs(
                                 boosterOptions[0]?.prompt,
@@ -582,7 +588,7 @@ export function MonitorActivityScene({
                   <div className="speech-bubble-wrapper">
                     {message.speakerType !== 'player' && (
                       <strong className="chat-message__speaker">
-                        {message.speakerName || 'Host'}
+                        {normalizeSpeakerName(message.speakerName) || 'Host'}
                       </strong>
                     )}
                     <div className={`speech-bubble ${message.speakerType === 'player' ? 'green' : ''}`}>

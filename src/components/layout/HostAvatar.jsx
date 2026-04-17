@@ -1,4 +1,4 @@
-function resolveHostId(characterId, speakerName) {
+﻿function resolveHostId(characterId, speakerName) {
   const id = String(characterId || '').toLowerCase()
   if (
     id === 'clara' ||
@@ -38,7 +38,7 @@ function KonradAvatar() {
 }
 
 function EmmaAvatar() {
-  return <img src="/backgrounds/emma-poer.png" className="host-avatar__img" alt="Emma Pör" />
+  return <img src="/backgrounds/emma-poer.png" className="host-avatar__img" alt={'Emma P\u00f6r'} />
 }
 
 function DidiAvatar() {
@@ -74,3 +74,4 @@ export function HostAvatar({ characterId, speakerName }) {
     </div>
   )
 }
+
