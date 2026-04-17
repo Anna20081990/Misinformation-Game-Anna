@@ -314,6 +314,10 @@ export function App() {
   })
   const [activeStepByPart, setActiveStepByPart] = useState({})
   const [showNavigation, setShowNavigation] = useState(false)
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false)
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false)
+  const [adminPasswordInput, setAdminPasswordInput] = useState('')
+  const [adminPasswordError, setAdminPasswordError] = useState('')
   const [stepJumpRequest, setStepJumpRequest] = useState({
     part: -1,
     stepIndex: 0,
@@ -327,6 +331,40 @@ export function App() {
   const handleSelectOption = (index, option, part) => {
     console.log('Antwort gewählt:', option?.label, 'Teil:', part)
   }
+
+  const handleSettingsClick = () => {
+    if (showNavigation) {
+      setShowNavigation(false)
+      setShowPasswordPrompt(false)
+      setAdminPasswordError('')
+      return
+    }
+
+    if (isAdminUnlocked) {
+      setShowNavigation(true)
+      return
+    }
+
+    setAdminPasswordInput('')
+    setAdminPasswordError('')
+    setShowPasswordPrompt(true)
+  }
+
+  const handlePasswordSubmit = (event) => {
+    event.preventDefault()
+
+    if (adminPasswordInput === 'anna') {
+      setIsAdminUnlocked(true)
+      setShowPasswordPrompt(false)
+      setShowNavigation(true)
+      setAdminPasswordInput('')
+      setAdminPasswordError('')
+      return
+    }
+
+    setAdminPasswordError('Passwort falsch.')
+  }
+
   const gameNavItems = [
     { id: -1, label: 'Start' },
     { id: 0, label: '0' },
@@ -449,7 +487,7 @@ export function App() {
         <button
           type="button"
           className={`app__settings-btn ${showNavigation ? 'app__settings-btn--active' : ''}`}
-          onClick={() => setShowNavigation((prev) => !prev)}
+          onClick={handleSettingsClick}
           aria-pressed={showNavigation}
           aria-label="Navigation ein- oder ausblenden"
           title="Navigation ein- oder ausblenden"
@@ -565,6 +603,51 @@ export function App() {
             </nav>
           )}
       </header>
+      {showPasswordPrompt && (
+        <div className="app__password-overlay" role="presentation">
+          <form
+            className="app__password-dialog"
+            onSubmit={handlePasswordSubmit}
+          >
+            <h2 className="app__password-title">Admin-Zugang</h2>
+            <p className="app__password-text">
+              Bitte Passwort eingeben, um die Schaltflächen zu sehen.
+            </p>
+            <input
+              className="app__password-input"
+              type="password"
+              value={adminPasswordInput}
+              onChange={(event) => {
+                setAdminPasswordInput(event.target.value)
+                if (adminPasswordError) setAdminPasswordError('')
+              }}
+              autoFocus
+            />
+            {adminPasswordError ? (
+              <p className="app__password-error">{adminPasswordError}</p>
+            ) : null}
+            <div className="app__password-actions">
+              <button
+                type="button"
+                className="app__password-btn app__password-btn--secondary"
+                onClick={() => {
+                  setShowPasswordPrompt(false)
+                  setAdminPasswordInput('')
+                  setAdminPasswordError('')
+                }}
+              >
+                Abbrechen
+              </button>
+              <button
+                type="submit"
+                className="app__password-btn app__password-btn--primary"
+              >
+                Öffnen
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
       <main className={`app__main ${showNavigation ? '' : 'app__main--compact'}`}>
         {viewMode === 'game' ? (
           <GameScreen

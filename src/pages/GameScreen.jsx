@@ -416,7 +416,6 @@ function getMobileBackgroundVariant(backgroundImage) {
     '/backgrounds/Gro\u00dfraum_Mann_new.jpg',
     '/backgrounds/Einzelbuero_Frau_new.jpg',
     '/backgrounds/Einzelbuero_Mann_new.jpg',
-    '/backgrounds/Einzelbuero_tablet_new.jpg',
     '/backgrounds/Kuppelsaal_new.jpg',
   ])
 
@@ -512,7 +511,7 @@ function isSingleButtonTransitionStep(currentPart, stepIndex) {
 function getSingleButtonTransitionConfig(currentPart, stepIndex) {
   if (Number(currentPart) === 2 && Number(stepIndex) === 52) {
     return {
-      backgroundImage: '/backgrounds/treppenhaus_keller.png',
+      backgroundImage: '/backgrounds/treppenhaus_keller.jpg',
       label: 'Auf ins Tageslicht!',
       nextPart: 3,
     }
@@ -521,7 +520,7 @@ function getSingleButtonTransitionConfig(currentPart, stepIndex) {
   if (Number(currentPart) === 3 && Number(stepIndex) === 52) {
     return {
       backgroundImage: '/backgrounds/lift_aussen_grossraum.png',
-      label: 'Zum GlÃ¼ck gibt es einen Lift.',
+      label: 'Zum Glück gibt es einen Lift.',
       nextPart: 4,
     }
   }
@@ -951,7 +950,7 @@ export function GameScreen({
         if (Number(data?.sceneId) !== Number(currentPart)) {
           setSceneDialogs(null)
           setDialogLoadError(
-            `UngÃ¼ltige Dialogantwort fÃ¼r Teil ${currentPart} (sceneId mismatch).`
+            `Ungültige Dialogantwort für Teil ${currentPart} (sceneId mismatch).`
           )
           console.warn(
             `[Dialogs] part=${currentPart} source=fallback reason=scene-id-mismatch`
@@ -1009,7 +1008,7 @@ export function GameScreen({
     speechBubbles: [
       {
         hostId: 'ambassador',
-        text: `Backend-Dialoge fÃ¼r Teil ${currentPart} konnten nicht geladen werden.\n${dialogLoadError || 'Bitte Backend/API prÃ¼fen und neu laden.'}`,
+        text: `Backend-Dialoge für Teil ${currentPart} konnten nicht geladen werden.\n${dialogLoadError || 'Bitte Backend/API prüfen und neu laden.'}`,
       },
     ],
     options: [],
@@ -1155,7 +1154,7 @@ export function GameScreen({
         selected: effectiveIntensityChoiceId === choice.id,
         disabled: !isPart2Activity2InputStep,
         choiceId: choice.id,
-        groupTitle: part2Activity2Config?.title || 'AktivitÃ¤t 2',
+        groupTitle: part2Activity2Config?.title || 'Aktivität 2',
         topic: part2Activity2Config?.topic || '',
         postAuthorName: 'Emma P\u00f6r',
         postAuthorAvatar: '/backgrounds/emma-poer.png',
@@ -1183,7 +1182,7 @@ export function GameScreen({
         selected: effectiveTrendChoiceId === choice.id,
         disabled: !isPart3Activity1InputStep,
         choiceId: choice.id,
-        groupTitle: part3Activity1Config?.title || 'AktivitÃ¤t 1',
+        groupTitle: part3Activity1Config?.title || 'Aktivität 1',
         topic: part3Activity1Config?.topic || '',
         postAuthorName: 'Konrad Sens',
         postAuthorAvatar: '/backgrounds/konrad_sens.png',
@@ -1202,7 +1201,7 @@ export function GameScreen({
         selected: effectiveBoosterChoiceIds.includes(choice.id),
         disabled: !isPart3Activity2InputStep,
         choiceId: choice.id,
-        groupTitle: part3Activity2Config?.title || 'AktivitÃ¤t 2',
+        groupTitle: part3Activity2Config?.title || 'Aktivität 2',
         topic: part3Activity2Config?.topic || '',
         prompt: part3Activity2Config?.prompt || '',
         neutralPost: part3Activity2Config?.neutralPost || '',
@@ -1228,10 +1227,10 @@ export function GameScreen({
         text: item.text,
         assignedBucketId: effectiveBucketAssignments[item.id] || '',
         disabled: !isPart4Activity1InputStep,
-        groupTitle: part4Activity1Config?.title || 'AktivitÃ¤t 1',
+        groupTitle: part4Activity1Config?.title || 'Aktivität 1',
         topic: part4Activity1Config?.topic || '',
         prompt: part4Activity1Config?.prompt || '',
-        unassignedLabel: part4Activity1Config?.unassignedLabel || 'BeitrÃ¤ge',
+        unassignedLabel: part4Activity1Config?.unassignedLabel || 'Beiträge',
         bucketDefinitions: part4Activity1Config?.bucketDefinitions || [],
         postAuthorName: 'Didi Fam',
         postAuthorAvatar: '/backgrounds/didi-fam.png',
@@ -1259,7 +1258,7 @@ export function GameScreen({
         selected: effectivePart4ChoiceId === choice.id,
         disabled: !isPart4Activity2InputStep,
         choiceId: choice.id,
-        groupTitle: part4Activity2Config?.title || 'AktivitÃ¤t 2',
+        groupTitle: part4Activity2Config?.title || 'Aktivität 2',
         topic: part4Activity2Config?.topic || '',
         postAuthorName: 'Didi Fam',
         postAuthorAvatar: '/backgrounds/didi-fam.png',
@@ -1412,7 +1411,7 @@ export function GameScreen({
                 : [
                     {
                       id: 'submit_ouch6',
-                      label: 'Autsch. Unter die GÃ¼rtellinie.',
+                      label: 'Autsch. Unter die Gürtellinie.',
                       kind: 'submit',
                       disabled: !selectedPart4ChoiceId,
                     },

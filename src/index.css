@@ -93,6 +93,80 @@ html, body {
   flex-wrap: wrap;
 }
 
+.app__password-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(4, 12, 24, 0.54);
+  backdrop-filter: blur(6px);
+}
+
+.app__password-dialog {
+  width: min(100%, 24rem);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(235, 244, 251, 0.96);
+  box-shadow: 0 24px 60px rgba(5, 16, 33, 0.3);
+  padding: 1.2rem;
+}
+
+.app__password-title {
+  margin: 0 0 0.4rem;
+  color: #10253a;
+  font-size: 1.25rem;
+}
+
+.app__password-text {
+  margin: 0 0 0.9rem;
+  color: #35516a;
+}
+
+.app__password-input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #b5cadb;
+  background: #fff;
+  color: #10253a;
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+}
+
+.app__password-error {
+  margin: 0.65rem 0 0;
+  color: #9f1d1d;
+  font-weight: 700;
+}
+
+.app__password-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.app__password-btn {
+  border-radius: 999px;
+  border: 2px solid #0c1d4d;
+  padding: 0.6rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.app__password-btn--primary {
+  background: #7ccbf0;
+  color: #0c1d4d;
+}
+
+.app__password-btn--secondary {
+  background: #fff;
+  color: #1c3550;
+}
+
 .app__header-game-row {
   display: flex;
   align-items: baseline;
