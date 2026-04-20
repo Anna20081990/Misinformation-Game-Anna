@@ -399,6 +399,9 @@ function getHostFullName(hostId) {
   if (hostId === 'ambassador') return 'Botschafterin Regelreich'
   if (hostId === 'clara') return 'Klara Blick'
   if (hostId === 'uwe') return 'Uwe-R. Sicht'
+  if (hostId === 'conni') return 'Conni Plex'
+  if (hostId === 'konsti') return 'Konsti Los'
+  if (hostId === 'lee') return 'Lee Ott'
   if (hostId === 'emma') return 'Emma P\u00f6r'
   if (hostId === 'konrad') return 'Konrad Sens'
   if (hostId === 'didi') return 'Didi Fam'
@@ -494,6 +497,9 @@ function normalizeHostId(raw, selectedHostId) {
   if (
     id === 'clara' ||
     id === 'uwe' ||
+    id === 'conni' ||
+    id === 'konsti' ||
+    id === 'lee' ||
     id === 'emma' ||
     id === 'konrad' ||
     id === 'didi'
@@ -607,6 +613,13 @@ function getResolvedFlowTarget(config, type, fallbackId, fallbackNextStep) {
     id: target?.id || fallbackId,
     nextStep: target?.nextStep ?? fallbackNextStep,
   }
+}
+
+function getActivityConfigFromStep(steps = [], stepIndex, fallbackConfig = null) {
+  const sourceStep = steps.find(
+    (entry) => Number(entry?.stepIndex) === Number(stepIndex)
+  )
+  return sourceStep?.activityConfig ?? fallbackConfig
 }
 
 function buildStepHostMessages({
@@ -731,24 +744,17 @@ function resolveSentenceMarkingSubmission(config, selectedSentenceIndexes) {
   const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongA', 31)
   const successTarget = getResolvedFlowTarget(config, 'success', 'rightA', 32)
   const selectedIds = [...selectedSentenceIndexes].sort()
-  const selectedOnly = (...ids) =>
-    selectedIds.length === ids.length &&
-    ids.every((id) => selectedIds.includes(id))
   const mappedOption = isCorrect
     ? successTarget
-    : selectedOnly('s5')
-      ? { ...failureTarget, id: 'wrongOnlyEscalation' }
-      : selectedOnly('s2')
-        ? { ...failureTarget, id: 'wrongOnlyIncident' }
-        : selectedOnly('s4')
-          ? { ...failureTarget, id: 'wrongOnlyOutrage' }
-          : selectedWrongCount === 0 && selectedCorrectCount === 2
+    : selectedCorrectCount === 0
+      ? { ...failureTarget, id: 'wrongOnlyFalse' }
+      : selectedWrongCount > 0
+        ? { ...failureTarget, id: 'wrongOvermarked' }
+        : selectedCorrectCount === 1
+          ? { ...failureTarget, id: 'wrongOnlyEscalation' }
+          : selectedCorrectCount === 2
             ? { ...failureTarget, id: 'wrongTwoCorrect' }
-            : selectedCorrectCount === 0
-              ? { ...failureTarget, id: 'wrongOnlyFalse' }
-              : selectedWrongCount > 0
-                ? { ...failureTarget, id: 'wrongOvermarked' }
-                : failureTarget
+            : failureTarget
 
   return {
     isCorrect,
@@ -780,24 +786,27 @@ function resolveSingleChoiceSubmission(config, selectedChoiceId, defaults) {
 
 function resolveBoosterSubmission(config, selectedBoosterChoiceIds) {
   const correctChoiceIds = config?.correctChoiceIds || []
-  const selectedCorrectCount = selectedBoosterChoiceIds.filter((item) =>
-    correctChoiceIds.includes(item)
-  ).length
-  const selectedWrongCount =
-    selectedBoosterChoiceIds.length - selectedCorrectCount
+  const selectedIds = new Set(selectedBoosterChoiceIds)
   const isCorrect =
     selectedBoosterChoiceIds.length === correctChoiceIds.length &&
     correctChoiceIds.every((item) => selectedBoosterChoiceIds.includes(item))
 
   const failureTarget = getResolvedFlowTarget(config, 'failure', 'wrongB', 41)
   const successTarget = getResolvedFlowTarget(config, 'success', 'rightB', 42)
+  const hasContextGap = selectedIds.has('a') || selectedIds.has('d')
+  const hasTooClearChoice = selectedIds.has('b') || selectedIds.has('c')
+  const hasUnfinishedChoice = selectedIds.has('e') || selectedIds.has('f')
   const mappedOption = isCorrect
     ? successTarget
-    : selectedCorrectCount === 0
-      ? { ...failureTarget, id: 'wrongBWeak', nextStep: 43 }
-      : selectedWrongCount === 0
-        ? { ...failureTarget, id: 'wrongBSingle', nextStep: 44 }
-        : { ...failureTarget, id: 'wrongBMixed', nextStep: 41 }
+    : !hasContextGap
+      ? hasUnfinishedChoice && !hasTooClearChoice
+        ? { ...failureTarget, id: 'wrongBUnfinishedOnly', nextStep: 45 }
+        : { ...failureTarget, id: 'wrongBTooClear', nextStep: 43 }
+      : hasTooClearChoice
+        ? { ...failureTarget, id: 'wrongBMixedClear', nextStep: 44 }
+        : hasUnfinishedChoice
+          ? { ...failureTarget, id: 'wrongBMixedUnfinished', nextStep: 46 }
+          : { ...failureTarget, id: 'wrongBPartialContext', nextStep: 41 }
 
   return {
     isCorrect,
@@ -1101,9 +1110,14 @@ export function GameScreen({
     currentPart === 2 && Number(stepData.stepIndex) === 3
   const isPart2Activity1Context =
     currentPart === 2 && [3, 31, 32].includes(Number(stepData.stepIndex))
+  const part2Activity1SourceConfig = getActivityConfigFromStep(
+    sortedBackendSteps,
+    3,
+    stepData.activityConfig
+  )
   const part2Activity1Config = isPart2Activity1Context
     ? resolveSentenceMarkingConfig(
-        stepData.activityConfig,
+        part2Activity1SourceConfig,
         PART2_ACTIVITY1_FALLBACK_CONFIG
       )
     : PART2_ACTIVITY1_FALLBACK_CONFIG
@@ -1111,9 +1125,14 @@ export function GameScreen({
     currentPart === 2 && Number(stepData.stepIndex) === 4
   const isPart2Activity2Context =
     currentPart === 2 && [4, 41, 42, 43].includes(Number(stepData.stepIndex))
+  const part2Activity2SourceConfig = getActivityConfigFromStep(
+    sortedBackendSteps,
+    4,
+    stepData.activityConfig
+  )
   const part2Activity2Config = isPart2Activity2Context
     ? resolveIntensityChoiceConfig(
-        stepData.activityConfig,
+        part2Activity2SourceConfig,
         PART2_ACTIVITY2_FALLBACK_CONFIG
       )
     : PART2_ACTIVITY2_FALLBACK_CONFIG
@@ -1121,19 +1140,30 @@ export function GameScreen({
     currentPart === 3 && Number(stepData.stepIndex) === 3
   const isPart3Activity1Context =
     currentPart === 3 && [3, 31, 32, 33].includes(Number(stepData.stepIndex))
+  const part3Activity1SourceConfig = getActivityConfigFromStep(
+    sortedBackendSteps,
+    3,
+    stepData.activityConfig
+  )
   const part3Activity1Config = isPart3Activity1Context
     ? resolveIntensityChoiceConfig(
-        stepData.activityConfig,
+        part3Activity1SourceConfig,
         PART3_ACTIVITY1_FALLBACK_CONFIG
       )
     : PART3_ACTIVITY1_FALLBACK_CONFIG
   const isPart3Activity2InputStep =
     currentPart === 3 && Number(stepData.stepIndex) === 4
   const isPart3Activity2Context =
-    currentPart === 3 && [4, 41, 42, 43, 44].includes(Number(stepData.stepIndex))
+    currentPart === 3 &&
+    [4, 41, 42, 43, 44, 45, 46].includes(Number(stepData.stepIndex))
+  const part3Activity2SourceConfig = getActivityConfigFromStep(
+    sortedBackendSteps,
+    4,
+    stepData.activityConfig
+  )
   const part3Activity2Config = isPart3Activity2Context
     ? resolveBoosterChoiceConfig(
-        stepData.activityConfig,
+        part3Activity2SourceConfig,
         PART3_ACTIVITY2_FALLBACK_CONFIG
       )
     : PART3_ACTIVITY2_FALLBACK_CONFIG
@@ -1141,9 +1171,14 @@ export function GameScreen({
     currentPart === 4 && Number(stepData.stepIndex) === 3
   const isPart4Activity1Context =
     currentPart === 4 && [3, 31, 32].includes(Number(stepData.stepIndex))
+  const part4Activity1SourceConfig = getActivityConfigFromStep(
+    sortedBackendSteps,
+    3,
+    stepData.activityConfig
+  )
   const part4Activity1Config = isPart4Activity1Context
     ? resolveBucketSortConfig(
-        stepData.activityConfig,
+        part4Activity1SourceConfig,
         PART4_ACTIVITY1_FALLBACK_CONFIG
       )
     : PART4_ACTIVITY1_FALLBACK_CONFIG
@@ -1151,9 +1186,14 @@ export function GameScreen({
     currentPart === 4 && Number(stepData.stepIndex) === 4
   const isPart4Activity2Context =
     currentPart === 4 && [4, 41, 43].includes(Number(stepData.stepIndex))
+  const part4Activity2SourceConfig = getActivityConfigFromStep(
+    sortedBackendSteps,
+    4,
+    stepData.activityConfig
+  )
   const part4Activity2Config = isPart4Activity2Context
     ? resolveIntensityChoiceConfig(
-        stepData.activityConfig,
+        part4Activity2SourceConfig,
         PART4_ACTIVITY2_FALLBACK_CONFIG
       )
     : PART4_ACTIVITY2_FALLBACK_CONFIG
@@ -1194,8 +1234,8 @@ export function GameScreen({
         selected: effectiveSentenceSelection.includes(sentence.id),
         disabled: !isPart2Activity1InputStep,
         sentenceId: sentence.id,
-        postAuthorName: 'Emma P\u00f6r',
-        postAuthorAvatar: '/backgrounds/emma-poer.png',
+        postAuthorName: 'Conni Plex',
+        postAuthorAvatar: '/backgrounds/conni_plex.jpg',
         hideTitle: true,
       }))
     : []
@@ -1221,8 +1261,8 @@ export function GameScreen({
         choiceId: choice.id,
         groupTitle: part2Activity2Config?.title || 'Aktivität 2',
         topic: part2Activity2Config?.topic || '',
-        postAuthorName: 'Emma P\u00f6r',
-        postAuthorAvatar: '/backgrounds/emma-poer.png',
+        postAuthorName: 'Conni Plex',
+        postAuthorAvatar: '/backgrounds/conni_plex.jpg',
         hideTitle: true,
         hideTopic: true,
       }))
@@ -1249,8 +1289,8 @@ export function GameScreen({
         choiceId: choice.id,
         groupTitle: part3Activity1Config?.title || 'Aktivität 1',
         topic: part3Activity1Config?.topic || '',
-        postAuthorName: 'Konrad Sens',
-        postAuthorAvatar: '/backgrounds/konrad_sens.png',
+        postAuthorName: 'Konsti Los',
+        postAuthorAvatar: '/backgrounds/konsti_los.jpg',
         hideTitle: true,
         hideTopic: true,
       }))
@@ -1270,15 +1310,15 @@ export function GameScreen({
         topic: part3Activity2Config?.topic || '',
         prompt: part3Activity2Config?.prompt || '',
         neutralPost: part3Activity2Config?.neutralPost || '',
-        postAuthorName: 'Konrad Sens',
-        postAuthorAvatar: '/backgrounds/konrad_sens.png',
+        postAuthorName: 'Konsti Los',
+        postAuthorAvatar: '/backgrounds/konsti_los.jpg',
         hideTitle: true,
         hideTopic: false,
         promptAfterNeutralPost: true,
         promptHostId: selectedHostId || 'selected',
         promptSpeakerName: getHostFullName(selectedHostId || 'selected'),
         renderNeutralPostAsMessage: true,
-        neutralPostHostId: 'konrad',
+        neutralPostHostId: 'konsti',
       }))
     : []
   const effectiveBucketAssignments = isPart4Activity1InputStep
@@ -1297,8 +1337,8 @@ export function GameScreen({
         prompt: part4Activity1Config?.prompt || '',
         unassignedLabel: part4Activity1Config?.unassignedLabel || 'Beiträge',
         bucketDefinitions: part4Activity1Config?.bucketDefinitions || [],
-        postAuthorName: 'Didi Fam',
-        postAuthorAvatar: '/backgrounds/didi-fam.png',
+        postAuthorName: 'Lee Ott',
+        postAuthorAvatar: '/backgrounds/lee_ott.jpg',
         hideTitle: true,
         hideTopic: true,
       }))
@@ -1325,8 +1365,8 @@ export function GameScreen({
         choiceId: choice.id,
         groupTitle: part4Activity2Config?.title || 'Aktivität 2',
         topic: part4Activity2Config?.topic || '',
-        postAuthorName: 'Didi Fam',
-        postAuthorAvatar: '/backgrounds/didi-fam.png',
+        postAuthorName: 'Lee Ott',
+        postAuthorAvatar: '/backgrounds/lee_ott.jpg',
         hideTitle: true,
         hideTopic: true,
       }))

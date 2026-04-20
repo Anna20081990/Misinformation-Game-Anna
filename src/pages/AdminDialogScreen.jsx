@@ -13,9 +13,9 @@ const HOST_CHOICES = [
   { id: 'selected', label: 'Gewählter Host (aus Teil 1)' },
   { id: 'clara', label: 'Klara Blick' },
   { id: 'uwe', label: 'Uwe R. Blick' },
-  { id: 'emma', label: 'Emma Pör' },
-  { id: 'konrad', label: 'Konrad Sens' },
-  { id: 'didi', label: 'Didi Fam' },
+  { id: 'conni', label: 'Conni Plex' },
+  { id: 'konsti', label: 'Konsti Los' },
+  { id: 'lee', label: 'Lee Ott' },
 ]
 
 const STEP_TYPES = [
@@ -69,7 +69,7 @@ function normalizeForApi(formData) {
       .filter((item) => item.text && item.text.trim())
       .map((item) => ({
         hostId: item.hostId || 'selected',
-        text: item.text.trim(),
+        text: item.text,
         ...(item.showOnOptionId?.trim()
           ? { showOnOptionId: item.showOnOptionId.trim() }
           : {}),

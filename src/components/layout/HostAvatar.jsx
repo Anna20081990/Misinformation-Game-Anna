@@ -1,12 +1,15 @@
 ﻿function resolveHostId(characterId, speakerName) {
   const id = String(characterId || '').toLowerCase()
+  if (id === 'emma') return 'conni'
+  if (id === 'konrad') return 'konsti'
+  if (id === 'didi') return 'lee'
   if (
     id === 'clara' ||
     id === 'uwe' ||
     id === 'ambassador' ||
-    id === 'emma' ||
-    id === 'konrad' ||
-    id === 'didi'
+    id === 'conni' ||
+    id === 'konsti' ||
+    id === 'lee'
   ) {
     return id
   }
@@ -15,9 +18,12 @@
   if (name.includes('clara')) return 'clara'
   if (name.includes('uwe')) return 'uwe'
   if (name.includes('botschafterin')) return 'ambassador'
-  if (name.includes('emma')) return 'emma'
-  if (name.includes('konrad')) return 'konrad'
-  if (name.includes('didi')) return 'didi'
+  if (name.includes('conni')) return 'conni'
+  if (name.includes('konsti')) return 'konsti'
+  if (name.includes('lee')) return 'lee'
+  if (name.includes('emma')) return 'conni'
+  if (name.includes('konrad')) return 'konsti'
+  if (name.includes('didi')) return 'lee'
   return 'host'
 }
 
@@ -33,16 +39,16 @@ function AmbassadorAvatar() {
   return <img src="/backgrounds/botschafterin.png" className="host-avatar__img" alt="Botschafterin Regelreich" />
 }
 
-function KonradAvatar() {
-  return <img src="/backgrounds/konrad_sens.png" className="host-avatar__img" alt="Konrad Sens" />
+function ConniAvatar() {
+  return <img src="/backgrounds/conni_plex.jpg" className="host-avatar__img" alt="Conni Plex" />
 }
 
-function EmmaAvatar() {
-  return <img src="/backgrounds/emma-poer.png" className="host-avatar__img" alt={'Emma P\u00f6r'} />
+function KonstiAvatar() {
+  return <img src="/backgrounds/konsti_los.jpg" className="host-avatar__img" alt="Konsti Los" />
 }
 
-function DidiAvatar() {
-  return <img src="/backgrounds/didi-fam.png" className="host-avatar__img" alt="Didi Fam" />
+function LeeAvatar() {
+  return <img src="/backgrounds/lee_ott.jpg" className="host-avatar__img" alt="Lee Ott" />
 }
 
 function GenericHostAvatar() {
@@ -67,9 +73,9 @@ export function HostAvatar({ characterId, speakerName }) {
       {hostId === 'clara' && <ClaraAvatar />}
       {hostId === 'uwe' && <UweAvatar />}
       {hostId === 'ambassador' && <AmbassadorAvatar />}
-      {hostId === 'emma' && <EmmaAvatar />}
-      {hostId === 'konrad' && <KonradAvatar />}
-      {hostId === 'didi' && <DidiAvatar />}
+      {hostId === 'conni' && <ConniAvatar />}
+      {hostId === 'konsti' && <KonstiAvatar />}
+      {hostId === 'lee' && <LeeAvatar />}
       {hostId === 'host' && <GenericHostAvatar />}
     </div>
   )

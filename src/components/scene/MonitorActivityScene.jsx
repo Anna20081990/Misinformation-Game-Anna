@@ -11,13 +11,35 @@ function normalizeSpeakerName(name) {
 
 function resolveKnownHostId(name) {
   const normalized = normalizeSpeakerName(name).toLowerCase()
-  if (normalized.includes('emma')) return 'emma'
-  if (normalized.includes('konrad')) return 'konrad'
-  if (normalized.includes('didi')) return 'didi'
+  if (normalized.includes('conni')) return 'conni'
+  if (normalized.includes('konsti')) return 'konsti'
+  if (normalized.includes('lee')) return 'lee'
+  if (normalized.includes('emma')) return 'conni'
+  if (normalized.includes('konrad')) return 'konsti'
+  if (normalized.includes('didi')) return 'lee'
   if (normalized.includes('clara') || normalized.includes('klara')) return 'clara'
   if (normalized.includes('uwe')) return 'uwe'
   if (normalized.includes('botschafter')) return 'ambassador'
   return ''
+}
+
+function resolveDisplaySpeakerName(hostId, speakerName) {
+  const normalizedName = normalizeSpeakerName(speakerName)
+  const id = String(hostId || '').toLowerCase()
+
+  if (id === 'conni' || normalizedName.toLowerCase().includes('conni')) return 'Conni Plex'
+  if (id === 'konsti' || normalizedName.toLowerCase().includes('konsti')) return 'Konsti Los'
+  if (id === 'lee' || normalizedName.toLowerCase().includes('lee')) return 'Lee Ott'
+  if (id === 'emma' || normalizedName.toLowerCase().includes('emma')) return 'Conni Plex'
+  if (id === 'konrad' || normalizedName.toLowerCase().includes('konrad')) return 'Konsti Los'
+  if (id === 'didi' || normalizedName.toLowerCase().includes('didi')) return 'Lee Ott'
+  if (id === 'clara' || normalizedName.toLowerCase().includes('clara')) return 'Klara Blick'
+  if (id === 'uwe' || normalizedName.toLowerCase().includes('uwe')) return 'Uwe-R. Blick'
+  if (id === 'ambassador' || normalizedName.toLowerCase().includes('botschafter')) {
+    return 'Botschafter Regelreich'
+  }
+
+  return normalizedName || 'Host'
 }
 
 function PostAuthorAvatar({ name, imageSrc }) {
@@ -105,17 +127,33 @@ export function MonitorActivityScene({
   const unassignedBucketLabel =
     bucketOptions[0]?.unassignedLabel || 'Nicht zugeordnet'
   const bucketPostAuthorName = bucketOptions[0]?.postAuthorName || ''
+  const bucketPostAuthorDisplayName = resolveDisplaySpeakerName(
+    resolveKnownHostId(bucketPostAuthorName),
+    bucketPostAuthorName
+  )
   const bucketPostAuthorAvatar = bucketOptions[0]?.postAuthorAvatar || ''
   const bucketHideTitle = Boolean(bucketOptions[0]?.hideTitle)
   const bucketHideTopic = Boolean(bucketOptions[0]?.hideTopic)
   const sentencePostAuthorName = sentenceOptions[0]?.postAuthorName || ''
+  const sentencePostAuthorDisplayName = resolveDisplaySpeakerName(
+    resolveKnownHostId(sentencePostAuthorName),
+    sentencePostAuthorName
+  )
   const sentencePostAuthorAvatar = sentenceOptions[0]?.postAuthorAvatar || ''
   const sentenceHideTitle = Boolean(sentenceOptions[0]?.hideTitle)
   const choicePostAuthorName = choiceOptions[0]?.postAuthorName || ''
+  const choicePostAuthorDisplayName = resolveDisplaySpeakerName(
+    resolveKnownHostId(choicePostAuthorName),
+    choicePostAuthorName
+  )
   const choicePostAuthorAvatar = choiceOptions[0]?.postAuthorAvatar || ''
   const choiceHideTitle = Boolean(choiceOptions[0]?.hideTitle)
   const choiceHideTopic = Boolean(choiceOptions[0]?.hideTopic)
   const boosterPostAuthorName = boosterOptions[0]?.postAuthorName || ''
+  const boosterPostAuthorDisplayName = resolveDisplaySpeakerName(
+    resolveKnownHostId(boosterPostAuthorName),
+    boosterPostAuthorName
+  )
   const boosterPostAuthorAvatar = boosterOptions[0]?.postAuthorAvatar || ''
   const boosterHideTitle = Boolean(boosterOptions[0]?.hideTitle)
   const boosterHideTopic = Boolean(boosterOptions[0]?.hideTopic)
@@ -124,10 +162,18 @@ export function MonitorActivityScene({
   )
   const boosterPromptHostId = boosterOptions[0]?.promptHostId || ''
   const boosterPromptSpeakerName = boosterOptions[0]?.promptSpeakerName || ''
+  const boosterPromptDisplayName = resolveDisplaySpeakerName(
+    boosterPromptHostId,
+    boosterPromptSpeakerName
+  )
   const boosterRenderNeutralPostAsMessage = Boolean(
     boosterOptions[0]?.renderNeutralPostAsMessage
   )
   const boosterNeutralPostHostId = boosterOptions[0]?.neutralPostHostId || ''
+  const boosterNeutralPostDisplayName = resolveDisplaySpeakerName(
+    boosterNeutralPostHostId,
+    boosterPostAuthorName
+  )
 
   const isSelectVariant = String(variant).includes('select')
 
@@ -161,7 +207,7 @@ export function MonitorActivityScene({
       lastMessageId,
       length: messages.length,
     }
-  }, [messages, actionOptions])
+  }, [messages])
 
   return (
     <div className="scene scene--activity">
@@ -185,7 +231,13 @@ export function MonitorActivityScene({
             </header>
 
             <div className="chat-panel__messages" ref={scrollRef}>
-              {leadMessages.map((message) => (
+              {leadMessages.map((message) => {
+                const displaySpeakerName = resolveDisplaySpeakerName(
+                  message.hostId ?? message.characterId,
+                  message.speakerName
+                )
+
+                return (
                 <article
                   key={message.id}
                   className={`chat-message chat-message--${message.speakerType === 'player' ? 'player' : 'host'}`}
@@ -193,13 +245,13 @@ export function MonitorActivityScene({
                   {message.speakerType !== 'player' && (
                     <HostAvatar
                       characterId={message.hostId ?? message.characterId}
-                      speakerName={message.speakerName}
+                      speakerName={displaySpeakerName}
                     />
                   )}
                   <div className="speech-bubble-wrapper">
                     {message.speakerType !== 'player' && (
                       <strong className="chat-message__speaker">
-                        {normalizeSpeakerName(message.speakerName) || 'Host'}
+                        {displaySpeakerName}
                       </strong>
                     )}
                     <div className={`speech-bubble ${message.speakerType === 'player' ? 'green' : ''}`}>
@@ -209,7 +261,8 @@ export function MonitorActivityScene({
                     </div>
                   </div>
                 </article>
-              ))}
+                )
+              })}
 
               {isSelectVariant && (
                 <section
@@ -221,11 +274,11 @@ export function MonitorActivityScene({
                       {!!sentencePostAuthorName && (
                         <div className="monitor-post-author">
                           <PostAuthorAvatar
-                            name={sentencePostAuthorName}
+                            name={sentencePostAuthorDisplayName}
                             imageSrc={sentencePostAuthorAvatar}
                           />
                           <strong className="monitor-post-author__name">
-                            {sentencePostAuthorName}
+                            {sentencePostAuthorDisplayName}
                           </strong>
                         </div>
                       )}
@@ -259,11 +312,11 @@ export function MonitorActivityScene({
                       {!!choicePostAuthorName && (
                         <div className="monitor-post-author">
                           <PostAuthorAvatar
-                            name={choicePostAuthorName}
+                            name={choicePostAuthorDisplayName}
                             imageSrc={choicePostAuthorAvatar}
                           />
                           <strong className="monitor-post-author__name">
-                            {choicePostAuthorName}
+                            {choicePostAuthorDisplayName}
                           </strong>
                         </div>
                       )}
@@ -303,11 +356,11 @@ export function MonitorActivityScene({
                         !boosterRenderNeutralPostAsMessage && (
                         <div className="monitor-post-author">
                           <PostAuthorAvatar
-                            name={boosterPostAuthorName}
+                            name={boosterPostAuthorDisplayName}
                             imageSrc={boosterPostAuthorAvatar}
                           />
                           <strong className="monitor-post-author__name">
-                            {boosterPostAuthorName}
+                            {boosterPostAuthorDisplayName}
                           </strong>
                         </div>
                         )}
@@ -330,11 +383,11 @@ export function MonitorActivityScene({
                           <article className="monitor-message monitor-message--host monitor-message--embedded">
                             <HostAvatar
                               characterId={boosterNeutralPostHostId}
-                              speakerName={boosterPostAuthorName}
+                              speakerName={boosterNeutralPostDisplayName}
                             />
                             <div className="monitor-message__bubble">
                               <strong className="monitor-message__speaker">
-                                {normalizeSpeakerName(boosterPostAuthorName) || 'Host'}
+                                {boosterNeutralPostDisplayName}
                               </strong>
                               {renderMessageParagraphs(
                                 boosterOptions[0]?.neutralPost,
@@ -360,11 +413,11 @@ export function MonitorActivityScene({
                           <article className="monitor-message monitor-message--host monitor-message--embedded">
                             <HostAvatar
                               characterId={boosterPromptHostId}
-                              speakerName={boosterPromptSpeakerName}
+                              speakerName={boosterPromptDisplayName}
                             />
                             <div className="monitor-message__bubble">
                               <strong className="monitor-message__speaker">
-                                {normalizeSpeakerName(boosterPromptSpeakerName) || 'Host'}
+                                {boosterPromptDisplayName}
                               </strong>
                               {renderMessageParagraphs(
                                 boosterOptions[0]?.prompt,
@@ -400,11 +453,11 @@ export function MonitorActivityScene({
                       {!!bucketPostAuthorName && (
                         <div className="monitor-post-author">
                           <PostAuthorAvatar
-                            name={bucketPostAuthorName}
+                            name={bucketPostAuthorDisplayName}
                             imageSrc={bucketPostAuthorAvatar}
                           />
                           <strong className="monitor-post-author__name">
-                            {bucketPostAuthorName}
+                            {bucketPostAuthorDisplayName}
                           </strong>
                         </div>
                       )}

@@ -4,9 +4,9 @@ const HOST_IDS = new Set([
   'clara',
   'uwe',
   'ambassador',
-  'emma',
-  'konrad',
-  'didi',
+  'conni',
+  'konsti',
+  'lee',
 ])
 const STEP_TYPES = new Set([
   'intro',
@@ -27,6 +27,10 @@ function assert(condition, message, status = 400) {
 
 function normalizeDialogText(rawText) {
   return String(rawText).replace(/\r\n?/g, '\n').trim()
+}
+
+function normalizeHostId(rawHostId) {
+  return String(rawHostId ?? '').trim().toLowerCase()
 }
 
 function normalizeBranchId(rawId, message) {
@@ -142,9 +146,9 @@ export function normalizeStepPayload(payload, fallbackStepIndex = null) {
     )
     const normalizedText = normalizeDialogText(bubble.text ?? '')
     assert(normalizedText, `speechBubbles[${index}].text ist erforderlich.`)
-    const hostId = String(
+    const hostId = normalizeHostId(
       bubble.hostId ?? bubble.characterId ?? 'selected'
-    ).toLowerCase()
+    )
     assert(
       HOST_IDS.has(hostId),
       `speechBubbles[${index}].hostId muss einer der bekannten Sprecherwerte sein.`
@@ -267,7 +271,9 @@ export function validateSceneDialogLogic(sceneEntry) {
     }
 
     for (const bubble of step.speechBubbles) {
-      const hostId = String(bubble?.hostId ?? '').toLowerCase()
+      const hostId = normalizeHostId(
+        bubble?.hostId ?? bubble?.characterId ?? 'selected'
+      )
       assert(
         HOST_IDS.has(hostId),
         `Szene ${sceneEntry.sceneId}, Step ${step.stepIndex}: ungültiger hostId ${hostId}.`

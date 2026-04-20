@@ -32,12 +32,18 @@ function getHostDisplayName(hostId, speakerName, selectedHostId) {
   }
 
   if (id === 'ambassador') return 'Botschafter Regelreich'
+  if (id === 'conni' || name.includes('conni')) return 'Conni Plex'
+  if (id === 'konsti' || name.includes('konsti')) return 'Konsti Los'
+  if (id === 'lee' || name.includes('lee')) return 'Lee Ott'
+  if (id === 'emma' || name.includes('emma')) return 'Conni Plex'
+  if (id === 'konrad' || name.includes('konrad')) return 'Konsti Los'
+  if (id === 'didi' || name.includes('didi')) return 'Lee Ott'
   if (id === 'host' && selectedHostId === 'clara') return 'Klara Blick'
-  if (id === 'host' && selectedHostId === 'uwe') return 'Uwe-R. Sicht'
+  if (id === 'host' && selectedHostId === 'uwe') return 'Uwe-R. Blick'
   if (id === 'selected' && selectedHostId === 'clara') return 'Klara Blick'
-  if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe-R. Sicht'
+  if (id === 'selected' && selectedHostId === 'uwe') return 'Uwe-R. Blick'
   if (id === 'clara' || name.includes('clara')) return 'Klara Blick'
-  if (id === 'uwe' || name.includes('uwe')) return 'Uwe-R. Sicht'
+  if (id === 'uwe' || name.includes('uwe')) return 'Uwe-R. Blick'
   return normalizedSpeakerName || 'Host'
 }
 

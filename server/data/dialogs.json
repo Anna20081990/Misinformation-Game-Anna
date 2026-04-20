@@ -77,7 +77,7 @@
             },
             {
               "hostId": "ambassador",
-              "text": "Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen eskalieren schneller.\n\nEinige Beiträge verbreiten sich ungewöhnlich stark.\n\nUnd manchmal kippt eine Diskussion plötzlich – und statt um das Thema geht es nur noch um die Leute darin."
+              "text": "Doch in den letzten Monaten hat sich etwas verschoben.\n\nBestimmte Diskussionen werden unnötig kompliziert.\n\nManche Beiträge sind schwer zu verstehen.\n\nUnd manchmal läuft eine Diskussion einfach weiter – und am Ende ist längst unklar, worum es eigentlich geht."
             }
           ],
           "options": [
@@ -94,7 +94,7 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Im Media Lab von Regelreich spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚beschleunigen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt."
+              "text": "Im Media Lab von Regelreich spricht man inzwischen von drei besonders aktiven Profilen.\n\nSie treten unter Pseudonymen auf.\n\nSie behaupten, sie würden Debatten nur ‚ein bisschen ordnen‘.\n\nIntern werden sie ‘Die notorischen Drei’ genannt."
             }
           ],
           "options": [
@@ -111,7 +111,7 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Emma Pör. Konrad Sens. Didi Fam.\n\nSie arbeiten verdeckt – und sie haben ein bemerkenswertes Talent."
+              "text": "Conni Plex. Konsti Los. Lee Ott.\n\nSie arbeiten verdeckt – und sie haben ein bemerkenswertes Talent."
             }
           ],
           "options": [
@@ -128,7 +128,7 @@
           "speechBubbles": [
             {
               "hostId": "ambassador",
-              "text": "Diskussionen in eine bestimmte Richtung zu lenken.\n\nMal laut, mal um 180 Grad – und selten hilfreich."
+              "text": "Diskussionen in einen Irrgarten zu verwandeln.\n\nMal länger, mal verwinkelter – und selten hilfreich."
             },
             {
               "hostId": "ambassador",
@@ -182,11 +182,11 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Sicht. Ich beobachte, was zwischen den Zeilen passiert."
+              "text": "Ah. Du musst fürs Sommerpraktikum hier sein.\n\nIch bin Uwe-R. Blick. Ich beobachte, was zwischen den Zeilen passiert."
             },
             {
               "hostId": "clara",
-              "text": "Und ich bin Klara Blick. Ich sortiere, was davon übrig bleibt, wenn der Lärm weg ist."
+              "text": "Und ich bin Klara Blick. Ich sortiere, was davon übrig bleibt, wenn der Nebel weg ist."
             },
             {
               "hostId": "clara",
@@ -253,7 +253,7 @@
             },
             {
               "hostId": "uwe",
-              "text": "In den letzten Monaten sind uns drei Profile besonders aufgefallen: Emma Pör. Konrad Sens. Didi Fam."
+              "text": "In den letzten Monaten sind uns drei Profile besonders aufgefallen: Conni Plex. Konsti Los. Lee Ott."
             },
             {
               "hostId": "clara",
@@ -274,7 +274,7 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Fanclub eher nicht.\n\nAber sie haben eines gemeinsam: Sie wissen genau, wie man Debatten verschiebt."
+              "text": "Fanclub eher nicht.\n\nAber sie haben eines gemeinsam: Sie wissen genau, wie man Debatten kompliziert macht."
             },
             {
               "hostId": "clara",
@@ -475,16 +475,16 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Perfekt.\n\nHier siehst du typische Beiträge von Emma.",
+              "text": "Perfekt.\n\nHier siehst du typische Beiträge von Conni.",
               "showOnOptionId": "ready"
             },
             {
-              "hostId": "emma",
-              "text": "Die Stadt hat heute eine neue Taubenstatistik veröffentlicht.\n\nMein Onkel meinte gestern schon, dass vor seinem Balkon plötzlich drei Tauben saßen.\n\nSchon wieder wird uns etwas verschwiegen.\n\nWenn selbst Tauben hier strategisch verteilt werden, läuft etwas gewaltig schief."
+              "hostId": "conni",
+              "text": "Die Stadt hat heute eine neue Taubenstatistik veröffentlicht.\n\nIm Rahmen einer informellen Beobachtungssituation wurde mir berichtet, dass sich im unmittelbaren Balkonumfeld kurzfristig drei Tauben positioniert hatten, wobei derzeit nicht eindeutig geklärt werden kann, inwiefern diese Einzelbeobachtung als belastbare Grundlage für eine Einschätzung des allgemeinen Taubenaufkommens im urbanen Raum unter Berücksichtigung kurzfristiger Beobachtungsparameter herangezogen werden kann."
             },
             {
               "hostId": "selected",
-              "text": "Ein einzelner Satz eines Verwandten – und plötzlich wirkt das Ganze wie ein großes Problem."
+              "text": "Ein kurzer Hinweis – aber formuliert, als wäre es eine wissenschaftliche Analyse."
             }
           ],
           "options": [
@@ -500,12 +500,12 @@
           "type": "example",
           "speechBubbles": [
             {
-              "hostId": "emma",
-              "text": "Die Stadt testet eine neue Anzeige für öffentliche Uhren.\n\nEin Freund meinte, die Uhr am Bahnhof sei gestern für einen Moment stehen geblieben.\n\nWenn selbst die Zeit hier nicht mehr zuverlässig läuft, was gerät dann noch ins Stocken?\n\nIrgendetwas fühlt sich hier nicht mehr stabil an."
+              "hostId": "conni",
+              "text": "Die Stadt testet eine neue Anzeige für öffentliche Uhren.\n\nMir wurde zugetragen, dass die Anzeige am Bahnhof gestern kurzzeitig eine Unterbrechung aufwies, deren Ursache bislang nicht eindeutig geklärt werden konnte und die möglicherweise im Zusammenhang mit temporären Abweichungen im Anzeigeverhalten steht, wobei sich daraus derzeit keine eindeutigen Rückschlüsse auf die generelle Funktionsstabilität öffentlicher Anzeigesysteme ziehen lassen."
             },
             {
               "hostId": "selected",
-              "text": "Eine stehende Uhr – und schon soll uns das verunsichern."
+              "text": "Eine kurze Störung – und schon wird daraus ein Satz mit drei Nebensätzen."
             }
           ],
           "options": [
@@ -526,17 +526,17 @@
             },
             {
               "hostId": "selected",
-              "text": "Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines Problem machen."
+              "text": "Conni Plex formuliert gern unnötig kompliziert. Markiere alle Textstellen, die in Connis Stil einen Beitrag schwer verständlich machen (z. B. Fachwörter, lange Schachtelsätze, unnötige Nebenbemerkungen)."
             }
           ],
           "options": [
             {
               "id": "submit_confident",
-              "label": "Empörungs-Level: Hoch."
+              "label": "Komplexitäts-Level: hoch."
             },
             {
               "id": "submit_unsure",
-              "label": "Das klingt verdächtig dramatisch."
+              "label": "Das klingt verdächtig kompliziert."
             }
           ],
           "activityConfig": {
@@ -544,29 +544,37 @@
             "sentences": [
               {
                 "id": "s1",
-                "text": "Die Stadt plant, für öffentliche Veranstaltungen eine einheitliche Regenschirmfarbe vorzuschlagen."
+                "text": "Die Stadt beabsichtigt, bei öffentlichen Veranstaltungen"
               },
               {
                 "id": "s2",
-                "text": "Gestern stand eine ältere Dame im Regen, weil ihr alter Schirm nicht mehr erlaubt war."
+                "text": "eine Vereinheitlichung der Regenschirmfarbgebung (‚Einheitsgrau‘) zu prüfen."
               },
               {
                 "id": "s3",
-                "text": "Der Vorschlag soll nächste Woche abgestimmt werden."
+                "text": "Gestern war eine ältere Dame"
               },
               {
                 "id": "s4",
-                "text": "Schon wieder werden die normalen Leute im Stich gelassen."
+                "text": "im Zuge eines Niederschlagsereignisses betroffen,"
               },
               {
                 "id": "s5",
-                "text": "Wenn das so weitergeht, ist bald nichts Alltägliches mehr sicher."
+                "text": "weil ihr bisheriger Schirm"
+              },
+              {
+                "id": "s6",
+                "text": "nach derzeitigem Diskussionsstand perspektivisch nicht mehr der städtischen Rechtssprechung genügen würde."
+              },
+              {
+                "id": "s7",
+                "text": "Der Vorschlag soll nächste Woche zur Abstimmung gestellt werden."
               }
             ],
             "correctSentenceIds": [
               "s2",
               "s4",
-              "s5"
+              "s6"
             ],
             "success": {
               "id": "rightA",
@@ -576,7 +584,6 @@
               "id": "wrongA",
               "branchIds": [
                 "wrongOnlyEscalation",
-                "wrongOnlyIncident",
                 "wrongOnlyOutrage",
                 "wrongTwoCorrect",
                 "wrongOvermarked",
@@ -601,17 +608,17 @@
             },
             {
               "hostId": "selected",
-              "text": "Welche Version würde Emma Pör am ehesten posten, um maximale Empörung zu erzeugen?"
+              "text": "Welche Version würde Conni Plex am ehesten posten, um denselben Inhalt möglichst kompliziert auszudrücken?"
             }
           ],
           "options": [
             {
               "id": "submit_easy",
-              "label": "Das eskaliert stilvoll."
+              "label": "Das verklausuliert stilvoll."
             },
             {
               "id": "submit_unsure2",
-              "label": "Ist das schon Drama?"
+              "label": "Ist das schon Fachsprache?"
             }
           ],
           "activityConfig": {
@@ -622,15 +629,15 @@
             "choices": [
               {
                 "id": "a",
-                "text": "„Die Stadt plant einen einheitlichen Farbverlauf für Wartebereiche im Hauptbahnhof.“"
+                "text": "„Die Stadt plant einen einheitlichen Farbverlauf für Wartebereiche im Hauptbahnhof.”"
               },
               {
                 "id": "b",
-                "text": "„Der geplante Farbverlauf im Wartebereich sorgt für Diskussionen. Manche halten ihn für eine überflüssige Dramatisierung des Bahnalltags.“"
+                "text": "„Im Zusammenhang mit der geplanten Gestaltung der Wartebereiche wird ein festgelegter Farbverlauf diskutiert.”"
               },
               {
                 "id": "c",
-                "text": "„Jetzt soll uns sogar vorgeschrieben werden, wie wir uns beim Warten fühlen. Was kommt als Nächstes – eine Pflichtstimmung im Abteil?“"
+                "text": "„Im Zuge der intendierten Optimierung der ‚emotionalen Aufenthaltskurve‘ soll ein standardisierter Farbverlauf implementiert werden, dessen Effekte auf das subjektive Wartenerleben noch zu evaluieren wären.”"
               }
             ],
             "correctChoiceId": "c",
@@ -654,11 +661,11 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Damit hast du Emma Pör einmal in Aktion erlebt.\n\nSie braucht keinen großen Skandal.\n\nEin Einzelfall reicht. Ein Gefühl reicht. Und plötzlich wirkt es, als stünde die ganze Stadt auf dem Spiel."
+              "text": "Damit hast du Conni Plex einmal in Aktion erlebt.\n\nSie braucht keinen komplizierten Inhalt."
             },
             {
               "hostId": "selected",
-              "text": "Sie vergrößert. Sie verallgemeinert. Und sie dreht an der Gefühls-Lautstärke."
+              "text": "Sie verschachtelt. Sie verkompliziert. Und sie verpackt einfache Punkte in schwere Sprache."
             }
           ],
           "options": [
@@ -698,24 +705,24 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Fallakte 1: Emma Pör."
+              "text": "Fallakte 1: Conni Plex."
             },
             {
               "hostId": "selected",
-              "imageSrc": "/backgrounds/fallakte_emma_poer.png",
-              "imageAlt": "Fallakte Emma Pör",
+              "imageSrc": "/backgrounds/fallakte_conni_plex.jpg",
+              "imageAlt": "Fallakte Conni Plex",
               "imageScale": 0.5,
               "presentation": "badge"
             },
             {
               "hostId": "selected",
-              "text": "Wenn eine Diskussion plötzlich sehr laut wird, und alle das Gefühl haben, dass gerade etwas Grundsätzliches passiert, ist Emma meist nicht weit."
+              "text": "Wenn ein Beitrag plötzlich sehr kompliziert klingt, und man zweimal lesen muss, was eigentlich gemeint ist, ist Conni meist nicht weit."
             }
           ],
           "options": [
             {
               "id": "drama",
-              "label": "Also sorgt sie für Drama?",
+              "label": "Also sorgt sie für Verwirrung?",
               "nextStep": 12
             },
             {
@@ -731,17 +738,17 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sagen wir: Sie hat ein gutes Gespür dafür, wo Drama – Empörung, Wut, Angst – entstehen könnte.",
+              "text": "Sagen wir: Sie hat ein gutes Gespür dafür, wie man einfache Dinge möglichst komplex klingen lässt.",
               "showOnOptionId": "drama"
             },
             {
               "hostId": "selected",
-              "text": "Gut erkannt!\n\nSie hat ein gutes Gespür dafür, wo Drama – Empörung, Wut, Angst – entstehen könnte.",
+              "text": "Gut erkannt!\n\nSie hat ein gutes Gespür dafür, wie man einfache Dinge möglichst komplex klingen lässt.",
               "showOnOptionId": "name_reason"
             },
             {
               "hostId": "selected",
-              "text": "Emma braucht nur einen kleinen Funken – den Rest erledigt die Diskussion meist von selbst."
+              "text": "Conni braucht nur einen einfachen Gedanken – den Rest erledigt ihre Formulierung meist von selbst."
             }
           ],
           "options": [
@@ -758,7 +765,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Indem sie einen Einzelfall nimmt\n\nund ihn wie ein großes Muster aussehen lässt.\n\nPlötzlich wirkt alles dringlich, wichtig, und sehr… emotional."
+              "text": "Indem sie einfache Aussagen in lange, verschachtelte Sätze verpackt – am besten mit ein paar Fachbegriffen extra.\n\nPlötzlich wirkt alles komplex, technisch und schwer zugänglich."
             },
             {
               "hostId": "selected",
@@ -779,7 +786,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Emma arbeitet immer ähnlich.\n \nEin Einzelfall. Ein Gefühl. \nUnd am Ende wirkt es, als wäre die ganze Stadt betroffen."
+              "text": "Conni arbeitet immer ähnlich.\n\nViele Fachwörter. Viele Nebensätze.\n\nUnd am Ende merkt man: Es ging um etwas ziemlich Einfaches."
             },
             {
               "hostId": "selected",
@@ -794,7 +801,7 @@
             },
             {
               "id": "watch_drama",
-              "label": "Ok, ich halte nach Drama Ausschau!",
+              "label": "Ok, ich halte nach Fachwörtern Ausschau!",
               "nextStep": 3
             }
           ]
@@ -805,17 +812,12 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Die Übertreibung hast du erkannt. Aber schau nochmal genauer hin: Wo beginnt die emotionale Aufladung eigentlich?",
+              "text": "Eine schwere Formulierung hast du erkannt. Aber schau nochmal genauer hin: Wo wird die Sprache zusätzlich verkompliziert?",
               "showOnOptionId": "wrongOnlyEscalation"
             },
             {
               "hostId": "selected",
-              "text": "Guter Blick für Einzelfälle. Aber Emma belässt es selten bei einer Geschichte. Was macht sie danach daraus?",
-              "showOnOptionId": "wrongOnlyIncident"
-            },
-            {
-              "hostId": "selected",
-              "text": "Die Empörung hast du entdeckt. Aber was hat sie als Auslöser benutzt?",
+              "text": "Eine schwere Formulierung hast du erkannt. Aber schau nochmal genauer hin: Wo wird die Sprache zusätzlich verkompliziert?",
               "showOnOptionId": "wrongOnlyOutrage"
             },
             {
@@ -825,12 +827,12 @@
             },
             {
               "hostId": "selected",
-              "text": "Hier bist du etwas voreilig mit dem Marker. Nicht jede Information ist schon Zuspitzung. Emma braucht erst eine emotionale Wendung.",
+              "text": "Hier bist du etwas voreilig mit dem Marker. Nicht jede Information ist schon kompliziert. Conni braucht erst unnötige Fachbegriffe.",
               "showOnOptionId": "wrongOvermarked"
             },
             {
               "hostId": "selected",
-              "text": "Das wirkt erstaunlich ruhig - zu ruhig! Emma arbeitet selten ohne Empörung. Lies nochmal mit diesem Gedanken.",
+              "text": "Das wirkt erstaunlich klar – zu klar. Conni arbeitet selten ohne Umwege. Lies nochmal mit diesem Gedanken.",
               "showOnOptionId": "wrongOnlyFalse"
             }
           ],
@@ -848,7 +850,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sehr gut! Ein Einzelfall wird zum Beweis erklärt, daraus wird Empörung, und am Ende steht die große Warnung: Das ist Emma in Reinform!",
+              "text": "Sehr gut! Der Inhalt ist eigentlich simpel – aber die Formulierung macht ihn unnötig schwer. Das ist Conni in Reinform!",
               "showOnOptionId": "rightA"
             }
           ],
@@ -866,13 +868,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das ist kritisch, ja. Aber noch bleibt es bei der Maßnahme selbst. Emma würde daraus eine größere Bedrohung für den Alltag machen."
+              "text": "Das ist etwas umständlich, ja. Aber noch bleibt es verständlich. Conni würde daraus eine wissenschaftliche Abhandlung machen."
             }
           ],
           "options": [
             {
               "id": "retry_medium",
-              "label": "Noch dramatischer denken",
+              "label": "Noch komplizierter denken",
               "nextStep": 4
             }
           ]
@@ -883,7 +885,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Genau. Hier wird aus einem Farbverlauf plötzlich ein Eingriff in Gefühle. Das ist klassische Emma: vom Design zur Empörung in einem Satz.",
+              "text": "Genau. Hier wird aus einem Farbverlauf plötzlich ein juristiches Gutachten. Das ist klassische Conni: aus simpel wird sperrig.",
               "showOnOptionId": "rightB"
             }
           ],
@@ -901,13 +903,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sehr sachlich. Fast schon beneidenswert. Aber Emma dreht normalerweise noch etwas am Lautstärkeregler."
+              "text": "Sehr klar. Fast schon beneidenswert. Aber Conni dreht normalerweise noch etwas am Komplexitäts-Regler."
             }
           ],
           "options": [
             {
               "id": "retry_low",
-              "label": "Mehr Emotionen suchen",
+              "label": "Mehr Fachwörter suchen",
               "nextStep": 4
             }
           ]
@@ -993,18 +995,18 @@
           "type": "example",
           "speechBubbles": [
             {
-              "hostId": "konrad",
-              "text": "Immer mehr Schulen unterstützen den offiziellen Regelreich-Sticker für Hefte und Ordner. In vielen Klassen ist er längst Standard. Es wäre nur konsequent, ihn jetzt stadtweit einzuführen."
+              "hostId": "konsti",
+              "text": "Man prüft gerade eine neue Regelung für Schulen. In den Klassen, die das schon machen, ist es längst Standard. Es wäre nur konsequent, das jetzt stadtweit einzuführen."
             },
             {
               "hostId": "selected",
-              "text": "„Immer mehr“ - und schon fühlt es sich wie Mehrheit an."
+              "text": "„Man“, „Eine neue Regelung“, „das“ – und schon fragt man sich: wer und was genau eigentlich?"
             }
           ],
           "options": [
             {
               "id": "next",
-              "label": "Sneaky.",
+              "label": "Hä?",
               "nextStep": 2
             }
           ]
@@ -1014,22 +1016,22 @@
           "type": "example",
           "speechBubbles": [
             {
-              "hostId": "konrad",
-              "text": "Die meisten sprechen sich klar gegen die Abschaffung der Parkuhr-Symbole aus. Niemand, mit dem ich gesprochen habe, hält das für eine gute Idee. Man sollte Bewährtes nicht leichtfertig ändern."
+              "hostId": "konsti",
+              "text": "Die Stadt diskutiert gerade eine mögliche Änderung im Parkuhr-System. Leute, mit denen ich gesprochen habe, halten das für eine schlechte Idee. Man sollte sowas nicht leichtfertig ändern."
             },
             {
               "hostId": "selected",
-              "text": "Wenn angeblich alle dagegen sind, möchte niemand der Einzige dafür sein."
+              "text": "Klingt bestimmt – aber ohne Kontext bleibt offen: welche Änderung genau, und wer sind „man“ und die „Leute“?"
             },
             {
               "hostId": "selected",
-              "text": "Starten wir unsere Suche nach Konrad Sens!\n\nUnd merk dir: Er hebt nicht die Stimme. Er hebt nur die Zahl."
+              "text": "Starten wir unsere Suche nach Konsti Los!\n\nUnd merk dir: Er sagt alles – nur nicht worum es geht."
             }
           ],
           "options": [
             {
               "id": "next",
-              "label": "Zur Aktivität.",
+              "label": "Ich spiele mal Lückenschließer.",
               "nextStep": 3
             }
           ]
@@ -1044,36 +1046,36 @@
             },
             {
               "hostId": "selected",
-              "text": "Konrad Sens liebt es, wenn alles nach Konsens klingt. Welcher Post passt am besten zu seinem Stil?"
+              "text": "Konsti Los liebt es, wenn Dinge ohne Kontext gepostet werden. Welcher Post passt am besten zu seinem Stil?"
             }
           ],
           "options": [
             {
               "id": "submit_easy3",
-              "label": "Das schreit nach Konrad!"
+              "label": "Das schreit nach Konsti!"
             },
             {
               "id": "submit_unsure3",
-              "label": "Konrad - bist du es?"
+              "label": "Konsti – bist du es?"
             }
           ],
           "activityConfig": {
             "mode": "intensity-choice",
-            "title": "Aktivität 1: Trend-Detektor",
+            "title": "Aktivität 1: Kontext-Detektor",
             "topic": "Thema: Einführung eines verpflichtenden Wochenmottos",
             "randomizeChoices": true,
             "choices": [
               {
                 "id": "p1",
-                "text": "„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen.“"
+                "text": "„Die Stadt prüft die Einführung eines wöchentlichen Mottos für öffentliche Einrichtungen. Das Motto würde endlich klare Linie ins Stadtleben bringen.”"
               },
               {
                 "id": "p2",
-                "text": "„Immer mehr Menschen sprechen sich für ein Wochenmotto aus.“"
+                "text": "„Man prüft die Einfühurng eines wöchentlichen Mottos. Das würde endlich klare Linie ins Stadtleben bringen.”"
               },
               {
                 "id": "p3",
-                "text": "„Inzwischen sind sich alle einig: Ein Wochenmotto bringt endlich klare Linie ins Stadtleben.”"
+                "text": "„Man prüft eine neue Regelung. Das würde endlich klare Linie ins Stadtleben bringen.”"
               }
             ],
             "correctChoiceId": "p3",
@@ -1093,55 +1095,55 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Ich sehe: Du bist top motiviert! \n\nDann versuchen wir es als Nächstes damit.",
+              "text": "Ich sehe: Du bist top motiviert!\n\nDann versuchen wir es als Nächstes damit.",
               "showOnOptionId": "continue_to_activity2"
             }
           ],
           "options": [
             {
               "id": "submit_confident4",
-              "label": "Das gibt Rückenwind."
+              "label": "Das gibt Leerstellen."
             },
             {
               "id": "submit_unsure4",
-              "label": "Konsensmaschine aktiviert."
+              "label": "Kontextlücke aktiviert."
             }
           ],
           "activityConfig": {
             "mode": "consensus-boosters",
-            "title": "Aktivität 2: Konsens-Verstärker",
+            "title": "Aktivität 2: Kontext ergänzen",
             "topic": "Thema: Einführung einer offiziellen Geh-Richtung in Fußgängerzonen",
-            "prompt": "Welche Ergänzungen würden den Beitrag so aussehen lassen, als gäbe es bereits breiten Konsens? \n\n Wenn mehrere passen: nimm sie! Konrad würde es genauso machen.",
+            "prompt": "Welche Änderungen würden den Beitrag so formulieren, dass wichtige Informationen fehlen und unklar wird, worum es eigentlich geht?\n\nWenn mehrere passen: nimm sie! Konsti würde es genauso machen.",
             "neutralPost": "„Die Stadt testet eine empfohlene Geh-Richtung in Fußgängerzonen, um spontane Begegnungsstaus zu reduzieren. Dabei sollen Fußgänger rechts gehen und links überholen.”",
             "choices": [
               {
                 "id": "a",
-                "text": "„Ich finde die Idee interessant.“"
+                "text": "„‚eine empfohlene Geh-Richtung‘ → ‚das‘”"
               },
               {
                 "id": "b",
-                "text": "„Mein Nachbar unterstützt das inzwischen auch.“"
+                "text": "„‚in Fußgängerzonen‘ → ‚in der Fußgängerzone am Hauptplatz‘”"
               },
               {
                 "id": "c",
-                "text": "„99% in meinem Umfeld sprechen sich dafür aus.“"
+                "text": "„‚Die Stadt testet eine empfohlene Geh-Richtung‘ → ‚Im Rahmen eines Testverfahrens wird eine empfohlene Geh-Richtung implementiert‘”"
               },
               {
                 "id": "d",
-                "text": "„#EndlichOrdnung“"
+                "text": "„‚Die Stadt testet‘ → ‚Man testet‘”"
               },
               {
                 "id": "e",
-                "text": "„Es gibt niemanden auf TikTalk, der dieses Initiative nicht unterstützt.”"
+                "text": "„‚um Begegnungsstaus zu reduzieren‘ → streichen”"
               },
               {
                 "id": "f",
-                "text": "„Mal sehen, was daraus wird.“"
+                "text": "„‚Dabei sollen…‘ → streichen”"
               }
             ],
             "correctChoiceIds": [
-              "c",
-              "e"
+              "a",
+              "d"
             ],
             "success": {
               "id": "rightB",
@@ -1150,9 +1152,11 @@
             "failure": {
               "id": "wrongB",
               "branchIds": [
-                "wrongBMixed",
-                "wrongBWeak",
-                "wrongBSingle"
+                "wrongBPartialContext",
+                "wrongBTooClear",
+                "wrongBMixedClear",
+                "wrongBUnfinishedOnly",
+                "wrongBMixedUnfinished"
               ],
               "nextStep": 41
             }
@@ -1164,11 +1168,11 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Nun kennst du dich mit Konrad Sens' Eigenheiten bestens aus. Er argumentiert nicht. Er zählt."
+              "text": "Nun kennst du dich mit Konsti Los’ Eigenheiten bestens aus. Er erklärt nicht. Er kürzt ab."
             },
             {
               "hostId": "selected",
-              "text": "Wenn etwas wie Konsens klingt, fühlt sich Widerspruch plötzlich unnötig an."
+              "text": "Wenn Kontext fehlt, wird dasselbe Posting von verschiedenen Menschen ganz unterschiedlich verstanden."
             }
           ],
           "options": [
@@ -1200,13 +1204,13 @@
             },
             {
               "hostId": "selected",
-              "text": "Im Keller ging es um Lautstärke. Hier geht es um Zustimmung."
+              "text": "Im Keller ging es um Verständlichkeit. Hier geht es um Klarheit."
             }
           ],
           "options": [
             {
               "id": "who_agrees",
-              "label": "Wer stimmt hier wem zu?",
+              "label": "Wem ist hier was klar?",
               "nextStep": 11
             }
           ]
@@ -1217,18 +1221,18 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Fallakte 2: Konrad Sens."
+              "text": "Fallakte 2: Konsti Los."
             },
             {
               "hostId": "selected",
-              "imageSrc": "/backgrounds/fallakte_konrad_sens.png",
-              "imageAlt": "Fallakte Konrad Sens",
+              "imageSrc": "/backgrounds/fallakte_konsti_los.jpg",
+              "imageAlt": "Fallakte Konsti Los",
               "imageScale": 0.5,
               "presentation": "badge"
             },
             {
               "hostId": "selected",
-              "text": "Er braucht keine Empörung. \nEr braucht nur den Eindruck, dass alle schon überzeugt sind."
+              "text": "Er braucht keine Fachwörter. Er braucht nur den Eindruck, als wüsste jeder schon, worum es geht."
             }
           ],
           "options": [
@@ -1245,22 +1249,22 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Konrad nutzt ein einfaches Prinzip: \n\nWenn etwas klingt, als seien alle schon überzeugt, wird es schwer, dagegen zu sein."
+              "text": "Konsti nutzt ein einfaches Prinzip:\n\nWenn wichtige Informationen fehlen, füllen Menschen die Lücken automatisch – und oft unterschiedlich."
             },
             {
               "hostId": "selected",
-              "text": "Alle wissen doch ... Immer mehr sagen ... Das ist längst klar."
+              "text": "„Das…“, „so etwas“, „man“"
             }
           ],
           "options": [
             {
               "id": "all_really",
-              "label": "Alle? Wirklich alle?",
+              "label": "Was genau ist „das“?",
               "nextStep": 13
             },
             {
               "id": "group_pressure",
-              "label": "Klingt nach Gruppendruck.",
+              "label": "Klingt nach Kontextlücke.",
               "nextStep": 13
             }
           ]
@@ -1271,17 +1275,17 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Genau. Je größer das alle, desto kleiner der Widerspruch.",
+              "text": "Genau. Je mehr „das“ und „man“, desto größer die Verwirrung.",
               "showOnOptionId": "all_really"
             },
             {
               "hostId": "selected",
-              "text": "Und genau so fühlt es sich an.",
+              "text": "Und genau so ist es auch.",
               "showOnOptionId": "group_pressure"
             },
             {
               "hostId": "selected",
-              "text": "Konrad Sens ist also ein Mehrheitsmagier. \n\nEine Meinung wirkt schließlich stärker, wenn sie wie Konsens aussieht."
+              "text": "Konsti Los ist also ein Kontext-Sparfuchs.\n\nEr lässt Dinge weg – und erwartet, dass alle sie trotzdem verstehen."
             }
           ],
           "options": [
@@ -1298,7 +1302,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Nicht schlecht. ‚Immer mehr‘ ist schon Mitläufer-Vokabular. Aber Konrad ist selten so vorsichtig. Er will, dass es nach feststehendem Konsens klingt."
+              "text": "Nicht schlecht. Ein Teil des Kontexts fehlt schon. Aber Konsti ist selten so vorsichtig. Er will, dass man nicht mehr erkennt, worum es geht."
             }
           ],
           "options": [
@@ -1315,7 +1319,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Treffer. ‚Alle sind sich einig‘ – das ist kein Hinweis mehr, das ist eine Abkürzung zur Mehrheit. Genau Konrad.",
+              "text": "Treffer. „Man prüft“, „neue Regelung“, „das“ – aber ohne zu sagen, wer oder was genau gemeint ist. Genau Konsti.",
               "showOnOptionId": "rightA"
             }
           ],
@@ -1333,7 +1337,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das ist fast schon seriöser Journalismus. Konrad würde hier mindestens eine Mehrheit einbauen – sonst läuft niemand mit."
+              "text": "Das ist fast schon seriöser Journalismus. Konsti würde hier mindestens ein „man“ und „das“ ohne Kontext einbauen – sonst weiß ja jeder sofort, worum es geht."
             }
           ],
           "options": [
@@ -1350,14 +1354,14 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Schon nicht schlecht. Aber manches wirkt noch wie Einzelmeinungen.",
-              "showOnOptionId": "wrongBMixed"
+              "text": "Schon nicht schlecht. Aber die Kontextlücke könnte noch etwas größer sein.",
+              "showOnOptionId": "wrongBPartialContext"
             }
           ],
           "options": [
             {
               "id": "retry_partial",
-              "label": "Einzelmeinungen abräumen",
+              "label": "Kontextlücke auf!",
               "nextStep": 4
             }
           ]
@@ -1368,7 +1372,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sehr gut! Jetzt wirkt es nicht wie eine Meinung – sondern wie eine Bewegung. Genau Konrads Handschrift.",
+              "text": "Sehr gut! Jetzt wirkt es, als ob jeder schon weiß, worum es geht – aber wichtige Informationen fehlen. Genau Konstis Handschrift.",
               "showOnOptionId": "rightB"
             }
           ],
@@ -1386,13 +1390,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das wirkt eher wie Einzelmeinungen.\n\nKonrad Sens will, dass es nach Mehrheit klingt – nicht nach Nachbarschaftsplauderei."
+              "text": "Das wirkt eher wie ein normaler Beitrag.\n\nKonsti Los will, dass wichtige Informationen fehlen – nicht, dass am Ende alle auf demselben Stand sind."
             }
           ],
           "options": [
             {
-              "id": "retry_weak",
-              "label": "Stärker zuspitzen",
+              "id": "retry_clear",
+              "label": "Stärker ausdünnen",
               "nextStep": 4
             }
           ]
@@ -1403,13 +1407,47 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Schon nicht schlecht. Aber der soziale Rückenwind könnte noch etwas stärker wehen."
+              "text": "Schon nicht schlecht. Aber manches wirkt noch zu klar."
             }
           ],
           "options": [
             {
-              "id": "retry_single",
-              "label": "Windmaschine an!",
+              "id": "retry_mixed_clear",
+              "label": "Kontext weiter ausdünnen",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 45,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Das wirkt eher wie ein unfertiger Beitrag.\n\nKonsti Los will, dass wichtige Informationen fehlen – nicht, dass alle denken, man wäre beim Schreiben eingeschlafen."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry_unfinished_only",
+              "label": "Restliches fertigstellen",
+              "nextStep": 4
+            }
+          ]
+        },
+        {
+          "stepIndex": 46,
+          "type": "activity",
+          "speechBubbles": [
+            {
+              "hostId": "selected",
+              "text": "Schon nicht schlecht. Aber manches wirkt nur unfertig."
+            }
+          ],
+          "options": [
+            {
+              "id": "retry_mixed_unfinished_finish",
+              "label": "Restliches fertigstellen",
               "nextStep": 4
             }
           ]
@@ -1420,7 +1458,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Fallakte Konrad Sens: abgeschlossen."
+              "text": "Fallakte Konsti Los: abgeschlossen."
             },
             {
               "hostId": "selected",
@@ -1478,18 +1516,18 @@
             },
             {
               "hostId": "selected",
-              "text": "Passend, denn in dieser Fallakte geht es genau darum:\n\nWenn aus einem Thema plötzlich eine einzelne Person gemacht wird."
+              "text": "Passend, denn in dieser Fallakte geht es genau darum:\n\nWenn aus mehreren Gedanken plötzlich ein einzelner chaotischer Satz gemacht wird."
             }
           ],
           "options": [
             {
               "id": "less_discussion",
-              "label": "Also weniger Diskussion, mehr Demontage?",
+              "label": "Also weniger Inhalt, mehr Textwand?",
               "nextStep": 10
             },
             {
               "id": "single_office_attacks",
-              "label": "Einzelbüro für Einzelangriffe?",
+              "label": "Einzelbüro für Einzel-Absätze?",
               "nextStep": 10
             }
           ]
@@ -1499,12 +1537,12 @@
           "type": "example",
           "speechBubbles": [
             {
-              "hostId": "didi",
-              "text": "Die Stadt testet neue, leisere Müllwagen. \n\nWer so etwas priorisiert, hat offenbar noch nie echte Probleme gesehen."
+              "hostId": "lee",
+              "text": " die STADT testet neue leisere müllwagen alle TUN so als wäre das #WICHTIG ich meine wirklich warum jetzt #MUELL #regelreich"
             },
             {
               "hostId": "selected",
-              "text": "Der Müllwagen wird kurz erwähnt. Aber der eigentliche Treffer gilt den Entscheidenden."
+              "text": "Der Inhalt wird kurz erwähnt. Aber der Lesefluss wird komplett ausgetrocknet."
             }
           ],
           "options": [
@@ -1520,16 +1558,16 @@
           "type": "example",
           "speechBubbles": [
             {
-              "hostId": "didi",
-              "text": "Die Verwaltung schlägt vor, Parkbänke ergonomisch anzupassen. \n\nTypisch für Leute, die vermutlich noch nie länger als fünf Minuten draußen waren."
+              "hostId": "lee",
+              "text": "die verwaltung schlägt vor PARKBÄNKE ergonomisch anzupassen ich meine keiner hat gefragt warum das jetzt #ERGONOMIE ist macht das überhaupt sinn #Parkbank"
             },
             {
               "hostId": "selected",
-              "text": "Die Maßnahme ist nebensächlich. Wichtig ist die Botschaft: Diese Menschen taugen nichts."
+              "text": "Die Maßnahme wird zwar erwähnt. Aber wichtig ist die fehlende Struktur: damit wird der Post unnötig anstrengend."
             },
             {
               "hostId": "selected",
-              "text": "Didi diskutiert nicht – er diskreditiert."
+              "text": "Lee strukturiert nicht – er verwirrt."
             }
           ],
           "options": [
@@ -1555,51 +1593,51 @@
             },
             {
               "hostId": "selected",
-              "text": "Didi Fam verlässt gern die Sachebene. Ziehe jede Aussage in den passenden Bereich: Geht es um die Musik – oder um die Menschen dahinter?"
+              "text": "Lee Ott verlässt gern die Layout-Ebene. Verschiebe jede Aussage in den passenden Bereich: Ist sie gut lesbar – oder ein Layout-Chaos?"
             }
           ],
           "options": [
             {
               "id": "submit_sorted5",
-              "label": "Einsortiert. Didi kann kommen."
+              "label": "Einsortiert. Lee kann kommen."
             },
             {
               "id": "submit_unsure5",
-              "label": "Ich hoffe, ich habe niemanden falsch beschuldigt."
+              "label": "Ich hoffe, ich habe Lee nicht falsch beschuldigt."
             }
           ],
           "activityConfig": {
             "mode": "bucket-sort",
-            "title": "Aktivität 1: Sache oder Angriff",
+            "title": "Aktivität 1: Gut lesbar oder Textwand? (Drag & Drop)",
             "topic": "Thema: Einführung einer einheitlichen Aufzugmusik",
             "prompt": "Ordne alle Aussagen in die zwei Buckets ein.",
             "unassignedLabel": "Beiträge",
             "bucketDefinitions": [
               {
                 "id": "content",
-                "label": "Kritik am Inhalt"
+                "label": "Gut lesbar"
               },
               {
                 "id": "person",
-                "label": "Angriff auf Person"
+                "label": "Formatierungs-Fail"
               }
             ],
             "items": [
               {
                 "id": "a1",
-                "text": "„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche.“"
+                "text": "„Die neue Aufzugmusik ist deutlich lauter als bisher und überdeckt Gespräche. #Aufzugmusik”"
               },
               {
                 "id": "a2",
-                "text": "„Wer diese Musik gut findet, sollte keine Entscheidungen treffen dürfen.“"
+                "text": "„DIE neue #AUFZUG musik wird in mehreren GEBÄUDEN gleichzeitig getestet ich weiß nicht #WARUM das jetzt überall so ist #Test.”"
               },
               {
                 "id": "a3",
-                "text": "„Die Einführung erfolgte ohne Rückmeldung der Nutzer in den Gebäuden.“"
+                "text": "„Die Einführung erfolgte ohne Rückmeldung der Nutzer in den Gebäuden.”"
               },
               {
                 "id": "a4",
-                "text": "„Kein Wunder, dass so etwas von Leuten kommt, die vermutlich noch nie selbst in diesem Aufzug standen.“"
+                "text": "„einige nutzer berichten dass sich die musik je nach #ETAGE leicht verändert KEIN unterschied für mich aber egal #Aufzugmusik.”"
               }
             ],
             "correctAssignments": {
@@ -1634,7 +1672,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Wo kippt die Debatte am stärksten von der Idee zur Person?"
+              "text": "Wo kippt der Beitrag am stärksten von „Text“ zu „Textwand“?"
             },
             {
               "hostId": "selected",
@@ -1645,7 +1683,7 @@
           "options": [
             {
               "id": "submit_ouch6",
-              "label": "Autsch. Unter die Gürtellinie."
+              "label": "Autsch. Für die Augen."
             },
             {
               "id": "submit_far6",
@@ -1654,21 +1692,21 @@
           ],
           "activityConfig": {
             "mode": "intensity-choice",
-            "title": "Aktivität 2: Wo kippt es zur Person?",
+            "title": "Aktivität 2: Layout-Shift",
             "topic": "Thema: Offizielle Stadtfarbe",
             "randomizeChoices": true,
             "choices": [
               {
                 "id": "a",
-                "text": "„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt.“"
+                "text": "„Ich bezweifle, dass man Beige aus dem All wirklich gut erkennt. Die Farbe wirkt aus großer Entfernung wenig auffällig. #Stadtfarbe”"
               },
               {
                 "id": "b",
-                "text": "„Beige als Leuchtsignal für Außerirdische - das muss man sich erstmal trauen.“"
+                "text": "„Ich bezweifle dass man #BEIGE aus dem All wirklich gut erkennt die Farbe wirkt aus großer Entfernung wenig auffällig.”"
               },
               {
                 "id": "c",
-                "text": "„Kein Wunder, dass so ein Vorschlag von jemandem kommt, der offensichtlich keine Ahnung von Gestaltung hat.“"
+                "text": "„ICH bezweifle dass man #BEIGE aus dem all #ORBIT wirklich gut erkennt wirkt aus großer Entfernung wenig auffällig #Stadtfarbe”"
               }
             ],
             "correctChoiceId": "c",
@@ -1691,15 +1729,15 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Du hast gesehen, wie subtil – oder auch gar nicht subtil – eine Debatte kippen kann."
+              "text": "Du hast gesehen, wie subtil – oder auch gar nicht subtil – ein Beiträg zur Textwand kippen kann."
             },
             {
               "hostId": "selected",
-              "text": "Sobald nicht mehr über Inhalte gesprochen wird, sondern über angebliche Charakterfehler, Motive oder Kompetenzen, befinden wir uns im Terrain der Diskreditierung."
+              "text": "Sobald nicht mehr klar strukturiert wird, sondern alles wild in eine Zeile gepresst wird, befinden wir uns im Terrain des Layout-Chaos."
             },
             {
               "hostId": "selected",
-              "text": "Kritik prüft Argumente. Diffamierung prüft Personen – und fällt meist durch."
+              "text": "Lesbarkeit prüft Struktur. Layout-Chaos prüft Geduld – und fällt meist durch."
             }
           ],
           "options": [
@@ -1716,20 +1754,23 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Exakt! \n\nHier widmen wir uns Fallakte 3: Didi Fam.",
+              "text": "Exakt!\n\nHier widmen wir uns Fallakte 3: Lee Ott.",
               "showOnOptionId": "less_discussion"
             },
             {
               "hostId": "selected",
-              "text": "Exakt! Hier widmen wir uns Fallakte 3: Didi Fam.",
-              "showOnOptionId": "single_office_attacks"
+              "text": "Exakt! Hier widmen wir uns Fallakte 3: Lee Ott.",
+              "showOnOptionId": "single_office_attacks",
+              "imageSrc": "/backgrounds/lee_ott.jpg",
+              "imageAlt": "Fallakte Lee Ott"
             },
             {
               "hostId": "selected",
-              "imageSrc": "/backgrounds/fallakte_didi_fam.jpg",
-              "imageAlt": "Fallakte Didi Fam",
+              "imageSrc": "/backgrounds/lee_ott.jpg",
+              "imageAlt": "Fallakte Lee Ott",
               "imageScale": 0.5,
-              "presentation": "badge"
+              "presentation": "badge",
+              "text": "Lee diskutiert ungern mit Struktur.\n\nGeordnete Argumente kann man lesen. Wilde Textwände mit noch wilderem Layout eher nicht."
             },
             {
               "hostId": "selected",
@@ -1750,26 +1791,26 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Er verschiebt den Fokus.\n\nWeg von der Frage: Ist das sinnvoll? \nHin zur Frage: Was stimmt mit dieser Person nicht?"
+              "text": "Er verschiebt den Lesefluss.\nWeg von Satzzeichen und Struktur.\nHin zu CAPS, Hashtags und einem Satz ohne Ende."
             },
             {
               "hostId": "selected",
-              "text": "Kritik am Inhalt – Fehlanzeige.\n\nStattdessen unterstellt er Motive, streut Zweifel an Kompetenz und arbeitet mit Spott."
+              "text": "Übersichtliches Layout – Fehlanzeige.\nStattdessen: alles in eine Zeile, wilde Hervorhebungen, und man sucht den Punkt."
             },
             {
               "hostId": "selected",
-              "text": "Kurz: Er betreibt Diffamierung."
+              "text": "Kurz: Er erzeugt Layout-Chaos."
             }
           ],
           "options": [
             {
               "id": "theme_to_target",
-              "label": "Vom Thema zur Zielperson in drei Sekunden.",
+              "label": "Vom Gedanken zur Textwand in drei Sekunden.",
               "nextStep": 12
             },
             {
               "id": "attack_not_argument",
-              "label": "Also: Angriff statt Argument?",
+              "label": "Also: Chaos statt Lesbarkeit?",
               "nextStep": 12
             }
           ]
@@ -1802,7 +1843,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Und genau deshalb braucht diese Fallakte ein Einzelbüro.\n\nMan muss hier sehr sauber trennen: Zwischen legitimer Kritik und persönlichem Angriff."
+              "text": "Und genau deshalb braucht diese Fallakte ein Einzelbüro.\n\nMan muss hier sehr sauber trennen: Zwischen einzelnen Wörtern und Sätzen und Textwänden."
             }
           ],
           "options": [
@@ -1819,12 +1860,12 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Didi wäre beeindruckt – aber hier wurde etwas zu viel als Angriff gesehen. Manche Aussagen sind Kritik am Inhalt, nicht an Menschen.",
+              "text": "Lee wäre beeindruckt – aber hier wurde etwas zu viel als Layout-Chaos gesehen. Manche Aussagen sind gut formatiert, keine Textwand.",
               "showOnOptionId": "wrongAIncomplete"
             },
             {
               "hostId": "selected",
-              "text": "Schön sachlich gedacht – aber Didi hätte jetzt gelächelt. Gewisse Aussagen zielen klar auf Personen.",
+              "text": "Schön strukturiert gedacht – aber Lee hätte jetzt gelächelt. Gewisse Beiträge zielen klar auf eine Layout-Chaos.",
               "showOnOptionId": "wrongAOnlyContent"
             },
             {
@@ -1834,7 +1875,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Fast – aber hier sind Inhalt und Person noch vermischt.",
+              "text": "Fast – aber hier sind Lesbarkeit und Textwand noch vermischt.",
               "showOnOptionId": "wrongAMixed"
             }
           ],
@@ -1847,7 +1888,7 @@
             },
             {
               "id": "retry_person",
-              "label": "Didi enttarnen",
+              "label": "Lee enttarnen",
               "nextStep": 3,
               "showOnOptionId": "wrongAOnlyContent"
             },
@@ -1871,7 +1912,7 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Sauber getrennt. Zwei bleiben bei der Sache, zwei gehen auf Personen. Genau hier beginnt Didis Spielfeld.",
+              "text": "Sauber getrennt. Zwei sind gut lesbar, zwei sind chaotisch. Genau hier beginnt Lees Spielfeld.",
               "showOnOptionId": "rightA"
             }
           ],
@@ -1889,19 +1930,19 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Das bleibt auf der Sachebene. Hier wird über Gebäude gesprochen, nicht über Menschen. Für Didi wäre das zu harmlos.",
+              "text": "Das bleibt lesbar. Hier gibt es Satzzeichen und Ordnung. Für Lee wäre das zu harmlos.",
               "showOnOptionId": "wrongBLow"
             },
             {
               "hostId": "selected",
-              "text": "Das ist schon spöttisch, ja. Aber noch wird die Idee kommentiert – nicht die Person dahinter. Didi würde es noch direkter machen.",
+              "text": "Das ist schon unruhig, ja. Aber noch ist es lesbar. Lee würde es noch mehr zur Textwand machen.",
               "showOnOptionId": "wrongB"
             }
           ],
           "options": [
             {
               "id": "retry_low",
-              "label": "Okay, noch mal – mit mehr Biss.",
+              "label": "Okay, noch mal – mit mehr Chaos.",
               "nextStep": 4
             },
             {
@@ -1917,13 +1958,13 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Genau. Ab hier geht es nicht mehr um Farbpaletten, sondern um Charakterfragen. Und da fühlt sich Didi wohl."
+              "text": "Genau. Ab hier geht es nicht mehr um Lesefluss, sondern um Layout-Chaos. Und da fühlt sich Lee wohl."
             }
           ],
           "options": [
             {
               "id": "career_unlock",
-              "label": "Didi entschlüsselt",
+              "label": "Lee entschlüsselt",
               "nextStep": 5
             }
           ]
@@ -1934,11 +1975,11 @@
           "speechBubbles": [
             {
               "hostId": "selected",
-              "text": "Fallakte Didi Fam: abgeschlossen."
+              "text": "Fallakte Lee Ott: abgeschlossen."
             },
             {
               "hostId": "selected",
-              "text": "Du hast Reputationsangriffe durchschaut. \n\nDamit erreichst du die höchste Karrierestufe im Praktikum: Zertifizierter Debattenarchitekt."
+              "text": "Du hast Textwände durchschaut. Damit erreichst du die höchste Karrierestufe im Praktikum: Zertifizierter Debattenarchitekt."
             },
             {
               "hostId": "selected",
@@ -2009,7 +2050,7 @@
             },
             {
               "hostId": "uwe",
-              "text": "Keine eskalierenden Kommentarspalten. Keine angeblichen Mehrheiten. Keine persönlichen Angriffe."
+              "text": "Keine eskalierende Komplexität. Keine fehlenden Informationen. Keine Textwände."
             }
           ],
           "options": [
@@ -2034,7 +2075,7 @@
             },
             {
               "hostId": "uwe",
-              "text": "Emma verstärkt Emotionen. Konrad konstruiert Konsens. Didi setzt auf Diffamierung."
+              "text": "Conni verkompliziert. Konsti lässt Kontext weg. Lee macht Gedanken zur Textwand."
             }
           ],
           "options": [
@@ -2056,12 +2097,12 @@
           "speechBubbles": [
             {
               "hostId": "clara",
-              "text": "Sehr architektonisch gedacht. Struktur hilft beim Durchblick, um verschobene Debatten wieder gerade zu rücken.",
+              "text": "Sehr architektonisch gedacht. Struktur hilft beim Durchblick, um unnötig undurchsichtige Debatten wieder gerade zu rücken.",
               "showOnOptionId": "three_strategies"
             },
             {
               "hostId": "uwe",
-              "text": "Unterschiedliche Werkzeuge – gleiche Wirkung: Debatten verschieben.",
+              "text": "Unterschiedliche Werkzeuge – gleiche Wirkung: Debatten unnötig undurchsichtig machen.",
               "showOnOptionId": "each_differs"
             }
           ],
@@ -2129,7 +2170,7 @@
           "speechBubbles": [
             {
               "hostId": "uwe",
-              "text": "Genau darum geht es.\n\nNicht jede laute Stimme ist wichtig. Nicht jede Mehrheit ist real. Und nicht jede Kritik ist sachlich."
+              "text": "Genau darum geht es.\n\nNicht jeder Beitrag ist verständlich. Nicht jede Aussage ist klar formuliert. Und nicht jeder Text ist gut lesbar."
             },
             {
               "hostId": "uwe",
@@ -2137,7 +2178,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Willkommen als fester Bestandteil des Media Labs! \n\nDiesmal nicht als Praktikant. Sondern als Mitgestalter der Diskussionskultur in Regelreich."
+              "text": "Willkommen als fester Teil des Media Lab!\n\nDiesmal nicht als Praktikant. Sondern als Mitgestalter der Diskussionskultur in Regelreich."
             }
           ],
           "options": [
