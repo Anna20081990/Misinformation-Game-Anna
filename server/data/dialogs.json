@@ -305,7 +305,7 @@
             },
             {
               "hostId": "clara",
-              "text": "Aber ja. Du wirst ihre Muster analysierengenauer unter die Lupe nehmen.",
+              "text": "Aber ja. Du wirst ihre Muster genauer unter die Lupe nehmen.",
               "showOnOptionId": "solve_cases"
             },
             {
@@ -526,7 +526,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines Problem machen."
+              "text": "Emma Pör arbeitet gern mit einzelnen Vorfällen, um große Empörung zu erzeugen. Markiere alle Textstellen, die in Emmas Stil aus einem Einzelfall ein allgemeines, emotionales Problem machen."
             }
           ],
           "options": [
@@ -1555,7 +1555,7 @@
             },
             {
               "hostId": "selected",
-              "text": "Didi Fam verlässt gern die Sachebene. Ziehe jede Aussage in den passenden Bereich: Geht es um die Musik – oder um die Menschen dahinter?"
+              "text": "Didi Fam verlässt gern die Sachebene. Verschiebe jede Aussage in den passenden Bereich: Geht es um die Musik – oder um die Menschen dahinter?"
             }
           ],
           "options": [

@@ -164,7 +164,13 @@ export function AdminDialogScreen() {
     setError('')
     try {
       const data = await getScenes()
-      setScenes(data)
+      setScenes(
+        data.map((scene) =>
+          scene.sceneId === 0
+            ? { ...scene, name: 'Einführung' }
+            : scene
+        )
+      )
       const firstSceneId =
         data.find((scene) => scene.sceneId === 1)?.sceneId ??
         data[0]?.sceneId ??

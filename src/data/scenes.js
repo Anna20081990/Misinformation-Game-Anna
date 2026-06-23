@@ -17,7 +17,7 @@ export const SCENES = [
   },
   {
     id: 0,
-    name: 'Avatar wählen',
+    name: 'Einführung',
     backgroundImage: '/backgrounds/City.png',
     backgroundImageMobile: '/backgrounds/City.png',
     backgroundPlaceholder: 'linear-gradient(180deg, #dff2ff 0%, #f7fcff 100%)',

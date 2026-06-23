@@ -117,17 +117,15 @@ export function ChatPanel({
     } else {
       const appendedMessage =
         messages.length > previous.length && lastMessageId !== previous.lastMessageId
-      const firstAppendedMessage = messages[previous.length]
-      const previousLastMessage = messages[previous.length - 1]
-      const firstAppendedMessageId =
-        firstAppendedMessage?.speakerType !== 'player' &&
-        previousLastMessage?.speakerType === 'player'
-          ? previousLastMessage?.id ?? null
-          : firstAppendedMessage?.id ?? null
 
       if (appendedMessage && hasOverflow) {
-        activeScrollAnchorIdRef.current = firstAppendedMessageId
-        scrollToMessageTop(container, firstAppendedMessageId)
+        const firstAppendedMessage = messages[previous.length]
+        if (firstAppendedMessage?.speakerType !== 'player') {
+          activeScrollAnchorIdRef.current = firstAppendedMessage?.id ?? null
+          scrollToMessageTop(container, firstAppendedMessage?.id ?? null)
+        } else {
+          activeScrollAnchorIdRef.current = null
+        }
       }
     }
 
