@@ -601,6 +601,29 @@ function getSingleButtonTransitionConfig(currentPart, stepIndex) {
   return null
 }
 
+function getUpcomingTransitionBackgrounds(currentPart, stepIndex) {
+  const part = Number(currentPart)
+  const step = Number(stepIndex)
+
+  if (part === 2 && step >= 50 && step <= 52) {
+    return ['/backgrounds/treppenhaus_keller.jpg']
+  }
+
+  if (part === 3 && step >= 50 && step <= 52) {
+    return ['/backgrounds/lift_aussen_grossraum.png']
+  }
+
+  if (part === 4 && step >= 51 && step <= 53) {
+    return ['/backgrounds/lift_innen.png']
+  }
+
+  return []
+}
+
+function uniqueBackgrounds(...groups) {
+  return [...new Set(groups.flat().filter(Boolean))]
+}
+
 function getResolvedFlowTarget(config, type, fallbackId, fallbackNextStep) {
   const target = config?.[type]
   return {
@@ -2042,20 +2065,46 @@ export function GameScreen({
   }
 
   const upcomingBackgrounds = (() => {
+    const transitionBackgrounds = getUpcomingTransitionBackgrounds(
+      currentPart,
+      stepData.stepIndex
+    )
+
     if (isSingleButtonTransition && singleButtonTransitionConfig) {
-      return getHostPartBackgrounds(
-        singleButtonTransitionConfig.nextPart,
-        selectedHostId
+      return uniqueBackgrounds(
+        transitionBackgrounds,
+        getHostPartBackgrounds(
+          singleButtonTransitionConfig.nextPart,
+          selectedHostId
+        )
       )
     }
 
-    if (currentPart === -1) return getPartEntryBackgrounds(0)
-    if (currentPart === 0) return getPartEntryBackgrounds(1)
-    if (currentPart === 1) return getHostPartBackgrounds(2, selectedHostId)
-    if (currentPart === 2) return getHostPartBackgrounds(3, selectedHostId)
-    if (currentPart === 3) return getHostPartBackgrounds(4, selectedHostId)
-    if (currentPart === 4) return getHostPartBackgrounds(5, selectedHostId)
-    return []
+    if (currentPart === -1)
+      return uniqueBackgrounds(transitionBackgrounds, getPartEntryBackgrounds(0))
+    if (currentPart === 0)
+      return uniqueBackgrounds(transitionBackgrounds, getPartEntryBackgrounds(1))
+    if (currentPart === 1)
+      return uniqueBackgrounds(
+        transitionBackgrounds,
+        getHostPartBackgrounds(2, selectedHostId)
+      )
+    if (currentPart === 2)
+      return uniqueBackgrounds(
+        transitionBackgrounds,
+        getHostPartBackgrounds(3, selectedHostId)
+      )
+    if (currentPart === 3)
+      return uniqueBackgrounds(
+        transitionBackgrounds,
+        getHostPartBackgrounds(4, selectedHostId)
+      )
+    if (currentPart === 4)
+      return uniqueBackgrounds(
+        transitionBackgrounds,
+        getHostPartBackgrounds(5, selectedHostId)
+      )
+    return transitionBackgrounds
   })()
 
   if (isMonitorActivityMode) {
