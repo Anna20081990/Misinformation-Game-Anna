@@ -95,7 +95,7 @@ export function ChatPanel({
       (element) => element?.dataset?.messageId === targetId
     )
     if (!firstNewMessage) return
-    container.scrollTop = firstNewMessage.offsetTop
+    container.scrollTop = Math.max(0, firstNewMessage.offsetTop - 16)
   }
 
   useLayoutEffect(() => {
@@ -120,12 +120,15 @@ export function ChatPanel({
 
       if (appendedMessage && hasOverflow) {
         const firstAppendedMessage = messages[previous.length]
-        if (firstAppendedMessage?.speakerType !== 'player') {
-          activeScrollAnchorIdRef.current = firstAppendedMessage?.id ?? null
-          scrollToMessageTop(container, firstAppendedMessage?.id ?? null)
-        } else {
-          activeScrollAnchorIdRef.current = null
-        }
+        const previousLastMessage = messages[previous.length - 1]
+        const firstAppendedMessageId =
+          firstAppendedMessage?.speakerType !== 'player' &&
+          previousLastMessage?.speakerType === 'player'
+            ? previousLastMessage?.id ?? null
+            : firstAppendedMessage?.id ?? null
+
+        activeScrollAnchorIdRef.current = firstAppendedMessageId
+        scrollToMessageTop(container, firstAppendedMessageId)
       }
     }
 
