@@ -571,40 +571,68 @@ function createTransitionFlags(overrides = {}) {
   }
 }
 
+const SINGLE_BUTTON_TRANSITIONS = [
+  {
+    part: 2,
+    stepIndex: 52,
+    backgroundImage: '/backgrounds/treppenhaus_keller.jpg',
+    label: 'Auf ins Tageslicht!',
+    nextPart: 3,
+  },
+  {
+    part: 3,
+    stepIndex: 52,
+    backgroundImage: '/backgrounds/lift_aussen_grossraum.png',
+    label: 'Zum Glück gibt es einen Lift.',
+    nextPart: 4,
+  },
+  {
+    part: 4,
+    stepIndex: 53,
+    backgroundImage: '/backgrounds/lift_innen.png',
+    label: 'Auf in die Chefetage',
+    nextPart: 5,
+  },
+]
+
+function uniqueImageUrls(urls = []) {
+  return Array.from(new Set(urls.filter(Boolean)))
+}
+
 function isSingleButtonTransitionStep(currentPart, stepIndex) {
-  return (
-    (Number(currentPart) === 2 && Number(stepIndex) === 52) ||
-    (Number(currentPart) === 3 && Number(stepIndex) === 52) ||
-    (Number(currentPart) === 4 && Number(stepIndex) === 53)
+  return SINGLE_BUTTON_TRANSITIONS.some(
+    (transition) =>
+      Number(currentPart) === transition.part &&
+      Number(stepIndex) === transition.stepIndex
   )
 }
 
 function getSingleButtonTransitionConfig(currentPart, stepIndex) {
-  if (Number(currentPart) === 2 && Number(stepIndex) === 52) {
-    return {
-      backgroundImage: '/backgrounds/treppenhaus_keller.jpg',
-      label: 'Auf ins Tageslicht!',
-      nextPart: 3,
-    }
-  }
+  const transition = SINGLE_BUTTON_TRANSITIONS.find(
+    (entry) =>
+      Number(currentPart) === entry.part && Number(stepIndex) === entry.stepIndex
+  )
 
-  if (Number(currentPart) === 3 && Number(stepIndex) === 52) {
-    return {
-      backgroundImage: '/backgrounds/lift_aussen_grossraum.png',
-      label: 'Zum Glück gibt es einen Lift.',
-      nextPart: 4,
-    }
-  }
+  return transition ? { ...transition } : null
+}
 
-  if (Number(currentPart) === 4 && Number(stepIndex) === 53) {
-    return {
-      backgroundImage: '/backgrounds/lift_innen.png',
-      label: 'Auf in die Chefetage',
-      nextPart: 5,
-    }
-  }
+function getUpcomingTransitionBackgrounds(currentPart, stepIndex, options = []) {
+  const part = Number(currentPart)
+  const currentStepIndex = Number(stepIndex)
+  const preloadWindow = 3
 
-  return null
+  return SINGLE_BUTTON_TRANSITIONS.filter((transition) => {
+    if (transition.part !== part) return false
+
+    const isNearTransition =
+      currentStepIndex < transition.stepIndex &&
+      currentStepIndex >= transition.stepIndex - preloadWindow
+    const pointsToTransition = options.some(
+      (option) => Number(option?.nextStep) === transition.stepIndex
+    )
+
+    return isNearTransition || pointsToTransition
+  }).map((transition) => transition.backgroundImage)
 }
 
 function getResolvedFlowTarget(config, type, fallbackId, fallbackNextStep) {
@@ -2082,20 +2110,38 @@ export function GameScreen({
   }
 
   const upcomingBackgrounds = (() => {
+    const transitionBackgrounds = getUpcomingTransitionBackgrounds(
+      currentPart,
+      stepData.stepIndex,
+      options
+    )
+    const withTransitionBackgrounds = (backgrounds = []) =>
+      uniqueImageUrls([...backgrounds, ...transitionBackgrounds])
+
     if (isSingleButtonTransition && singleButtonTransitionConfig) {
-      return getHostPartBackgrounds(
-        singleButtonTransitionConfig.nextPart,
-        selectedHostId
+      return withTransitionBackgrounds(
+        getHostPartBackgrounds(
+          singleButtonTransitionConfig.nextPart,
+          selectedHostId
+        )
       )
     }
 
-    if (currentPart === -1) return getPartEntryBackgrounds(0)
-    if (currentPart === 0) return getPartEntryBackgrounds(1)
-    if (currentPart === 1) return getHostPartBackgrounds(2, selectedHostId)
-    if (currentPart === 2) return getHostPartBackgrounds(3, selectedHostId)
-    if (currentPart === 3) return getHostPartBackgrounds(4, selectedHostId)
-    if (currentPart === 4) return getHostPartBackgrounds(5, selectedHostId)
-    return []
+    if (currentPart === -1) return withTransitionBackgrounds(getPartEntryBackgrounds(0))
+    if (currentPart === 0) return withTransitionBackgrounds(getPartEntryBackgrounds(1))
+    if (currentPart === 1) {
+      return withTransitionBackgrounds(getHostPartBackgrounds(2, selectedHostId))
+    }
+    if (currentPart === 2) {
+      return withTransitionBackgrounds(getHostPartBackgrounds(3, selectedHostId))
+    }
+    if (currentPart === 3) {
+      return withTransitionBackgrounds(getHostPartBackgrounds(4, selectedHostId))
+    }
+    if (currentPart === 4) {
+      return withTransitionBackgrounds(getHostPartBackgrounds(5, selectedHostId))
+    }
+    return withTransitionBackgrounds()
   })()
 
   if (isMonitorActivityMode) {

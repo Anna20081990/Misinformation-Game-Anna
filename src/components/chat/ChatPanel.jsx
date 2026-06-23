@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
@@ -85,6 +85,11 @@ export function ChatPanel({
   title = 'Media Lab Luminara',
 }) {
   const scrollRef = useRef(null)
+  const [scrollbarMetrics, setScrollbarMetrics] = useState({
+    isVisible: false,
+    thumbHeight: 0,
+    thumbTop: 0,
+  })
   const previousSnapshotRef = useRef({
     firstMessageId: null,
     lastMessageId: null,
@@ -94,6 +99,35 @@ export function ChatPanel({
   const avatarOptions = options.filter((option) => isAvatarOption(option))
   const textOptions = options.filter((option) => !isAvatarOption(option))
 
+  function updateScrollbarMetrics() {
+    const container = scrollRef.current
+    if (!container) return
+
+    const scrollable = container.scrollHeight > container.clientHeight + 1
+    if (!scrollable) {
+      setScrollbarMetrics((prev) =>
+        prev.isVisible
+          ? { isVisible: false, thumbHeight: 0, thumbTop: 0 }
+          : prev
+      )
+      return
+    }
+
+    const thumbHeight = Math.max(
+      12,
+      (container.clientHeight / container.scrollHeight) * 100
+    )
+    const maxScrollTop = container.scrollHeight - container.clientHeight
+    const scrollProgress = maxScrollTop > 0 ? container.scrollTop / maxScrollTop : 0
+    const thumbTop = scrollProgress * (100 - thumbHeight)
+
+    setScrollbarMetrics({
+      isVisible: true,
+      thumbHeight,
+      thumbTop,
+    })
+  }
+
   function scrollToMessageTop(container, messageId) {
     if (!container || messageId == null) return
     const targetId = String(messageId)
@@ -101,7 +135,7 @@ export function ChatPanel({
       (element) => element?.dataset?.messageId === targetId
     )
     if (!firstNewMessage) return
-    container.scrollTop = firstNewMessage.offsetTop
+    container.scrollTop = Math.max(0, firstNewMessage.offsetTop - 16)
   }
 
   useLayoutEffect(() => {
@@ -137,6 +171,8 @@ export function ChatPanel({
       }
     }
 
+    updateScrollbarMetrics()
+
     previousSnapshotRef.current = {
       firstMessageId,
       lastMessageId,
@@ -144,11 +180,25 @@ export function ChatPanel({
     }
   }, [messages, options])
 
+  useLayoutEffect(() => {
+    const container = scrollRef.current
+    if (!container) return undefined
+
+    updateScrollbarMetrics()
+    if (typeof ResizeObserver === 'undefined') return undefined
+
+    const resizeObserver = new ResizeObserver(updateScrollbarMetrics)
+    resizeObserver.observe(container)
+
+    return () => resizeObserver.disconnect()
+  }, [])
+
   function handleMessageImageLoad() {
     const container = scrollRef.current
     const activeAnchorId = activeScrollAnchorIdRef.current
     if (!container || activeAnchorId == null) return
     scrollToMessageTop(container, activeAnchorId)
+    updateScrollbarMetrics()
   }
 
   return (
@@ -157,7 +207,11 @@ export function ChatPanel({
         <h2 className="chat-panel__title">{title}</h2>
       </header>
 
-      <div className="chat-panel__messages" ref={scrollRef}>
+      <div
+        className="chat-panel__messages"
+        ref={scrollRef}
+        onScroll={updateScrollbarMetrics}
+      >
         {messages.map((message) => {
           const isBadgeImage = message.presentation === 'badge'
           const isJuniorBadge = String(message.imageSrc || '').includes(
@@ -315,6 +369,18 @@ export function ChatPanel({
           })}
         </footer>
       </div>
+      {scrollbarMetrics.isVisible && (
+        <div
+          className="chat-panel__mobile-scrollbar"
+          aria-hidden="true"
+          style={{
+            '--chat-scrollbar-thumb-height': `${scrollbarMetrics.thumbHeight}%`,
+            '--chat-scrollbar-thumb-top': `${scrollbarMetrics.thumbTop}%`,
+          }}
+        >
+          <span className="chat-panel__mobile-scrollbar-thumb" />
+        </div>
+      )}
     </section>
   )
 }
