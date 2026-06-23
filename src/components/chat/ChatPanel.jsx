@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { HostAvatar } from '../layout/HostAvatar.jsx'
 import { getPlayerAvatarComponent } from '../layout/PlayerAvatars.jsx'
 
@@ -79,6 +79,11 @@ export function ChatPanel({
   title = 'Media Lab Luminara',
 }) {
   const scrollRef = useRef(null)
+  const [scrollbar, setScrollbar] = useState({
+    top: 0,
+    height: 100,
+    visible: false,
+  })
   const previousSnapshotRef = useRef({
     firstMessageId: null,
     lastMessageId: null,
@@ -96,6 +101,22 @@ export function ChatPanel({
     )
     if (!firstNewMessage) return
     container.scrollTop = Math.max(0, firstNewMessage.offsetTop - 16)
+  }
+
+  function updateScrollbar(container = scrollRef.current) {
+    if (!container) return
+
+    const { scrollHeight, clientHeight, scrollTop } = container
+    const maxScroll = Math.max(0, scrollHeight - clientHeight)
+
+    if (!maxScroll) {
+      setScrollbar({ top: 0, height: 100, visible: false })
+      return
+    }
+
+    const height = Math.max(14, (clientHeight / scrollHeight) * 100)
+    const top = (scrollTop / maxScroll) * (100 - height)
+    setScrollbar({ top, height, visible: true })
   }
 
   useLayoutEffect(() => {
@@ -132,6 +153,8 @@ export function ChatPanel({
       }
     }
 
+    updateScrollbar(container)
+
     previousSnapshotRef.current = {
       firstMessageId,
       lastMessageId,
@@ -144,6 +167,7 @@ export function ChatPanel({
     const activeAnchorId = activeScrollAnchorIdRef.current
     if (!container || activeAnchorId == null) return
     scrollToMessageTop(container, activeAnchorId)
+    updateScrollbar(container)
   }
 
   return (
@@ -152,7 +176,11 @@ export function ChatPanel({
         <h2 className="chat-panel__title">{title}</h2>
       </header>
 
-      <div className="chat-panel__messages" ref={scrollRef}>
+      <div
+        className="chat-panel__messages"
+        ref={scrollRef}
+        onScroll={() => updateScrollbar()}
+      >
         {messages.map((message) => {
           const isBadgeImage = message.presentation === 'badge'
           const isJuniorBadge = String(message.imageSrc || '').includes(
@@ -309,6 +337,18 @@ export function ChatPanel({
             )
           })}
         </footer>
+      </div>
+      <div
+        className={`chat-panel__mobile-scrollbar ${scrollbar.visible ? 'chat-panel__mobile-scrollbar--visible' : ''}`}
+        aria-hidden="true"
+      >
+        <span
+          className="chat-panel__mobile-scrollbar-thumb"
+          style={{
+            height: `${scrollbar.height}%`,
+            top: `${scrollbar.top}%`,
+          }}
+        />
       </div>
     </section>
   )
